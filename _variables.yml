@@ -1,0 +1,10 @@
+course:
+  title: "TODO: Course Title"
+  number: "TODO: Course Number"
+  term: "TODO: Term"
+  instructor: "TODO: Instructor Name"
+
+labels:
+  keyidea: "Key idea"
+  discuss: "Discuss"
+  demo: "Live demo"

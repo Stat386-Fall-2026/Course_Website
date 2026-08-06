@@ -1,0 +1,16 @@
+# Defaults for all slide decks in the slides/ directory.
+# Individual decks only need title + subtitle in their YAML.
+format:
+  revealjs:
+    theme:
+      - simple
+      - ../theme.scss
+    slide-number: true
+    code-copy: true
+    transition: fade
+    chalkboard: true
+    footer: "TODO: Course Number — Term"
+execute:
+  echo: true
+  warning: false
+  message: false

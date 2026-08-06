@@ -1,0 +1,57 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "TODO: Course Number — Term"
+  site-url: ""
+  repo-url: ""
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: schedule.qmd
+        text: Schedule
+      - href: slides.qmd
+        text: Slides
+      - href: demos.qmd
+        text: Demos
+      - href: assignments.qmd
+        text: Assignments
+      - href: resources.qmd
+        text: Resources
+    right:
+      - icon: github
+        href: ""
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - section: "Course"
+        contents:
+          - index.qmd
+          - schedule.qmd
+          - resources.qmd
+      - section: "Slides"
+        contents:
+          - slides.qmd
+          - slides/week-01.qmd
+      - section: "Demos"
+        contents:
+          - demos.qmd
+          - demos/week-01.qmd
+      - section: "Assignments"
+        contents:
+          - assignments.qmd
+          - assignments/homework-01.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    css: styles.css
+    toc: true
+    number-sections: false
+    code-copy: true
+    code-overflow: wrap

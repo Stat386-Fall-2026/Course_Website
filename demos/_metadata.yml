@@ -1,0 +1,8 @@
+# Defaults for files in the demos/ directory
+# These apply to all .qmd files in this folder unless overridden.
+format:
+  html:
+    toc: true
+    code-copy: true
+execute:
+  echo: true

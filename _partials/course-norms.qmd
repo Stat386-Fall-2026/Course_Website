@@ -1,0 +1,8 @@
+## Course Norms
+
+::: {.key-idea}
+- Ask questions early and often
+- Practice the code demos on your own
+- Start assignments early
+- Help each other — but write your own code
+:::

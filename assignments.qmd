@@ -1,0 +1,17 @@
+---
+title: "Assignments"
+---
+
+# Assignments
+
+## Homework
+
+- [Homework 1](assignments/homework-01.qmd) — **TODO: Due date**
+
+## How to Add a New Assignment
+
+1. Create `assignments/homework-NN.qmd` using `assignments/homework-01.qmd` as a template.
+2. Add a link on this page.
+3. Add the file to the sidebar in `_quarto.yml` under the "Assignments" section.
+4. Update the [schedule](schedule.qmd) with the due date.
+5. Run `quarto render` to rebuild the site.

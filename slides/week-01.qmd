@@ -1,0 +1,59 @@
+---
+title: "Week 1: Course Introduction"
+subtitle: "Course Website, Tools, and Expectations"
+---
+
+## Course Overview {.section-card}
+
+Welcome to **{{< var course.number >}}** — {{< var course.term >}}.
+
+This course covers **TODO: course topic summary**.
+
+## Course Goals
+
+By the end of this course, you will be able to:
+
+- Understand **TODO: key concept 1**
+- Apply **TODO: key concept 2**
+- Evaluate **TODO: key concept 3**
+- Communicate **TODO: key skill**
+
+## What You'll Do Each Week
+
+- **Before class:** Review the week's slides and any assigned readings
+- **In class:** Attend lecture, participate in the code demo
+- **After class:** Complete the assigned homework or project work
+
+Slides and demos are posted on the course website and updated regularly.
+
+## How Slides and Demos Are Organized
+
+- Each week has its own slide deck (`slides/week-NN.qmd`)
+- Each week has a companion code demo (`demos/week-NN.qmd`)
+- The [schedule](../schedule.qmd) page links everything together
+- Demos include standalone source files you can download and run
+
+## A Quick Code Example {.demo-slide}
+
+```python
+import random
+
+# Simulate rolling a die 10 times
+rolls = [random.randint(1, 6) for _ in range(10)]
+print(f"Rolls: {rolls}")
+print(f"Average: {sum(rolls) / len(rolls):.2f}")
+```
+
+::: {.demo-box}
+Try changing the number of rolls. Does the average get closer to 3.5?
+:::
+
+## Expectations
+
+{{< include ../_partials/course-norms.qmd >}}
+
+::: notes
+This is a speaker note. Remind students to install Python and Quarto before next class. Point them to the [resources](../resources.qmd) page for setup instructions.
+:::
+
+{{< include ../_partials/questions.qmd >}}

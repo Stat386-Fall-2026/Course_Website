@@ -1,0 +1,50 @@
+---
+title: "Week 1 Demo: First Python Program"
+---
+
+# Learning Goal
+
+Write, run, and understand a simple Python program that simulates rolling dice.
+
+## Setup
+
+Make sure you have Python installed. Open a terminal and verify:
+
+```bash
+python --version
+```
+
+You should see Python 3.x. If not, see the [resources](../resources.qmd) page for installation instructions.
+
+## The Code
+
+Here's a small Python program that simulates rolling a six-sided die ten times and reports the average:
+
+```python
+import random
+
+rolls = [random.randint(1, 6) for _ in range(10)]
+print(f"Rolls: {rolls}")
+print(f"Average: {sum(rolls) / len(rolls):.2f}")
+```
+
+Run it and observe the output. Try running it multiple times — the results will change because of the randomness.
+
+## What to Notice
+
+- **`random.randint(1, 6)`** generates a random integer between 1 and 6 (inclusive).
+- **List comprehension** `[... for _ in range(10)]` creates a list of 10 rolls in one line.
+- **f-strings** like `f"Average: {value:.2f}"` format output cleanly.
+- The **average** of the rolls will tend toward 3.5 as you increase the number of rolls (law of large numbers).
+
+## Try This
+
+Modify the program to:
+
+1. Roll the die 100 times instead of 10. Does the average get closer to 3.5?
+2. Roll two dice and sum the results. What's the expected average now?
+3. Count how many times each value appears. Does the distribution look uniform?
+
+## Source File
+
+The standalone script is available here: [`week-01-demo.py`](week-01-demo.py)

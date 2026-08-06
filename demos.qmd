@@ -1,0 +1,20 @@
+---
+title: "Demos"
+---
+
+# Code Demos
+
+Each week includes an in-class code demo with narrative explanation, executable code, and links to standalone source files.
+
+## Available Demos
+
+- [Week 1: First Python Program](demos/week-01.qmd) — [`week-01-demo.py`](demos/week-01-demo.py)
+
+## How to Add a New Demo
+
+1. Create `demos/week-NN.qmd` using `demos/week-01.qmd` as a template.
+2. Create `demos/week-NN-demo.py` (or `.R`, `.jl`, etc.) with the standalone script.
+3. Add a link on this page.
+4. Add a row in the [schedule](schedule.qmd).
+5. Add the `.qmd` file to the sidebar in `_quarto.yml` under the "Demos" section.
+6. Run `quarto render` to rebuild the site.

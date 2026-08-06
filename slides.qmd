@@ -1,0 +1,19 @@
+---
+title: "Slides"
+---
+
+# Slide Decks
+
+Each week's lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.
+
+## Available Decks
+
+- [Week 1: Course Introduction](slides/week-01.qmd)
+
+## How to Add a New Deck
+
+1. Create `slides/week-NN.qmd` using `slides/week-01.qmd` as a template.
+2. Add a link on this page.
+3. Add a row in the [schedule](schedule.qmd).
+4. Add the file to the sidebar in `_quarto.yml` under the "Slides" section.
+5. Run `quarto render` to rebuild the site.

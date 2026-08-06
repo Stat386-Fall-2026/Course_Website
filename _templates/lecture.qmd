@@ -1,0 +1,46 @@
+---
+title: "Week XX: Title"
+subtitle: "Subtitle"
+---
+
+## Opening Question {.question-slide}
+
+::: {.discussion-box}
+What do you already believe about today's topic?
+:::
+
+## Learning Goals
+
+By the end of class, you should be able to:
+
+- Goal 1
+- Goal 2
+- Goal 3
+
+## Key Concept
+
+::: {.key-idea}
+**Key idea:** Write the central idea here.
+:::
+
+## Example
+
+Explain the example here.
+
+## Live Demo {.demo-slide}
+
+::: {.demo-box}
+Open `demos/week-XX.qmd` and follow along.
+:::
+
+## Takeaways {.takeaway-slide}
+
+- Takeaway 1
+- Takeaway 2
+- Takeaway 3
+
+::: notes
+Add speaker notes here.
+:::
+
+{{< include ../_partials/questions.qmd >}}
