@@ -1,0 +1,289 @@
+---
+title: "Streamlit and Dashboards for Data Science"
+subtitle: "Motivation, Principles, Streamlit Basics, and Deployment"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Agenda {.section-card}
+
+1. Why Dashboards?
+2. Dashboard Design Principles
+3. What is Streamlit?
+4. Streamlit: Basics
+5. From Notebook to Dashboard
+6. Deployment & Hosting
+7. Tips, Testing, Troubleshooting
+8. Appendix
+
+## Motivation: Why Dashboards?
+
+- **Close the loop:** put insights in the hands of decision-makers
+- **Self-serve analytics:** reduce ad-hoc requests
+- **Reproducibility:** logic is versioned and consistent
+- **Interactivity:** explore scenarios, filters, time windows
+- **Shareability:** URLs, embeddings, lightweight auth
+
+::: {.key-idea}
+Notebooks are great for **exploration**; dashboards shine for **communication**, monitoring, and operational decisions.
+:::
+
+## When & When Not {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+### ✅ Good Candidates
+
+- Repeatedly answered business questions
+- KPI monitoring
+- What-if tools
+- Lightweight internal tools
+
+</div>
+<div>
+
+### ❌ Poor Candidates
+
+- One-off analysis
+- Heavy transactional apps
+- Complex multi-user workflows
+- Black-box outputs without context
+
+</div>
+:::
+
+## Outcomes to Aim For
+
+- **Speed to signal:** users reach the answer in < 30 seconds
+- **Clarity:** minimal cognitive load, clear hierarchy
+- **Trust:** definitions and data lineage are obvious
+- **Actionability:** clear next steps and owners
+
+::: {.tip-box}
+Design backward from the decision the user needs to make — not the data you happen to have.
+:::
+
+## Core Principles
+
+1. **Start with questions, not charts.**
+2. **Prioritize a small set of key metrics.**
+3. **Progressive disclosure:** defaults first, detail on demand.
+4. **Consistency:** scales, colors, date ranges, terminology.
+5. **Accessibility:** color contrast, keyboard focus, alt text.
+
+## Layout & Visual Best Practices
+
+- Use a grid (e.g., thirds) and align elements
+- Put the most important KPIs in the top-left
+- Use small multiples over complicated legends
+- Prefer **lines** for trends, **bars** for comparisons, **tables** for detail
+- Limit palette; encode with position and length before color
+- Label directly; avoid chart junk and 3D
+
+## Data Interaction
+
+- Provide sensible defaults and snapshots; avoid empty states
+- Add time controls: last 7 / 30 / 90 days & custom range
+- Show definitions / tooltips: how is the KPI computed?
+- Link outs to docs/tickets; include ownership
+- **Performance:** pre-aggregate, cache, paginate long tables
+
+## Streamlit in One Slide
+
+- Python-first framework for data apps and dashboards
+- **Reactive model:** the script re-runs top-to-bottom on user interaction
+- Rich set of widgets, charts, layouts, and media
+- Stateless script with per-session `st.session_state` and caching
+- Runs as a single-process web server; easy to deploy
+
+## Mental Model
+
+Think of `app.py` as a **declarative UI** that rebuilds on change.
+
+- Widgets write to `st.session_state`; code reads from it every run
+- `st.cache_data` for expensive data fetch/compute
+- `st.cache_resource` for connections/models
+- `st.form` to batch updates
+
+::: {.key-idea}
+Every interaction triggers a full script rerun. Cache the heavy work; keep the script lean.
+:::
+
+## Hello, Streamlit {.demo-slide}
+
+```python
+import streamlit as st
+
+st.set_page_config(page_title="Hello Streamlit", layout="wide")
+st.title("Hello, Streamlit!")
+st.write("This app reruns top-to-bottom whenever a widget changes.")
+
+name = st.text_input("Your name", placeholder="Ada")
+age = st.slider("Age", 0, 100, 42)
+
+if st.button("Say hi"):
+    st.success(f"Hi {name or 'friend'}! You are {age} years young.")
+```
+
+::: {.demo-box}
+Run with `streamlit run app.py`. Change the slider and watch the whole script rerun.
+:::
+
+## Layout: Columns, Tabs, Expanders {.demo-slide}
+
+```python
+left, right = st.columns([2, 3])
+
+with left:
+    st.metric("Active Users", 1248, "+38 vs. last week")
+    st.metric("Conversion %", 5.7, "-0.2pp")
+
+with right:
+    tab1, tab2 = st.tabs(["Trend", "Distribution"])
+    with tab1:
+        st.line_chart(dataframe[["date", "users"]], x="date", y="users")
+    with tab2:
+        st.bar_chart(dataframe[["segment", "users"]].set_index("segment"))
+
+with st.expander("Notes"):
+    st.write("Definitions, caveats, links to docs")
+```
+
+## Caching for Speed {.demo-slide}
+
+```python
+import pandas as pd
+import time
+import streamlit as st
+
+@st.cache_data(ttl=600)
+def load_sales():
+    time.sleep(2)  # simulate slow IO
+    return pd.read_csv("sales.csv")
+
+@st.cache_resource
+def get_bigquery_client():
+    from google.cloud import bigquery
+    return bigquery.Client()
+
+df = load_sales()
+st.dataframe(df.head())
+```
+
+::: {.tip-box}
+`@st.cache_data` caches return values (data); `@st.cache_resource` caches singleton objects (connections, models).
+:::
+
+## Multipage Apps & Project Structure
+
+```
+my_app/
+  app.py              # home page
+  pages/
+    1_Dashboard.py
+    2_Detail.py
+  data/
+  requirements.txt
+  .streamlit/
+    config.toml       # theming, server options
+    secrets.toml      # API keys (never commit!)
+```
+
+::: {.warning-box}
+**Never commit `secrets.toml`.** Add it to `.gitignore`; use environment variables or a secrets manager in production.
+:::
+
+## Refactoring Patterns
+
+1. **Move constants to controls** (sliders, selects, inputs)
+2. **Extract data loads** into `@st.cache_data` functions
+3. **Turn plots into functions** that accept `df` and params
+4. **Provide drilldowns** and links to raw data
+
+::: {.key-idea}
+A notebook cell becomes a dashboard when its inputs become widgets and its outputs become reactive UI.
+:::
+
+## Preparing for Deployment
+
+- **Pin dependencies:** `requirements.txt` or `pyproject.toml`
+- **Secrets:** `.streamlit/secrets.toml` or environment variables
+- **Config:** `.streamlit/config.toml` (theme, headless, CORS)
+- **Auth:** reverse proxy (OAuth) or `streamlit-authenticator`
+
+## Streamlit Community Cloud
+
+1. Push repo to GitHub with `app.py` and `requirements.txt`
+2. Connect repo; set Python version and secrets
+3. App auto-builds on `main`-branch commits; share the URL
+
+::: {.columns-2}
+<div>
+
+### Pros
+
+- Simplest path to a live app
+- Free tier available
+- Auto-rebuild on push
+
+</div>
+<div>
+
+### Cons
+
+- Resource limits
+- No private networking
+- Few enterprise features
+
+</div>
+:::
+
+## Security, Privacy, and Compliance
+
+- Never commit secrets; scope API keys by env and role
+- Sanitize PII; enforce row/column-level policies upstream
+- Log access at the proxy; add basic rate limiting
+
+::: {.warning-box}
+Dashboards inherit the access model of their data source. If the source is open, the dashboard is open.
+:::
+
+## Common Gotchas
+
+- **Large dataframes:** paginate / summarize; avoid sending millions of rows to the browser
+- **Long-running tasks:** use caching, background queues, or progress indicators
+- **Session reset on redeploy:** consider durable state upstream (DB)
+- **Load balancers:** enable sticky sessions for WebSockets
+
+## Live Demo Plan {.demo-slide}
+
+1. Start from a notebook cell; parameterize in Streamlit
+2. Add a KPI row, chart, and table
+3. Commit, push, deploy
+4. Share the URL and collect feedback
+
+::: {.demo-box}
+Keep the demo small. The goal is the loop — edit, push, share — not a polished app.
+:::
+
+## Further Reading {.reference-slide}
+
+- **Streamlit docs:** widgets, state, caching, deployment
+- **Visualization best practices:** Tufte, Cairo, Evergreen Data
+
+## Wrap-Up {.takeaway-slide}
+
+- Dashboards serve **decisions**, not data dumps
+- Design for **speed to signal**, clarity, trust, and actionability
+- Streamlit's **reactive rerun** model rewards lean, cached scripts
+- Refactor notebooks by turning **inputs into widgets** and **plots into functions**
+- Deploy simply on Community Cloud; handle **secrets** with care
+
+::: notes
+This deck moves from motivation → principles → Streamlit mechanics → deployment. If time is tight, the Security and Gotchas slides can be condensed or moved to the appendix. The Hello Streamlit and Caching slides are the best live-demo candidates. Emphasize the mental model: every widget change triggers a full script rerun, so caching is essential. Remind students that `secrets.toml` must never be committed and that dashboards inherit the access controls of their data source.
+:::
+
+{{< include ../_partials/questions.qmd >}}

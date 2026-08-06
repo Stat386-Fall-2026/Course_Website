@@ -1,0 +1,379 @@
+---
+title: "Intro to the Terminal for Data Science"
+subtitle: "macOS Terminal + Windows Git Bash"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Goals for Today
+
+By the end of class, you should be able to:
+
+- Move around your computer with `pwd`, `ls`, `cd`
+- Create and organize folders with `mkdir`
+- Copy files with `cp`
+- View text quickly with `cat`, `less`
+- Search text with `grep`
+- Combine commands with pipes `|` (e.g., `history | grep ...`)
+- Make small edits in `vim` (just enough to survive)
+
+## Which Terminal Are You Using? {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**macOS**
+
+- App: **Terminal**
+- Shell: usually `zsh` or `bash`
+
+</div>
+<div>
+
+**Windows**
+
+- App: **Git Bash** (installed with Git for Windows)
+- Shell: `bash`
+
+</div>
+:::
+
+::: {.tip-box}
+**Tip:** If you can type `pwd` and press Enter, you are ready.
+:::
+
+## Mental Model: A Tree of Folders
+
+- A path names a location in the tree
+- `/` is the root (top of the tree)
+- Your home directory is your default starting point
+
+```text
+(/)
+├── home
+│   └── you
+│       ├── Desktop
+│       ├── Documents
+│       └── project
+├── tmp
+└── usr
+```
+
+## Where Am I? `pwd`
+
+**Print Working Directory** shows your current location.
+
+```bash
+pwd
+```
+
+What you will see:
+
+- macOS: something like `/Users/yourname`
+- Git Bash: something like `/c/Users/yourname`
+
+::: {.key-idea}
+**Key idea:** Every command runs relative to your current directory, unless you give an absolute path.
+:::
+
+## What Is Here? `ls`
+
+`ls` lists directory contents.
+
+```bash
+ls
+ls -l     # long format (details)
+ls -a     # show hidden files (often start with .)
+```
+
+::: {.tip-box}
+**Tip:** Use **Tab** to auto-complete names.
+:::
+
+## Move Around: `cd`
+
+`cd` changes directory.
+
+```bash
+cd Desktop   # go to Desktop
+cd ..        # parent directory
+cd ~         # home directory
+cd -         # toggle to previous directory
+```
+
+## Quick Exercise 1: Navigate {.exercise-slide}
+
+**2–3 minutes** — Work in pairs. One person drives, one spots.
+
+1. Use `pwd` to confirm where you are.
+2. `cd` to your Desktop (or Documents if you prefer).
+3. `ls -a` and identify one hidden item.
+4. Return home using `cd ~` and verify with `pwd`.
+
+::: {.exercise-check}
+**Check:** Everyone should end in their home directory.
+:::
+
+## Make a Workspace: `mkdir`
+
+Create a folder for today.
+
+```bash
+cd ~
+mkdir ds-terminal
+cd ds-terminal
+```
+
+Create nested folders:
+
+```bash
+mkdir -p data/raw
+mkdir -p notes
+```
+
+::: {.tip-box}
+**Tip:** `-p` creates parent folders as needed.
+:::
+
+## Create a File Quickly
+
+For quick practice, you can create small text files with output redirection:
+
+```bash
+echo "name,score" > data/raw/scores.csv
+echo "Ada,98"   >> data/raw/scores.csv
+echo "Sam,87"   >> data/raw/scores.csv
+echo "Rae,92"   >> data/raw/scores.csv
+```
+
+- `>`  — overwrite (create or replace)
+- `>>` — append
+
+## Copy Files: `cp`
+
+Copy a file:
+
+```bash
+cp data/raw/scores.csv data/raw/scores_copy.csv
+```
+
+Copy a folder recursively:
+
+```bash
+cp -r data data_backup
+```
+
+::: {.tip-box}
+**Tip:** Use `ls` to confirm what changed.
+:::
+
+## Quick Exercise 2: Build Your Folder Tree {.exercise-slide}
+
+**2–3 minutes** — In pairs:
+
+1. Create `ds-terminal` in your home directory if you have not yet.
+2. Inside it, create `data/raw` and `notes`.
+3. Create a small CSV called `data/raw/people.csv` with 3 rows (any content).
+4. Copy it to `data/raw/people_backup.csv`.
+
+::: {.exercise-check}
+**Check:** `ls data/raw` shows both CSV files.
+:::
+
+## View Text: `cat` and `less`
+
+`cat` prints a file to the screen:
+
+```bash
+cat data/raw/scores.csv
+```
+
+`less` lets you scroll (recommended for longer files):
+
+```bash
+less data/raw/scores.csv
+```
+
+In `less`: press **q** to quit.
+
+## Search Text: `grep`
+
+Find lines that match a pattern:
+
+```bash
+grep "Ada" data/raw/scores.csv
+grep -n "a" data/raw/scores.csv     # -n: show line numbers
+grep -i "ada" data/raw/scores.csv   # -i: case-insensitive
+```
+
+## Quick Exercise 3: Grep Like a Data Scientist {.exercise-slide}
+
+**2–3 minutes** — In pairs:
+
+1. Use `cat` or `less` to look at your CSV.
+2. Use `grep` to find one specific row.
+3. Use `grep -n` to show line numbers.
+4. **Challenge:** Use `grep -i` to match regardless of capitalization.
+
+## Pipes: Turning Small Tools into Workflows
+
+A pipe `|` sends output of the left command into the right command.
+
+```bash
+cat data/raw/scores.csv | grep "9"
+```
+
+Common helpers:
+
+- `head` — first lines
+- `tail` — last lines
+- `wc -l` — count lines
+
+```bash
+cat data/raw/scores.csv | tail -n 3 | wc -l
+```
+
+## Search Your Command History
+
+View recent commands:
+
+```bash
+history | tail -n 20
+```
+
+Find a previous command by keyword:
+
+```bash
+history | grep "grep"
+history | grep "mkdir"
+```
+
+::: {.tip-box}
+**Tip:** On many shells, **Ctrl+r** opens interactive reverse search.
+:::
+
+## Quick Exercise 4: Pipe Practice {.exercise-slide}
+
+**2–3 minutes** — In pairs:
+
+1. Run `history | tail -n 15`.
+2. Find a command you used earlier via `history | grep "cd"` (or any keyword).
+3. Create a pipeline that counts how many lines in your CSV contain the letter `a`.
+
+::: {.tip-box}
+**Hint:** `cat ... | grep ... | wc -l`
+:::
+
+## Vim Survival Mode
+
+Vim has **modes**. Two you need today:
+
+- **Normal mode:** navigate and run commands
+- **Insert mode:** type text
+
+Key moves:
+
+- Enter insert mode: `i`
+- Back to normal mode: `Esc`
+- Save and quit: `:wq`
+- Quit without saving: `:q!`
+
+## Vim Demo: Edit a README
+
+Create and open a file:
+
+```bash
+cd ~/ds-terminal
+vim notes/README.txt
+```
+
+Try:
+
+1. Press `i`, type 2 lines about what you learned, press `Esc`
+2. Type `:wq` then press Enter
+3. Confirm with `cat notes/README.txt`
+
+## Quick Exercise 5: Vim Check {.exercise-slide}
+
+**2–3 minutes** — In pairs:
+
+1. Open `notes/README.txt` in `vim`.
+2. Add a bullet list of 2 commands you used today.
+3. Save and quit successfully.
+4. Verify using `cat`.
+
+::: {.exercise-check}
+**Check:** Everyone can explain what `i`, `Esc`, and `:wq` do.
+:::
+
+## A Tiny Cheat Sheet {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### Navigate
+
+- `pwd`
+- `ls`, `ls -la`
+- `cd DIR`, `cd ..`, `cd ~`
+
+</div>
+<div>
+
+#### Create & Copy
+
+- `mkdir -p a/b`
+- `cp SRC DST`
+
+</div>
+<div>
+
+#### View & Search
+
+- `cat FILE`
+- `less FILE`
+- `grep "PATTERN" FILE`
+
+</div>
+<div>
+
+#### Compose
+
+- `|` — pipe
+- `wc -l`, `head`, `tail`
+- `history | grep "keyword"`
+
+</div>
+<div>
+
+#### Vim
+
+- `i`, `Esc`
+- `:wq`, `:q!`
+
+</div>
+:::
+
+## Optional Follow-Up Practice
+
+- Run `vimtutor` if available
+- Try: make a new CSV and use `grep` plus pipes to answer:
+  - How many rows match a pattern?
+  - Which rows contain a given name?
+- **Bonus:** learn `mv` (rename/move) and `rm` (delete carefully)
+
+## Takeaways {.takeaway-slide}
+
+- The terminal is just navigating a tree of folders
+- `pwd`, `ls`, `cd` are your three navigation tools
+- Pipes `|` chain small tools into powerful workflows
+- `grep` is your search engine for text files
+- Vim survival: `i` to type, `Esc` to stop, `:wq` to save
+
+::: notes
+This is a hands-on, exercise-heavy deck. Budget about 50 minutes total — roughly 5 minutes per content slide and 2–3 minutes per exercise. Make sure students are paired up before starting. The cheat-sheet slide is meant as a takeaway reference they can screenshot.
+:::
+
+{{< include ../_partials/questions.qmd >}}

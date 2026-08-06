@@ -1,0 +1,404 @@
+---
+title: "From Repo to Website"
+subtitle: "Quarto + GitHub Pages"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Where we are / where we're going
+
+::: {.key-idea}
+**Already have:** Git/GitHub, Markdown, terminal + VS Code, uv environments.
+:::
+
+**Today:** turn a repo into a website.
+
+**Learning goals:**
+
+- Explain what GitHub Pages hosts (static files) and how URL works
+- Create a Quarto website project and preview locally
+- Publish your site so it updates when you push
+
+## Agenda {.section-card}
+
+1. The big picture
+2. GitHub Pages (the hosting)
+3. Quarto (the builder)
+4. Publishing (making it live)
+5. Troubleshooting + portfolio tips
+
+## Mental model (keep this in your head) {.section-card}
+
+::: {.columns-2}
+<div>
+**Input**
+
+- `.qmd`
+- data
+- images
+</div>
+
+<div>
+**Pipeline**
+
+- **Render:** Quarto + Pandoc (+ Jupyter)
+- **Output:** static HTML files
+- **Host:** GitHub Pages
+</div>
+:::
+
+::: {.key-idea}
+GitHub Pages does **not** run Python. Quarto runs Python **before** publishing and saves results into static files.
+:::
+
+## Discussion {.question-slide}
+
+::: {.discussion-box}
+Where do you think the most common failure happens in this pipeline: writing the `.qmd`, executing code, rendering to `_site`, or GitHub Pages hosting, and why?
+:::
+
+## GitHub Pages: what it is {.comparison-slide}
+
+::: {.columns-2}
+<div>
+**Pages IS**
+
+- Static hosting from a GitHub repo
+- Great for portfolios/docs/class sites
+- Configured in Settings
+</div>
+
+<div>
+**Pages is NOT**
+
+- A database/server
+- A place for secrets (assume public)
+- A Python runtime
+</div>
+:::
+
+## URLs + repo choices
+
+::: {.tip-box}
+**Project site (most common):** `https://<user>.github.io/<repo>/`
+:::
+
+**User site (special repo):** `https://<user>.github.io/` from repo named `<user>.github.io`
+
+::: {.key-idea}
+**Class tip:** Use one repo per site so URLs stay clean.
+:::
+
+## Pages settings (what to click)
+
+1. **Settings > Pages**
+2. Choose Source:
+   - Deploy from a branch (simple)
+   - GitHub Actions (best for Quarto)
+3. If deploying from branch: pick `main` and folder `/docs`
+
+::: {.tip-box}
+**Why `docs/`?** Keeps source files on `main` and built website in `docs/`.
+:::
+
+## Mini-demo: "hello Pages" {.demo-slide}
+
+::: {.demo-box}
+1. Create repo, add `index.html`
+2. Push to GitHub
+3. Turn on Pages
+4. Visit the URL
+:::
+
+::: {.warning-box}
+**If 404:** Wait, then check Settings > Pages for deployed URL and build status.
+:::
+
+## What is Quarto?
+
+::: {.key-idea}
+Quarto lets you publish Markdown + code + LaTeX to HTML, PDF, slides, and websites.
+:::
+
+- Can execute code using Jupyter kernels
+- Works with `.qmd` and `.ipynb`
+- **In class:** portfolio + assignment pages that update from GitHub
+
+## Workflow: new project (terminal-friendly) {.demo-slide}
+
+::: {.demo-box}
+```bash
+mkdir my_site
+cd my_site
+git init
+uv init
+uv add jupyter ipykernel
+quarto preview
+```
+:::
+
+## Quarto website project structure
+
+::: {.key-idea}
+**Two layers of config:**
+:::
+
+- **`_quarto.yml`** = site-wide settings (nav, theme, output dir)
+- **Each `.qmd` page** = page-level title, format options, content
+
+::: {.tip-box}
+**Rule:** If it applies to the whole site, put it in `_quarto.yml`. If specific to one page, put it in page front matter.
+:::
+
+## Discussion {.question-slide}
+
+::: {.discussion-box}
+What belongs in `_quarto.yml` (site-wide) versus in a page's YAML front matter, and what would break if you put it in the wrong place?
+:::
+
+## Create a website project (fast start) {.demo-slide}
+
+::: {.demo-box}
+```bash
+quarto create project website my_site
+cd my_site
+quarto preview
+```
+:::
+
+**What you'll see:** `_quarto.yml`, `index.qmd`, `about.qmd`
+
+## Minimal `_quarto.yml` for GitHub Pages {.demo-slide}
+
+::: {.demo-box}
+```yaml
+project:
+  type: website
+  output-dir: docs
+website:
+  title: "My Portfolio"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+```
+:::
+
+::: {.warning-box}
+**Important:** Set `output-dir: docs` if Pages is serving `/docs` on `main`.
+:::
+
+## A `.qmd` page: prose + code {.demo-slide}
+
+::: {.demo-box}
+```yaml
+---
+title: "EDA: Penguins"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+```
+```{python}
+#| echo: false
+# your code here
+```
+:::
+
+::: {.key-idea}
+**Good portfolio pages:** Short intro (what question?), 1-3 key visuals, a "so what?" paragraph.
+:::
+
+## The local loop
+
+::: {.columns-2}
+<div>
+**The loop**
+
+- Edit in VS Code
+- Run `quarto preview`
+- Browser auto-refreshes on save
+- `quarto render` to build full site
+</div>
+
+<div>
+**Why preview?**
+
+- Fast feedback
+- Don't debug deploy problems while also debugging your analysis
+</div>
+:::
+
+## Reproducibility: `.gitignore` + environments
+
+::: {.demo-box}
+**Add to `.gitignore`:**
+```
+.quarto/
+site_libs/
+*_files/
+```
+:::
+
+::: {.key-idea}
+**Keep Python environment in repo:** `uv` manages dependencies. If needed: `uv pip freeze > requirements.txt`
+:::
+
+## Two deployment strategies {.comparison-slide}
+
+::: {.columns-2}
+<div>
+**A. Build locally, commit `docs/`**
+
+- Simple mental model
+- Works without Actions
+- **Downside:** must remember to render + commit
+</div>
+
+<div>
+**B. GitHub Actions builds on push**
+
+- Best for "always up to date"
+- More moving parts
+- Once set, it's done
+</div>
+:::
+
+## Strategy A: build locally (fastest to teach) {.demo-slide}
+
+::: {.demo-box}
+```bash
+quarto render
+git add docs
+git commit -m "Render site"
+git push
+```
+:::
+
+::: {.tip-box}
+**Pages setting:** Settings > Pages > Deploy from branch: `main` + `/docs`
+:::
+
+## Strategy B: GitHub Actions (starter concept) {.demo-slide}
+
+::: {.demo-box}
+- Workflow file under `.github/workflows/`
+- Pages source set to **GitHub Actions**
+:::
+
+**Conceptual steps:**
+
+1. Checkout repo
+2. Install Quarto + Python
+3. `quarto render`
+4. Upload site to Pages
+
+::: {.key-idea}
+**Class note:** Provide pre-made workflow so students don't write YAML from scratch.
+:::
+
+## Common gotchas (and quick fixes) {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+**404 or blank page**
+
+Pages not pointed at right folder (use `docs/`)
+</div>
+
+<div>
+**Site doesn't update**
+
+Forgot to push, or Actions failed
+</div>
+
+<div>
+**Broken images**
+
+Path issues (use relative paths)
+</div>
+
+<div>
+**Render fails**
+
+Missing package in your environment
+</div>
+:::
+
+::: {.warning-box}
+**Debug routine:** Check (1) local preview, (2) repo contents (`docs/`), (3) Pages/Actions status.
+:::
+
+## Troubleshooting (pipeline diagram repeat)
+
+::: {.key-idea}
+Input → Render → Output → Host
+:::
+
+::: {.columns-2}
+<div>
+**Check each stage**
+
+- Input: `.qmd` valid?
+- Render: packages present?
+</div>
+
+<div>
+**Check each stage**
+
+- Output: `docs/` built?
+- Host: Pages pointed at `docs/`?
+</div>
+:::
+
+## Portfolio structure that scales
+
+::: {.tip-box}
+**Recommended navbar:** Home (who you are), Projects (2-4 highlights), Assignments (organized by week/topic), Final Project, About/Resume.
+:::
+
+::: {.key-idea}
+**Design rule:** Make it skimmable: headings, short paragraphs, figures with captions.
+:::
+
+## In-class checklist (today) {.exercise-slide}
+
+::: {.exercise-check}
+1. Create Quarto website project
+2. Set `output-dir: docs` in `_quarto.yml`
+3. Preview locally
+4. Push to GitHub
+5. Turn on Pages (`main` + `/docs`)
+6. Confirm your site URL works
+:::
+
+## Wrap-up {.takeaway-slide}
+
+- Quarto builds the static site from `.qmd`
+- GitHub Pages hosts the built static files
+- Your portfolio is a software project: version control + environment + reproducible build
+
+::: {.key-idea}
+**"Ship your work."**
+:::
+
+::: notes
+This deck walks students from repo to live website in one session.
+
+- Slide 2 sets learning goals; emphasize that GitHub Pages only serves static files.
+- Slide 4 mental model is the backbone — return to it when troubleshooting.
+- Slide 6 IS/NOT comparison clarifies the most common misconceptions about Pages.
+- Slides 11 and 14 give two paths to a project: manual (terminal-friendly) vs. `quarto create`.
+- Slide 15 minimal `_quarto.yml` is the config students will actually use.
+- Slides 19-21 contrast the two deployment strategies; recommend Strategy A for first-time setup.
+- Slide 22 gotchas reference is worth bookmarking — most student issues live here.
+- Slide 25 is the in-class exercise; confirm each step before moving on.
+- Close with the wrap-up: the portfolio is a reproducible software project.
+:::
+
+{{< include ../_partials/questions.qmd >}}

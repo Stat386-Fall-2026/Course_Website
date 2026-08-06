@@ -1,0 +1,325 @@
+---
+title: "Dimensionality Reduction for EDA"
+subtitle: "PCA, t-SNE, UMAP, PHATE & Missing Data"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Agenda {.section-card}
+
+1. Motivation & Workflow
+2. Missing Data Refresher
+3. Preprocessing Essentials
+4. Methods (Intuitions)
+5. Coloring, Outliers, Pitfalls
+
+## Why Embed in EDA? {.section-card}
+
+::: {.key-idea}
+- **Hypothesis generation:** see clusters, manifolds, trajectories
+- **Outlier discovery:** visually spot anomalies and mislabeled rows
+- **Target alignment:** color by a variable of interest
+- **Batch effects:** detect site/collector effects
+- **Communication:** fast sanity checks and storytelling
+:::
+
+## EDA with Embeddings: A Practical Workflow {.section-card}
+
+1. Assemble features and audit missingness
+2. Preprocess: impute / encode / scale
+3. Start with PCA (EVR, scree, biplot)
+4. Try t-SNE / UMAP / PHATE for nonlinear structure
+5. Color by target, batches, time, features, missingness
+6. Overlay outliers, stability checks
+7. Capture hypotheses; plan confirmatory analyses
+
+::: {.tip-box}
+This is the spine of the rest of this deck — each step gets a closer look.
+:::
+
+## Missing Data: Quick Principles {.section-card}
+
+::: {.warning-box}
+Embeddings cannot handle `NaN`s — you must drop or impute **before** fitting.
+:::
+
+::: {.key-idea}
+- Create **missingness indicators** *before* imputation
+- Keep indicators for color-by to inspect patterns
+- Choose imputation to match context: median / most-frequent, KNN, model-based
+:::
+
+## MCAR, MAR, MNAR {.comparison-slide}
+
+::: {.columns-2}
+<div>
+**MCAR**
+
+- Missingness unrelated to any data
+- Drops a small fraction safely
+
+</div>
+<div>
+**MAR**
+
+- Depends only on **observed** variables
+- Group-wise imputation helps
+
+</div>
+:::
+
+::: {.columns-2}
+<div>
+**MNAR**
+
+- Depends on the **unobserved** value itself
+- Needs domain insight & sensitivity analyses
+
+</div>
+<div>
+**EDA tip**
+
+- If a simple model predicts missingness from observed features better than chance → likely **not** MCAR
+
+</div>
+:::
+
+## Visualizing Missingness in Embeddings {.section-card}
+
+::: {.key-idea}
+- Add `*_is_missing` indicators to metadata
+- Color by missingness to see clustering
+- **MCAR should not cluster**
+- Compare against batch / site / time
+:::
+
+::: {.tip-box}
+**Report:** how missingness was handled — imputation method, indicators kept, assumed mechanism.
+:::
+
+## Preprocessing Choices Matter {.section-card}
+
+- **Scaling:** standardize numerics; robust scaling for heavy tails
+- **Encoding:** one-hot for categoricals; avoid target leakage
+- **Distance metric:** Euclidean default; cosine for sparse / high-D
+- **Subsampling:** embed a subset for large *N*
+- **Random seeds:** fix for demos
+
+::: {.warning-box}
+Different preprocessing → different embeddings. Lock your pipeline and record choices.
+:::
+
+## Preprocessing Checklist {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### Imputation
+
+- Missingness indicators saved?
+- Numeric imputation set?
+- Categorical imputation set?
+
+</div>
+<div>
+
+#### Encoding
+
+- One-hot encoding on?
+- Target leakage avoided?
+
+</div>
+<div>
+
+#### Scaling
+
+- Scaling after imputation?
+- Robust scale for heavy tails?
+
+</div>
+:::
+
+## PCA: Linear Baseline {.demo-slide}
+
+::: {.demo-box}
+- Finds **orthogonal directions** with maximal variance
+- Fast, deterministic; axes are interpretable linear combos
+- Use **EVR** & **scree plot** to gauge dimensionality
+:::
+
+::: {.tip-box}
+PCA is always the first stop — it gives a sanity check and a reproducible reference point.
+:::
+
+## PCA — Visualization {.demo-slide}
+
+::: {.demo-box}
+**PCA visualization** — 2D scatter of the first two principal components.
+
+- Inspect spread, clusters, and outliers
+- Check the scree plot to decide how many PCs to keep
+:::
+
+## t-SNE: Local Neighborhoods {.demo-slide}
+
+::: {.demo-box}
+- Preserves **neighbor probabilities**; emphasizes local structure
+- Key knob: **perplexity** (neighborhood size)
+- Often faster/more stable than t-SNE at larger scales
+:::
+
+::: {.warning-box}
+Inter-cluster distances / areas are **not** globally meaningful. Use `init="pca"` and fixed seeds.
+:::
+
+## t-SNE — Visualization {.demo-slide}
+
+::: {.demo-box}
+**t-SNE visualization** — 2D scatter emphasizing local neighborhoods.
+
+- Tune perplexity and re-run to check stability
+- Compare clusters to PCA for contrast
+:::
+
+## UMAP: Topology-Aware {.demo-slide}
+
+::: {.demo-box}
+- Builds a **fuzzy topological graph**; optimizes low-D cross-entropy
+- `n_neighbors`: local vs global tradeoff
+- `min_dist`: cluster tightness
+:::
+
+::: {.tip-box}
+Often faster and more stable than t-SNE at larger scales — a good default nonlinear method.
+:::
+
+## UMAP — Visualization {.demo-slide}
+
+::: {.demo-box}
+**UMAP visualization** — 2D scatter balancing local and global structure.
+
+- Try a few `n_neighbors` / `min_dist` settings
+- Verify clusters persist across seeds
+:::
+
+## PHATE: Trajectories & Denoising {.demo-slide}
+
+::: {.demo-box}
+- Emphasizes **continuous progressions**; great for time-course data
+- Manifold-denoising via **diffusion geometry**
+- Use when you expect arcs / branches rather than compact blobs
+:::
+
+## PHATE — Visualization {.demo-slide}
+
+::: {.demo-box}
+**PHATE visualization** — 2D scatter revealing trajectories and branches.
+
+- Ideal for developmental, single-cell, or time-series data
+- Compare arcs against PCA to confirm nonlinear structure
+:::
+
+## Cheat-Sheet: Which Method When? {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### PCA
+
+- Linear global structure
+- EVR / speed / determinism
+- Good first look
+
+</div>
+<div>
+
+#### t-SNE
+
+- Local clusters
+- Perplexity sensitive
+- Distances between clusters ≠ meaning
+
+</div>
+<div>
+
+#### UMAP
+
+- Local + some global
+- `n_neighbors` / `min_dist` control
+- Scales well
+
+</div>
+<div>
+
+#### PHATE
+
+- Trajectories / branches
+- Denoising effect
+- Great for progressions
+
+</div>
+:::
+
+## Coloring Strategies {.section-card}
+
+::: {.key-idea}
+**What to overlay on your embedding:**
+- Target / label, probabilities, residuals
+- Batch / site, collector, time, cohort
+- Engineered features: score, complexity, text length
+- Missingness indicators
+:::
+
+::: {.tip-box}
+Use shapes / sizes for a **second** variable — sparingly, to avoid clutter.
+:::
+
+## Outliers & QC {.section-card}
+
+::: {.key-idea}
+- Inspect whether outliers align with **missingness**, **batches**, or **data-entry errors**
+- Verify suspicious points directly in the **raw table** before acting
+:::
+
+::: {.warning-box}
+Don't delete on a hunch — confirm the row, then document the action.
+:::
+
+## Common Pitfalls {.section-card}
+
+::: {.warning-box}
+- Reading **global distances / areas** on t-SNE as meaningful
+- Over-interpreting **pretty pictures** as causal stories
+- Ignoring **preprocessing / batch effects**
+- Not reporting **params / seeds** — irreproducible EDA
+:::
+
+## References & Further Reading {.reference-slide}
+
+- Van der Maaten & Hinton (2008) — **t-SNE**
+- McInnes et al. (2018) — **UMAP**
+- Moon et al. (2019) — **PHATE**
+- Jolliffe (2002) — **PCA**
+- scikit-learn docs · umap-learn docs
+
+## Key Takeaways {.takeaway-slide}
+
+- **Start with PCA** — fast, deterministic, interpretable baseline
+- **Add nonlinear methods** (t-SNE / UMAP / PHATE) for structure PCA misses
+- **Handle missingness first** — indicators + imputation, then report it
+- **Color deliberately** — target, batch, time, missingness tell the story
+- **Report params & seeds** — reproducible EDA beats pretty guesses
+
+::: notes
+- This deck threads dimensionality reduction into the EDA workflow: motivation → missing data → preprocessing → methods → interpretation.
+- Pace the missing-data refresher quickly — it builds on the dedicated missing-data lecture, so treat it as recall rather than first exposure.
+- The MCAR / MAR / MNAR comparison slide is a natural check-for-understanding point; ask students to name a mechanism before revealing the columns.
+- For each method slide (PCA, t-SNE, UMAP, PHATE), demo one live embedding if time allows — PCA plus one nonlinear method is a good pair.
+- The "visualization" demo slides stand in for the image-only slides from the source PDF; insert real plots from your dataset here.
+- Emphasize the pitfalls slide — over-interpreting t-SNE global distances and skipping preprocessing are the two most common student mistakes.
+- Leave ~5 minutes for coloring strategies and outliers; the cheat-sheet slide is a takeaway students should revisit during the lab.
+:::
+
+{{< include ../_partials/questions.qmd >}}

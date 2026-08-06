@@ -1,0 +1,406 @@
+---
+title: "Pandas Essentials"
+subtitle: "DataFrames, Series, and Data Manipulation"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Introduction to pandas {.section-card}
+
+- **pandas:** Python library for tabular, labeled data
+- Core objects: **Series** (1D) and **DataFrame** (2D)
+- Built on NumPy (vectorized, fast, memory-efficient)
+- Index (row labels) and Columns (column labels) enable alignment
+- Imported with the alias `pd`
+
+```python
+import pandas as pd
+import numpy as np
+```
+
+## Loading and Saving Data
+
+**Reading:**
+
+- `pd.read_csv`, `pd.read_excel`, `pd.read_json`, `pd.read_parquet`
+- Useful args: `usecols`, `dtype`, `parse_dates`, `na_values`
+
+**Writing:**
+
+- `DataFrame.to_csv`, `to_excel`, `to_parquet`, `to_json`
+
+```python
+df = pd.read_csv("data.csv",
+                 usecols=["id", "date", "amount"],
+                 parse_dates=["date"],
+                 dtype={"id": "int64"})
+
+df.to_parquet("data.parquet")  # efficient columnar format
+```
+
+## What Is a `.parquet` File?
+
+Parquet is a **columnar, compressed, typed** storage format for tabular data.
+
+- **Smaller files:** built-in compression reduces disk space
+- **Faster I/O:** columnar layout reads only the columns you need
+- **Preserves types:** keeps schema (ints, floats, timestamps) reliably
+- **Interoperable:** works across Python (pandas), R, Spark, SQL engines
+- **Scale-friendly:** good for medium/large datasets
+
+```python
+# Write
+df.to_parquet("data.parquet", engine="pyarrow", index=False)
+
+# Read (optionally select columns)
+df2 = pd.read_parquet("data.parquet", columns=["id", "amount"])
+```
+
+::: {.tip-box}
+**Tip:** Keep `index=False` unless you need the index; pick columns when reading to speed things up.
+:::
+
+## Creating DataFrames and Series
+
+- From dict of lists / list of dicts
+- From NumPy arrays (columns and index optional)
+- From a single column: `pd.Series`
+
+```python
+df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]},
+                  index=["r1", "r2", "r3"])
+
+s = pd.Series([10, 20, 30], name="C")
+
+df_from_np = pd.DataFrame(np.arange(6).reshape(3, 2),
+                          columns=["x", "y"])
+```
+
+## Inspecting Data
+
+**Structure & Summary**
+
+- `df.head()`, `df.tail()`, `df.sample(n)`
+- `df.info()` — dtypes, non-nulls, memory
+- `df.describe(include="all")`, `df.nunique()`, `df.isna().sum()`
+
+```python
+df.info(); df.head()
+df.describe(include="all")
+```
+
+## Quick Visual Checks
+
+**Built-in plotting**
+
+- Histograms: `df["amount"].hist()`
+- Boxplots: `df[["A", "B"]].plot(kind="box")`
+- Scatter: `df.plot.scatter(x="A", y="B")`
+- Category counts: `df["region"].value_counts().plot(kind="bar")`
+
+```python
+df["amount"].hist(); df.plot.scatter(x="A", y="B")
+```
+
+## Indexes vs Columns & Selection
+
+::: {.key-idea}
+**Key idea:** The index labels rows; columns label variables. Alignment uses labels; positions are independent of labels.
+:::
+
+**Label-based selection: `.loc`**
+
+- `df.loc[row_labels, col_labels]`
+- Works with slices by label (inclusive): `df.loc["r1":"r3", ["A", "B"]]`
+
+**Position-based selection: `.iloc`**
+
+- `df.iloc[row_positions, col_positions]`
+- Works with integer slices (end-exclusive): `df.iloc[0:2, 0:2]`
+
+## Setting & Resetting the Index
+
+```python
+df2 = df.set_index("id")    # column -> index
+df3 = df2.reset_index()     # index -> column
+```
+
+## Selecting & Filtering {.demo-slide}
+
+```python
+# Columns
+df["A"]              # Series
+df[["A", "B"]]       # DataFrame
+
+# .loc by labels (rows, cols)
+df.loc["r2", "B"]
+df.loc["r1":"r3", ["A", "B"]]
+
+# .iloc by positions
+df.iloc[0:2, 0:2]
+
+# Boolean masks (align on index)
+mask = (df["A"] >= 2) & (df["B"] < 6)
+df[mask]
+```
+
+## Filtering with `.query()` {.demo-slide}
+
+**What:** Filter rows using a string expression where column names become variables.
+
+**Why:** Often more readable in method-chains; can be faster (NumExpr) on large frames.
+
+```python
+# Equivalent to df[(df.A > 1) & (df.B == "x")]
+df.query("A > 1 and B == 'x'")
+```
+
+Using local Python variables — prefix with `@`:
+
+```python
+thr = 100
+region = "E"
+df.query("amount >= @thr and region == @region")
+```
+
+## `.query()` with Column Names {.demo-slide}
+
+Column names with spaces — use backticks:
+
+```python
+df.query("`gross amount` > 0")
+```
+
+::: {.warning-box}
+**Note:** Expressions use pandas/python ops (`and`, `or`, `not`, `in`). Beware complex dtype casting; verify with small samples.
+:::
+
+## Vectorized Operations & Alignment
+
+Arithmetic is vectorized; alignment happens on labels.
+
+- Operations between DataFrame and Series align on index/columns
+- NumPy ufuncs often work directly on pandas objects
+
+```python
+df["A_times_10"] = df["A"] * 10
+
+row_adj = pd.Series({"r1": 1, "r2": 0, "r3": -1})
+df_plus = df.add(row_adj, axis="index")
+
+z = (df["A"] - np.mean(df["A"])) / np.std(df["A"])
+```
+
+## Lambda Functions in Python
+
+**Lambda** = small, anonymous function defined inline.
+
+```python
+lambda args: expression
+```
+
+::: {.key-idea}
+**Key points:**
+
+- Single expression only; returns that expression's value
+- Handy for short, custom logic — especially in `.apply`
+- Prefer vectorized pandas/NumPy methods when possible (usually faster)
+:::
+
+## Lambda Examples
+
+```python
+# Plain Python
+square = lambda x: x**2
+sorted_names = sorted(names, key=lambda s: s.lower())
+```
+
+::: {.tip-box}
+**Rule of thumb:** Use `lambda` for quick glue logic; reach for vectorized ops for performance.
+:::
+
+## `.apply` and Lambda Functions {.demo-slide}
+
+- `Series.apply(func)` — element-wise over a Series
+- `DataFrame.apply(func, axis=0/1)` — reduce or transform along axis
+- Prefer vectorized ops when possible; `apply` is for custom logic
+
+```python
+# DataFrame.apply row-wise (axis=1)
+def bmi(row):
+    return row["weight_kg"] / (row["height_cm"] / 100) ** 2
+
+df["bmi"] = df.apply(bmi, axis=1)
+
+# Using vectorized where possible is faster:
+df["bmi_fast"] = df["weight_kg"] / (df["height_cm"] / 100) ** 2
+```
+
+## Lambda & Apply {.demo-slide}
+
+```python
+# Series.apply with lambda
+df["A_flag"] = df["A"].apply(
+    lambda x: "hi" if x > 2 else "lo"
+)
+
+# Element-wise with conditional logic
+df["discounted"] = df["amount"].apply(
+    lambda x: x * 0.90 if x > 100 else x
+)
+
+# Row-wise apply with lambda
+df["bmi"] = df.apply(
+    lambda r: r["weight_kg"] / (r["height_cm"] / 100) ** 2,
+    axis=1
+)
+```
+
+## Aggregations & GroupBy
+
+**Common aggregations:** `min`, `max`, `sum`, `mean`, `median`, `std`, `var`, `count`, `nunique`, `quantile`, `first`, `last`
+
+```python
+g = df.groupby("team")
+
+g["score"].mean()                          # single col
+g[["score", "time"]].agg(["mean", "std"])  # multi agg per col
+```
+
+## Named Aggregations
+
+```python
+# Named aggregations (recommended)
+out = g.agg(
+    score_mean=("score", "mean"),
+    score_p90=("score", lambda x: x.quantile(0.90)),
+    time_sum=("time", "sum")
+)
+```
+
+**Group-wise transform** (broadcast back to rows):
+
+```python
+# z-score within each team
+df["score_z_in_team"] = (
+    df.groupby("team")["score"]
+      .transform(lambda x: (x - x.mean()) / x.std())
+)
+```
+
+## Reshaping: Long ↔ Wide
+
+- `pd.melt` — wide → long
+- `pivot` / `pivot_table` — long → wide (with aggregation)
+
+```python
+wide = pd.DataFrame({
+    "id": [1, 2, 3],
+    "height_cm": [170, 165, 180],
+    "weight_kg": [70, 60, 80]
+})
+
+long = pd.melt(wide, id_vars="id",
+               var_name="measure", value_name="value")
+
+pivoted = long.pivot_table(
+    index="id", columns="measure",
+    values="value", aggfunc="mean"
+).reset_index()
+```
+
+## Combining Data (Brief) {.demo-slide}
+
+**Concatenate:**
+
+- `pd.concat([df1, df2], axis=0)` — stack rows
+- `pd.concat([df1, df2], axis=1)` — add columns (align by index)
+
+**Merge** (SQL-style) — we will cover in depth later:
+
+```python
+left = pd.DataFrame({"id": [1, 2, 3], "x": [10, 20, 30]})
+right = pd.DataFrame({"id": [2, 3, 4], "y": [200, 300, 400]})
+
+rows = pd.concat([left, left], axis=0, ignore_index=True)
+joined = pd.merge(left, right, on="id", how="left")
+```
+
+## Missing Data (Brief)
+
+**Detect:** `isna` / `notna`, summarize with `.sum()`
+
+**Drop:** `dropna` (rows or columns)
+
+**Fill:** `fillna(value)` or `method="ffill"` / `"bfill"`
+
+```python
+df.isna().sum()
+df_drop = df.dropna(subset=["A", "B"])
+df_fill = df.fillna({"A": df["A"].median(), "B": 0})
+```
+
+::: {.tip-box}
+We will dive deeper on strategies and caveats on a separate day.
+:::
+
+## Dates & `to_datetime` {.demo-slide}
+
+**Parsing:** `pd.to_datetime` handles many formats
+
+**Accessors:** `.dt.year`, `.dt.month`, `.dt.day`, `.dt.month_name()`
+
+```python
+orders = pd.DataFrame({
+    "date": ["2023-01-01", "2023-01-03", "2023-02-10", "2023-03-01"],
+    "region": ["E", "W", "E", "W"],
+    "sales": [100, 50, 80, 90]
+})
+orders["date"] = pd.to_datetime(orders["date"])
+orders["year"] = orders["date"].dt.year
+orders["month"] = orders["date"].dt.month
+orders["month_name"] = orders["date"].dt.month_name()
+```
+
+## Date-Based Aggregation {.demo-slide}
+
+```python
+# Monthly aggregation (time-aware)
+monthly = (orders.set_index("date")
+                  .resample("M")["sales"].sum()
+                  .reset_index())
+```
+
+## From Pandas to NumPy (and Back)
+
+- Use **pandas** for labeled, messy real-world tables
+- Use **NumPy** for fast math & linear algebra
+- Move between them easily
+
+```python
+df_small = pd.DataFrame({
+    "height_cm": [172, 165, 181],
+    "weight_kg": [70, 60, 82]
+})
+
+arr = df_small.to_numpy()
+arr_std = (arr - arr.mean(axis=0)) / arr.std(axis=0)
+df_std = pd.DataFrame(arr_std, columns=df_small.columns)
+```
+
+## Putting It Together: A Cleaning/Exploration Flow {.takeaway-slide}
+
+- **Load:** `read_csv` / `read_parquet` with proper `dtype` and `parse_dates`
+- **Inspect:** `info`, `head`, `describe`, `isna().sum()`; quick plots (hist, box, scatter)
+- **Subset:** `loc` / `iloc` with clear index/column semantics; `query` for readable filters
+- **Transform:** Prefer vectorized ops; use `apply` for custom logic; leverage `.dt` for dates
+- **Aggregate:** `groupby` + `agg` / `transform` for summaries and group-wise features
+- **Combine:** `concat` for stacking; (joins later)
+
+::: notes
+This is a dense deck covering a lot of pandas ground. The "brief" sections (Combining, Missing Data) are intentionally light — they get dedicated decks later. The `.query()` and lambda/apply slides are good candidates for a live demo. If time is tight, you can skip the Parquet slide or move it to a resource reference.
+:::
+
+{{< include ../_partials/questions.qmd >}}

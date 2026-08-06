@@ -1,0 +1,457 @@
+---
+title: "Introduction to Git and GitHub"
+subtitle: "Version Control, Collaboration, and Workflow"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## 1 · Intro to Git {.section-card}
+
+- What Git is and why we use it
+- How Git stores information
+- Configuring Git on your machine
+- Core commands and the staging area
+
+## 2 · GitHub {.section-card}
+
+- What GitHub is (and is not)
+- Other web-based Git services
+- The GitHub workflow
+- The `.gitignore` file
+
+## 3 · Collaborating {.section-card}
+
+- Branching and merging
+- Merge conflicts
+- Forking and pull requests
+- Pull request lifecycle
+
+## What is Git?
+
+- **Git:** A **distributed version control system** (created 2005)
+- Lets multiple people work on a project simultaneously without overwriting each other's changes
+- Each project is called a **repository**
+- Key features:
+  - Track changes in source code
+  - Collaboration and version tracking
+
+## Why Use Version Control?
+
+Version control **records changes to files over time**, letting you recall specific versions later.
+
+::: {.warning-box}
+Without version control, you end up with:
+
+`file_v1.txt`, `file_v2.txt`, `file_v2.1.txt`, `file_final.txt`, `file_final_really.txt`
+:::
+
+::: {.key-idea}
+**Key idea:** A single, organized history beats a folder full of renamed copies.
+:::
+
+## Motivation for Using Git
+
+- **Collaboration:** Multiple developers on the same project without conflict
+- **History:** Track the evolution of a project with detailed change records
+- **Branching:** Experiment with new features safely
+- **Undo Mistakes:** Easily revert to previous states
+- **Integration:** Works with many tools and CI workflows
+
+## Collaboration: Distributed Version Control
+
+::: {.key-idea}
+In a **distributed** system, every developer has a full copy of the repository — including its complete history.
+:::
+
+- No single point of failure
+- Work offline; sync when ready
+- Each clone is a self-contained backup
+
+## Checkins Over Time
+
+::: {.key-idea}
+Git stores **snapshots**, not differences. Each commit captures a picture of your project at that moment.
+:::
+
+- Commits are linked through history
+- You can step back to any snapshot
+- Unchanged files are referenced, not re-stored
+
+## Discussion: Git as a Database {.question-slide}
+
+Git stores information as **snapshots linked through commit histories**.
+
+::: {.discussion-box}
+- In what ways is Git similar to a database?
+- What advantages does this design give?
+- What are the trade-offs for very large repositories?
+:::
+
+## Discussion: How Expensive is Git Storage? {.question-slide}
+
+Every commit stores a new snapshot.
+
+::: {.discussion-box}
+- What happens to disk usage as a project grows?
+- How expensive is it to store every version?
+- Can you think of ways Git reduces storage costs?
+:::
+
+## How Git Stores Information Efficiently
+
+- Stores data as **snapshots**, not complete copies of each version
+- Each file version stored as a **blob object** identified by a unique **hash**
+- **Unchanged files** are referenced from previous commits instead of duplicated
+- Uses **compression** and **delta storage** to save space
+- Periodically **repacks** similar objects, storing only differences
+- **Result:** fast history lookup, efficient storage, integrity checking
+
+## Configure Git {.demo-slide}
+
+Set your identity — run **once** on your computer:
+
+```bash
+git config --global user.name "Your Name Here"
+git config --global user.email "email@example.com"
+```
+
+::: {.tip-box}
+**Tip:** These values are attached to every commit you make. Use the same email as your GitHub account.
+:::
+
+## Basic Git Commands {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### Start
+
+- `git init`
+- `git clone <url>`
+- `git status`
+
+</div>
+<div>
+
+#### Stage & Commit
+
+- `git add <file>`
+- `git commit -m "msg"`
+
+</div>
+<div>
+
+#### Sync
+
+- `git push`
+- `git pull`
+
+</div>
+<div>
+
+#### Branch
+
+- `git branch <name>`
+- `git checkout -b <name>`
+- `git merge <name>`
+
+</div>
+:::
+
+## The Staging Area
+
+::: {.key-idea}
+The **staging area** is a checkpoint between your working files and your committed history.
+:::
+
+- You choose exactly what goes into the next commit
+- Lets you craft clean, focused commits
+- `git add` moves files into staging; `git commit` records them
+
+## Stages for File Status
+
+The file lifecycle:
+
+```text
+Untracked  →  Staged  →  Committed  →  Modified
+```
+
+- **Untracked:** Git is not yet tracking the file
+- **Staged:** Added with `git add`, ready to commit
+- **Committed:** Saved in history with `git commit`
+- **Modified:** Tracked file changed since last commit
+
+## Commit Messages — Your Journal {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Good**
+
+- `Add login validation`
+- `Fix off-by-one in sort loop`
+- `Update README install steps`
+
+</div>
+<div>
+
+**Bad**
+
+- `update`
+- `stuff`
+- `final final v2`
+- `asdf`
+
+</div>
+:::
+
+::: {.tip-box}
+**Tip:** Write the message so future-you knows *what* and *why*.
+:::
+
+## What is GitHub?
+
+- **GitHub:** A web-based platform for version control using Git
+- Founded 2008; acquired by **Microsoft** in 2018
+- Key features:
+  - Hosting repositories
+  - Pull requests and code reviews
+  - Issue tracking
+  - CI/CD pipelines
+
+## Git is not GitHub! {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Git**
+
+- A **tool** (software) on your computer
+- Tracks changes locally
+- Works offline
+- Free, open source
+
+</div>
+<div>
+
+**GitHub**
+
+- A **website** (service) in the cloud
+- Hosts and shares repositories
+- Adds collaboration features
+- Owned by Microsoft
+
+</div>
+:::
+
+## Other Web-based Git Services {.comparison-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### GitLab
+
+- Open-source
+- CI/CD, issue tracking
+
+</div>
+<div>
+
+#### Bitbucket
+
+- Atlassian
+- Git and Mercurial
+- Jira integration
+
+</div>
+<div>
+
+#### SourceForge
+
+- Git hosting
+- Project management
+
+</div>
+<div>
+
+#### AWS CodeCommit
+
+- Managed source control
+- Scalable and secure
+
+</div>
+:::
+
+## GitHub Workflow
+
+1. Create a repository on GitHub
+2. Clone locally: `git clone <url>`
+3. Create a branch: `git checkout -b <branch-name>`
+4. Make changes and commit
+5. Push: `git push origin <branch-name>`
+6. Create a pull request
+7. Review and merge
+
+## The `.gitignore` File
+
+Tells Git which files and directories to **ignore**.
+
+- Prevents unnecessary files from being tracked
+- Common use cases:
+  - Build artifacts
+  - Sensitive data (keys, credentials)
+  - System-specific files (`.DS_Store`)
+
+## `.gitignore` Example {.demo-slide}
+
+```bash
+# Ignore all .log files
+*.log
+
+# Ignore the node_modules directory
+node_modules/
+
+# Ignore system-specific files
+.DS_Store
+```
+
+::: {.tip-box}
+**Tip:** Commit a `.gitignore` early — before unwanted files get tracked.
+:::
+
+## Discussion: The Role of `git add .` {.question-slide}
+
+::: {.discussion-box}
+- Why might `git add .` be risky?
+- How does `.gitignore` interact with it?
+- When would you prefer to add files manually?
+:::
+
+## `.gitignore` and `git add`
+
+- `git add .` **respects `.gitignore`** and skips ignored files
+- Explicitly adding a file **overrides** the ignore rule
+- The ignore list only applies to **untracked** files — not already committed ones
+
+::: {.warning-box}
+**Warning:** Once a file is committed, adding it to `.gitignore` will not stop Git from tracking it.
+:::
+
+## Discussion: Do We Really Need `.gitignore`? {.question-slide}
+
+::: {.discussion-box}
+- Would `.gitignore` still be necessary if you always add files manually?
+- Is it just convenience, or does it protect your project?
+:::
+
+## Branching
+
+**Branching** is a core Git feature for parallel development and isolated work.
+
+- `git branch <name>` — create a branch
+- `git checkout <name>` — switch to it
+- `git checkout -b <name>` — create **and** switch in one step
+
+::: {.key-idea}
+**Key idea:** A branch is a lightweight pointer — branching is cheap and fast.
+:::
+
+## Branching: Merging {.demo-slide}
+
+**Merging** brings changes from one branch into another:
+
+```bash
+git checkout main          # move to target branch
+git merge <branch-name>    # merge in the feature branch
+```
+
+**Best practices:**
+
+- Keep branches small and focused
+- Regularly update from `main`
+- Use descriptive branch names
+
+## Merge Conflicts
+
+Occur when changes in two branches **conflict**.
+
+- Common causes:
+  - Concurrent changes to the same line
+  - One branch deletes while another modifies
+
+Git marks conflicts with:
+
+```text
+<<<<<<< HEAD
+your changes
+=======
+their changes
+>>>>>>> branch-name
+```
+
+## Merge Conflicts: Resolving {.demo-slide}
+
+**Resolving:**
+
+1. Open the conflicted files
+2. Manually edit to keep the correct content
+3. (Optional) Use a visual merge tool
+4. `git add <file>` to mark as resolved
+5. `git commit` to finish the merge
+
+::: {.tip-box}
+**Tip:** Communicate with your team; pull before working to reduce conflicts.
+:::
+
+## Forking
+
+A **fork** is an independent copy of a repository.
+
+- Ideal for personal changes to others' projects
+- Pull requests can request merging changes into the original
+- No Git command for forking — it is a platform feature
+- Cloning + changing the remote URL is similar
+
+## Pull Requests
+
+A **pull request (PR)** is a feature for collaboration and code review.
+
+- A way to introduce changes from one branch to another
+- Or from a fork back to the original repository
+- Lets developers propose changes for review before merging
+
+## Pull Request Setup
+
+1. Fork the repository
+2. Create a development branch
+3. Commit your changes
+4. Submit a formal pull request
+5. Other developers review
+6. If approved, the PR is merged and the branch deleted
+7. The PR is closed
+
+## Git for Everybody!
+
+::: {.key-idea}
+**XKCD:** "Git is like learning to drive — everyone has a slightly different mental model, and somehow it mostly works."
+:::
+
+- Git's flexibility means many workflows are valid
+- Pick a simple workflow and stay consistent
+- When in doubt, `git status` and `git log`
+
+## Takeaways {.takeaway-slide}
+
+- Git is a **distributed** version control system storing **snapshots**
+- The **staging area** lets you craft focused commits
+- **GitHub** hosts repositories and adds collaboration features
+- **`.gitignore`** keeps unwanted files out of history
+- **Branching, merging, and pull requests** enable safe collaboration
+
+::: notes
+This deck introduces both the conceptual model (snapshots, distributed VCS) and the practical commands students need on day one. The two storage discussion slides are best as quick think-pair-share moments — do not dwell too long. The branching/merge-conflict slides benefit from a live demo; consider creating a small repo on the fly to show a conflict. Close by showing the GitHub workflow as the bridge to next week's collaborative exercise.
+:::
+
+{{< include ../_partials/questions.qmd >}}

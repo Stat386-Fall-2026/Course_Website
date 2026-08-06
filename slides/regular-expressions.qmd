@@ -1,0 +1,295 @@
+---
+title: "Regular Expressions"
+subtitle: "Dr. Tom Kerby — August 6, 2026"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## What is a Regular Expression? {.section-card}
+
+A **regular expression** (also called *regex*) is a sequence of characters that defines a search pattern. They are used to match and manipulate text.
+
+::: {.key-idea}
+**Common uses:**
+- Cleaning messy data (removing symbols, fixing formats)
+- Extracting structured info from text (emails, dates, phone numbers)
+- Feature engineering (hashtags, mentions, sentiment cues)
+- Web scraping and log parsing
+- Data validation for preprocessing pipelines
+:::
+
+## Examples {.section-card}
+
+::: {.demo-box}
+- `[a-z]+` — matches any sequence of one or more lowercase letters
+- `\d{3}-\d{2}-\d{4}` — matches a number (e.g., SSN) in format `123-45-6789`
+- `^https?://` — matches beginning of a URL (`http` or `https`)
+- `[aeiouyAEIOUY]` — matches any vowel (and `y`)
+:::
+
+## Syntax of Regular Expressions {.section-card}
+
+| Component | Role |
+|---|---|
+| **Characters** | A sequence of symbols that define a search pattern |
+| **Metacharacters** | Characters with specific meaning |
+| **Character classes** | Groups that can match any one of a set |
+| **Quantifiers** | Specify number of occurrences |
+| **Anchors** | Match the position |
+| **Alternation** | The "or" operator |
+
+## Metacharacters {.section-card}
+
+| Char | Meaning |
+|---|---|
+| `[]` | Character classes |
+| `\` | Escapes metacharacters / specifies special sequences |
+| `{}` | Quantifier — number of repeats |
+| `*` | Zero or more |
+| `+` | One or more |
+| `?` | Zero or one |
+| `^` | Start of pattern OR complement in a class |
+| `$` | End of pattern |
+| `.` | Any character except newline |
+| `\|` | Alternation (or) |
+| `()` | Groups |
+
+## Character Classes {.section-card}
+
+Specified using `[ ]` — groups of characters that satisfy the search.
+
+::: {.key-idea}
+**Ranges:** `[a-zA-Z]` matches any letter. Metacharacters (except `\`) are **not active** inside classes, so `[akm$]` matches `"a"`, `"k"`, `"m"`, `"$"`.
+
+If `^` is the **first character** in a class, it means **complement**: `[^aeiou]` matches anything except lowercase vowels.
+:::
+
+## The Backslash `\` {.section-card}
+
+::: {.key-idea}
+The backslash `\` signals special sequences and is used to escape metacharacters.
+
+It can even escape itself: `\\` searches for `\`.
+:::
+
+## Some Special Sequences {.section-card}
+
+| Seq | Meaning | Pattern | Example match |
+|---|---|---|---|
+| `\d` | A digit | `file_\d\d` | `file 21` |
+| `\w` | Alphanumeric | `\w-\w\w\w` | `A-b23` |
+| `\s` | White space | `a\sb\sc` | `a b c` |
+| `\D` | A non-digit | `\D\D\D` | `abc` |
+| `\W` | Non-alphanumeric | `\W\W\W\W\W` | `*-+=)` |
+| `\S` | Non-whitespace | `\S\S` | `Hi` |
+
+## Quantifiers {.section-card}
+
+| Quant | Meaning | Pattern | Example match |
+|---|---|---|---|
+| `+` | One or more times | `\w-\w+` | `A-bbb32` |
+| `{d}` | Exactly d times | `\D{3}` | `Abc` or `)))` |
+| `{d1,d2}` | d1 to d2 times | `\d{2,4}` | `12` or `345` |
+| `{d,}` | d or more times | `\w{3,}` | `Anything` |
+| `*` | Zero or more times | `A*B*C*` | `AAACCC` |
+| `?` | One or zero times | `colou?r` | `color` or `colour` |
+
+## Anchors {.section-card}
+
+| Anchor | Meaning | Pattern | Matches / Not |
+|---|---|---|---|
+| `^` | Start of string | `^Hello` | "Hello world" ✓, "Say Hello" ✗ |
+| `$` | End of string | `world$` | "Hello world" ✓, "worldwide" ✗ |
+| `\b` | Word boundary | `\bcat\b` | "cat" ✓, "concatenate" ✗ |
+| `\B` | Non-word boundary | `\Bcat\B` | "concatenate" ✓, "cat" ✗ |
+
+## Anchors, continued {.section-card}
+
+::: {.key-idea}
+- `\A` — matches only at the **start** of string
+- `\Z` — matches only at the **end** of string
+- `\b` — word boundary
+:::
+
+::: {.warning-box}
+`\b` can interfere with Python's string literals. Use **raw string literals** with `r`, e.g., `r"\d+.\d?"`.
+:::
+
+## Read & Decipher (Simple) {.exercise-slide}
+
+What does each regex do? What would it match?
+
+1. `\bcat\b`
+2. `\b\d{5}\b`
+3. `^[A-Z][a-z]+$`
+
+::: {.exercise-check}
+Hints and solutions on the next slides.
+:::
+
+## Read & Decipher (Simple) — Hints {.exercise-slide}
+
+::: {.key-idea}
+Think about what each piece means:
+- `\b` = word boundary
+- `\d{5}` = exactly five digits
+- `^[A-Z]` = starts with an uppercase letter
+- `[a-z]+` = one or more lowercase letters
+- `$` = end of string
+:::
+
+## Read & Decipher (Simple) — Solutions {.exercise-slide}
+
+1. `\bcat\b` — matches the **whole word** `cat`
+2. `\b\d{5}\b` — matches a **5-digit token** (US ZIP code)
+3. `^[A-Z][a-z]+$` — matches a **capitalized word** (e.g., `Kerby`)
+
+::: {.exercise-check}
+All three target different kinds of "words" in text.
+:::
+
+## Read & Decipher (Medium) {.exercise-slide}
+
+What does each regex do? What would it match?
+
+1. `^\s*\#.*$`
+2. `https?://[^\s)]+`
+
+::: {.exercise-check}
+Hints and solution on the next slide.
+:::
+
+## Read & Decipher (Medium) — Solutions {.exercise-slide}
+
+::: {.key-idea}
+1. `^\s*\#.*$` — matches **comment lines** (optional leading spaces, a `#`, then anything to end of line)
+2. `https?://[^\s)]+` — matches a **simple URL** starting with `http` or `https`, continuing until a space or `)`.
+:::
+
+## How Would You Extract Phone Numbers? {.exercise-slide}
+
+**Task:** Find all U.S. phone numbers `123-456-7890` in text.
+
+::: {.key-idea}
+**Hints:** `\d` means digit, `{n}` means exactly n times.
+:::
+
+::: {.exercise-check}
+Solution on the next slide.
+:::
+
+## Extract Phone Numbers — Solution {.demo-slide}
+
+::: {.demo-box}
+```python
+import re
+
+text = "Call 801-555-1234 or 212-999-8888 today!"
+pattern = r"\b\d{3}-\d{3}-\d{4}\b"
+print(re.findall(pattern, text))
+# ['801-555-1234', '212-999-8888']
+```
+:::
+
+::: {.tip-box}
+The `\b` anchors ensure we don't grab digits embedded in longer numbers.
+:::
+
+## How Would You Extract Email Addresses? {.exercise-slide}
+
+**Task:** Identify all email addresses in text.
+
+::: {.key-idea}
+**Hints:** Start with word characters before `@`, match the domain, use `+` for one or more.
+:::
+
+::: {.exercise-check}
+Solution on the next slide.
+:::
+
+## Extract Email Addresses — Solution {.demo-slide}
+
+::: {.demo-box}
+```python
+import re
+
+text = "Contact us at help@university.edu"
+pattern = r"\b\w+@\w+\.\w+\b"
+print(re.findall(pattern, text))
+# ['help@university.edu']
+```
+:::
+
+::: {.tip-box}
+`\w+` matches one or more word characters — the local part and the domain.
+:::
+
+## Python `re` Library — Matching {.section-card}
+
+| Function | Returns |
+|---|---|
+| `re.findall(pattern, string)` | All matching substrings as a list |
+| `re.match(pattern, string)` | Matches at the **beginning** of the string |
+| `re.search(pattern, string)` | Finds the **first** match anywhere |
+| `re.finditer(pattern, string)` | Iterator of match objects |
+| `re.compile(pattern)` | Compiles a pattern for repeated use |
+
+## Python `re` Library — Modifying Strings {.section-card}
+
+| Function | Description |
+|---|---|
+| `re.split(pattern, string)` | Splits the string where the RE matches |
+| `re.sub(pattern, replace, string)` | Replaces matches with `replace` |
+| `re.subn(pattern, replace, string)` | Same as `sub`, but returns a `(result, count)` tuple |
+
+## `re` Isn't Always Necessary {.section-card}
+
+::: {.key-idea}
+Python's built-in string methods often do the job:
+
+`.endswith()` · `.startswith()` · `.join()` · `.find()` · `.replace()` · `.strip()` · `.rstrip()` · `.lstrip()` · `.strip('#')` · `.split()` · `.lower()` · `.upper()`
+:::
+
+## Applying to Pandas {.section-card}
+
+::: {.key-idea}
+- Use the **`.str`** attribute for vectorized string operations.
+- Use the **`.apply()`** method with a lambda function for regex-powered logic.
+:::
+
+## Pandas Example {.demo-slide}
+
+::: {.demo-box}
+```python
+import pandas as pd
+import re
+
+data = {'text': ["Hello, World!",
+                 "The rain in Spain",
+                 "How are you?"]}
+df = pd.DataFrame(data)
+
+df['uppercase_text'] = df['text'].str.upper()
+df['words_starting_with_S'] = df['text'].apply(
+    lambda x: re.findall(r'\bS\w+', x)
+)
+```
+:::
+
+::: {.tip-box}
+`.str.upper()` needs no regex; `.apply()` with `re.findall` unlocks pattern power.
+:::
+
+::: notes
+- This deck introduces regular expressions as a text-processing tool for data cleaning and feature engineering.
+- Emphasize the layered structure: characters → metacharacters → classes → quantifiers → anchors → alternation.
+- The two "Read & Decipher" exercises build intuition before students write their own patterns.
+- Phone-number and email-extraction exercises bridge from reading regex to writing Python code with `re`.
+- Remind students that simple string methods often suffice — regex shines when structure varies.
+- Pandas integration shows how regex scales to real dataframes via `.str` and `.apply()`.
+- The "raw string" tip matters: Python's `\b` becomes a backspace unless prefixed with `r`.
+:::
+
+{{< include ../_partials/questions.qmd >}}

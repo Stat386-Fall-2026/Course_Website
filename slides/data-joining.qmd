@@ -1,0 +1,368 @@
+---
+title: "Joining Data Together in Pandas"
+subtitle: "Building custom datasets from smaller pieces"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Today {.section-card}
+
+- Why joining matters
+- Core join types (inner, left, right, outer)
+- Keys, indexes, and common pitfalls
+- Joining mismatched time intervals and geographic levels
+- Two demos + a mini API enrichment
+
+## Why Do We Join Data?
+
+It's rare to have a single "master" dataset. Data lives in:
+
+- **Separate tables** — transactions vs customers vs products
+- **Separate sources** — API + scraped + local
+- **Different grains** — daily vs monthly, county vs state
+
+Joining constructs analysis-ready datasets.
+
+## A Mental Model: Tables Are Lego Bricks
+
+- Each table is a brick with a purpose
+- Keys are the studs and sockets
+
+::: {.key-idea}
+Good joining is:
+
+- Knowing which keys should match
+- Confirming how many matches you expect
+- Checking who got dropped and why
+:::
+
+## The Workhorse: `pd.merge`
+
+```python
+pd.merge(left, right, how=..., on=...)
+```
+
+Think "SQL join" but in pandas. Key params:
+
+- `how` — `"inner"`, `"left"`, `"right"`, `"outer"`
+- `on` / `left_on` / `right_on`
+- `validate` — cardinality check
+- `indicator` — track merge results
+
+## Inner Join {.demo-slide}
+
+Keeps rows with keys found in **BOTH** tables.
+
+Good when analysis requires matched records and you expect near-perfect coverage.
+
+```python
+pd.merge(a, b, how="inner", on="id")
+```
+
+## Left Join {.demo-slide}
+
+Keeps **all rows** from the left table. Adds columns from the right when keys match. Unmatched keys become `NaN`.
+
+```python
+pd.merge(orders, customers,
+         how="left", on="customer_id")
+```
+
+## Right Join {.demo-slide}
+
+Keeps all rows from the right table. Mostly symmetric with left join — just swap table order.
+
+```python
+pd.merge(a, b, how="right", on="id")
+```
+
+## Outer Join {.demo-slide}
+
+Keeps rows whose keys appear in **EITHER** table. Useful for a "union of coverage." Often requires follow-up cleaning.
+
+```python
+pd.merge(a, b, how="outer", on="id")
+```
+
+## Quick Reference: Join Types {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### inner
+
+Matched keys only
+
+Strict matching
+
+</div>
+<div>
+
+#### left
+
+All left + matches
+
+Enrich a "main" table
+
+</div>
+<div>
+
+#### right
+
+All right + matches
+
+Same, but right is "main"
+
+</div>
+<div>
+
+#### outer
+
+All keys from both
+
+Coverage comparisons / audits
+
+</div>
+:::
+
+## Keys: What You Join On
+
+Keys should represent the **same real-world thing** in both tables.
+
+Clean keys before merging:
+
+- Consistent types (string vs int)
+- Consistent formats (zero padding, casing, whitespace)
+- Consistent meaning
+
+::: {.tip-box}
+**Tip:** Mismatched key types are the #1 cause of silent missing matches.
+:::
+
+## Duplicates and Cardinality
+
+A merge can **explode rows** if keys are duplicated.
+
+- **one-to-one** — one row matches one row
+- **one-to-many** — e.g., one customer, many transactions
+- **many-to-many** — danger zone (row multiplication)
+
+::: {.warning-box}
+Always check row counts before and after a merge.
+:::
+
+## Use `validate=` to Sanity-Check Joins {.demo-slide}
+
+```python
+pd.merge(customers, demographics,
+         on="customer_id", how="left",
+         validate="one_to_one")
+```
+
+Options: `"one_to_one"`, `"one_to_many"`, `"many_to_one"`, `"many_to_many"`
+
+::: {.tip-box}
+If `validate` fails, you have unexpected duplicates. Fix them before trusting the join.
+:::
+
+## Use `indicator=` to See What Matched {.demo-slide}
+
+```python
+m = pd.merge(a, b, on="id", how="outer", indicator=True)
+m["_merge"].value_counts()
+```
+
+- `both` — matched
+- `left_only` — missing from right
+- `right_only` — missing from left
+
+## Joining on Indexes {.demo-slide}
+
+```python
+customers = customers.set_index("customer_id")
+orders    = orders.set_index("customer_id")
+
+orders.join(customers, how="left")
+```
+
+::: {.key-idea}
+`.join()` defaults to joining on the index — handy when the index already encodes your key.
+:::
+
+## When Is Index-Joining Useful?
+
+- Time series indexed by date
+- Panel data indexed by `(id, date)`
+- When you want a clear "primary key" structure
+
+## Problem: Different Time Intervals
+
+Daily data (stock prices, weather) vs monthly data (unemployment, CPI).
+
+::: {.warning-box}
+A direct merge on date often **fails** because the keys don't align — there's no row for the 15th in a monthly table.
+:::
+
+## Strategies for Time Interval Mismatch {.demo-slide}
+
+**Align to a common period:**
+
+- Convert daily → monthly (aggregate)
+- Expand monthly → daily (forward-fill)
+
+**Use `merge_asof` for "nearest previous" matches:**
+
+```python
+pd.merge_asof(
+    daily.sort_values("date"),
+    monthly.sort_values("date"),
+    on="date", direction="backward"
+)
+```
+
+## Problem: Different Geographic Levels
+
+County-level outcomes vs state-level policies.
+
+A join requires:
+
+- A **crosswalk** (county → state)
+- Consistent identifiers (FIPS codes, abbreviations)
+- Sometimes aggregation
+
+## Strategies for Geographic Mismatch
+
+::: {.columns-2}
+<div>
+
+**Enrich**
+
+Add state info to county rows (many-to-one).
+
+</div>
+<div>
+
+**Aggregate**
+
+Roll counties up to state, then join.
+
+</div>
+:::
+
+::: {.warning-box}
+**Disaggregate carefully** — going state → county requires assumptions or weights.
+:::
+
+## `pd.concat` vs `merge` {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**`merge`**
+
+Combines columns using key matches (relational join).
+
+```python
+pd.merge(left, right,
+         on="id", how="left")
+```
+
+</div>
+<div>
+
+**`concat`**
+
+Stacks dataframes along rows or columns.
+
+```python
+# stack rows (same columns)
+all_months = pd.concat(
+    list_of_monthly_dfs,
+    ignore_index=True)
+
+# stack columns (same index)
+wide = pd.concat(
+    [left.set_index("id"),
+     right.set_index("id")],
+    axis=1)
+```
+
+</div>
+:::
+
+## Multi-Key Joins {.demo-slide}
+
+Many real joins need **multiple keys**: `(state, year)`, `(customer_id, order_date)`.
+
+```python
+pd.merge(a, b, how="left",
+         on=["state", "year"])
+```
+
+## Demo 1: A Straightforward Join {.demo-slide}
+
+Three tables:
+
+- **orders** — `order_id, customer_id, product_id, qty, date`
+- **customers** — `customer_id, name, state`
+- **products** — `product_id, category, price`
+
+**Goal:** build an analysis table with revenue and customer location.
+
+Topics: left joins, missing keys, `validate`, `indicator`.
+
+## Demo 2: Creative Joins {.demo-slide}
+
+Time + geography + API enrichment:
+
+- **Time mismatch:** daily + monthly → `merge_asof` or resampling
+- **Geographic mismatch:** county + state → crosswalk or aggregation
+- **API enrichment:** add city/state from ZIP codes using a free API (Zippopotam)
+
+## A Join Checklist {.reference-slide}
+
+1. Identify the unit of observation (grain) for each table
+2. Define join keys and clean them
+3. Decide which table is "main" (often a left join)
+4. Validate expected cardinality (`validate=`)
+5. Audit match quality (`indicator=` and summary checks)
+6. After join: check row counts, missingness, duplicates
+
+## Common Pitfalls {.reference-slide}
+
+::: {.warning-box}
+- **Row multiplication** from many-to-many joins
+- **Dirty keys** — leading zeros, spacing, type mismatch
+- **Silent missing matches** — different naming conventions
+- **Wrong grain** — county vs state, day vs month
+- **Forgetting to check** what got dropped in an inner join
+:::
+
+## Project Tie-In
+
+Your final project dataset will likely require:
+
+- Multiple API calls
+- Scraping multiple pages
+- Multiple non-trivial joins
+
+Treat joining as part of **data documentation**:
+
+- What keys did you use?
+- What fraction matched?
+- What assumptions aligned the grains?
+
+## Wrap-Up {.takeaway-slide}
+
+- `pd.merge` handles most joins cleanly
+- Use `validate` and `indicator` to avoid surprises
+- For mismatched grains: resample/aggregate, `merge_asof`, crosswalks
+- Next: practice by building a mini dataset
+
+::: notes
+This deck moves from concept (why join, Lego model) to mechanics (merge types, keys, cardinality) to the hard part (mismatched grains in time and geography). The two demos are the centerpiece — Demo 1 is a gentle warm-up; Demo 2 brings together time, geography, and a live API call, which mirrors what students will do in their final project. Encourage students to screenshot the join-types cheat sheet and the checklist. Emphasize `validate=` and `indicator=` as the two habits that prevent most silent join disasters. If time is tight, compress the pitfall slides and send students to the checklist as a take-home reference.
+:::
+
+{{< include ../_partials/questions.qmd >}}

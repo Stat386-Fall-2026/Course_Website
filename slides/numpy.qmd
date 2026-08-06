@@ -1,0 +1,285 @@
+---
+title: "NumPy Essentials"
+subtitle: "Arrays, Operations, and Broadcasting"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Introduction to NumPy {.section-card}
+
+- **NumPy:** Fundamental package for numerical computations in Python
+- Provides support for **arrays**, **matrices**, and mathematical functions
+- Key features: fast, memory-efficient, and **vectorized** operations
+- Imported with the alias `np`
+
+```python
+import numpy as np
+```
+
+## NumPy: The Engine Behind Pandas
+
+- Pandas DataFrames and Series are built on NumPy arrays
+- Provides the speed, memory efficiency, and vectorized operations
+- Many pandas methods call NumPy functions under the hood
+
+**Example**
+
+```python
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+print(type(df.to_numpy()))
+# <class 'numpy.ndarray'>
+```
+
+## From Pandas to NumPy (and Back)
+
+- Use **pandas** for labeled/tabular data
+- Use **NumPy** for fast math, reshaping, and simulations
+- Move between them easily:
+
+```python
+import pandas as pd
+import numpy as np
+
+# Pandas -> NumPy
+df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+arr = df.to_numpy()
+
+# Back to Pandas
+df2 = pd.DataFrame(arr, columns=df.columns)
+```
+
+## Loading and Saving Data
+
+**Loading data from a file:**
+
+- `np.loadtxt` — Load data from a text file
+- `np.load` — Load data from a NumPy binary file (`.npy`)
+
+**Saving data to a file:**
+
+- `np.savetxt` — Save data to a text file
+- `np.save` — Save data to a NumPy binary file (`.npy`)
+
+Common file formats: `csv`, `txt`, `npy`, `npz`
+
+## Creating NumPy Arrays
+
+- Using lists: `np.array([1, 2, 3])`
+- Initial values: `np.zeros((3, 4))`
+- Various other initialization methods (see next slide)
+
+## Array Initialization Methods
+
+| Function | Description |
+|---|---|
+| `np.empty(shape)` | Create an uninitialized array |
+| `np.zeros(shape)` | Create an array of zeros |
+| `np.ones(shape)` | Create an array of ones |
+| `np.full(shape, fill_value)` | Create an array filled with a constant |
+| `np.eye(N)` | Create a 2D identity matrix of size N |
+| `np.arange(start, stop, step)` | Create an array with a sequence |
+| `np.linspace(start, stop, num)` | Create evenly spaced values |
+| `np.random.rand(*shape)` | Random array from uniform distribution |
+| `np.random.randn(*shape)` | Random array from standard normal |
+
+## Array Operations
+
+**Element-wise Operations:**
+
+- Arithmetic: `+`, `-`, `*`, `/`, `**`
+- Comparisons: `<`, `>`, `<=`, `>=`, `==`, `!=`
+
+**Broadcasting:**
+
+- Perform operations on arrays with different shapes
+- NumPy automatically broadcasts dimensions to match
+
+**Mathematical Functions:**
+
+- `np.sum`, `np.mean`, `np.std`
+- `np.min`, `np.max`, `np.argmax`
+
+## Array Operations (Continued)
+
+**Logical Operations:**
+
+- `np.logical_and`, `np.logical_or`, `np.logical_not`
+
+## Mathematical Functions
+
+- Trigonometric: `np.sin`, `np.cos`, etc.
+- Exponential & logarithmic: `np.exp`, `np.log`, etc.
+- Power & root: `np.power`, `np.sqrt`, etc.
+
+## Statistical & Linear Algebra
+
+**Statistical (Aggregating) Functions:**
+
+- `np.mean`, `np.median`, `np.std`, `np.var`
+- `np.percentile`
+- `np.min`, `np.max`
+- Note: can specify `axis` along which to compute
+
+**Linear Algebra:**
+
+- `np.dot` (or `@`) for matrix multiplication
+- `np.linalg.inv`: Matrix inverse
+- `np.linalg.eig`: Eigenvalues and eigenvectors
+
+## Slicing NumPy Arrays
+
+**Indexing** — Accessing individual elements:
+
+- Use square brackets: `array[row_index, col_index]`
+
+**Slicing** — Extracting sub-arrays:
+
+- `array[start:end]` — Elements from index `start` to `end-1`
+- `array[start:end:step]` — Elements with specified step
+
+**Multi-dimensional slicing:**
+
+- `array[row_start:row_end, col_start:col_end]`
+
+**Fancy indexing:**
+
+- Use arrays of indices: `array[rows, cols]`
+
+## Slicing Examples: Basic & Multi-dimensional {.demo-slide}
+
+::: {.warning-box}
+**Recall:** 0-indexing!!
+:::
+
+```python
+# Basic Slicing
+arr = np.array([0, 1, 2, 3, 4, 5])
+arr[2:5]  # [2, 3, 4]
+
+# Multi-dimensional Slicing
+mat = np.array([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
+mat[0:2, 1:3]  # [[1, 2], [4, 5]]
+```
+
+## Slicing Examples: Step & Fancy Indexing {.demo-slide}
+
+```python
+# Step Slicing
+arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+arr[1:9:2]  # [1, 3, 5, 7]
+
+# Fancy Indexing
+arr = np.array([10, 11, 12, 13, 14])
+indices = np.array([1, 3])
+arr[indices]  # [11, 13]
+```
+
+## Reshaping and Combining Arrays
+
+**Reshaping:**
+
+- `np.reshape(arr, new_shape)` — Change array dimensions
+- `arr.flatten()` — Flatten multi-dimensional array into 1D
+
+**Combining:**
+
+- `np.concatenate((arr1, arr2), axis)` — Concatenate along an axis
+- `np.stack((arr1, arr2), axis)` — Stack along a new axis
+- `np.vstack((arr1, arr2))` — Stack arrays vertically
+- `np.hstack((arr1, arr2))` — Stack arrays horizontally
+
+## Broadcasting in NumPy
+
+::: {.key-idea}
+**Broadcasting** enables element-wise operations on arrays of different shapes. NumPy automatically adjusts dimensions to match.
+:::
+
+**Broadcasting Rules:**
+
+1. If arrays have different ranks, prepend the smaller-rank array with ones.
+2. If dimensions don't match, adjust the smaller dimension to match the larger one.
+3. If dimensions still don't match and neither dimension is 1, broadcasting fails.
+
+```python
+arr1 = np.array([[1, 2], [3, 4]])
+arr2 = np.array([10, 20])
+result = arr1 + arr2
+# arr2 is broadcast to [[10, 20], [10, 20]]
+```
+
+## Broadcasting Example {.demo-slide}
+
+**Working example:**
+
+```python
+a = np.array([[0.0,  0.0,  0.0],
+              [10.0, 10.0, 10.0],
+              [20.0, 20.0, 20.0],
+              [30.0, 30.0, 30.0]])
+
+b = np.array([1.0, 2.0, 3.0])
+
+a + b
+# array([[ 1.,  2.,  3.],
+#        [11., 12., 13.],
+#        [21., 22., 23.],
+#        [31., 32., 33.]])
+```
+
+::: {.warning-box}
+**Fails:** `b = np.array([1.0, 2.0, 3.0, 4.0])` → `ValueError: operands could not be broadcast together with shapes (4,3) (4,)`
+:::
+
+## NumPy Simulation Examples {.demo-slide}
+
+**Simulating Coin Flips:**
+
+```python
+coin_flips = np.random.randint(2, size=10)  # 0: Heads, 1: Tails
+print("Coin Flips:", coin_flips)
+```
+
+**Simulating Dice Rolls:**
+
+```python
+dice_rolls = np.random.randint(1, 7, size=5)
+print("Dice Rolls:", dice_rolls)
+```
+
+::: {.demo-box}
+Try changing the `size` parameter. Do the results look random?
+:::
+
+## Gaussian Distribution {.demo-slide}
+
+```python
+mu = 0
+sigma = 1
+num_samples = 1000
+
+gaussian_samples = np.random.normal(mu, sigma, num_samples)
+print("Gaussian Samples:", gaussian_samples)
+```
+
+::: {.demo-box}
+Try changing `mu` and `sigma` to see how the distribution shifts and spreads.
+:::
+
+## Takeaways {.takeaway-slide}
+
+- NumPy is the foundation for numerical computing in Python
+- Arrays are fast, memory-efficient, and support vectorized operations
+- Broadcasting lets you operate on arrays of different shapes
+- Slicing and fancy indexing give you flexible data access
+- `np.random` modules enable simulations of all kinds
+
+::: notes
+This deck is code-heavy. Walk through each example live if possible. The broadcasting slides are the most conceptually challenging — take extra time there. The simulation examples at the end pair well with a live demo.
+:::
+
+{{< include ../_partials/questions.qmd >}}

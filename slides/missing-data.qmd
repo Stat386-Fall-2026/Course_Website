@@ -1,0 +1,358 @@
+---
+title: "Missing Data"
+subtitle: "Types, Detection, and Pandas Imputation"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Why Missing Data Matters
+
+- **Biases estimates and relationships** if handled poorly
+- **Reduces statistical power** (less data after dropping)
+- **Causes errors** in modeling pipelines
+
+::: {.key-idea}
+**Thesis:** Your strategy must match *why* the data is missing.
+:::
+
+## What Counts as "Missing"?
+
+- **Canonical:** `NaN`, `None`, `NaT`
+- **Non-standard placeholders:** `""`, `"NA"`, `"?"`, `"Unknown"`, `999`, `-1`
+- **Not missing:** true zeros; a valid category like `"Unknown"` (if chosen)
+- Pandas may parse placeholders as strings unless normalized
+
+::: {.warning-box}
+Always normalize sentinels before analyzing — pandas won't catch `999` for you.
+:::
+
+## Types of Missingness {.section-card}
+
+- **Structurally Missing** — missing due to data structure
+- **MCAR** — Missing Completely At Random (no pattern)
+- **MAR** — Missing At Random (depends on observed variables)
+- **MNAR** — Missing Not At Random (depends on the unobserved value itself)
+
+## Structurally Missing
+
+- Missing due to the **structure** of the data
+- Examples: male participants don't have pregnancy questions; unemployed don't have employer questions
+
+::: {.tip-box}
+**Best strategies:** do nothing, create a "not applicable" value, or analyze separately.
+:::
+
+## MCAR — Missing Completely At Random
+
+- Missingness **independent** of both observed and unobserved data
+- Examples: lab technician spills a sample; survey printing error
+- **Heuristic:** distributions look similar for rows with/without missing values
+
+::: {.key-idea}
+**Actions:** drop a small fraction; mean/median imputation is acceptable. Caveat: dropping still reduces power.
+:::
+
+## MAR — Missing At Random
+
+- Missingness relates to **observed variables**, not the missing value itself
+- Examples: patients with lower BP less likely to have cholesterol measured; older patients more likely missing weight
+- **Heuristic:** missingness rates differ across observed groups
+
+::: {.key-idea}
+**Prefer conditional strategies:** group-wise imputation. Caveat: a global mean may bias results if groups differ.
+:::
+
+## MNAR — Missing Not At Random
+
+- Missingness depends on the **missing values themselves**
+- Examples: people with lower income less likely to report; depressed participants less likely to answer depression questions
+
+::: {.warning-box}
+**Actions:** keep a missingness indicator; allow NA to persist; add a "Not reported" category; run sensitivity checks. pandas imputation can't "fix" MNAR — document assumptions.
+:::
+
+## MAR vs MNAR
+
+::: {.comparison-slide}
+
+::: {.columns-2}
+<div>
+**If MAR**
+
+- Multiple imputation works
+- Prediction models make reasonable estimates
+- MLE approaches are valid
+</div>
+<div>
+**If MNAR**
+
+- Imputation may introduce bias
+- Missingness holds hidden info
+- Need sensitivity checks + documentation
+</div>
+:::
+
+:::
+
+## MAR or MNAR? {.exercise-slide}
+
+::: {.exercise-check}
+**Scenario 1:** Younger people are more likely to skip the income question because they *don't know* it.
+
+**Answer:** MAR — missingness depends on observed age.
+:::
+
+## MAR or MNAR? (cont.) {.exercise-slide}
+
+::: {.exercise-check}
+**Scenario 2:** People with *higher income* are more likely to skip the income question because they don't want to disclose it.
+
+**Answer:** MNAR — missingness depends on the unobserved value itself.
+:::
+
+## Choosing a Strategy (Mini-Flow)
+
+1. **Assess likely mechanism:** MCAR, MAR, or MNAR?
+2. **Measure extent:** % missing by column and by row
+3. **Consider downstream use:** summary stats, modeling, visualization
+
+::: {.tip-box}
+Match the method to the mechanism — there is no universal best choice.
+:::
+
+## Detecting Standard Missingness (pandas)
+
+- **Quick scans:** `df.info()`, `df.isna().sum()`
+- **Row-level share:** `df.isna().any(axis=1).mean()`
+- Dtype surprises can signal placeholders
+
+```python
+df.info()
+df.isna().sum().sort_values(ascending=False)
+```
+
+## Detecting Non-Standard Missingness {.demo-slide}
+
+- **Coercion:** `pd.to_numeric(df["col"], errors="coerce")`
+- **Frequency spikes:** `df["name"].value_counts().head(10)`
+- **Normalize sentinels** at read time
+
+```python
+sent = ["NA", "N/A", "?", "Unknown", "999", "-999", ""]
+df = df.replace(sent, np.nan)
+# Or at read:
+df = pd.read_csv("data.csv", na_values=sent)
+```
+
+## Visualizing Missingness (Quick) {.demo-slide}
+
+**Column bar — share missing per column:**
+
+```python
+(df.isna().sum() / len(df)).sort_values(
+    ascending=False).plot.bar()
+```
+
+**Heatmap — where missingness lives:**
+
+```python
+sns.heatmap(df.isna(), cbar=False)
+```
+
+## Drop vs Impute: Tradeoffs {.comparison-slide}
+
+::: {.columns-2}
+<div>
+**Drop**
+
+- Simple; removes problematic rows/cols
+- *Cost:* data loss; bias if not MCAR
+</div>
+<div>
+**Impute**
+
+- Preserves dataset shape
+- *Cost:* distorts distributions/correlations if assumptions fail
+</div>
+:::
+
+## Dropping with Control (pandas) {.demo-slide}
+
+```python
+# Drop rows only if key columns missing
+df = df.dropna(subset=["age", "income"])
+
+# Drop columns with too many missings
+# (keep if >= 40% present)
+thresh = int(0.4 * len(df))
+df = df.dropna(axis=1, thresh=thresh)
+```
+
+::: {.tip-box}
+Always compare `df.shape` before/after, and document the fraction removed.
+:::
+
+## Mean Imputation (Numeric) {.demo-slide}
+
+```python
+df["age"] = df["age"].fillna(df["age"].mean())
+```
+
+- **Strengths:** simple, fast, preserves size
+- **Weaknesses:** shrinks variance, distorts tails, biases correlations toward 0
+- **When:** symmetric distributions, low missingness, MCAR-ish
+
+## Median Imputation (Numeric, Robust) {.demo-slide}
+
+```python
+df["income"] = df["income"].fillna(df["income"].median())
+```
+
+- **Strengths:** robust to outliers/skew
+- **Weaknesses:** compresses variance; may flatten multimodality
+- **When:** skewed data, outliers, MCAR/MAR (global)
+
+## Forward / Backward Fill (Ordered / Time Series) {.demo-slide}
+
+```python
+# Globally:
+df["price"] = df["price"].ffill().bfill()
+
+# Within groups (safer):
+df = df.sort_values(["id", "time"])
+df["x"] = df.groupby("id")["x"].ffill()
+```
+
+- **Strengths:** good for continuous sensors/sequences
+- **Weaknesses:** dangerous across entities; must group properly
+
+## Missingness Indicator Columns {.demo-slide}
+
+```python
+df["age_missing"] = df["age"].isna().astype("int8")
+df["age"] = df["age"].fillna(df["age"].median())
+```
+
+- **Strengths:** keeps signal that values were missing (useful for MAR/MNAR)
+- **When:** MNAR suspected, transparency, later modeling
+
+::: {.tip-box}
+Pair the indicator with an imputation — the flag preserves *that* data was missing.
+:::
+
+## Nearest / Closest Value (Index-Based) {.demo-slide}
+
+```python
+df = df.sort_values("timestamp").set_index("timestamp")
+df["y"] = df["y"].interpolate(method="nearest")
+```
+
+- **Strengths:** leverages local neighborhood
+- **Weaknesses:** assumes local similarity; unsafe for unordered/categorical data
+
+## Group-Wise (Conditional) Imputation {.demo-slide}
+
+```python
+df["income"] = df["income"].fillna(
+    df.groupby("region")["income"].transform("median")
+)
+```
+
+- **Strengths:** respects systematic differences across groups (MAR)
+- **Weaknesses:** unstable for small groups
+
+::: {.warning-box}
+Check group sizes — a handful of rows makes the group median noisy.
+:::
+
+## Strengths & Weaknesses (Summary) {.reference-slide}
+
+| Method | Best For | Strengths | Weaknesses |
+|---|---|---|---|
+| Drop | MCAR; small fraction | Simple | Data loss; bias if not MCAR |
+| Mean | Symmetric numeric | Fast; simple | Shrinks variance; distorts tails |
+| Median | Skewed / outliers | Robust; better center | Still compresses variance |
+| FFill/BFill | Ordered series | Continuity; local realism | Must group; may propagate errors |
+| Indicator | MNAR suspected | Preserves missingness signal | Needs interpretation; not a fill alone |
+| Nearest | Smooth series | Local info | Needs order; unsafe for categoricals |
+| Group-wise | MAR | Respects group structure | Small groups unstable |
+
+## Measuring Impact of Your Choice {.demo-slide}
+
+```python
+before = df.copy()
+# ... do your cleaning ...
+after = df.copy()
+before.shape, after.shape
+before.describe(numeric_only=True)
+after.describe(numeric_only=True)
+```
+
+- Watch shifts in mean/median/variance and correlations
+- Visual spot-checks: histograms, scatter plots pre/post
+- **Document:** what changed, why, and the assumed mechanism
+
+## Pair Activity: Identify the Mechanism {.exercise-slide}
+
+::: {.exercise-check}
+**Set A** — Which type? What evidence? What handling plan?
+
+1. Self-reported weight missing more for extreme values
+2. Random sensor packet loss
+3. Income missing more for low site-activity users
+:::
+
+## Pair Activity: Identify the Mechanism (cont.) {.exercise-slide}
+
+::: {.exercise-check}
+**Set B** — Which type? What evidence? What handling plan?
+
+1. Survey with `"?"` in salary; `"Unknown"` in education
+2. Transaction log missing timestamps on weekends
+3. Medical test missing only when above the device's range
+:::
+
+## Methods for Detecting Non-Standard Missing {.reference-slide}
+
+```python
+# 1) Spot sentinel spikes
+df["name"].value_counts().head(10)
+
+# 2) Coerce numerics to reveal NaN
+df["x_num"] = pd.to_numeric(df["x"], errors="coerce")
+
+# 3) Normalize common sentinels
+sent = ["NA", "N/A", "?", "Unknown", "999", "-999", ""]
+df = df.replace(sent, np.nan)
+```
+
+## Pair Activity: Try Two Imputations & Compare {.exercise-slide}
+
+```python
+m1 = df["age"].fillna(df["age"].median())
+m2 = df["age"].fillna(
+    df.groupby("region")["age"].transform("median")
+)
+m1.describe(), m2.describe()
+```
+
+::: {.exercise-check}
+- Report changes in mean / median / variance
+- Add a missingness indicator for at least one column
+:::
+
+## Key Takeaways {.takeaway-slide}
+
+- **Match the method to the mechanism** — MCAR, MAR, MNAR drive the choice
+- **Detect before you act:** `isna().sum()`, sentinel scans, visual checks
+- **Dropping is simple but costly** — bias if not MCAR, power loss either way
+- **Imputation preserves shape** but distorts distributions if assumptions fail
+- **Document assumptions** — especially under MNAR, imputation can't "fix" bias
+
+::: notes
+This deck moves from concept (why missingness matters, the four types) to practice (detection, then imputation methods in pandas). Pace the type-of-missingness slides carefully — students often conflate MAR and MNAR. The two MAR-or-MNAR exercise slides (Scenarios 1 & 2) are a good check-for-understanding checkpoint before moving to detection. The comparison slide (Drop vs Impute) is the pivot from concepts to methods. For the imputation method slides, pick one or two to demo live (median + group-wise is a good pair) rather than reading every code block aloud. The reference/cheat-sheet summary table is meant to be a takeaway students revisit during the lab. Leave ~10 minutes for the final pair activity comparing two imputations — encourage students to actually run the code and report the describe() deltas. If short on time, skip the nearest-value slide and fold its idea into the ffill/bfill discussion.
+:::
+
+{{< include ../_partials/questions.qmd >}}

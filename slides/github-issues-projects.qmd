@@ -1,0 +1,327 @@
+---
+title: "GitHub Issues, Projects, and Workflows"
+subtitle: "How teams plan work and ship changes"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Why these tools matter
+
+- **Issues** capture work: bugs, tasks, features, questions
+- **Projects** organize work: priorities, status, timelines
+- **Workflows** (Actions) automate the boring parts: lint, tests, deploy docs
+- Great repos make it easy for new contributors to help
+
+## Learning goals
+
+1. Write a clear issue with reproducible steps and a good title
+2. Use labels, assignees, and references to coordinate work
+3. Use a Project board/table to track progress
+4. Explain what a GitHub Actions workflow is and read simple YAML
+5. Identify traits of a healthy open source repository
+
+## Agenda {.section-card}
+
+- **Issues:** the unit of work
+- **Projects:** the planning layer
+- **Workflows:** automation and CI basics
+- **What good repos look like**
+
+## Issues: what they are
+
+A shared to-do list backed by discussion and history.
+
+- Used for **bugs**, **feature requests**, **tasks**, **design questions**
+- Can be linked to:
+  - a **pull request** (implementation)
+  - a **project item** (planning)
+  - other **issues** (dependencies)
+
+## Anatomy of a strong issue
+
+::: {.key-idea}
+A strong issue is specific, searchable, and reproducible.
+:::
+
+- **Title:** specific and searchable
+- **Context:** what you expected vs what happened
+- **Repro steps:** minimal steps to reproduce
+- **Evidence:** error message, screenshot, snippet, environment info
+- **Definition of done:** what would close this issue?
+
+## Issue template (copy/paste starter) {.demo-slide}
+
+```markdown
+## Summary
+One sentence: what is broken or needed?
+
+## Steps to reproduce
+1.
+
+## Expected
+What you expected to happen.
+
+## Actual
+What actually happened (include exact error text).
+
+## Environment
+OS:
+Python & Package version(s):
+```
+
+::: {.tip-box}
+Keep the template short. Long templates discourage people from filing issues at all.
+:::
+
+## Labels, assignees, milestones
+
+- **Labels** make triage possible (`bug`, `docs`, `good first issue`, `help wanted`)
+- **Assignees** clarify ownership (who is currently driving)
+- **Milestones** group work by release, sprint, or deadline
+
+::: {.key-idea}
+Rule of thumb: **labels** describe the work; **assignee** describes the person.
+:::
+
+## Linking issues to pull requests
+
+- Refer to an issue from a PR description: `#123`
+- Auto-close when merged: `fixes #123`, `closes #123`, `resolves #123`
+
+::: {.tip-box}
+The PR becomes a documented solution, not just a code dump.
+:::
+
+## Demo plan (Issues) {.demo-slide}
+
+1. Create an issue with the template
+2. Add labels and assign it
+3. Open a PR that says `fixes #<issue number>`
+4. Merge PR and watch the issue close automatically
+
+::: {.demo-box}
+Watch for the automatic close — it's the moment the link between issue and PR clicks for students.
+:::
+
+## GitHub Issues vs Pull Requests {.comparison-slide}
+
+::: {.columns-2}
+
+<div>
+
+### Issues
+
+Describe and discuss work:
+
+- Bug reports
+- Feature requests
+- Design discussions
+- Tasks not implemented yet
+
+**Think:** problem statement and planning space.
+
+</div>
+
+<div>
+
+### Pull Requests
+
+Implement the work:
+
+- Code changes
+- New features
+- Documentation
+- Review and merge discussion
+
+**Think:** solution and code review space.
+
+</div>
+
+:::
+
+## Discussion prompt {.question-slide}
+
+::: {.discussion-box}
+In a group project, what information belongs in an **issue** vs in a **pull request**? Why might using these tools be beneficial during a group project?
+:::
+
+## Projects: what they are
+
+A planning surface that integrates issues and PRs.
+
+- **Board** view (kanban)
+- **Table** view (spreadsheet-style)
+- **Timeline** view (roadmap)
+- **Custom fields** track metadata: priority, size, due date
+
+## Minimal kanban workflow {.demo-slide}
+
+::: {.columns-2}
+
+<div>
+
+### To do
+
+Unstarted work sitting in the backlog.
+
+</div>
+
+<div>
+
+### In progress
+
+Currently being worked on.
+
+</div>
+
+:::
+
+**Done** — Completed, merged, shipped.
+
+::: {.tip-box}
+Keep columns boring; use **labels** and **fields** for nuance.
+:::
+
+## Project hygiene: what makes it useful
+
+- **One source of truth** for status (not private notes)
+- Work items have **owners** and **next steps**
+- **Regular pruning:** close stale items, split oversized issues
+- **Priorities visible** (top of backlog means something)
+
+## Demo plan (Projects) {.demo-slide}
+
+1. Create a Project for the repo
+2. Add three draft items
+3. Add a **Priority** field
+4. Switch between Board and Table views
+5. Move an item across columns
+
+::: {.demo-box}
+Show how the same item appears in both views — same data, different lens.
+:::
+
+## Discussion prompt {.question-slide}
+
+::: {.discussion-box}
+What would you track in a Project board for your final project: tasks, bugs, experiments, writing, or all of the above?
+:::
+
+## What is a workflow?
+
+::: {.key-idea}
+A **workflow** is an automated process triggered by repo events.
+:::
+
+- Defined in **YAML** files in `.github/workflows/`
+- Consists of **jobs** and **steps**
+- Runs on a **runner** (usually a VM)
+
+## YAML primer (60 seconds)
+
+- **Indentation matters** (use spaces, not tabs)
+- `key: value` pairs
+- Lists start with `-`
+- `#` starts a comment
+
+::: {.warning-box}
+Tabs will break your workflow. Configure your editor to insert spaces.
+:::
+
+## Minimal workflow anatomy {.demo-slide}
+
+```yaml
+name: Lint
+on: [push, pull_request]
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install ruff && ruff check .
+```
+
+::: {.demo-box}
+Read top to bottom: name, triggers, a job, a runner, then three steps.
+:::
+
+## Why start with linting?
+
+- **Fast feedback** on style and obvious mistakes
+- **Reduces review time** and merge conflicts
+- Great **baseline** even before you have tests
+
+## Workflow best practices (intro level)
+
+- **Pin action versions** (`@v4`, `@v5`)
+- Keep **secrets out of repos** (use GitHub Secrets)
+- Prefer **least-privilege** permissions
+- Make failures **actionable:** clear logs, small steps
+
+## Optional: matrix testing idea {.demo-slide}
+
+::: {.key-idea}
+A **matrix** runs the same job across many combinations of OS and language versions.
+:::
+
+```yaml
+strategy:
+  matrix:
+    os: [ubuntu-latest, windows-latest]
+    python: ["3.10", "3.11"]
+```
+
+::: {.tip-box}
+Use sparingly at first — each combination costs runner minutes.
+:::
+
+## Healthy repo checklist {.reference-slide}
+
+- **Clear README:** what it is, how to install, minimal example
+- **Contribution docs:** `CONTRIBUTING.md` and Code of Conduct
+- **Issue templates** and PR template
+- **CI badges** and automated checks (lint, tests, docs)
+- **Good triage:** labels, milestones, assigned issues, recent activity
+
+## Case study: scikit-learn
+
+- **Contribution guide** explains many ways to contribute
+- Clear **expectations for review** and community behavior
+- Strong **documentation culture**
+
+## Case study: pandas
+
+- Detailed **contributing guide** with workflow steps
+- Active **issue tracker** with labels and triage
+- **Maintainer guidance** exists, signaling maturity
+
+## Mini-activity: repo evaluation {.exercise-slide}
+
+::: {.discussion-box}
+Pick one repo and answer:
+:::
+
+1. Where do I learn how to contribute?
+2. What do issues look like?
+3. What automation runs on PRs?
+4. What is one improvement you would make?
+
+::: {.exercise-check}
+Be ready to share your chosen repo and one observation from the group.
+:::
+
+## Takeaways {.takeaway-slide}
+
+- **Issues** are the unit of work; good titles and repro steps make them useful
+- **Projects** give a planning layer with board, table, and timeline views
+- **Workflows** automate lint, tests, and more via simple YAML
+- **Healthy repos** signal care through docs, templates, CI, and triage
+
+::: notes
+This deck spans planning and automation. Pace the Issues section so students see the issue→PR link before moving on. The Projects demo is short but powerful — emphasize that the same item shows up in every view. For workflows, read the YAML aloud line by line; students new to YAML struggle with indentation. Skip the matrix slide if time is short. End with the mini-activity and have 2–3 groups share their repo evaluation.
+:::
+
+{{< include ../_partials/questions.qmd >}}

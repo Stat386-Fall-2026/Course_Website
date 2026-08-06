@@ -1,0 +1,298 @@
+---
+title: "Python Packaging with uv"
+subtitle: "Why packages matter, what changed from class scripts, and what to teach now"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Where Students Are Starting {.section-card}
+
+**Already familiar:**
+
+- `uv init`, `uv add`, `uv run`
+- A reproducible project environment
+
+**New idea today:**
+
+- **Environment management** = "What do I need to run this project?"
+- **Packaging** = "How do I turn this project into something other people can install and reuse?"
+
+## Why Packages Exist {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Before packaging**
+
+- Share code by copying folders / repos
+- Imports depend on where Python is launched
+- No standard name / version / install story
+- Hard to reuse reliably
+
+</div>
+<div>
+
+**After packaging**
+
+- Give code a name, version, dependencies
+- Build standard artifacts (wheels, sdists)
+- Install locally, from PyPI, or from Git
+- Make reuse predictable
+
+</div>
+:::
+
+::: {.key-idea}
+A **package** is an organized tree of importable modules — not just a loose folder of scripts.
+:::
+
+## Where Do Packages Fit? {.section-card}
+
+::: {.key-idea}
+**Rule of thumb:** If code should be reused outside one notebook, one folder, or one person, packaging starts to matter.
+:::
+
+## Script vs. Package {.comparison-slide}
+
+| | Script / App | Package / Library |
+|---|---|---|
+| **Main goal** | Run code for yourself | Let others install and reuse |
+| **Layout** | Flat files | `src/your_pkg/` plus metadata |
+| **Installable** | Not automatically | Yes, when build system declared |
+| **What gets shared** | Source folder | Wheels, sdists, package name |
+| **User action** | Clone and run | Install, import, or run CLI |
+
+## The Packaging Stack: Keep the Layers Separate {.section-card}
+
+::: {.cheat-grid}
+<div>
+
+#### Your code
+
+Source files, tests, README
+
+</div>
+<div>
+
+#### Recipe
+
+`pyproject.toml`
+
+</div>
+<div>
+
+#### Builder
+
+Backend (e.g. `uv_build`)
+
+</div>
+<div>
+
+#### Artifacts
+
+Wheel and sdist in `dist/`
+
+</div>
+<div>
+
+#### Channel
+
+TestPyPI, PyPI, local, Git
+
+</div>
+:::
+
+::: {.key-idea}
+**Most important distinction:** `pyproject.toml` is the **recipe**. A **wheel** is the finished product.
+:::
+
+## The Python Package Ecosystem {.section-card}
+
+::: {.discussion-box}
+A package ecosystem connects **code** → **metadata** → **builder** → **artifact** → **index**.
+
+We will trace this flow concretely with `uv` in the next slides.
+:::
+
+## Three Core Terms to Lock In First {.reference-slide}
+
+| Term | Meaning |
+|---|---|
+| `pyproject.toml` | Standard file for project metadata + build-system config |
+| **wheel** (`.whl`) | Built distribution that installs directly |
+| **PyPI / TestPyPI** | Package index where you publish built distributions |
+
+::: {.warning-box}
+**Terms that cause confusion:** `uv.lock` (dev environment snapshot), **sdist** (source distribution), `setup.py` (older setuptools entry point).
+:::
+
+## You Will Still See `setup.py` {.section-card}
+
+**Historically:**
+
+- Metadata and build logic lived in `setup.py` via `setuptools.setup(...)`
+
+**Today:**
+
+- New projects use `pyproject.toml`
+- `setup.py` is still valid, but not the default starting point
+
+::: {.tip-box}
+Keep `setup.py` only when **legacy** or **programmatic** config is genuinely needed.
+:::
+
+## The Current Best Default for This Course {.section-card}
+
+**Recommendation:**
+
+- Use **uv** as the frontend
+- Use **pyproject.toml** as the standard packaging file
+- Use **uv_build** as the default backend for pure Python
+- Use `uv init --package` or `uv init --lib` when the project should be reusable
+
+::: {.key-idea}
+If no build system is declared, **uv treats the project as an app** — not as a packaged project to build and install.
+:::
+
+## Worked Example: Create, Build, Install {.demo-slide}
+
+```bash
+uv init --lib templemath
+cd templemath
+uv add numpy
+uv build
+pip install dist/templemath-0.1.0-py3-none-any.whl
+python -c "import templemath"
+```
+
+::: {.demo-box}
+`uv init --lib` gives an installable layout. `uv build` creates the distributions. The **wheel** installs like any other package.
+:::
+
+## What Goes in `pyproject.toml`? {.demo-slide}
+
+```toml
+[project]
+name = "templemath"
+version = "0.1.0"
+description = "Utilities for classroom demos"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0"]
+
+[project.scripts]
+templemath = "templemath.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
+```
+
+::: {.tip-box}
+Read as: `[project]` = **who am I?** · `dependencies` = **what do I need?** · `[project.scripts]` = **what command?** · `[build-system]` = **how to build?**
+:::
+
+## What Happens When You Run `uv build`? {.demo-slide}
+
+```bash
+uv build
+ls dist/
+```
+
+1. Read `pyproject.toml`
+2. Use the declared backend
+3. Create `dist/*.whl` and `dist/*.tar.gz`
+4. Those files are what you **publish** or **install**
+
+## Wheel vs. sdist {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**sdist**
+
+- Source distribution
+- `.tar.gz`
+- Contains source + metadata
+- Useful fallback
+- **Analogy:** boxed meal kit
+
+</div>
+<div>
+
+**wheel**
+
+- Built distribution
+- `.whl`
+- Installs directly, no build step
+- Faster, simpler
+- **Analogy:** prepared meal
+
+</div>
+:::
+
+## Where Can Installs Come From? {.demo-slide}
+
+```bash
+pip install templemath                                 # PyPI: published release
+pip install .                                          # Local path: what's on disk
+pip install dist/templemath-0.1.0-py3-none-any.whl     # wheel
+pip install git+https://github.com/user/repo.git       # Git URL: source control
+```
+
+::: {.tip-box}
+**Teaching shortcut:** PyPI is for **releases**. Git URLs are for **source-control** installs.
+:::
+
+## One Git Nuance Worth Teaching {.demo-slide}
+
+```bash
+# named direct URL requirement
+pip install "TempleMath @ git+https://github.com/user/repo.git"
+
+# bare VCS URL
+pip install git+https://github.com/user/repo.git
+```
+
+::: {.warning-box}
+**Important nuance:** A bare VCS URL can infer the project name, but **extras** cannot be requested, and **editable** VCS installs need more explicit info.
+:::
+
+## Recommended Release Workflow with uv {.demo-slide}
+
+1. Create packaged project (`uv init --package` or `--lib`)
+2. Fill in `[project]` metadata
+3. Build with `uv build`
+4. Sanity-check with `uv build --no-sources`
+5. Publish to **TestPyPI** or **PyPI**
+
+```bash
+uv build
+uv build --no-sources
+uv publish
+```
+
+## Three Takeaways {.takeaway-slide}
+
+1. `pyproject.toml` is the **build-and-metadata** file — not the installed package.
+2. A **wheel** is the built artifact users install.
+3. For this course: **uv + pyproject.toml + uv_build** for pure Python.
+
+::: {.key-idea}
+**One sentence:** `pyproject.toml` tells tools how to build; a wheel is the built result; PyPI is where you publish; uv is the frontend.
+:::
+
+## References {.reference-slide}
+
+- Previous course deck
+- **PyPA:** Writing your `pyproject.toml`; The Packaging Flow
+- **uv docs:** Creating projects; Configuring projects; Build backend; Building distributions; Building and publishing
+- **pip docs:** VCS Support
+
+::: notes
+This deck pivots from environment management (already covered) to packaging. The key conceptual move is the recipe-vs-product distinction on slide 6 — spend extra time there. The `templemath` worked example (slides 11–13) is the best live demo; consider running `uv build` live and inspecting `dist/`. Skip the Git nuance slide (16) if time is short — it is optional detail. End by previewing the recommended release workflow so students see the full arc from `uv init` to `uv publish`.
+:::
+
+{{< include ../_partials/questions.qmd >}}

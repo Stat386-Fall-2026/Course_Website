@@ -9,7 +9,7 @@ format:
     code-copy: true
     transition: fade
     chalkboard: true
-    footer: "TODO: Course Number — Term"
+    footer: "STAT 386 — Fall 2026"
 execute:
   echo: true
   warning: false

@@ -17,10 +17,47 @@ By the end of class, you should be able to:
 - Goal 2
 - Goal 3
 
+## Section Divider {.section-card}
+
+Use `{.section-card}` for strong section breaks with a navy→royal gradient background and white text.
+
 ## Key Concept
 
 ::: {.key-idea}
-**Key idea:** Write the central idea here.
+**Key idea:** Write the central idea here. Cream box with tan left border.
+:::
+
+::: {.tip-box}
+**Tip:** Use `.tip-box` for small inline hints. Light tan background, tan left border.
+:::
+
+::: {.warning-box}
+**Warning:** Use `.warning-box` for pitfalls or common mistakes. Soft red background, warm left border.
+:::
+
+## Comparison: Option A vs Option B {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Option A**
+
+- Point 1
+- Point 2
+
+</div>
+<div>
+
+**Option B**
+
+- Point 1
+- Point 2
+
+</div>
+:::
+
+::: {.tip-box}
+**Tip:** Use `.comparison-slide` for side-by-side choices or contrasts.
 :::
 
 ## Example
@@ -31,6 +68,47 @@ Explain the example here.
 
 ::: {.demo-box}
 Open `demos/week-XX.qmd` and follow along.
+:::
+
+## Quick Exercise {.exercise-slide}
+
+**2–3 minutes** — Work in pairs.
+
+1. Step one
+2. Step two
+3. Step three
+
+::: {.exercise-check}
+**Check:** Verify everyone completed the task.
+:::
+
+## Reference / Cheat Sheet {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### Category A
+
+- Item 1
+- Item 2
+
+</div>
+<div>
+
+#### Category B
+
+- Item 3
+- Item 4
+
+</div>
+<div>
+
+#### Category C
+
+- Item 5
+- Item 6
+
+</div>
 :::
 
 ## Takeaways {.takeaway-slide}

@@ -1,0 +1,332 @@
+---
+title: "IDEs and Virtual Environments for Data Science"
+subtitle: "VS Code + uv"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## What You Should Be Able to Do After Today {.section-card}
+
+By the end of class, you should be able to:
+
+- Explain what an IDE gives you (and what it does not)
+- Explain what a virtual environment is and why teams rely on them
+- Use VS Code for the everyday loop: edit, run, debug, version control
+- Use uv to create a project, add dependencies, reproduce an environment
+- Resolve a merge conflict using VS Code's merge UI
+
+## Two Recurring Problems in Real Projects {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Productivity problem**
+
+- You need a fast edit-run-check loop
+- Fewer context switches
+- Help from tooling
+
+</div>
+<div>
+
+**Reproducibility problem**
+
+- "It works on my machine" is not a plan
+- Different projects need different versions
+- Teams need reliable setup
+
+</div>
+:::
+
+::: {.key-idea}
+**Key idea:** An IDE addresses productivity; a virtual environment addresses reproducibility. You need both.
+:::
+
+## Why Use an IDE for Data Science?
+
+An IDE is a **hub**.
+
+- Editor + terminal + debugger + notebooks + Git in one place
+- Faster feedback, fewer context switches
+- Project-level settings
+
+::: {.warning-box}
+**Trade-offs:** learning curve, extensions can sprawl, heavier than a bare text editor.
+:::
+
+## IDE Landscape (Quick Take)
+
+- **VS Code / Code-OSS:** huge ecosystem; strong Git, Python, notebook support
+- **PyCharm:** excellent Python refactoring; heavier
+- **JupyterLab:** notebook-first; great for EDA; weaker as project hub
+- **RStudio / Positron:** strong for R and Quarto
+- **Terminal + Vim/Neovim:** light and powerful; steep curve
+
+## VS Code Mental Model
+
+- A **project** is a folder (workspace) plus settings
+- **Views:** Explorer, Editor, Terminal, Source Control, Extensions
+- The **Command Palette** is your "search bar" for actions
+
+::: {.key-idea}
+**Key idea:** Think "open a folder," not "open a file." Settings travel with the project.
+:::
+
+## VS Code: The 90% You Use All the Time
+
+**Daily moves**
+
+- Open folder: `File > Open Folder`
+- Integrated terminal: `Terminal > New Terminal`
+- Command Palette: `Cmd/Ctrl+Shift+P`
+- Search files: `Cmd/Ctrl+P`
+
+**Two habits**
+
+- Keep work inside a project folder
+- Let the project choose its Python interpreter
+
+::: {.tip-box}
+**Tip:** `Cmd/Ctrl+P` jumps to files; `Cmd/Ctrl+Shift+P` runs commands. Different shortcuts, both essential.
+:::
+
+## Extensions We Will Use {.reference-slide}
+
+| Extension | ID | Purpose |
+|---|---|---|
+| **Python** | `ms-python.python` | IntelliSense, debugging, testing |
+| **Jupyter** | `ms-toolsai.jupyter` | Notebooks and interactive cells |
+| **Quarto** | `quarto.quarto` | Preview and render `.qmd` |
+| **Ruff** (optional) | `charliermarsh.ruff` | Fast linting and formatting |
+
+::: {.tip-box}
+**Tip:** Install from the Extensions view (`Cmd/Ctrl+Shift+X`). Restart VS Code after enabling a language extension.
+:::
+
+## Quarto in VS Code {.demo-slide}
+
+With the Quarto extension, you can preview `.qmd` inside VS Code.
+
+```bash
+touch report.qmd
+quarto render report.qmd
+```
+
+In VS Code: run the command **Quarto: Preview**.
+
+::: {.demo-box}
+**Demo flow:** create `report.qmd` → add a heading and a code cell → Preview in viewer pane → edit and watch it update.
+:::
+
+## Git Inside VS Code
+
+Same concepts as terminal Git.
+
+- **Source Control view** shows: changed files, staged files, diffs
+- Stage changes, write commit message, commit
+- Push and pull without leaving the editor
+
+::: {.key-idea}
+**Key idea:** The UI is a thin layer over Git. Nothing the buttons do is hidden from the terminal.
+:::
+
+## CLI to VS Code Mapping {.comparison-slide}
+
+| Terminal Git | VS Code UI |
+|---|---|
+| `git status` | Open Source Control view |
+| `git add <file>` | `+` to stage files |
+| `git commit -m "msg"` | Type message, click **Commit** |
+| `git push` | **Sync** / **Push** from UI |
+| `git pull` | **Pull** from UI |
+
+::: {.tip-box}
+**Tip:** The Source Control view badge number shows how many files have changed.
+:::
+
+## Merge Conflicts: What They Are
+
+A conflict happens when Git **cannot automatically combine** two sets of changes.
+
+- Most common: two branches edit the same lines
+- Git stops and asks you to decide
+
+::: {.warning-box}
+**Note:** Conflicts are not errors — they are Git being careful. You resolve them by choosing which changes win.
+:::
+
+## Conflict Resolution in VS Code
+
+**Markers** in the file:
+
+```text
+<<<<<<< current branch
+your changes
+=======
+incoming changes
+>>>>>>> incoming branch
+```
+
+- VS Code adds inline actions: **Accept Current**, **Accept Incoming**, **Accept Both**, **Compare changes**, **3-way merge editor**
+- After resolving: save file, stage it, commit the merge resolution
+
+## Why Virtual Environments Exist
+
+Python projects depend on external packages. Packages depend on other packages.
+
+If everything lives in one global Python:
+
+- Projects fight over versions
+- Upgrading one package breaks another
+- Reproducing an environment is hard
+
+::: {.key-idea}
+**Key idea:** A virtual environment **isolates** dependencies per project so each project gets exactly the versions it needs.
+:::
+
+## What Is a Virtual Environment?
+
+An isolated folder containing:
+
+- A **Python interpreter**
+- Installed **packages** (`site-packages`)
+- **Scripts** (`python`, `pip`, `pytest`)
+
+::: {.tip-box}
+**Rule of thumb:** one environment per project. Create it fresh, ignore it in Git, recreate it from the lockfile.
+:::
+
+## Why uv for This Class
+
+**uv** is a fast, standards-first tool.
+
+- `uv init` — creating projects
+- `uv add` / `uv remove` — managing dependencies
+- `uv sync` — syncing environments
+- `uv run` — running code
+- `uv.lock` — lockfile for reproducibility
+- Manages Python versions too
+
+## uv Project Structure (What to Commit)
+
+**Commit:** `pyproject.toml`, `uv.lock`, `.python-version`
+
+**Do NOT commit:** `.venv/` (local environment)
+
+```text
+myproject/
+  pyproject.toml
+  uv.lock
+  .python-version
+  .venv/   # ignore in git
+```
+
+::: {.warning-box}
+**Note:** Add `.venv/` to `.gitignore`. The environment is local; the lockfile is shared.
+:::
+
+## uv: The Commands You'll Use Most {.demo-slide}
+
+```bash
+uv init myproject
+cd myproject
+uv add httpx rich
+uv sync
+uv run python main.py
+```
+
+::: {.demo-box}
+**What happens:** `uv init` scaffolds the project, `uv add` updates `pyproject.toml` and `uv.lock`, `uv sync` builds `.venv`, and `uv run` executes inside that environment.
+:::
+
+## VS Code + uv: How They Fit Together
+
+- **uv** manages dependencies and environment in `.venv`
+- **VS Code** uses that environment as the interpreter
+
+**Two stable habits**
+
+- Run scripts with `uv run ...` in the terminal
+- In VS Code, select the interpreter inside `.venv`
+
+::: {.tip-box}
+**Tip:** `Cmd/Ctrl+Shift+P` → **Python: Select Interpreter** → pick the `.venv` path. VS Code remembers it per project.
+:::
+
+## In-Class Demo Outline {.demo-slide}
+
+1. **Create a new project:** `uv init`, add a dependency, run a script
+2. **Open folder** in VS Code, select the interpreter
+3. **Install Quarto extension**, preview a `.qmd`
+4. **Initialize Git**, commit from Source Control, push
+5. **Create and resolve a conflict**
+
+::: {.demo-box}
+**Pace:** ~2 minutes per step. Narrate each action; students follow along on their machines.
+:::
+
+## Exercise 1 (pairs): Build and Run a uv Project {.exercise-slide}
+
+**Goal:** build muscle memory for `uv init`, `uv add`, `uv run`.
+
+**Checklist**
+
+1. `uv init joke-demo`
+2. `uv add httpx`
+3. Write a script that calls `icanhazdadjoke.com`
+4. Run with `uv run python main.py`
+5. Commit `pyproject.toml`, `uv.lock`, and the script
+
+::: {.exercise-check}
+**Check:** `uv run` prints a dad joke; `git status` shows a clean tree after the commit.
+:::
+
+## Exercise 2 (pairs): Resolve a Merge Conflict in VS Code {.exercise-slide}
+
+**Goal:** get comfortable with the merge UI.
+
+1. Each person makes a branch and edits the **same line** in `README.md`
+2. Merge one branch first
+3. Merge the second branch and resolve the conflict in VS Code
+4. Stage, commit, push, then pull to verify
+
+::: {.exercise-check}
+**Check:** both teammates' edits are visible in `README.md`; `git log` shows the merge commit.
+:::
+
+## Optional 5-Minute Repo Tour: scikit-learn {.reference-slide}
+
+Look for these signals of a healthy project:
+
+- Clear **README**
+- Automated checks (**CI**)
+- Code quality tools
+- Central config in `pyproject.toml`
+- Tests and docs alongside code
+
+::: {.tip-box}
+**Tip:** Skim `pyproject.toml` first — it tells you how the project is built, tested, and tooled.
+:::
+
+## Wrap-Up: What to Remember {.takeaway-slide}
+
+- IDEs reduce friction in the edit-run-check loop
+- Virtual environments prevent dependency conflicts and enable reproducibility
+- **VS Code:** editor + terminal + Git + extensions
+- **uv:** project files (`pyproject.toml`, `uv.lock`, `.python-version`) plus local `.venv`
+- Use `uv sync` after pulling; use `uv run` to run reliably
+
+## Resources (Optional) {.reference-slide}
+
+- **uv docs:** https://docs.astral.sh/uv/
+- **VS Code Git:** https://code.visualstudio.com/docs/sourcecontrol/overview
+- **VS Code merge conflicts:** https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts
+- **Quarto in VS Code:** https://quarto.org/docs/tools/vscode/
+
+::: notes
+This deck pairs IDE productivity (VS Code) with reproducibility (uv). Pace: about 50 minutes. The two recurring-problems slide sets up the "why" before the "how." Slides 9 and 18 are good live-demo moments; the in-class demo outline (slide 20) is a guided walkthrough students follow on their machines. Exercises 1 and 2 are pair work — make sure partners are assigned before starting. If time is tight, the scikit-learn repo tour and the resources slide can be skipped or left as follow-up reading. Emphasize the two stable habits on slide 19: `uv run` in the terminal, and selecting the `.venv` interpreter in VS Code — these prevent most of the "it worked yesterday" issues students hit later.
+:::
+
+{{< include ../_partials/questions.qmd >}}

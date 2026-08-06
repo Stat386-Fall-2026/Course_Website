@@ -1,0 +1,384 @@
+---
+title: "Python Packages"
+subtitle: "Building, Testing, and Publishing"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Assumed Knowledge {.section-card}
+
+- You've already used `uv` for environment management
+  - `uv init`, `uv add`, `uv sync`
+- **Today's focus:** packaging
+
+::: {.key-idea}
+We will cover `pyproject.toml`, the Setuptools backend, building sdists/wheels, and publishing to TestPyPI.
+:::
+
+## Why Package?
+
+- **Reuse & share** via `pip` / PyPI
+- **Versioning & distribution** — pinned, discoverable releases
+- A clear **API + tests + docs** makes collaboration easier
+
+::: {.tip-box}
+**Tip:** Even personal projects benefit — a package is easier to import than a loose script.
+:::
+
+## The Workflow (at a glance) {.section-card}
+
+1. **Create repo & skeleton** — `README`, `LICENSE`, `src/`, `tests/`
+2. **Configure `pyproject.toml`** — build backend: Setuptools
+3. **Build distributions** — `uv build` or `python -m build`
+4. **Upload to TestPyPI** — `uvx twine upload --repository testpypi dist/*`
+5. **Install from TestPyPI** to verify; iterate & release
+
+## What is a PEP?
+
+**PEP** = Python Enhancement Proposal.
+
+- Tools (`pip`, `build`, `twine`, `uv`) use PEPs as the contract
+
+Three PEPs you'll touch today:
+
+- **PEP 621** — project metadata in `pyproject.toml`
+- **PEP 517/518** — build tools
+- **PEP 440** — version numbering
+
+::: {.tip-box}
+**Tip:** You don't have to memorize them — just know they exist.
+:::
+
+## PEP 8 (style) in one slide
+
+- **Goal:** readable, consistent code
+- Highlights:
+  - 4-space indent
+  - Clear names
+  - Imports at top
+
+::: {.key-idea}
+We enforce PEP 8 with `ruff format` and `ruff check`.
+:::
+
+## Modern Package Directory (src layout) {.demo-slide}
+
+```text
+myproject/
+  LICENSE
+  README.md
+  pyproject.toml
+  src/
+    myproject/
+      __init__.py
+      core.py
+  tests/
+```
+
+::: {.warning-box}
+**Why `src/`?** It prevents accidental imports from the project root — you test the *installed* package, not the loose files.
+:::
+
+## Minimal pyproject.toml (Setuptools backend) {.demo-slide}
+
+```toml
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "myproject"
+version = "0.1.0"
+description = "Short one-line description"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Your Name", email = "you@example.com" }]
+classifiers = ["Programming Language :: Python :: 3",
+               "Operating System :: OS Independent"]
+dependencies = []
+```
+
+## Editable install (dev) & versioning {.demo-slide}
+
+```bash
+# install locally for development
+uv pip install -e .
+```
+
+```toml
+# bump version when publishing (PEP 440)
+# MAJOR.MINOR.PATCH, e.g. 0.1.0 -> 0.1.1
+version = "0.1.1"
+```
+
+::: {.key-idea}
+Editable installs (`-e`) link your source so edits take effect immediately — no reinstall needed.
+:::
+
+## requirements.txt vs pyproject.toml {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**`requirements.txt`** *(app-focused)*
+
+- Exact pins for a runnable environment
+- Reproducible deployments
+- Used by servers, containers, CI
+
+</div>
+<div>
+
+**`pyproject.toml`** *(library-focused)*
+
+- Metadata + broad dependency ranges
+- Installable by others via `pip`
+- Source of truth for the package
+
+</div>
+:::
+
+::: {.key-idea}
+**Rule:** libraries declare minimal compatible versions; apps pin.
+:::
+
+## Bridging the two (uv commands) {.demo-slide}
+
+```bash
+# export a lock file from your project
+uv export --format requirements-txt -o requirements.txt
+
+# compile pyproject.toml into pinned requirements
+uv pip compile pyproject.toml -o requirements.txt
+```
+
+::: {.tip-box}
+**Tip:** With `uv`, you can export a lock or `requirements.txt` whenever an app-style pin file is needed.
+:::
+
+## Build distributions {.demo-slide}
+
+```bash
+# uses your chosen backend via uv
+uv build
+```
+
+**Outputs:**
+
+- `dist/*.tar.gz` — **sdist** (source distribution)
+- `dist/*.whl` — **wheel** (built distribution)
+
+::: {.key-idea}
+An **sdist** contains source; a **wheel** is pre-built for fast installs. Upload both.
+:::
+
+## Publish to TestPyPI (trial first) {.demo-slide}
+
+```bash
+uvx twine upload --repository testpypi dist/*
+```
+
+`~/.pypirc` config:
+
+```ini
+[testpypi]
+  username = __token__
+  password = <testpypi_api_key>
+```
+
+::: {.warning-box}
+**Warning:** Use **TestPyPI** first — it's a sandbox. Don't push broken builds to the real PyPI.
+:::
+
+## Install & verify from TestPyPI {.demo-slide}
+
+```bash
+python -m pip install --index-url https://test.pypi.org/simple/ \
+                      --no-deps myproject
+```
+
+```python
+python -c "import myproject; print('import ok')"
+```
+
+::: {.demo-box}
+Try installing your own package from TestPyPI and importing it in a fresh environment. Did it work?
+:::
+
+## Why tests? (pytest)
+
+- **Catch bugs early** — find issues before users do
+- **Prevent regressions** — changes can't silently break things
+- **Document intended behavior** — tests are executable specs
+- **Confidence to publish** — green tests = green light
+
+::: {.key-idea}
+Tests are part of the package. A library without tests is a library without a safety net.
+:::
+
+## A tiny test: Arrange Act Assert {.demo-slide}
+
+```python
+# tests/test_core.py
+from myproject import core
+
+def test_add_one():
+    # Arrange
+    x = 2
+    # Act
+    y = core.add_one(x)
+    # Assert
+    assert y == 3
+```
+
+```bash
+uvx pytest -q
+```
+
+## Parametrized tests (bonus) {.demo-slide}
+
+```python
+import pytest
+from myproject import core
+
+@pytest.mark.parametrize("x,expected", [(0, 1), (2, 3), (-1, 0)])
+def test_add_one_param(x, expected):
+    assert core.add_one(x) == expected
+```
+
+::: {.tip-box}
+**Tip:** `parametrize` runs the same test logic across many inputs — one test, many cases.
+:::
+
+## Docs with Quarto (brief)
+
+- Write `.qmd` files with **runnable examples**
+- Render to **HTML**; publish via **GitHub Pages**
+- Great for tutorials and API how-tos
+
+::: {.key-idea}
+Quarto turns prose + code into a polished site — ideal for package documentation.
+:::
+
+## What counts as package data?
+
+- Small files shipped with the library:
+  - CSVs, templates, small models
+- Included in **wheels** and **sdists**
+- Access at runtime with `importlib.resources`
+
+::: {.warning-box}
+**Warning:** Don't ship large datasets as package data — use a download step or external storage instead.
+:::
+
+## Including data with Setuptools {.demo-slide}
+
+```toml
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+myproject = ["data/*.csv", "templates/*.html"]
+```
+
+::: {.key-idea}
+`include-package-data = true` + globs in `package-data` tell Setuptools which non-Python files to bundle.
+:::
+
+## Loading data at runtime {.demo-slide}
+
+```python
+from importlib.resources import files, as_file
+import pandas as pd
+
+def load_demo():
+    target = files("myproject").joinpath("data/temples.csv")
+    with as_file(target) as path:
+        return pd.read_csv(path)
+```
+
+::: {.tip-box}
+**Tip:** `as_file` gives you a real filesystem path — works whether the package is installed as a wheel or from source.
+:::
+
+## Why ship a CLI? (optional)
+
+- Lets users run your tool **from the terminal**
+- Great for **pipelines** or **demos**
+- Skip if the project is **library only**
+
+::: {.key-idea}
+A CLI turns an importable library into a runnable command — `mypkg` instead of `python -c "..."`.
+:::
+
+## Minimal CLI entry point {.demo-slide}
+
+```toml
+# pyproject.toml
+[project.scripts]
+mypkg = "myproject.cli:main"
+```
+
+```python
+# src/myproject/cli.py
+def main() -> int:
+    print("Hello from myproject!")
+    return 0
+```
+
+::: {.demo-box}
+After install, `mypkg` runs `main()` directly from the shell. Try it!
+:::
+
+## Submission Checklist {.reference-slide}
+
+::: {.cheat-grid}
+<div>
+
+#### Structure
+
+- `src/` layout
+- `pyproject.toml` with metadata
+- `README` + `LICENSE`
+
+</div>
+<div>
+
+#### Quality
+
+- `tests/` present
+- `ruff`-clean
+- Builds successfully
+
+</div>
+<div>
+
+#### Publish
+
+- Published on **TestPyPI**
+- Install instructions verified
+- Usage instructions verified
+
+</div>
+:::
+
+## References {.reference-slide}
+
+- Packaging Python Projects — [PyPA](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
+- Writing your `pyproject.toml` — [PyPA](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
+- Using TestPyPI — [PyPA](https://packaging.python.org/en/latest/guides/using-testpypi/)
+- [uv docs](https://docs.astral.sh/uv/)
+- [Setuptools docs](https://setuptools.pypa.io/)
+
+::: notes
+This deck moves from concepts (PEPs, layout) to hands-on commands (build, publish, test). Budget ~50 minutes: spend more time on pyproject.toml, building, and the TestPyPI flow since those are the novel steps. Emphasize that students should use TestPyPI, not real PyPI, for their first upload. The CLI and package-data slides are optional — skip if running short on time. Encourage students to follow along live in their own repo.
+:::
+
+{{< include ../_partials/questions.qmd >}}

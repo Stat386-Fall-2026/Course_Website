@@ -8,7 +8,39 @@ Each week's lecture slides are built with Quarto Reveal.js. Click a link below t
 
 ## Available Decks
 
+### Course Introduction
+
 - [Week 1: Course Introduction](slides/week-01.qmd)
+
+### Tools & Workflow
+
+- [Intro to the Terminal](slides/terminal-commands.qmd)
+- [VS Code + uv](slides/vscode-uv.qmd)
+- [Introduction to Git and GitHub](slides/git-github.qmd)
+- [GitHub Issues, Projects, and Workflows](slides/github-issues-projects.qmd)
+- [From Repo to Website: Quarto + GitHub Pages](slides/quarto-github-pages.qmd)
+
+### Python Foundations
+
+- [NumPy Essentials](slides/numpy.qmd)
+- [Pandas Essentials](slides/pandas.qmd)
+- [Brief Introduction to Importing Data](slides/importing-data.qmd)
+- [Regular Expressions](slides/regular-expressions.qmd)
+- [Joining Data in Pandas](slides/data-joining.qmd)
+
+### Data Analysis
+
+- [Missing Data: Types, Detection, and Imputation](slides/missing-data.qmd)
+- [Dimensionality Reduction for EDA](slides/eda-dimensionality-reduction.qmd)
+
+### Python Packaging
+
+- [Python Packages](slides/python-packages.qmd)
+- [Python Packaging with uv](slides/python-packaging.qmd)
+
+### Applications
+
+- [Streamlit and Dashboards for Data Science](slides/streamlit-dashboards.qmd)
 
 ## How to Add a New Deck
 

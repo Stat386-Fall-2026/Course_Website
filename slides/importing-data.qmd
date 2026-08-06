@@ -1,0 +1,315 @@
+---
+title: "Brief Introduction to Importing Data"
+subtitle: "Loading Files into Pandas and Python"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+---
+
+## Importing Data into Pandas {.section-card}
+
+Getting data **already in a file** into Pandas and Python:
+
+- **Flat files** — CSV, TSV, delimited text
+- **Excel** — multi-sheet workbooks
+- **JSON** — web-friendly structured text
+- **YAML** — human-readable config files
+- **Unstructured text** — plain `.txt` files
+
+::: {.key-idea}
+**Key idea:** Match the reader to the file type. Pandas covers most tabular formats; Python's built-in `open()` handles plain text.
+
+:::
+
+## Reading in Flat Files {.section-card}
+
+**Flat files** = plain text or tabular data.
+
+- **Rows** are records / observations
+- **Columns** are variables / features
+
+**Common formats:**
+
+- CSV (`.csv`)
+- TSV (`.tsv`)
+- Delimited `.txt` (tabs or spaces)
+- Other extensions: `.data`, `.dat`, `.table`
+
+## Pandas `read_csv` {.demo-slide}
+
+The go-to reader for flat files:
+
+```python
+import pandas as pd
+
+df = pd.read_csv("data.csv")
+df.head()
+```
+
+::: {.tip-box}
+**Tip:** `read_csv` is flexible — it handles TSV, pipe-delimited, and many other flat formats by changing `sep`.
+:::
+
+## Common Arguments for `read_csv` {.demo-slide}
+
+```python
+df = pd.read_csv(
+    "data.csv",
+    sep=",",            # delimiter ("," default; "\t" for TSV)
+    header=0,           # row number for column names
+    index_col=0,        # column to use as row index
+    nrows=100,          # read only first n rows
+    encoding="utf-8",   # text encoding
+    usecols=["a", "b"], # keep only these columns
+    dtype={"a": "int64"},
+    compression="gzip"  # auto-detect if .gz/.zip
+)
+```
+
+## Excel {.section-card}
+
+Excel files are **not "flat"** — they hold multiple sheets and formatting.
+
+- Import a **single sheet** by index or name
+- Import **all sheets** as a dictionary
+- See also `pd.ExcelFile()` for inspection
+
+```python
+# One sheet
+df = pd.read_excel("file.xlsx", sheet_name="Sheet1")
+
+# All sheets -> dict of DataFrames
+all_sheets = pd.read_excel("file.xlsx", sheet_name=None)
+```
+
+## JSON {.section-card}
+
+**JavaScript Object Notation** — standard format for HTTP requests.
+
+- Formatting similar to a Python `dict`
+- Library: `json` (built-in)
+- `json.loads(string)` → JSON string to Python object
+- `json.dumps(obj)` → Python object to JSON string
+
+## JSON Example {.demo-slide}
+
+A JSON object looks like a Python dictionary with string keys:
+
+```json
+{"name": "John", "age": 30, "city": "New York"}
+```
+
+::: {.key-idea}
+**Key idea:** JSON keys and string values are wrapped in double quotes (`"`). Numbers are unquoted.
+:::
+
+## Python and JSON {.demo-slide}
+
+Convert a JSON string into a Python object:
+
+```python
+import json
+
+x = '{"name":"John", "age":30, "city":"New York"}'
+y = json.loads(x)        # string -> dict
+
+print(y["name"])         # John
+print(type(y))           # <class 'dict'>
+```
+
+::: {.tip-box}
+**Result:** `json.loads` returns a Python dictionary you can index normally.
+:::
+
+## Working with JSON Data {.demo-slide}
+
+Convert a Python object into a JSON string:
+
+```python
+import json
+
+x = {"name": "John", "age": 30, "city": "New York"}
+y = json.dumps(x)        # dict -> JSON string
+
+print(y)
+# {"name": "John", "age": 30, "city": "New York"}
+print(type(y))           # <class 'str'>
+```
+
+## YAML {.section-card}
+
+**YAML Ain't Markup Language**
+
+- Human-readable format for structured data
+- Uses **indentation** and whitespace (no braces)
+- Commonly used for **config files**
+- Not typically used for large datasets
+
+## Example YAML {.demo-slide}
+
+A sample YAML config:
+
+```yaml
+# database config
+database:
+  host: localhost
+  port: 5432
+  user: admin
+  password: secret
+
+model:
+  name: random_forest
+  n_estimators: 100
+  max_depth: 8
+```
+
+::: {.tip-box}
+**Note:** YAML supports `#` comments — JSON does not.
+:::
+
+## JSON vs YAML {.comparison-slide}
+
+::: {.columns-2}
+
+<div>
+
+**JSON**
+
+- Syntax: `{}`, `[]`, `""`
+- **No** comments
+- Machine parsing / interoperability
+- Standard for HTTP / APIs
+
+```json
+{"name": "John", "age": 30}
+```
+
+</div>
+
+<div>
+
+**YAML**
+
+- Syntax: indentation & whitespace
+- Supports `#` comments
+- Human readability (configs)
+- Used for config files
+
+```yaml
+name: John
+age: 30
+```
+
+</div>
+
+:::
+
+## Other Dataset File Types {.section-card}
+
+Pandas and other libraries read many formats directly:
+
+- **Stata** datasets — `pd.read_stata()`
+- **SAS** datasets (`.sas`) — `pd.read_sas()`
+- **HTML** tables — `pd.read_html()`
+- **MATLAB** (`.mat`) — `scipy.io.loadmat()`
+- And more: Parquet, Feather, HDF5, SQL…
+
+::: {.key-idea}
+**Key idea:** Before writing a custom parser, check whether Pandas or a scientific library already has a reader.
+:::
+
+## Unstructured Text Files {.section-card}
+
+**Plain text** = only text, no structure.
+
+- If tabular, use `pd.read_csv()` or similar
+- To open plain text, use Python's `open()` function
+
+::: {.warning-box}
+**Remember:** Always close a file you have opened — or use a context manager.
+:::
+
+## Reading a File {.demo-slide}
+
+```python
+file = open("filename.txt", mode="r")
+text = file.read()
+file.close()
+```
+
+- `"r"` means **reading mode**
+- `file.read()` reads the whole file into a string
+
+::: {.tip-box}
+**Tip:** Always close a file you've opened. Forgetting to close can lock the file or leak resources.
+:::
+
+## Reading Lines (continued) {.demo-slide}
+
+`file.read()` reads from start to finish.
+
+```python
+text1 = file.read()   # full content
+text2 = file.read()   # ""  (empty!)
+```
+
+::: {.warning-box}
+**Gotcha:** Calling `read()` again returns an empty string because the cursor is at the end.
+:::
+
+To reset the cursor:
+
+```python
+file.seek(0)          # jump back to start
+text = file.read()   # works again
+```
+
+## Or Make a List of Lines {.demo-slide}
+
+`.readlines()` reads each line as a separate item in a list. New lines end with `"\n"`.
+
+```python
+file = open("filename.txt", mode="r")
+text_list = file.readlines()
+file.close()
+
+print(text_list)
+# ["first line\n", "second line\n", ...]
+```
+
+## Context Manager {.demo-slide}
+
+The `with` block opens **and** closes the file automatically:
+
+```python
+with open("filename.txt", mode="r") as myfile:
+    text_list = myfile.readlines()
+# file is closed here — even if an error occurred
+```
+
+::: {.tip-box}
+**Best practice:** Prefer `with` over manual `open()`/`close()`. It guarantees the file closes.
+:::
+
+## Reading HTML {.demo-slide}
+
+`pandas.read_html(input)` reads HTML `<table>`s into a **list of DataFrame** objects.
+
+- Input: a **URL** or **raw HTML** string
+- Output: a **list** of all tables — even if only one
+
+```python
+tables = pd.read_html("https://example.com/data.html")
+df = tables[0]    # first table on the page
+```
+
+::: {.warning-box}
+**Note:** `read_html` requires `lxml`, `html5lib`, or `beautifulsoup4` installed.
+:::
+
+::: notes
+This deck introduces the main ways to import data into Pandas and Python. Plan for a quick live demo of `read_csv` with arguments like `sep`, `usecols`, and `nrows`, then show `read_excel` with `sheet_name=None`. The JSON pair (`loads`/`dumps`) is a good place to pause and confirm the dict/string distinction. The JSON vs YAML comparison slide is the conceptual centerpiece — emphasize that JSON is for machine interchange and YAML is for human-readable configs. For unstructured text, the two big teaching points are: (1) the `read()` cursor gotcha and `seek(0)`, and (2) the context manager as the safe, idiomatic pattern. If time is tight, trim the "Other Dataset File Types" slide to a quick mention and keep the file-handling demos.
+:::
+
+{{< include ../_partials/questions.qmd >}}
