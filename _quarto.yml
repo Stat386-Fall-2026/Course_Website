@@ -3,23 +3,17 @@ project:
   output-dir: docs
 
 website:
-  title: "TODO: Course Number — Term"
+  title: "STAT 386 — Fall 2026"
   site-url: ""
   repo-url: ""
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: schedule.qmd
-        text: Schedule
       - href: slides.qmd
         text: Slides
-      - href: demos.qmd
-        text: Demos
-      - href: assignments.qmd
-        text: Assignments
-      - href: resources.qmd
-        text: Resources
+      # - href: demos.qmd
+      #   text: Demos
     right:
       - icon: github
         href: ""
@@ -27,23 +21,14 @@ website:
     style: docked
     search: true
     contents:
-      - section: "Course"
-        contents:
-          - index.qmd
-          - schedule.qmd
-          - resources.qmd
       - section: "Slides"
         contents:
           - slides.qmd
-          - slides/week-01.qmd
-      - section: "Demos"
-        contents:
-          - demos.qmd
-          - demos/week-01.qmd
-      - section: "Assignments"
-        contents:
-          - assignments.qmd
-          - assignments/homework-01.qmd
+          - slides/terminal_intro.qmd
+      # - section: "Demos"
+      #   contents:
+      #     - demos.qmd
+      #     - demos/week-01.qmd
 
 format:
   html:

@@ -1,0 +1,434 @@
+---
+title: "Intro to the Terminal for Data Science"
+subtitle: "A hands-on workshop for macOS Terminal and Windows Git Bash"
+author: "STAT 386"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+    slide-number: true
+    transition: fade
+    incremental: false
+    code-overflow: wrap
+    footer: "STAT 386"
+---
+
+## Today's goal {.overview-slide}
+
+By the end of class, you should be able to work comfortably inside a small project folder.
+
+- Find your location with `pwd`, `ls`, and `cd`
+- Create a course workspace on your Desktop
+- Inspect and search a small CSV
+- Copy, move, and remove files carefully
+- Clone a repository and open it in Positron
+- Use wildcards and pipes for simple tasks
+
+## Why the terminal matters in STAT 386
+
+You will use the terminal to run project commands such as:
+
+```bash
+uv run python analysis.py
+git status
+git add .
+```
+
+Today focuses on the file and text skills that make those commands feel less mysterious.
+
+## A GitHub repository and a local copy
+
+::: {.columns-2}
+
+<div>
+
+### GitHub
+
+The online repository holds the project, instructions, and collaboration history.
+
+</div>
+
+<div>
+
+### Your computer
+
+`git clone` downloads a working copy that you can open, edit, and run.
+
+</div>
+
+:::
+
+::: {.key-idea}
+**For STAT 386:** your repositories live in the course GitHub organization. Your invitation to the organization gives you access to the course repositories.
+:::
+
+## How we will work
+
+- Type commands yourself, rather than only watching.
+- Work with a partner during the exercises.
+- If you get stuck, compare your current folder with your partner's, then raise a hand.
+- Press `Ctrl+C` to stop a command that is running.
+- Use Tab to complete names whenever possible.
+
+## Which terminal are you using? {.comparison-slide}
+
+::: {.columns-2}
+
+<div>
+### macOS
+
+- Open **Terminal**.
+- Your shell will usually be `zsh`.
+- Your home directory will look like `/Users/yourname`.
+</div>
+
+<div>
+### Windows
+
+- Open **Git Bash**.
+- Your shell will be `bash`.
+- Your home directory will look like `/c/Users/yourname`.
+</div>
+
+:::
+
+## Your folders form a tree
+
+```text
+/
+├── Users
+│   └── yourname
+│       ├── Desktop
+│       ├── Documents
+│       └── Desktop
+│           └── School
+│               └── STAT_386
+└── tmp
+```
+
+- A **path** names a location in this tree.
+- `~` means your home directory.
+- Every command works from your current directory unless you give it another path.
+
+## Where am I? `pwd`
+
+`pwd` means **print working directory**.
+
+```bash
+pwd
+```
+
+Run it now. The result tells you where the terminal is currently working.
+
+## What is here? `ls`
+
+```bash
+ls          # list visible files and folders
+ls -l       # show details
+ls -a       # include hidden items
+ls -la      # combine both options
+```
+
+Hidden items usually begin with a period. You will always see `.` for the current folder and `..` for its parent.
+
+## Moving between folders with `cd`
+
+```bash
+cd Documents  # enter Documents
+cd ..         # move to the parent folder
+cd ~          # return to your home folder
+cd -          # switch to the previous folder
+```
+
+Type the first few letters of a folder and press Tab to finish its name.
+
+## Finding help
+
+Most command-line tools provide built-in documentation.
+
+```bash
+git clone --help     # details and options for a Git command
+git help clone       # another way to open Git help
+man ls               # manual page on macOS
+ls --help            # help text in Git Bash
+```
+
+Use the help text to discover options such as `-a` or `-l`. In a manual page, press `q` to quit.
+
+## Exercise 1: A short navigation check {.exercise-slide}
+
+Work with your partner for about three minutes.
+
+1. Run `pwd` and read your current location.
+2. Run `cd ~`, then run `pwd` again.
+3. Run `ls -a` and identify `.` and `..`.
+4. Enter `Documents` if it exists, then return home with `cd ~`.
+5. Try `cd -` to revisit the previous location.
+
+::: {.exercise-check}
+**Check:** Everyone should finish in their home directory.
+:::
+
+## Your STAT 386 workspace
+
+Keep course repositories in one visible place so you can use both the terminal and the file explorer.
+
+```bash
+cd ~/Desktop
+mkdir -p School/STAT_386
+cd School/STAT_386
+pwd
+```
+
+`mkdir -p` creates missing parent folders as needed. This folder will hold your STAT 386 repositories.
+
+## Cloning the practice repository {.demo-slide}
+
+Copy the HTTPS URL from the green **Code** button on the course practice repository.
+
+```bash
+cd ~/Desktop/School/STAT_386
+git clone https://github.com/Stat386-Fall-2026/terminal-practice.git
+cd terminal-practice
+ls
+git status
+```
+
+::: {.warning-box}
+**Use the URL shown in the course repository.** Copy it from GitHub rather than retyping it.
+:::
+
+## The practice repository
+
+After cloning, your repository should include this starting structure:
+
+```text
+terminal-practice/
+├── data/
+│   └── raw/
+│       └── scores.csv
+└── notes/
+    ├── ideas.txt
+    └── tasks.txt
+```
+
+::: notes
+Instructor preparation: create `terminal-practice` in the course organization. Add `data/raw/scores.csv` with a header and the rows `Ada,98`, `Sam,87`, `Rae,92`, and `Maya,95`; also add `notes/ideas.txt` and `notes/tasks.txt`. Make it public, or confirm that every student has accepted the organization invitation before class.
+:::
+
+## Exercise 2: Clone and inspect {.exercise-slide}
+
+Work with your partner for about five minutes.
+
+1. Navigate to `~/Desktop/School/STAT_386`.
+2. Copy the course practice repository's HTTPS URL from **Code**.
+3. Run `git clone` followed by the URL.
+4. Enter `terminal-practice` with `cd` and run `ls`.
+5. Run `git status` and identify the branch Git reports.
+
+::: {.exercise-check}
+**Check:** `git status` should say that your branch is up to date and the working tree is clean.
+:::
+
+## Viewing a file
+
+```bash
+cat data/raw/scores.csv       # print the whole file
+less data/raw/scores.csv      # view a longer file one screen at a time
+wc -l data/raw/scores.csv     # count lines
+```
+
+In `less`, press `q` to return to the terminal.
+
+## Searching a file with `grep`
+
+```bash
+grep "Ada" data/raw/scores.csv     # matching lines
+grep -n "a" data/raw/scores.csv    # include line numbers
+grep -i "ada" data/raw/scores.csv  # ignore capitalization
+```
+
+`grep` finds lines that contain a pattern.
+
+## Exercise 3: Inspect the data {.exercise-slide}
+
+Work with your partner for about three minutes.
+
+1. Use `cat` or `less` to view `data/raw/scores.csv`.
+2. Use `wc -l` to count the lines.
+3. Use `grep` to find the row for `Rae`.
+4. Use `grep -n` to show the line number for `Maya`.
+5. Use `grep -i` to search for `ada`.
+
+::: {.exercise-check}
+**Check:** `scores.csv` should have five lines, including the header.
+:::
+
+## Copying and moving files
+
+```bash
+mkdir -p demo/copies
+cp data/raw/scores.csv demo/copies/
+mv demo/copies/scores.csv demo/copies/scores-backup.csv
+ls demo/copies
+```
+
+- `cp` creates a copy.
+- `mv` moves a file or changes its name.
+- Confirm a change with `ls` before continuing.
+
+## Wildcards with `cp` and `mv`
+
+`*` matches any number of characters. The shell finds matching names before `cp` or `mv` runs.
+
+```bash
+mkdir -p demo/archive
+cp notes/*.txt demo/archive/
+mv demo/archive/*.txt demo/
+ls demo
+```
+
+The two text files move from `demo/archive/` into `demo/`.
+
+## Removing files carefully
+
+`rm` permanently removes a file. There is no Trash or Undo step.
+
+```bash
+pwd
+ls demo
+rm demo/tasks.txt
+ls demo
+```
+
+::: {.warning-box}
+**Pause before pressing Enter.** Check your location with `pwd` and check the exact filename with `ls`. Do not use `rm -r` today.
+:::
+
+## Pipes connect small commands
+
+A pipe, `|`, sends the text output of the command on the left to the command on the right.
+
+```bash
+grep -i "a" data/raw/scores.csv
+grep -i "a" data/raw/scores.csv | wc -l
+```
+
+The first command prints matching rows. The second sends those rows to `wc -l`, which counts them.
+
+Useful helpers:
+
+- `head` shows the first lines of a file.
+- `tail` shows the last lines of a file.
+- `wc -l` counts lines.
+
+## Saving command output
+
+```bash
+grep -E ',9[0-9]$' data/raw/scores.csv > demo/scores-in-the-90s.csv
+cat demo/scores-in-the-90s.csv
+```
+
+This creates a new file containing rows with scores from 90 through 99. The pattern avoids treating a score such as 19 as a score in the 90s.
+
+::: {.warning-box}
+**Warning:** Choose a new output filename when using `>` unless you deliberately want to replace a file.
+:::
+
+## Exercise 4: Repository file workout {.exercise-slide}
+
+Work with your partner for about eight minutes. Begin in your home directory.
+
+1. Use `cd` and `ls` to return to `~/Desktop/School/STAT_386/terminal-practice`.
+2. Create `practice/copies` and `practice/archive`.
+3. Copy every CSV from `data/raw` into `practice/copies` using `*`.
+4. Copy every text file from `notes` into `practice/archive` using `*`.
+5. Move the archived text files into `practice` using `*`.
+6. Use `rm` to remove `practice/tasks.txt` after confirming the name with `ls`.
+7. Save rows with scores in the 90s into `practice/scores-in-the-90s.csv`.
+8. Use `cat` and `ls` to verify each result.
+
+::: {.exercise-check}
+**Finish line:** `practice/` should contain `ideas.txt` and `scores-in-the-90s.csv`; `practice/copies/` should contain the copied CSV.
+:::
+
+## Opening the repository in Positron {.demo-slide}
+
+From the top level of `terminal-practice`, run:
+
+```bash
+positron .
+```
+
+The period means “the current folder.” Positron opens the repository as a project, so its file explorer and terminal begin in the same place.
+
+## Vi survival card
+
+You will normally edit files in Positron. On a remote computer, though, you may encounter `vi`.
+
+```bash
+vi notes/README.txt
+```
+
+- `i` enters insert mode so you can type.
+- `Esc` returns to normal mode.
+- `:wq` saves and quits.
+- `:q!` quits without saving.
+
+::: {.tip-box}
+**Tip:** If `vi` feels unfamiliar today, that is fine. Keep this slide as an escape-and-save reference.
+:::
+
+## Capstone: Explain the workflow {.exercise-slide}
+
+With your partner, explain this command one piece at a time:
+
+```bash
+grep -E ',9[0-9]$' data/raw/scores.csv | wc -l
+```
+
+Then run `positron .` from the repository root and locate the `practice/` files in Positron's file explorer.
+
+::: {.exercise-check}
+**Finish line:** You should be able to explain what every command did and where every output file lives.
+:::
+
+## Terminal reference {.reference-slide}
+
+| Task | Command |
+|---|---|
+| Where am I? | `pwd` |
+| What is here? | `ls`, `ls -la` |
+| Change folders | `cd folder`, `cd ..`, `cd ~` |
+| Create folders | `mkdir -p folder/subfolder` |
+| Get help | `git clone --help`, `man ls`, `ls --help` |
+| View text | `cat file`, `less file` |
+| Search text | `grep "pattern" file` |
+| Copy, move, remove | `cp source destination`, `mv old new`, `rm file` |
+| Clone a repository | `git clone URL` |
+| Check a repository | `git status` |
+| Open Positron here | `positron .` |
+| Combine tools | `command1 \| command2` |
+| Stop a command | `Ctrl+C` |
+
+## Takeaways {.takeaway-slide}
+
+- Your terminal always works from a current folder.
+- `pwd`, `ls`, and `cd` handle most navigation.
+- `grep` helps you inspect text and CSV files quickly.
+- Pipes let one command pass results to another.
+- `git clone` creates a local copy of your GitHub repository.
+- Keep course repositories in `Desktop/School/STAT_386`.
+- Check `pwd` and `ls` before using `rm`.
+
+## Optional practice
+
+Try these after class:
+
+```bash
+history | tail -n 20
+history | grep "grep"
+vimtutor
+```
+
+You will use the terminal again when you set up a Python project and work with Git.

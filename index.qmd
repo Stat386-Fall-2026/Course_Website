@@ -1,29 +1,14 @@
 ---
-title: "TODO: Course Number — Term"
+title: "STAT 386 — Fall 2026"
 ---
 
-# Welcome
+# Data Science Process
 
-**TODO: Course Title** — **TODO: Course Number** — **TODO: Term**
+**Dr. Tom Kerby**
 
-This is the central home for the course. Here you will find the schedule, lecture slides, in-class code demos, assignments, and resources — all in one place.
+This site hosts lecture slides and in-class code demos for STAT 386. The syllabus, assignments, and course resources live in the Canvas course.
 
 ## Quick Links
 
-- [Schedule](schedule.qmd) — weekly topics, links to slides and demos
-- [Slides](slides.qmd) — Reveal.js slide decks for each week
-- [Demos](demos.qmd) — executable code demos with narrative explanations
-- [Assignments](assignments.qmd) — homework and project descriptions
-- [Resources](resources.qmd) — software setup, readings, tools, datasets, and policies
-
-## About This Site
-
-This site contains the **living course materials**. Slides, demos, and assignments are updated throughout the semester, so check back regularly. All content is built with [Quarto](https://quarto.org) and hosted on GitHub Pages.
-
-::: {.callout-note}
-**TODO:** Replace this placeholder text with a short course description (2–3 paragraphs) covering the main topics, prerequisites, and learning objectives.
-:::
-
-## Instructor
-
-**TODO:** Instructor name, email, office hours, and location.
+- [Slides](slides.qmd) — Reveal.js slide decks for each topic
+<!-- - [Demos](demos.qmd) — executable code demos with narrative explanations -->

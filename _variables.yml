@@ -1,8 +1,8 @@
 course:
-  title: "TODO: Course Title"
-  number: "TODO: Course Number"
-  term: "TODO: Term"
-  instructor: "TODO: Instructor Name"
+  title: "Data Science Process"
+  number: "STAT 386"
+  term: "Fall 2026"
+  instructor: "Dr. Tom Kerby"
 
 labels:
   keyidea: "Key idea"

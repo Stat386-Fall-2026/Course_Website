@@ -7,16 +7,16 @@ subtitle: "Course Website, Tools, and Expectations"
 
 Welcome to **{{< var course.number >}}** — {{< var course.term >}}.
 
-This course covers **TODO: course topic summary**.
+This course covers the **end-to-end data science workflow** — from setting up your Python environment and mastering the terminal, through data wrangling with NumPy and Pandas, to packaging your code and building interactive dashboards.
 
 ## Course Goals
 
 By the end of this course, you will be able to:
 
-- Understand **TODO: key concept 1**
-- Apply **TODO: key concept 2**
-- Evaluate **TODO: key concept 3**
-- Communicate **TODO: key skill**
+- Understand the **end-to-end data science workflow**, from project setup to deployment
+- Apply **core Python libraries** (NumPy, Pandas) for data manipulation and analysis
+- Evaluate **data quality** — handling missing values, joins, and data import challenges
+- Communicate **results through reproducible reports and interactive dashboards**
 
 ## What You'll Do Each Week
 
@@ -30,7 +30,7 @@ Slides and demos are posted on the course website and updated regularly.
 
 - Each week has its own slide deck (`slides/week-NN.qmd`)
 - Each week has a companion code demo (`demos/week-NN.qmd`)
-- The [schedule](../schedule.qmd) page links everything together
+- The [schedule](../index.qmd#schedule) links everything together
 - Demos include standalone source files you can download and run
 
 ## A Quick Code Example {.demo-slide}

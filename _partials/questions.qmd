@@ -4,4 +4,4 @@
 Take 2 minutes — what is one thing from today that is still unclear?
 :::
 
-Next week: **TODO: Week NN topic**
+See the [schedule](../index.qmd#schedule) for what's coming next.
