@@ -14,7 +14,7 @@ Make sure you have Python installed. Open a terminal and verify:
 python --version
 ```
 
-You should see Python 3.x. If not, see the [resources](../resources.qmd) page for installation instructions.
+You should see Python 3.x. If not, check the Canvas course for Python installation instructions.
 
 ## The Code
 

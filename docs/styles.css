@@ -1,0 +1,31 @@
+/* STAT 386 — Minimal custom styles */
+
+/* Improve readability and spacing for main content */
+main {
+  max-width: 800px;
+  padding: 1.5rem;
+}
+
+/* Slightly looser line height for body text */
+p {
+  line-height: 1.7;
+}
+
+/* Callout-like box for callout divs */
+.callout {
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+
+/* Code blocks: don't overflow, wrap instead */
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Tables: comfortable spacing */
+table {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

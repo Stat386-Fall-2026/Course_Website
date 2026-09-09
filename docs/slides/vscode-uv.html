@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
+
+  <title>STAT 386 — Fall 2026 – IDEs and Virtual Environments for Data Science</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-d116e4eecfb5de37dd99a1f86fe2cb7c.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="title-slide center">
+  <h1 class="title">IDEs and Virtual Environments for Data Science</h1>
+  <p class="subtitle">VS Code + uv</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="what-you-should-be-able-to-do-after-today" class="slide level2 section-card">
+<h2>What You Should Be Able to Do After Today</h2>
+<p>By the end of class, you should be able to:</p>
+<ul>
+<li>Explain what an IDE gives you (and what it does not)</li>
+<li>Explain what a virtual environment is and why teams rely on them</li>
+<li>Use VS Code for the everyday loop: edit, run, debug, version control</li>
+<li>Use uv to create a project, add dependencies, reproduce an environment</li>
+<li>Resolve a merge conflict using VS Code’s merge UI</li>
+</ul>
+</section>
+<section id="two-recurring-problems-in-real-projects" class="slide level2 comparison-slide">
+<h2>Two Recurring Problems in Real Projects</h2>
+<div class="columns-2">
+<div>
+<p><strong>Productivity problem</strong></p>
+<ul>
+<li>You need a fast edit-run-check loop</li>
+<li>Fewer context switches</li>
+<li>Help from tooling</li>
+</ul>
+</div>
+<div>
+<p><strong>Reproducibility problem</strong></p>
+<ul>
+<li>“It works on my machine” is not a plan</li>
+<li>Different projects need different versions</li>
+<li>Teams need reliable setup</li>
+</ul>
+</div>
+</div>
+<div class="key-idea">
+<p><strong>Key idea:</strong> An IDE addresses productivity; a virtual environment addresses reproducibility. You need both.</p>
+</div>
+</section>
+<section id="why-use-an-ide-for-data-science" class="slide level2">
+<h2>Why Use an IDE for Data Science?</h2>
+<p>An IDE is a <strong>hub</strong>.</p>
+<ul>
+<li>Editor + terminal + debugger + notebooks + Git in one place</li>
+<li>Faster feedback, fewer context switches</li>
+<li>Project-level settings</li>
+</ul>
+<div class="warning-box">
+<p><strong>Trade-offs:</strong> learning curve, extensions can sprawl, heavier than a bare text editor.</p>
+</div>
+</section>
+<section id="ide-landscape-quick-take" class="slide level2">
+<h2>IDE Landscape (Quick Take)</h2>
+<ul>
+<li><strong>VS Code / Code-OSS:</strong> huge ecosystem; strong Git, Python, notebook support</li>
+<li><strong>PyCharm:</strong> excellent Python refactoring; heavier</li>
+<li><strong>JupyterLab:</strong> notebook-first; great for EDA; weaker as project hub</li>
+<li><strong>RStudio / Positron:</strong> strong for R and Quarto</li>
+<li><strong>Terminal + Vim/Neovim:</strong> light and powerful; steep curve</li>
+</ul>
+</section>
+<section id="vs-code-mental-model" class="slide level2">
+<h2>VS Code Mental Model</h2>
+<ul>
+<li>A <strong>project</strong> is a folder (workspace) plus settings</li>
+<li><strong>Views:</strong> Explorer, Editor, Terminal, Source Control, Extensions</li>
+<li>The <strong>Command Palette</strong> is your “search bar” for actions</li>
+</ul>
+<div class="key-idea">
+<p><strong>Key idea:</strong> Think “open a folder,” not “open a file.” Settings travel with the project.</p>
+</div>
+</section>
+<section id="vs-code-the-90-you-use-all-the-time" class="slide level2">
+<h2>VS Code: The 90% You Use All the Time</h2>
+<p><strong>Daily moves</strong></p>
+<ul>
+<li>Open folder: <code>File &gt; Open Folder</code></li>
+<li>Integrated terminal: <code>Terminal &gt; New Terminal</code></li>
+<li>Command Palette: <code>Cmd/Ctrl+Shift+P</code></li>
+<li>Search files: <code>Cmd/Ctrl+P</code></li>
+</ul>
+<p><strong>Two habits</strong></p>
+<ul>
+<li>Keep work inside a project folder</li>
+<li>Let the project choose its Python interpreter</li>
+</ul>
+<div class="tip-box">
+<p><strong>Tip:</strong> <code>Cmd/Ctrl+P</code> jumps to files; <code>Cmd/Ctrl+Shift+P</code> runs commands. Different shortcuts, both essential.</p>
+</div>
+</section>
+<section id="extensions-we-will-use" class="slide level2 reference-slide">
+<h2>Extensions We Will Use</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Extension</th>
+<th>ID</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Python</strong></td>
+<td><code>ms-python.python</code></td>
+<td>IntelliSense, debugging, testing</td>
+</tr>
+<tr class="even">
+<td><strong>Jupyter</strong></td>
+<td><code>ms-toolsai.jupyter</code></td>
+<td>Notebooks and interactive cells</td>
+</tr>
+<tr class="odd">
+<td><strong>Quarto</strong></td>
+<td><code>quarto.quarto</code></td>
+<td>Preview and render <code>.qmd</code></td>
+</tr>
+<tr class="even">
+<td><strong>Ruff</strong> (optional)</td>
+<td><code>charliermarsh.ruff</code></td>
+<td>Fast linting and formatting</td>
+</tr>
+</tbody>
+</table>
+<div class="tip-box">
+<p><strong>Tip:</strong> Install from the Extensions view (<code>Cmd/Ctrl+Shift+X</code>). Restart VS Code after enabling a language extension.</p>
+</div>
+</section>
+<section id="quarto-in-vs-code" class="slide level2 demo-slide">
+<h2>Quarto in VS Code</h2>
+<p>With the Quarto extension, you can preview <code>.qmd</code> inside VS Code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">touch</span> report.qmd</span>
+<span id="cb1-2"><a></a><span class="ex">quarto</span> render report.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In VS Code: run the command <strong>Quarto: Preview</strong>.</p>
+<div class="demo-box">
+<p><strong>Demo flow:</strong> create <code>report.qmd</code> → add a heading and a code cell → Preview in viewer pane → edit and watch it update.</p>
+</div>
+</section>
+<section id="git-inside-vs-code" class="slide level2">
+<h2>Git Inside VS Code</h2>
+<p>Same concepts as terminal Git.</p>
+<ul>
+<li><strong>Source Control view</strong> shows: changed files, staged files, diffs</li>
+<li>Stage changes, write commit message, commit</li>
+<li>Push and pull without leaving the editor</li>
+</ul>
+<div class="key-idea">
+<p><strong>Key idea:</strong> The UI is a thin layer over Git. Nothing the buttons do is hidden from the terminal.</p>
+</div>
+</section>
+<section id="cli-to-vs-code-mapping" class="slide level2 comparison-slide">
+<h2>CLI to VS Code Mapping</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Terminal Git</th>
+<th>VS Code UI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git status</code></td>
+<td>Open Source Control view</td>
+</tr>
+<tr class="even">
+<td><code>git add &lt;file&gt;</code></td>
+<td><code>+</code> to stage files</td>
+</tr>
+<tr class="odd">
+<td><code>git commit -m "msg"</code></td>
+<td>Type message, click <strong>Commit</strong></td>
+</tr>
+<tr class="even">
+<td><code>git push</code></td>
+<td><strong>Sync</strong> / <strong>Push</strong> from UI</td>
+</tr>
+<tr class="odd">
+<td><code>git pull</code></td>
+<td><strong>Pull</strong> from UI</td>
+</tr>
+</tbody>
+</table>
+<div class="tip-box">
+<p><strong>Tip:</strong> The Source Control view badge number shows how many files have changed.</p>
+</div>
+</section>
+<section id="merge-conflicts-what-they-are" class="slide level2">
+<h2>Merge Conflicts: What They Are</h2>
+<p>A conflict happens when Git <strong>cannot automatically combine</strong> two sets of changes.</p>
+<ul>
+<li>Most common: two branches edit the same lines</li>
+<li>Git stops and asks you to decide</li>
+</ul>
+<div class="warning-box">
+<p><strong>Note:</strong> Conflicts are not errors — they are Git being careful. You resolve them by choosing which changes win.</p>
+</div>
+</section>
+<section id="conflict-resolution-in-vs-code" class="slide level2">
+<h2>Conflict Resolution in VS Code</h2>
+<p><strong>Markers</strong> in the file:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; current branch</span>
+<span id="cb2-2"><a></a>your changes</span>
+<span id="cb2-3"><a></a>=======</span>
+<span id="cb2-4"><a></a>incoming changes</span>
+<span id="cb2-5"><a></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; incoming branch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>VS Code adds inline actions: <strong>Accept Current</strong>, <strong>Accept Incoming</strong>, <strong>Accept Both</strong>, <strong>Compare changes</strong>, <strong>3-way merge editor</strong></li>
+<li>After resolving: save file, stage it, commit the merge resolution</li>
+</ul>
+</section>
+<section id="why-virtual-environments-exist" class="slide level2">
+<h2>Why Virtual Environments Exist</h2>
+<p>Python projects depend on external packages. Packages depend on other packages.</p>
+<p>If everything lives in one global Python:</p>
+<ul>
+<li>Projects fight over versions</li>
+<li>Upgrading one package breaks another</li>
+<li>Reproducing an environment is hard</li>
+</ul>
+<div class="key-idea">
+<p><strong>Key idea:</strong> A virtual environment <strong>isolates</strong> dependencies per project so each project gets exactly the versions it needs.</p>
+</div>
+</section>
+<section id="what-is-a-virtual-environment" class="slide level2">
+<h2>What Is a Virtual Environment?</h2>
+<p>An isolated folder containing:</p>
+<ul>
+<li>A <strong>Python interpreter</strong></li>
+<li>Installed <strong>packages</strong> (<code>site-packages</code>)</li>
+<li><strong>Scripts</strong> (<code>python</code>, <code>pip</code>, <code>pytest</code>)</li>
+</ul>
+<div class="tip-box">
+<p><strong>Rule of thumb:</strong> one environment per project. Create it fresh, ignore it in Git, recreate it from the lockfile.</p>
+</div>
+</section>
+<section id="why-uv-for-this-class" class="slide level2">
+<h2>Why uv for This Class</h2>
+<p><strong>uv</strong> is a fast, standards-first tool.</p>
+<ul>
+<li><code>uv init</code> — creating projects</li>
+<li><code>uv add</code> / <code>uv remove</code> — managing dependencies</li>
+<li><code>uv sync</code> — syncing environments</li>
+<li><code>uv run</code> — running code</li>
+<li><code>uv.lock</code> — lockfile for reproducibility</li>
+<li>Manages Python versions too</li>
+</ul>
+</section>
+<section id="uv-project-structure-what-to-commit" class="slide level2">
+<h2>uv Project Structure (What to Commit)</h2>
+<p><strong>Commit:</strong> <code>pyproject.toml</code>, <code>uv.lock</code>, <code>.python-version</code></p>
+<p><strong>Do NOT commit:</strong> <code>.venv/</code> (local environment)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>myproject/</span>
+<span id="cb3-2"><a></a>  pyproject.toml</span>
+<span id="cb3-3"><a></a>  uv.lock</span>
+<span id="cb3-4"><a></a>  .python-version</span>
+<span id="cb3-5"><a></a>  .venv/   # ignore in git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="warning-box">
+<p><strong>Note:</strong> Add <code>.venv/</code> to <code>.gitignore</code>. The environment is local; the lockfile is shared.</p>
+</div>
+</section>
+<section id="uv-the-commands-youll-use-most" class="slide level2 demo-slide">
+<h2>uv: The Commands You’ll Use Most</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">uv</span> init myproject</span>
+<span id="cb4-2"><a></a><span class="bu">cd</span> myproject</span>
+<span id="cb4-3"><a></a><span class="ex">uv</span> add httpx rich</span>
+<span id="cb4-4"><a></a><span class="ex">uv</span> sync</span>
+<span id="cb4-5"><a></a><span class="ex">uv</span> run python main.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="demo-box">
+<p><strong>What happens:</strong> <code>uv init</code> scaffolds the project, <code>uv add</code> updates <code>pyproject.toml</code> and <code>uv.lock</code>, <code>uv sync</code> builds <code>.venv</code>, and <code>uv run</code> executes inside that environment.</p>
+</div>
+</section>
+<section id="vs-code-uv-how-they-fit-together" class="slide level2">
+<h2>VS Code + uv: How They Fit Together</h2>
+<ul>
+<li><strong>uv</strong> manages dependencies and environment in <code>.venv</code></li>
+<li><strong>VS Code</strong> uses that environment as the interpreter</li>
+</ul>
+<p><strong>Two stable habits</strong></p>
+<ul>
+<li>Run scripts with <code>uv run ...</code> in the terminal</li>
+<li>In VS Code, select the interpreter inside <code>.venv</code></li>
+</ul>
+<div class="tip-box">
+<p><strong>Tip:</strong> <code>Cmd/Ctrl+Shift+P</code> → <strong>Python: Select Interpreter</strong> → pick the <code>.venv</code> path. VS Code remembers it per project.</p>
+</div>
+</section>
+<section id="in-class-demo-outline" class="slide level2 demo-slide">
+<h2>In-Class Demo Outline</h2>
+<ol type="1">
+<li><strong>Create a new project:</strong> <code>uv init</code>, add a dependency, run a script</li>
+<li><strong>Open folder</strong> in VS Code, select the interpreter</li>
+<li><strong>Install Quarto extension</strong>, preview a <code>.qmd</code></li>
+<li><strong>Initialize Git</strong>, commit from Source Control, push</li>
+<li><strong>Create and resolve a conflict</strong></li>
+</ol>
+<div class="demo-box">
+<p><strong>Pace:</strong> ~2 minutes per step. Narrate each action; students follow along on their machines.</p>
+</div>
+</section>
+<section id="exercise-1-pairs-build-and-run-a-uv-project" class="slide level2 exercise-slide">
+<h2>Exercise 1 (pairs): Build and Run a uv Project</h2>
+<p><strong>Goal:</strong> build muscle memory for <code>uv init</code>, <code>uv add</code>, <code>uv run</code>.</p>
+<p><strong>Checklist</strong></p>
+<ol type="1">
+<li><code>uv init joke-demo</code></li>
+<li><code>uv add httpx</code></li>
+<li>Write a script that calls <code>icanhazdadjoke.com</code></li>
+<li>Run with <code>uv run python main.py</code></li>
+<li>Commit <code>pyproject.toml</code>, <code>uv.lock</code>, and the script</li>
+</ol>
+<div class="exercise-check">
+<p><strong>Check:</strong> <code>uv run</code> prints a dad joke; <code>git status</code> shows a clean tree after the commit.</p>
+</div>
+</section>
+<section id="exercise-2-pairs-resolve-a-merge-conflict-in-vs-code" class="slide level2 exercise-slide">
+<h2>Exercise 2 (pairs): Resolve a Merge Conflict in VS Code</h2>
+<p><strong>Goal:</strong> get comfortable with the merge UI.</p>
+<ol type="1">
+<li>Each person makes a branch and edits the <strong>same line</strong> in <code>README.md</code></li>
+<li>Merge one branch first</li>
+<li>Merge the second branch and resolve the conflict in VS Code</li>
+<li>Stage, commit, push, then pull to verify</li>
+</ol>
+<div class="exercise-check">
+<p><strong>Check:</strong> both teammates’ edits are visible in <code>README.md</code>; <code>git log</code> shows the merge commit.</p>
+</div>
+</section>
+<section id="optional-5-minute-repo-tour-scikit-learn" class="slide level2 reference-slide">
+<h2>Optional 5-Minute Repo Tour: scikit-learn</h2>
+<p>Look for these signals of a healthy project:</p>
+<ul>
+<li>Clear <strong>README</strong></li>
+<li>Automated checks (<strong>CI</strong>)</li>
+<li>Code quality tools</li>
+<li>Central config in <code>pyproject.toml</code></li>
+<li>Tests and docs alongside code</li>
+</ul>
+<div class="tip-box">
+<p><strong>Tip:</strong> Skim <code>pyproject.toml</code> first — it tells you how the project is built, tested, and tooled.</p>
+</div>
+</section>
+<section id="wrap-up-what-to-remember" class="slide level2 takeaway-slide">
+<h2>Wrap-Up: What to Remember</h2>
+<ul>
+<li>IDEs reduce friction in the edit-run-check loop</li>
+<li>Virtual environments prevent dependency conflicts and enable reproducibility</li>
+<li><strong>VS Code:</strong> editor + terminal + Git + extensions</li>
+<li><strong>uv:</strong> project files (<code>pyproject.toml</code>, <code>uv.lock</code>, <code>.python-version</code>) plus local <code>.venv</code></li>
+<li>Use <code>uv sync</code> after pulling; use <code>uv run</code> to run reliably</li>
+</ul>
+</section>
+<section id="resources-optional" class="slide level2 reference-slide">
+<h2>Resources (Optional)</h2>
+<ul>
+<li><strong>uv docs:</strong> https://docs.astral.sh/uv/</li>
+<li><strong>VS Code Git:</strong> https://code.visualstudio.com/docs/sourcecontrol/overview</li>
+<li><strong>VS Code merge conflicts:</strong> https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts</li>
+<li><strong>Quarto in VS Code:</strong> https://quarto.org/docs/tools/vscode/</li>
+</ul>
+<aside class="notes">
+<p>This deck pairs IDE productivity (VS Code) with reproducibility (uv). Pace: about 50 minutes. The two recurring-problems slide sets up the “why” before the “how.” Slides 9 and 18 are good live-demo moments; the in-class demo outline (slide 20) is a guided walkthrough students follow on their machines. Exercises 1 and 2 are pair work — make sure partners are assigned before starting. If time is tight, the scikit-learn repo tour and the resources slide can be skipped or left as follow-up reading. Emphasize the two stable habits on slide 19: <code>uv run</code> in the terminal, and selecting the <code>.venv</code> interpreter in VS Code — these prevent most of the “it worked yesterday” issues students hit later.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="questions" class="slide level2 question-slide">
+<h2>Questions?</h2>
+<div class="discussion-box">
+<p>Take 2 minutes — what is one thing from today that is still unclear?</p>
+</div>
+<p>See the <a href="../index.html#schedule">schedule</a> for what’s coming next.</p>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>STAT 386 — Fall 2026</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

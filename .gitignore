@@ -1,5 +1,6 @@
 # Quarto output
-docs/
+# Note: docs/ is committed so GitHub Pages can serve the rendered site.
+# Re-render with `quarto render` before committing changes.
 
 # Python
 __pycache__/

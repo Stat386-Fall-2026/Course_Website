@@ -30,7 +30,7 @@ Slides and demos are posted on the course website and updated regularly.
 
 - Each week has its own slide deck (`slides/week-NN.qmd`)
 - Each week has a companion code demo (`demos/week-NN.qmd`)
-- The [schedule](../index.qmd#schedule) links everything together
+- The course website links slides and demos together
 - Demos include standalone source files you can download and run
 
 ## A Quick Code Example {.demo-slide}
@@ -53,7 +53,7 @@ Try changing the number of rolls. Does the average get closer to 3.5?
 {{< include ../_partials/course-norms.qmd >}}
 
 ::: notes
-This is a speaker note. Remind students to install Python and Quarto before next class. Point them to the [resources](../resources.qmd) page for setup instructions.
+This is a speaker note. Remind students to install Python and Quarto before next class. Point them to Canvas for setup instructions.
 :::
 
 {{< include ../_partials/questions.qmd >}}
