@@ -4,7 +4,7 @@ title: "Slides"
 
 # Slide Decks
 
-Each week's lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.
+Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.
 
 ## Available Decks
 
