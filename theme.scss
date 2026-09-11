@@ -467,6 +467,39 @@ main.content {
   background: #F0F3F7;
 }
 
+/* Content boxes on section-card slides need explicit dark text
+   because .section-card sets color: white with higher specificity */
+
+.reveal .slide.section-card .key-idea,
+.reveal .slide.section-card .discussion-box,
+.reveal .slide.section-card .demo-box,
+.reveal .slide.section-card .check-box,
+.reveal .slide.section-card .tip-box,
+.reveal .slide.section-card .warning-box,
+.reveal .slide.section-card .exercise-check {
+  color: $course-ink;
+}
+
+.reveal .slide.section-card .key-idea strong,
+.reveal .slide.section-card .discussion-box strong,
+.reveal .slide.section-card .demo-box strong,
+.reveal .slide.section-card .check-box strong,
+.reveal .slide.section-card .tip-box strong,
+.reveal .slide.section-card .warning-box strong,
+.reveal .slide.section-card .exercise-check strong {
+  color: $course-navy;
+}
+
+.reveal .slide.section-card .key-idea code,
+.reveal .slide.section-card .discussion-box code,
+.reveal .slide.section-card .demo-box code,
+.reveal .slide.section-card .check-box code,
+.reveal .slide.section-card .tip-box code,
+.reveal .slide.section-card .warning-box code,
+.reveal .slide.section-card .exercise-check code {
+  color: $course-navy;
+}
+
 /* Overview slide */
 
 .reveal .slide.overview-slide h2 {

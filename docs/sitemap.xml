@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/slides.html</loc>
-    <lastmod>2026-09-09T15:07:00.934Z</lastmod>
+    <lastmod>2026-09-11T15:50:20.284Z</lastmod>
   </url>
   <url>
     <loc>/slides/vscode-uv.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>/slides/github-issues-projects.html</loc>
-    <lastmod>2026-08-06T19:14:26.340Z</lastmod>
+    <lastmod>2026-09-11T14:35:26.694Z</lastmod>
   </url>
   <url>
     <loc>/slides/eda-dimensionality-reduction.html</loc>
@@ -83,5 +83,9 @@
   <url>
     <loc>/slides/week-01.html</loc>
     <lastmod>2026-09-09T15:16:20.636Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/git_github_foundations.html</loc>
+    <lastmod>2026-09-11T15:49:11.652Z</lastmod>
   </url>
 </urlset>

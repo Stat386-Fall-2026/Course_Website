@@ -1,0 +1,703 @@
+---
+title: "Git and GitHub Foundations"
+subtitle: "Working Files, Commits, and Shared Repositories"
+author: "STAT 386"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+    slide-number: true
+    transition: fade
+    incremental: false
+    code-overflow: wrap
+    footer: "STAT 386"
+---
+
+## Today's question {.section-card}
+
+::: {.key-idea}
+Where is my change right now?
+:::
+
+By the end of class, you should be able to:
+
+- Explain how Git records the history of a project
+- Distinguish working files, staging, local history, and GitHub
+- Inspect, commit, and share changes from the terminal
+
+::: notes
+Suggested time: 2 minutes.
+
+Frame every command as an answer to the question on this slide. Students do not need to memorize a recipe if they can determine where a change currently lives and where it needs to go next.
+:::
+
+## The `final_really_final` problem {.question-slide}
+
+::: {.columns-2}
+
+<div>
+
+```text
+analysis.py
+analysis_v2.py
+analysis_final.py
+analysis_final_fixed.py
+analysis_final_really.py
+```
+
+</div>
+
+<div>
+
+::: {.discussion-box}
+What information is missing?
+:::
+
+- Which file should we use?
+- What changed between versions?
+- Why did it change?
+- Which files belong to the same version of the project?
+
+</div>
+
+:::
+
+::: notes
+Suggested time: 3 to 5 minutes.
+
+Give students 30 seconds to think, then collect several answers. The filenames may imply an order, but they do not reliably preserve authorship, intent, related changes across files, or a trustworthy history.
+:::
+
+## Version control
+
+::: {.key-idea}
+Version control records changes to a project over time.
+:::
+
+A version control system helps us:
+
+- Preserve earlier versions
+- Understand what changed and why
+- Combine related changes into meaningful checkpoints
+- Share a consistent project history
+
+::: notes
+Suggested time: 2 minutes.
+
+Avoid promising that Git prevents conflicts. Git helps people coordinate changes and resolve conflicts when they occur.
+:::
+
+## Git as a database
+
+Git stores structured records that describe a project's contents and history.
+
+| Git object | What it represents |
+|---|---|
+| **Blob** | The contents of a file |
+| **Tree** | A directory and its contents |
+| **Commit** | A project snapshot, its metadata, and its parent |
+
+::: {.tip-box}
+You do not need to memorize the object names. Focus on how they connect.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+This slide provides the deeper explanation without making internal Git commands part of the learning objectives. Explain that filenames live in trees, while blobs store contents.
+:::
+
+## A commit connects contents and history
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    C["Commit"] --> T["Project tree"]
+    C --> P["Parent commit"]
+    C --> M["Author, time, message"]
+    T --> B1["README contents"]
+    T --> B2["Data contents"]
+```
+
+::: {.key-idea}
+Each commit describes the project at one moment and links it to the preceding history.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+The commit points to a tree rather than copying a visible folder into a special archive. The parent connection creates the history students later see with git log.
+:::
+
+## Unchanged contents can be reused
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    C2["Commit 2"] --> T2["Tree 2"]
+    C2 --> C1["Commit 1"]
+    T2 --> R2["Updated README"]
+    T2 --> D["Unchanged data"]
+    C1 --> T1["Tree 1"]
+    T1 --> R1["Original README"]
+    T1 --> D
+```
+
+Git presents each commit as a complete project snapshot while reusing file contents that have not changed.
+
+::: notes
+Suggested time: 2 minutes.
+
+This is the main answer to the storage question. Do not discuss packfiles unless a student asks or you choose the optional extension later.
+:::
+
+## What changes in the database? {.question-slide}
+
+::: {.discussion-box}
+A repository contains 100 files. You change one line in one file and commit.
+
+What new information must Git store? What can it reuse?
+:::
+
+::: {.fragment}
+Git needs a new version of the changed file, a new tree describing the snapshot, and a new commit. It can reuse the contents of the other 99 files.
+:::
+
+::: notes
+Suggested time: 3 to 6 minutes.
+
+This is the first adjustable activity. For the short version, take one or two answers. For the longer version, give students one minute alone and two minutes with a partner before revealing the answer.
+:::
+
+## Git and GitHub {.comparison-slide}
+
+::: {.columns-2}
+
+<div>
+
+### Git
+
+- Software on your computer
+- Records local project history
+- Works offline
+- `status`, `add`, `commit`
+
+</div>
+
+<div>
+
+### GitHub
+
+- Hosts Git repositories
+- Stores a shared remote copy
+- Adds issues, pull requests, reviews
+- Requires a network connection
+
+</div>
+
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Connect this distinction to the preceding slides: Git manages the database. GitHub can host and share a copy of it. Collaboration features will receive their own class meeting.
+:::
+
+## Four locations for a change
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    W["Working files"] -->|"git add"| S["Staging area"]
+    S -->|"git commit"| L["Local history"]
+    L -->|"git push"| G["GitHub"]
+```
+
+::: {.key-idea}
+The staging area describes the contents of the next commit.
+:::
+
+`git status` helps you determine where your changes currently live.
+
+::: notes
+Suggested time: 3 minutes.
+
+This is the central visual for the lesson. Return to it after each part of the demonstration. Explain that git pull synchronizes remote changes back into the local repository and working files, but postpone details until the final remote slides.
+:::
+
+## Git can explain its commands {.reference-slide}
+
+```bash
+git status
+git <command> -h
+git help <command>
+```
+
+- `git status` describes the current repository state
+- `-h` displays a short command summary
+- `git help` opens the full documentation
+
+::: {.tip-box}
+When you are unsure, begin with `git status`.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Demonstrate git status and one short help command. This gives students a recovery strategy before they begin working.
+:::
+
+## A practice repository {.demo-slide}
+
+::: {.demo-box}
+```bash
+cd ~/Desktop/School/STAT_386
+mkdir git_practice
+cd git_practice
+
+git init
+git status
+ls -a
+```
+:::
+
+::: {.tip-box}
+The hidden `.git` directory contains the repository's database. Leave its contents alone during normal work.
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Have students work along with the demonstration. Pause after git init and ask whether GitHub has been involved yet. The answer is no. Use ls -a to reveal the .git directory.
+:::
+
+## The first project files {.demo-slide}
+
+::: {.demo-box}
+```bash
+echo "# Git Practice" > README.md
+echo "Questions about Git" > questions.md
+
+git status
+```
+:::
+
+::: {.discussion-box}
+What does Git know about these files? What has Git recorded in its history?
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Both files are untracked. Git can see that they exist, but no commit contains them yet. Connect the output to the working-files box in the central diagram.
+:::
+
+## The first snapshot {.demo-slide}
+
+::: {.demo-box}
+```bash
+git add README.md questions.md
+git status
+git diff --staged
+
+git commit -m "Start Git practice repository"
+git log --oneline
+```
+:::
+
+::: {.key-idea}
+Staging proposes the snapshot. Committing records it.
+:::
+
+::: notes
+Suggested time: 5 minutes.
+
+Pause after each command. Before the commit, ask where the files live. After the commit, ask again. Point out the abbreviated commit hash and message in git log --oneline.
+:::
+
+## Two files, two changes {.demo-slide}
+
+::: {.demo-box}
+```bash
+echo "This repository records our Git practice." >> README.md
+echo "How does staging work?" >> questions.md
+
+git diff
+git add README.md
+git status
+```
+:::
+
+::: {.discussion-box}
+If we commit now, which change will Git record?
+:::
+
+::: notes
+Suggested time: 3 minutes before the activity.
+
+The README change is staged. The questions change remains unstaged. Do not answer immediately. Continue to the next slide for the adjustable activity.
+:::
+
+## Commit planner {.exercise-slide}
+
+::: {.exercise-check}
+Use the evidence from Git to plan two focused commits.
+:::
+
+1. Run `git diff` to inspect the unstaged change.
+2. Run `git diff --staged` to inspect the proposed commit.
+3. Commit the staged README change.
+4. Run `git status` and explain what remains.
+5. Stage and commit the question as a separate change.
+
+::: notes
+Suggested time: 4 to 12 minutes.
+
+This is the main accordion activity.
+
+Short version: Students predict the first commit and you execute it together.
+
+Standard version: Students complete both commits independently.
+
+Extended version: Partners compare git log --oneline output and explain whether the two commit messages tell a coherent story.
+:::
+
+## Inside a commit {.demo-slide}
+
+::: {.demo-box}
+```bash
+git cat-file -p HEAD
+git cat-file -p HEAD^{tree}
+```
+:::
+
+Look for the commit identifier, the tree identifier, the parent, the author, and each blob.
+
+::: {.tip-box}
+These commands reveal the structure. You will rarely need them during ordinary work.
+:::
+
+::: notes
+Optional expansion: 3 to 8 minutes.
+
+Skip this slide if the guided practice ran long. For the shortest version, run only git cat-file -p HEAD. For the extended version, copy one blob hash from the tree output and inspect it with git cat-file -p followed by the hash. Students will see the stored file contents.
+:::
+
+## Commit messages {.comparison-slide}
+
+::: {.columns-2}
+
+<div>
+
+### Useful
+
+- `Start Git practice repo`
+- `Explain project purpose in README`
+- `Add question about staging`
+
+</div>
+
+<div>
+
+### Unhelpful
+
+- `update`
+- `stuff`
+- `final final v2`
+
+</div>
+
+:::
+
+::: {.key-idea}
+A useful message completes: "This commit will..."
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Ask students whether someone unfamiliar with the project could reconstruct the sequence of work from the messages alone. The message should describe the result of applying the commit.
+:::
+
+## Local and remote repositories
+
+::: {.columns-2}
+
+<div>
+
+### Local repository
+
+- Lives on your computer
+- Contains your commits
+- Available without GitHub
+
+</div>
+
+<div>
+
+### Remote repository
+
+- Usually hosted on GitHub
+- Shared through a URL
+- Commonly named `origin`
+
+</div>
+
+:::
+
+```bash
+git remote -v
+```
+
+::: notes
+Suggested time: 2 minutes.
+
+Explain that origin is a conventional short name for a remote URL. It does not mean “the original repository” in every possible workflow.
+:::
+
+## Connecting the repository to GitHub {.demo-slide}
+
+First, create an **empty** GitHub repository named `<netid>_git_practice`.
+
+::: {.demo-box}
+```bash
+git branch -M main
+git remote add origin <repository-url>
+git remote -v
+git push -u origin main
+```
+:::
+
+::: {.discussion-box}
+Which parts of the project now exist on GitHub?
+:::
+
+::: notes
+Suggested time: 5 to 8 minutes.
+
+Create the GitHub repository without initializing a README, license, or .gitignore. Authentication may make this section longer than planned. After pushing, open the GitHub commit history and compare it with git log --oneline.
+
+The -u option connects the local main branch to origin/main, which allows later pushes to use git push without additional arguments.
+:::
+
+## Files Git should ignore
+
+::: {.key-idea}
+Ignore files that belong only to your computer or that the project can recreate.
+:::
+
+- Generated output and caches: `.quarto/`, `__pycache__/`
+- Local environments: `.venv/`
+- Machine-specific files: `.DS_Store`
+- Local secrets: `.env`
+
+::: {.warning-box}
+Never commit passwords, tokens, or private keys. Ignoring them does not erase earlier commits.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Emphasize the principle before the examples. Some choices depend on the project. For example, GitHub Pages built by an Action can ignore the locally generated site, while a project that publishes from a docs directory may intentionally track that output.
+:::
+
+## Files Git should track
+
+::: {.key-idea}
+Track the files someone else needs to understand and reproduce the project.
+:::
+
+- Source files: `.py`, `.qmd`
+- Documentation: `README.md`
+- Dependency records: `pyproject.toml`, `uv.lock`
+- Small data files required by the project
+- `.gitignore` and safe templates such as `.env.example`
+
+::: {.tip-box}
+Large or sensitive data usually need storage outside Git.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Explain that .env.example documents the names of required settings without containing real credentials. The distinction is not simply important versus unimportant files. Git should preserve the source and instructions needed to recreate the work.
+:::
+
+## Editing `.gitignore` {.demo-slide}
+
+::: {.columns-2}
+
+<div>
+
+### Add a rule
+
+```bash
+echo "scratch.txt" >> .gitignore
+echo "Temporary notes" > scratch.txt
+git status --ignored
+```
+
+</div>
+
+<div>
+
+### Review or remove a rule
+
+```bash
+nano .gitignore
+```
+
+One pattern goes on each line. Delete the line to stop ignoring that pattern.
+
+</div>
+
+:::
+
+::: {.warning-box}
+`.gitignore` affects untracked files. It does not make Git forget a file that was already committed.
+:::
+
+::: notes
+Suggested time: 3 to 5 minutes.
+
+Demonstrate that scratch.txt appears under the ignored section of git status --ignored. Remove the scratch.txt line, save the file, and rerun git status to make it appear as untracked.
+
+If a file was already committed, add the ignore rule and run git rm --cached followed by the filename to remove it from future commits while leaving the local file in place. Avoid demonstrating this extra command unless time permits.
+
+Mention that # starts a comment, * acts as a wildcard, and a trailing slash identifies a directory. Revisit these patterns during the uv class.
+:::
+
+## Repository archaeology {.exercise-slide}
+
+::: {.exercise-check}
+Use the history to reconstruct what happened.
+:::
+
+```bash
+git log --oneline
+git show HEAD
+git show <earlier-commit-hash>
+```
+
+Explain to a partner:
+
+- What each commit changed
+- Whether the commit message describes it accurately
+- What the history cannot tell you
+
+::: notes
+Optional expansion: 3 to 8 minutes.
+
+Use this activity only if time remains after the push. The short version inspects HEAD as a class. The extended version has partners inspect one another's histories and compare what they can reconstruct.
+:::
+
+## Where is the change? {.question-slide}
+
+For each situation, decide whether the change appears in local history and on GitHub.
+
+| Situation | Local history? | GitHub? |
+|---|---:|---:|
+| File saved |  |  |
+| Change staged |  |  |
+| Change committed |  |  |
+| Commit pushed |  |  |
+
+::: {.fragment}
+Only committed changes appear in local history. Only pushed commits appear on GitHub.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Use this as the exit check. Ask students to answer before revealing the final statement. If time permits, add a fifth situation verbally: a student modifies a file after staging it. The file can then contain both staged and unstaged changes.
+:::
+
+## Takeaways {.takeaway-slide}
+
+- Git records project snapshots in a structured database
+- The staging area defines the contents of the next commit
+- `git status` and `git diff` provide evidence about the current state
+- Commits live locally until `git push` sends them to GitHub
+
+::: {.key-idea}
+When Git feels confusing, ask: Where is my change right now?
+:::
+
+::: notes
+Suggested time: 1 minute.
+
+Preview the next class: Positron will display the same working files, staging area, diffs, commits, and remote operations through a visual interface.
+:::
+
+## Command reference {.reference-slide}
+
+::: {.cheat-grid}
+
+<div>
+
+#### Inspect
+
+- `git status`
+- `git diff`
+- `git diff --staged`
+- `git log --oneline`
+
+</div>
+
+<div>
+
+#### Record
+
+- `git add <file>`
+- `git commit -m "message"`
+
+</div>
+
+<div>
+
+#### Connect
+
+- `git remote -v`
+- `git remote add origin <url>`
+
+</div>
+
+<div>
+
+#### Synchronize
+
+- `git push`
+- `git pull`
+
+</div>
+
+:::
+
+::: notes
+Reference slide. Do not lecture through every command. Leave this available while students work.
+:::
+
+## Git identity {.reference-slide}
+
+If Git does not know who you are:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+```
+
+Check the current configuration:
+
+```bash
+git config --global --list
+```
+
+::: {.tip-box}
+Use an email address connected to your GitHub account, including a GitHub-provided private email if you prefer.
+:::
+
+::: notes
+Reference slide. Most students should already have configured Git if they completed the earlier clone and push activity. Use only when needed.
+:::
+
+{{< include ../_partials/questions.qmd >}}

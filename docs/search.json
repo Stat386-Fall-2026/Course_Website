@@ -4,7 +4,7 @@
     "href": "slides.html",
     "title": "Slides",
     "section": "",
-    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal",
+    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal \nIntroduction to Git and GitHub",
     "crumbs": [
       "Home",
       "Slides",
@@ -16,7 +16,7 @@
     "href": "slides.html#available-decks",
     "title": "Slides",
     "section": "",
-    "text": "Intro to the Terminal",
+    "text": "Intro to the Terminal \nIntroduction to Git and GitHub",
     "crumbs": [
       "Home",
       "Slides",
@@ -3147,5 +3147,208 @@
     "title": "Week 1: Course Introduction",
     "section": "Questions?",
     "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#todays-question",
+    "href": "slides/git_github_foundations.html#todays-question",
+    "title": "Git and GitHub Foundations",
+    "section": "Today’s question",
+    "text": "Today’s question\n\nWhere is my change right now?\n\nBy the end of class, you should be able to:\n\nExplain how Git records the history of a project\nDistinguish working files, staging, local history, and GitHub\nInspect, commit, and share changes from the terminal\n\n\nSuggested time: 2 minutes.\nFrame every command as an answer to the question on this slide. Students do not need to memorize a recipe if they can determine where a change currently lives and where it needs to go next."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-final_really_final-problem",
+    "href": "slides/git_github_foundations.html#the-final_really_final-problem",
+    "title": "Git and GitHub Foundations",
+    "section": "The final_really_final problem",
+    "text": "The final_really_final problem\n\n\nanalysis.py\nanalysis_v2.py\nanalysis_final.py\nanalysis_final_fixed.py\nanalysis_final_really.py\n\n\n\nWhat information is missing?\n\n\nWhich file should we use?\nWhat changed between versions?\nWhy did it change?\nWhich files belong to the same version of the project?\n\n\n\n\nSuggested time: 3 to 5 minutes.\nGive students 30 seconds to think, then collect several answers. The filenames may imply an order, but they do not reliably preserve authorship, intent, related changes across files, or a trustworthy history."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#version-control",
+    "href": "slides/git_github_foundations.html#version-control",
+    "title": "Git and GitHub Foundations",
+    "section": "Version control",
+    "text": "Version control\n\nVersion control records changes to a project over time.\n\nA version control system helps us:\n\nPreserve earlier versions\nUnderstand what changed and why\nCombine related changes into meaningful checkpoints\nShare a consistent project history\n\n\nSuggested time: 2 minutes.\nAvoid promising that Git prevents conflicts. Git helps people coordinate changes and resolve conflicts when they occur."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-as-a-database",
+    "href": "slides/git_github_foundations.html#git-as-a-database",
+    "title": "Git and GitHub Foundations",
+    "section": "Git as a database",
+    "text": "Git as a database\nGit stores structured records that describe a project’s contents and history.\n\n\n\nGit object\nWhat it represents\n\n\n\n\nBlob\nThe contents of a file\n\n\nTree\nA directory and its contents\n\n\nCommit\nA project snapshot, its metadata, and its parent\n\n\n\n\nYou do not need to memorize the object names. Focus on how they connect.\n\n\nSuggested time: 3 minutes.\nThis slide provides the deeper explanation without making internal Git commands part of the learning objectives. Explain that filenames live in trees, while blobs store contents."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
+    "href": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
+    "title": "Git and GitHub Foundations",
+    "section": "A commit connects contents and history",
+    "text": "A commit connects contents and history\n\n\n\n\n\nflowchart TD\n    C[\"Commit\"] --&gt; T[\"Project tree\"]\n    C --&gt; P[\"Parent commit\"]\n    C --&gt; M[\"Author, time, message\"]\n    T --&gt; B1[\"README contents\"]\n    T --&gt; B2[\"Data contents\"]\n\n\n\n\n\n\n\nEach commit describes the project at one moment and links it to the preceding history.\n\n\nSuggested time: 2 minutes.\nThe commit points to a tree rather than copying a visible folder into a special archive. The parent connection creates the history students later see with git log."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
+    "href": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
+    "title": "Git and GitHub Foundations",
+    "section": "Unchanged contents can be reused",
+    "text": "Unchanged contents can be reused\n\n\n\n\n\nflowchart TD\n    C2[\"Commit 2\"] --&gt; T2[\"Tree 2\"]\n    C2 --&gt; C1[\"Commit 1\"]\n    T2 --&gt; R2[\"Updated README\"]\n    T2 --&gt; D[\"Unchanged data\"]\n    C1 --&gt; T1[\"Tree 1\"]\n    T1 --&gt; R1[\"Original README\"]\n    T1 --&gt; D\n\n\n\n\n\n\nGit presents each commit as a complete project snapshot while reusing file contents that have not changed.\n\nSuggested time: 2 minutes.\nThis is the main answer to the storage question. Do not discuss packfiles unless a student asks or you choose the optional extension later."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#what-changes-in-the-database",
+    "href": "slides/git_github_foundations.html#what-changes-in-the-database",
+    "title": "Git and GitHub Foundations",
+    "section": "What changes in the database?",
+    "text": "What changes in the database?\n\nA repository contains 100 files. You change one line in one file and commit.\nWhat new information must Git store? What can it reuse?\n\n\nGit needs a new version of the changed file, a new tree describing the snapshot, and a new commit. It can reuse the contents of the other 99 files.\n\n\nSuggested time: 3 to 6 minutes.\nThis is the first adjustable activity. For the short version, take one or two answers. For the longer version, give students one minute alone and two minutes with a partner before revealing the answer."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-and-github",
+    "href": "slides/git_github_foundations.html#git-and-github",
+    "title": "Git and GitHub Foundations",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\n\nGit\n\nSoftware on your computer\nRecords local project history\nWorks offline\nstatus, add, commit\n\nGitHub\n\nHosts Git repositories\nStores a shared remote copy\nAdds issues, pull requests, reviews\nRequires a network connection\n\n\n\nSuggested time: 3 minutes.\nConnect this distinction to the preceding slides: Git manages the database. GitHub can host and share a copy of it. Collaboration features will receive their own class meeting."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#four-locations-for-a-change",
+    "href": "slides/git_github_foundations.html#four-locations-for-a-change",
+    "title": "Git and GitHub Foundations",
+    "section": "Four locations for a change",
+    "text": "Four locations for a change\n\n\n\n\n\nflowchart LR\n    W[\"Working files\"] --&gt;|\"git add\"| S[\"Staging area\"]\n    S --&gt;|\"git commit\"| L[\"Local history\"]\n    L --&gt;|\"git push\"| G[\"GitHub\"]\n\n\n\n\n\n\n\nThe staging area describes the contents of the next commit.\n\ngit status helps you determine where your changes currently live.\n\nSuggested time: 3 minutes.\nThis is the central visual for the lesson. Return to it after each part of the demonstration. Explain that git pull synchronizes remote changes back into the local repository and working files, but postpone details until the final remote slides."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-can-explain-its-commands",
+    "href": "slides/git_github_foundations.html#git-can-explain-its-commands",
+    "title": "Git and GitHub Foundations",
+    "section": "Git can explain its commands",
+    "text": "Git can explain its commands\ngit status\ngit &lt;command&gt; -h\ngit help &lt;command&gt;\n\ngit status describes the current repository state\n-h displays a short command summary\ngit help opens the full documentation\n\n\nWhen you are unsure, begin with git status.\n\n\nSuggested time: 2 minutes.\nDemonstrate git status and one short help command. This gives students a recovery strategy before they begin working."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#a-practice-repository",
+    "href": "slides/git_github_foundations.html#a-practice-repository",
+    "title": "Git and GitHub Foundations",
+    "section": "A practice repository",
+    "text": "A practice repository\n\ncd ~/Desktop/School/STAT_386\nmkdir git_practice\ncd git_practice\n\ngit init\ngit status\nls -a\n\n\nThe hidden .git directory contains the repository’s database. Leave its contents alone during normal work.\n\n\nSuggested time: 4 minutes.\nHave students work along with the demonstration. Pause after git init and ask whether GitHub has been involved yet. The answer is no. Use ls -a to reveal the .git directory."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-first-project-files",
+    "href": "slides/git_github_foundations.html#the-first-project-files",
+    "title": "Git and GitHub Foundations",
+    "section": "The first project files",
+    "text": "The first project files\n\necho \"# Git Practice\" &gt; README.md\necho \"Questions about Git\" &gt; questions.md\n\ngit status\n\n\nWhat does Git know about these files? What has Git recorded in its history?\n\n\nSuggested time: 3 minutes.\nBoth files are untracked. Git can see that they exist, but no commit contains them yet. Connect the output to the working-files box in the central diagram."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-first-snapshot",
+    "href": "slides/git_github_foundations.html#the-first-snapshot",
+    "title": "Git and GitHub Foundations",
+    "section": "The first snapshot",
+    "text": "The first snapshot\n\ngit add README.md questions.md\ngit status\ngit diff --staged\n\ngit commit -m \"Start Git practice repository\"\ngit log --oneline\n\n\nStaging proposes the snapshot. Committing records it.\n\n\nSuggested time: 5 minutes.\nPause after each command. Before the commit, ask where the files live. After the commit, ask again. Point out the abbreviated commit hash and message in git log –oneline."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#two-files-two-changes",
+    "href": "slides/git_github_foundations.html#two-files-two-changes",
+    "title": "Git and GitHub Foundations",
+    "section": "Two files, two changes",
+    "text": "Two files, two changes\n\necho \"This repository records our Git practice.\" &gt;&gt; README.md\necho \"How does staging work?\" &gt;&gt; questions.md\n\ngit diff\ngit add README.md\ngit status\n\n\nIf we commit now, which change will Git record?\n\n\nSuggested time: 3 minutes before the activity.\nThe README change is staged. The questions change remains unstaged. Do not answer immediately. Continue to the next slide for the adjustable activity."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#commit-planner",
+    "href": "slides/git_github_foundations.html#commit-planner",
+    "title": "Git and GitHub Foundations",
+    "section": "Commit planner",
+    "text": "Commit planner\n\nUse the evidence from Git to plan two focused commits.\n\n\nRun git diff to inspect the unstaged change.\nRun git diff --staged to inspect the proposed commit.\nCommit the staged README change.\nRun git status and explain what remains.\nStage and commit the question as a separate change.\n\n\nSuggested time: 4 to 12 minutes.\nThis is the main accordion activity.\nShort version: Students predict the first commit and you execute it together.\nStandard version: Students complete both commits independently.\nExtended version: Partners compare git log –oneline output and explain whether the two commit messages tell a coherent story."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#inside-a-commit",
+    "href": "slides/git_github_foundations.html#inside-a-commit",
+    "title": "Git and GitHub Foundations",
+    "section": "Inside a commit",
+    "text": "Inside a commit\n\ngit cat-file -p HEAD\ngit cat-file -p HEAD^{tree}\n\nLook for the commit identifier, the tree identifier, the parent, the author, and each blob.\n\nThese commands reveal the structure. You will rarely need them during ordinary work.\n\n\nOptional expansion: 3 to 8 minutes.\nSkip this slide if the guided practice ran long. For the shortest version, run only git cat-file -p HEAD. For the extended version, copy one blob hash from the tree output and inspect it with git cat-file -p followed by the hash. Students will see the stored file contents."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#commit-messages",
+    "href": "slides/git_github_foundations.html#commit-messages",
+    "title": "Git and GitHub Foundations",
+    "section": "Commit messages",
+    "text": "Commit messages\n\nUseful\n\nStart Git practice repo\nExplain project purpose in README\nAdd question about staging\n\nUnhelpful\n\nupdate\nstuff\nfinal final v2\n\n\n\nA useful message completes: “This commit will…”\n\n\nSuggested time: 2 minutes.\nAsk students whether someone unfamiliar with the project could reconstruct the sequence of work from the messages alone. The message should describe the result of applying the commit."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#local-and-remote-repositories",
+    "href": "slides/git_github_foundations.html#local-and-remote-repositories",
+    "title": "Git and GitHub Foundations",
+    "section": "Local and remote repositories",
+    "text": "Local and remote repositories\n\nLocal repository\n\nLives on your computer\nContains your commits\nAvailable without GitHub\n\nRemote repository\n\nUsually hosted on GitHub\nShared through a URL\nCommonly named origin\n\n\ngit remote -v\n\nSuggested time: 2 minutes.\nExplain that origin is a conventional short name for a remote URL. It does not mean “the original repository” in every possible workflow."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#connecting-the-repository-to-github",
+    "href": "slides/git_github_foundations.html#connecting-the-repository-to-github",
+    "title": "Git and GitHub Foundations",
+    "section": "Connecting the repository to GitHub",
+    "text": "Connecting the repository to GitHub\nFirst, create an empty GitHub repository named &lt;netid&gt;_git_practice.\n\ngit branch -M main\ngit remote add origin &lt;repository-url&gt;\ngit remote -v\ngit push -u origin main\n\n\nWhich parts of the project now exist on GitHub?\n\n\nSuggested time: 5 to 8 minutes.\nCreate the GitHub repository without initializing a README, license, or .gitignore. Authentication may make this section longer than planned. After pushing, open the GitHub commit history and compare it with git log –oneline.\nThe -u option connects the local main branch to origin/main, which allows later pushes to use git push without additional arguments."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#files-git-should-ignore",
+    "href": "slides/git_github_foundations.html#files-git-should-ignore",
+    "title": "Git and GitHub Foundations",
+    "section": "Files Git should ignore",
+    "text": "Files Git should ignore\n\nIgnore files that belong only to your computer or that the project can recreate.\n\n\nGenerated output and caches: .quarto/, __pycache__/\nLocal environments: .venv/\nMachine-specific files: .DS_Store\nLocal secrets: .env\n\n\nNever commit passwords, tokens, or private keys. Ignoring them does not erase earlier commits.\n\n\nSuggested time: 2 minutes.\nEmphasize the principle before the examples. Some choices depend on the project. For example, GitHub Pages built by an Action can ignore the locally generated site, while a project that publishes from a docs directory may intentionally track that output."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#repository-archaeology",
+    "href": "slides/git_github_foundations.html#repository-archaeology",
+    "title": "Git and GitHub Foundations",
+    "section": "Repository archaeology",
+    "text": "Repository archaeology\n\nUse the history to reconstruct what happened.\n\ngit log --oneline\ngit show HEAD\ngit show &lt;earlier-commit-hash&gt;\nExplain to a partner:\n\nWhat each commit changed\nWhether the commit message describes it accurately\nWhat the history cannot tell you\n\n\nOptional expansion: 3 to 8 minutes.\nUse this activity only if time remains after the push. The short version inspects HEAD as a class. The extended version has partners inspect one another’s histories and compare what they can reconstruct."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#where-is-the-change",
+    "href": "slides/git_github_foundations.html#where-is-the-change",
+    "title": "Git and GitHub Foundations",
+    "section": "Where is the change?",
+    "text": "Where is the change?\nFor each situation, decide whether the change appears in local history and on GitHub.\n\n\n\nSituation\nLocal history?\nGitHub?\n\n\n\n\nFile saved\n\n\n\n\nChange staged\n\n\n\n\nChange committed\n\n\n\n\nCommit pushed\n\n\n\n\n\n\nOnly committed changes appear in local history. Only pushed commits appear on GitHub.\n\n\nSuggested time: 3 minutes.\nUse this as the exit check. Ask students to answer before revealing the final statement. If time permits, add a fifth situation verbally: a student modifies a file after staging it. The file can then contain both staged and unstaged changes."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#takeaways",
+    "href": "slides/git_github_foundations.html#takeaways",
+    "title": "Git and GitHub Foundations",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nGit records project snapshots in a structured database\nThe staging area defines the contents of the next commit\ngit status and git diff provide evidence about the current state\nCommits live locally until git push sends them to GitHub\n\n\nWhen Git feels confusing, ask: Where is my change right now?\n\n\nSuggested time: 1 minute.\nPreview the next class: Positron will display the same working files, staging area, diffs, commits, and remote operations through a visual interface."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#command-reference",
+    "href": "slides/git_github_foundations.html#command-reference",
+    "title": "Git and GitHub Foundations",
+    "section": "Command reference",
+    "text": "Command reference\n\nInspect\n\ngit status\ngit diff\ngit diff --staged\ngit log --oneline\n\nRecord\n\ngit add &lt;file&gt;\ngit commit -m \"message\"\n\nConnect\n\ngit remote -v\ngit remote add origin &lt;url&gt;\n\nSynchronize\n\ngit push\ngit pull\n\n\n\nReference slide. Do not lecture through every command. Leave this available while students work."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-identity",
+    "href": "slides/git_github_foundations.html#git-identity",
+    "title": "Git and GitHub Foundations",
+    "section": "Git identity",
+    "text": "Git identity\nIf Git does not know who you are:\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"email@example.com\"\nCheck the current configuration:\ngit config --global --list\n\nUse an email address connected to your GitHub account, including a GitHub-provided private email if you prefer.\n\n\nReference slide. Most students should already have configured Git if they completed the earlier clone and push activity. Use only when needed."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#questions",
+    "href": "slides/git_github_foundations.html#questions",
+    "title": "Git and GitHub Foundations",
+    "section": "Questions?",
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#what-belongs-in-.gitignore",
+    "href": "slides/git_github_foundations.html#what-belongs-in-.gitignore",
+    "title": "Git and GitHub Foundations",
+    "section": "What belongs in .gitignore?",
+    "text": "What belongs in .gitignore?\n\nUsually ignore\n.venv/\n__pycache__/\n*.py[cod]\n.quarto/\n_site/\n.env\n.DS_Store\nGenerated files, local environments, machine-specific files, and secrets do not belong in the shared history.\nUsually commit\n\nSource files such as .py and .qmd\nREADME.md and other documentation\npyproject.toml and uv.lock\nSmall data files required to reproduce the project\n.gitignore itself\nA safe template such as .env.example\n\n\n\nIgnoring a secret does not remove it from earlier commits. Never commit passwords, tokens, or private keys.\n\n\nSuggested time: 3 minutes.\nThe general rule is to track source material and reproducibility information while ignoring files that the project can regenerate or that belong only to one computer. Some choices depend on the project. For example, a class may commit small data files but store large or sensitive data elsewhere.\nExplain that .env.example documents the required variable names without containing real credentials."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#editing-.gitignore",
+    "href": "slides/git_github_foundations.html#editing-.gitignore",
+    "title": "Git and GitHub Foundations",
+    "section": "Editing .gitignore",
+    "text": "Editing .gitignore\n\nAdd a rule\necho \"scratch.txt\" &gt;&gt; .gitignore\necho \"Temporary notes\" &gt; scratch.txt\ngit status --ignored\nReview or remove a rule\nnano .gitignore\nOne pattern goes on each line. Delete the line to stop ignoring that pattern.\n\n\n.gitignore affects untracked files. It does not make Git forget a file that was already committed.\n\n\nSuggested time: 3 to 5 minutes.\nDemonstrate that scratch.txt appears under the ignored section of git status –ignored. Remove the scratch.txt line, save the file, and rerun git status to make it appear as untracked.\nIf a file was already committed, add the ignore rule and run git rm –cached followed by the filename to remove it from future commits while leaving the local file in place. Avoid demonstrating this extra command unless time permits.\nMention that # starts a comment, * acts as a wildcard, and a trailing slash identifies a directory. Revisit these patterns during the uv class."
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#files-git-should-track",
+    "href": "slides/git_github_foundations.html#files-git-should-track",
+    "title": "Git and GitHub Foundations",
+    "section": "Files Git should track",
+    "text": "Files Git should track\n\nTrack the files someone else needs to understand and reproduce the project.\n\n\nSource files: .py, .qmd\nDocumentation: README.md\nDependency records: pyproject.toml, uv.lock\nSmall data files required by the project\n.gitignore and safe templates such as .env.example\n\n\nLarge or sensitive data usually need storage outside Git.\n\n\nSuggested time: 2 minutes.\nExplain that .env.example documents the names of required settings without containing real credentials. The distinction is not simply important versus unimportant files. Git should preserve the source and instructions needed to recreate the work."
   }
 ]
