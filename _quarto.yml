@@ -25,6 +25,7 @@ website:
         contents:
           - slides.qmd
           - slides/terminal_intro.qmd
+          - slides/IDEs_and_Markdown.qmd
       # - section: "Demos"
       #   contents:
       #     - demos.qmd
