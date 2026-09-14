@@ -500,6 +500,35 @@ main.content {
   color: $course-navy;
 }
 
+/* Paragraphs and list items inside content boxes inherit the box color,
+   not the section-card p { color: white } rule */
+.reveal .slide.section-card .key-idea p,
+.reveal .slide.section-card .discussion-box p,
+.reveal .slide.section-card .demo-box p,
+.reveal .slide.section-card .check-box p,
+.reveal .slide.section-card .tip-box p,
+.reveal .slide.section-card .warning-box p,
+.reveal .slide.section-card .exercise-check p,
+.reveal .slide.section-card .key-idea li,
+.reveal .slide.section-card .discussion-box li,
+.reveal .slide.section-card .demo-box li,
+.reveal .slide.section-card .check-box li,
+.reveal .slide.section-card .tip-box li,
+.reveal .slide.section-card .warning-box li,
+.reveal .slide.section-card .exercise-check li {
+  color: $course-ink !important;
+}
+
+.reveal .slide.section-card .key-idea strong,
+.reveal .slide.section-card .discussion-box strong,
+.reveal .slide.section-card .demo-box strong,
+.reveal .slide.section-card .check-box strong,
+.reveal .slide.section-card .tip-box strong,
+.reveal .slide.section-card .warning-box strong,
+.reveal .slide.section-card .exercise-check strong {
+  color: $course-navy !important;
+}
+
 /* Overview slide */
 
 .reveal .slide.overview-slide h2 {
@@ -599,6 +628,33 @@ main.content {
 .reveal .slide.takeaway-slide .warning-box code,
 .reveal .slide.takeaway-slide .exercise-check code {
   color: $course-navy;
+}
+
+.reveal .slide.takeaway-slide .key-idea p,
+.reveal .slide.takeaway-slide .discussion-box p,
+.reveal .slide.takeaway-slide .demo-box p,
+.reveal .slide.takeaway-slide .check-box p,
+.reveal .slide.takeaway-slide .tip-box p,
+.reveal .slide.takeaway-slide .warning-box p,
+.reveal .slide.takeaway-slide .exercise-check p,
+.reveal .slide.takeaway-slide .key-idea li,
+.reveal .slide.takeaway-slide .discussion-box li,
+.reveal .slide.takeaway-slide .demo-box li,
+.reveal .slide.takeaway-slide .check-box li,
+.reveal .slide.takeaway-slide .tip-box li,
+.reveal .slide.takeaway-slide .warning-box li,
+.reveal .slide.takeaway-slide .exercise-check li {
+  color: $course-ink !important;
+}
+
+.reveal .slide.takeaway-slide .key-idea strong,
+.reveal .slide.takeaway-slide .discussion-box strong,
+.reveal .slide.takeaway-slide .demo-box strong,
+.reveal .slide.takeaway-slide .check-box strong,
+.reveal .slide.takeaway-slide .tip-box strong,
+.reveal .slide.takeaway-slide .warning-box strong,
+.reveal .slide.takeaway-slide .exercise-check strong {
+  color: $course-navy !important;
 }
 
 /* Exercise / practice slide */
@@ -786,6 +842,7 @@ main.content {
 .reveal .key-idea {
   border-left: 0.35rem solid $course-tan;
   background: #FFF8E8;
+  color: $course-navy !important;
 }
 
 .reveal .discussion-box {
@@ -818,6 +875,10 @@ main.content {
 .reveal .demo-box strong,
 .reveal .check-box strong {
   color: $course-navy;
+}
+
+.reveal .key-idea strong {
+  color: $course-navy !important;
 }
 
 /* ============================================================

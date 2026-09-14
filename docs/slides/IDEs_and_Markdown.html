@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
+
+  <meta name="author" content="STAT 386">
+  <title>STAT 386 — Fall 2026 – Positron and Markdown</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-ea9777273271e368743e81dc1e893736.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <style>
+  .reveal .equal-example {
+    height: 11.5em;
+    padding: 0.45em 0.65em;
+    overflow: hidden;
+    border: 1px solid rgba(90, 100, 110, 0.45);
+    border-radius: 0.2em;
+    background: rgba(120, 130, 140, 0.08);
+  }
+
+  .reveal .equal-example h1 {
+    margin: 0.25em 0 0.4em;
+    font-size: 1.45em;
+  }
+
+  .reveal .equal-example pre {
+    margin: 0.35em 0 0;
+  }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="title-slide center">
+  <h1 class="title">Positron and Markdown</h1>
+  <p class="subtitle">One project, many tools, readable work</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+STAT 386 
+</div>
+</div>
+</div>
+
+</section>
+<section id="todays-question" class="slide level2 section-card">
+<h2>Today’s question</h2>
+<div class="key-idea">
+<p>How can an IDE help us see, create, and manage a data science project?</p>
+</div>
+<p>By the end of class, you should be able to:</p>
+<ul>
+<li>Explain what an IDE contributes to a project workflow</li>
+<li>Navigate the core parts of Positron</li>
+<li>Explain how extensions add capabilities to an IDE</li>
+<li>Write and preview a useful Markdown document</li>
+<li>Connect Git concepts from Day 1 to Positron</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>The emphasis today is not replacing the terminal. It is learning how an IDE puts several project tools in one visible workspace.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="review-four-places-work-can-live" class="slide level2 comparison-slide smaller">
+<h2>Review: four places work can live</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Location</th>
+<th>What lives there</th>
+<th>How work arrives</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Local machine</strong></td>
+<td>Saved changes in working files</td>
+<td>Save a file</td>
+</tr>
+<tr class="even">
+<td><strong>Staged</strong></td>
+<td>Changes selected for the next commit</td>
+<td><code>git add</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Version controlled (local)</strong></td>
+<td>Commits stored in local Git history</td>
+<td><code>git commit</code></td>
+</tr>
+<tr class="even">
+<td><strong>Version controlled (GitHub)</strong></td>
+<td>Commits shared in the remote repository</td>
+<td><code>git push</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question to keep asking:</strong> Where is my change right now?</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Clarify that the first three locations are on the local computer. The labels distinguish working files, the staging area, and local Git history. GitHub stores the shared remote history. Trace one change down the table from saving through pushing.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="where-is-the-change" class="slide level2 question-slide">
+<h2>Where is the change?</h2>
+<p>Match each situation to a location.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Your commit appears on the repository website</td>
+<td><span class="fragment">Version controlled: GitHub</span></td>
+</tr>
+<tr class="even">
+<td>You saved a new sentence in <code>README.md</code></td>
+<td><span class="fragment">Local machine: working files</span></td>
+</tr>
+<tr class="odd">
+<td>You committed, but have not pushed</td>
+<td><span class="fragment">Version controlled: local</span></td>
+</tr>
+<tr class="even">
+<td>You ran <code>git add README.md</code></td>
+<td><span class="fragment">Staged</span></td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 2 to 3 minutes.</p>
+<p>Ask students to answer before revealing each location. The purpose is to reactivate yesterday’s mental model before adding a new interface.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-use-an-ide-for-data-science" class="slide level2 smaller">
+<h2>Why use an IDE for data science?</h2>
+<p>An IDE is a <strong>project hub</strong>.</p>
+<div class="columns-2">
+<div>
+<p><strong>Tools in one place</strong></p>
+<ul>
+<li>File browser</li>
+<li>Text and code editor</li>
+<li>Console and terminal</li>
+<li>Preview and viewer panes</li>
+<li>Source control and diff viewer</li>
+<li>Debugging, notebooks, and data tools</li>
+</ul>
+</div>
+<div>
+<p><strong>Why that matters</strong></p>
+<ul>
+<li>Less switching between apps</li>
+<li>Faster feedback while you work</li>
+<li>Shared context about the project folder</li>
+<li>Visible feedback about files and errors</li>
+</ul>
+</div>
+</div>
+<p><strong>Important:</strong> The tools still require the same underlying understanding.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Keep this broader than Git. Emphasize the repeated data science loop and the value of keeping project context visible.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="positron-is-a-collection-of-connected-tools" class="slide level2 smaller">
+<h2>Positron is a collection of connected tools</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Part of Positron</th>
+<th>What it helps you do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Explorer</strong></td>
+<td>See the folders and files in a project</td>
+</tr>
+<tr class="even">
+<td><strong>Editor</strong></td>
+<td>Write code, prose, and configuration</td>
+</tr>
+<tr class="odd">
+<td><strong>Console</strong></td>
+<td>Work interactively with Python or R</td>
+</tr>
+<tr class="even">
+<td><strong>Terminal</strong></td>
+<td>Run shell commands, Git, and project tools</td>
+</tr>
+<tr class="odd">
+<td><strong>Viewer</strong></td>
+<td>Preview Quarto documents and other output</td>
+</tr>
+<tr class="even">
+<td><strong>Source Control</strong></td>
+<td>Inspect, stage, commit, pull, and push changes</td>
+</tr>
+<tr class="odd">
+<td><strong>Extensions</strong></td>
+<td>Add support for languages, formats, and workflows</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Positron is built on Code OSS and adds a layout designed for data science. Point out that the rows provide several views of the same project. Students do not need to use every pane at once.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-project-folder" class="slide level2">
+<h2>The project folder</h2>
+<p>Opening a folder gives Positron context for the active file.</p>
+<ul>
+<li>The Explorer shows related files and folders</li>
+<li>The terminal starts in the project folder</li>
+<li>Git can find the repository and current branch</li>
+<li>Search and navigation work across the project</li>
+<li>Quarto can find project settings and website navigation</li>
+</ul>
+<div class="key-idea">
+<p><strong>Daily habit:</strong> use <code>File &gt; Open Folder</code>, then work inside the project.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Connect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="extensions-add-capabilities" class="slide level2 reference-slide smaller">
+<h2>Extensions add capabilities</h2>
+<p>Extensions are add-ons that teach an IDE about new languages, file types, and workflows.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Positron example</th>
+<th>Capability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Built in</strong></td>
+<td>Python and R support</td>
+<td>Consoles, completion, and data science features</td>
+</tr>
+<tr class="even">
+<td><strong>Included extension</strong></td>
+<td>Quarto</td>
+<td>Preview and render <code>.qmd</code> documents</td>
+</tr>
+<tr class="odd">
+<td><strong>Included extension</strong></td>
+<td>Ruff</td>
+<td>Check and format Python code</td>
+</tr>
+<tr class="even">
+<td><strong>Optional extension</strong></td>
+<td>A language or theme</td>
+<td>Customize a specific workflow</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Open the Extensions view from the Activity Bar during the demonstration. Positron includes core extensions and a curated set of bootstrapped extensions. The Quarto extension and Quarto CLI are included, so Positron is ready to preview Quarto documents out of the box.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="extensions-deserve-judgment" class="slide level2 question-slide">
+<h2>Extensions deserve judgment</h2>
+<div class="columns-2">
+<div>
+<p><strong>A useful extension should:</strong></p>
+<ul>
+<li>Solve a real need</li>
+<li>Come from a publisher you trust</li>
+<li>Be maintained</li>
+<li>Fit the workflow you actually use</li>
+</ul>
+</div>
+<div>
+<p><strong>Too many extensions can:</strong></p>
+<ul>
+<li>Add clutter</li>
+<li>Create conflicting behavior</li>
+<li>Slow startup</li>
+<li>Expand access to files and network resources</li>
+</ul>
+</div>
+</div>
+<div class="discussion-box">
+<p>What would you check before installing an extension?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Treat extensions like software packages. Show the publisher, update date, repository, and permissions or trust prompt during the live walkthrough.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-markdown" class="slide level2 smaller">
+<h2>Why Markdown?</h2>
+<p>Markdown is plain text with small formatting cues.</p>
+<div class="columns-2">
+<div>
+<p><strong>A durable format</strong></p>
+<ul>
+<li>Readable without special software</li>
+<li>Meaningful line-by-line Git changes</li>
+<li>Reusable as HTML, slides, reports, or websites</li>
+</ul>
+</div>
+<div>
+<p><strong>A working format</strong></p>
+<ul>
+<li>Rendered automatically by GitHub</li>
+<li>Commonly read and produced by AI chat tools</li>
+<li>Used for our blogs, website, and final project documentation</li>
+</ul>
+</div>
+</div>
+<p><strong>Main idea:</strong> Simple source can produce polished output.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Connect today’s README work to the course website and final project. Markdown is not only a formatting lesson. It becomes a common source language across the semester.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="markdown-and-ai" class="slide level2 smaller">
+<h2>Markdown and AI</h2>
+<p>When you chat with an AI tool, you already encounter Markdown-like structure:</p>
+<ul>
+<li>Headings and lists organize a response</li>
+<li>Code fences preserve code exactly</li>
+<li>Tables and links make relationships explicit</li>
+</ul>
+<p>AI tools can draft, restructure, and clean Markdown because the structure is explicit plain text.</p>
+<p><strong>Your role:</strong> Decide whether the content is accurate and sounds like you.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Show how a structured prompt is easier for both humans and AI to follow. Keep the caution focused on content judgment, not fear of the tool.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="source-on-the-left-rendered-result-on-the-right" class="slide level2 comparison-slide scrollable">
+<h2>Source on the left, rendered result on the right</h2>
+<div class="columns-2">
+<div class="equal-example">
+<p><strong>Markdown source</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a></a><span class="fu"># About Me</span></span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>I study **statistics** and enjoy:</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a><span class="ss">- </span>data visualization</span>
+<span id="cb1-6"><a></a><span class="ss">- </span>basketball</span>
+<span id="cb1-7"><a></a><span class="ss">- </span>learning Python</span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a><span class="co">[</span><span class="ot">My GitHub profile</span><span class="co">](https://github.com/)</span></span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a>I &lt;3 Data Science!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="equal-example">
+<p><strong>Rendered result</strong></p>
+<h1>
+About Me
+</h1>
+<p>I study <strong>statistics</strong> and enjoy:</p>
+<ul>
+<li>data visualization</li>
+<li>basketball</li>
+<li>learning Python</li>
+</ul>
+<p><a href="https://github.com/">My GitHub profile</a></p>
+<p>I &lt;3 Data Science!</p>
+</div>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Ask students what information is present in both versions. The preview changes presentation, not meaning.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="markdown-essentials" class="slide level2 reference-slide smaller">
+<h2>Markdown essentials</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Goal</th>
+<th>Markdown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Heading</td>
+<td><code># Heading</code></td>
+</tr>
+<tr class="even">
+<td>Smaller heading</td>
+<td><code>## Smaller heading</code></td>
+</tr>
+<tr class="odd">
+<td>Bold</td>
+<td><code>**important**</code></td>
+</tr>
+<tr class="even">
+<td>Italic</td>
+<td><code>*emphasis*</code></td>
+</tr>
+<tr class="odd">
+<td>Bulleted list</td>
+<td><code>- item</code></td>
+</tr>
+<tr class="even">
+<td>Numbered list</td>
+<td><code>1. item</code></td>
+</tr>
+<tr class="odd">
+<td>Link</td>
+<td><code>[label](https://example.com)</code></td>
+</tr>
+<tr class="even">
+<td>Image</td>
+<td><code>![description](images/photo.jpg)</code></td>
+</tr>
+<tr class="odd">
+<td>Inline code</td>
+<td><code>`git status`</code></td>
+</tr>
+<tr class="even">
+<td>Code block</td>
+<td>Three backticks before and after the code</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Demonstrate only the syntax students need for today’s activity. The table is a reference, not a memorization checklist. Remind students to use headings to describe structure rather than only making text larger.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="live-walkthrough-one-project-many-views" class="slide level2 demo-slide">
+<h2>Live walkthrough: one project, many views</h2>
+<div class="demo-box">
+<p>The instructor shares the real Positron window. Students open yesterday’s repository and mirror each step.</p>
+</div>
+<p>We will use:</p>
+<ol type="1">
+<li>Explorer to locate files</li>
+<li>Editor to revise Markdown</li>
+<li>Viewer to preview the result</li>
+<li>Source Control to inspect and record the change</li>
+<li>Terminal to verify what happened</li>
+</ol>
+<aside class="notes">
+<p>Suggested time: 1 minute to set up, followed by the next three walkthrough slides.</p>
+<p>Ask students to arrange their screens so they can see Positron and the projected demonstration. Do not rush past anyone who cannot locate the repository.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="walkthrough-1-orient-to-the-project" class="slide level2 demo-slide">
+<h2>Walkthrough 1: orient to the project</h2>
+<p><strong>Follow along</strong></p>
+<ol type="1">
+<li>Select <code>File &gt; Open Folder</code></li>
+<li>Open the repository from Day 1</li>
+<li>In Explorer, locate <code>README.md</code></li>
+<li>Open a terminal inside Positron</li>
+<li>Run:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="bu">pwd</span></span>
+<span id="cb2-2"><a></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="exercise-check">
+<p>Check: Explorer and <code>pwd</code> identify the same project.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 to 4 minutes.</p>
+<p>Point to the Activity Bar, Explorer, Editor, Panel, and Status Bar in the real interface. Ask students to name which part of the interface answered each question.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="walkthrough-2-edit-and-preview-markdown" class="slide level2 demo-slide">
+<h2>Walkthrough 2: edit and preview Markdown</h2>
+<p><strong>Follow along</strong></p>
+<ol type="1">
+<li>Open <code>README.md</code> in the editor</li>
+<li>Add a heading called <code>## About This Repository</code></li>
+<li>Add one sentence and a three-item list</li>
+<li>Save the file</li>
+<li>Open a Markdown preview beside the source</li>
+</ol>
+<div class="discussion-box">
+<p>What is easier to understand in the source? What is easier to understand in the preview?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>Use the Command Palette and search for the Markdown preview command if needed. The goal is to practice finding actions, not memorizing every shortcut.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="walkthrough-3-inspect-and-record-the-change" class="slide level2 demo-slide">
+<h2>Walkthrough 3: inspect and record the change</h2>
+<p><strong>Follow along</strong></p>
+<ol type="1">
+<li>Open <strong>Source Control</strong></li>
+<li>Select <code>README.md</code> under <strong>Changes</strong> and read the diff</li>
+<li>Stage the file</li>
+<li>Verify with <code>git diff --staged</code></li>
+<li>Enter a specific commit message and commit</li>
+<li>Verify with <code>git status</code></li>
+</ol>
+<div class="key-idea">
+<p>The interface and terminal are two views of the same Git repository.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 5 to 7 minutes.</p>
+<p>Pause before staging and ask where the change lives. Pause after staging and ask again. Commit with a message such as <code>Describe repository in README</code>. Push only after the class distinguishes it from commit.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="day-1-concepts-inside-positron" class="slide level2 comparison-slide smaller">
+<h2>Day 1 concepts inside Positron</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Git concept or command</th>
+<th>Positron representation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Working files</td>
+<td><strong>Changes</strong></td>
+</tr>
+<tr class="even">
+<td><code>git diff</code></td>
+<td>Diff viewer</td>
+</tr>
+<tr class="odd">
+<td><code>git add</code></td>
+<td><strong>Stage Changes</strong> or <code>+</code></td>
+</tr>
+<tr class="even">
+<td>Staging area</td>
+<td><strong>Staged Changes</strong></td>
+</tr>
+<tr class="odd">
+<td><code>git commit</code></td>
+<td>Commit message and <strong>Commit</strong></td>
+</tr>
+<tr class="even">
+<td><code>git push</code></td>
+<td><strong>Push</strong></td>
+</tr>
+<tr class="odd">
+<td>Repository files</td>
+<td>Explorer</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Return to the four-location model. Have students identify which interface action moved the change each time. When the interface surprises them, recommend <code>git status</code> and <code>git diff</code> as direct checks.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="push-pull-and-sync-are-different" class="slide level2 comparison-slide smaller">
+<h2>Push, pull, and sync are different</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Action</th>
+<th>Direction</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Push</strong></td>
+<td>Local to GitHub</td>
+<td>Send local commits to the remote repository</td>
+</tr>
+<tr class="even">
+<td><strong>Pull</strong></td>
+<td>GitHub to local</td>
+<td>Bring remote commits into the local repository</td>
+</tr>
+<tr class="odd">
+<td><strong>Sync</strong></td>
+<td>Both directions</td>
+<td>Combine receiving and sending changes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For now:</strong> Use <strong>Push</strong> and <strong>Pull</strong> separately until you can predict what <strong>Sync</strong> will do.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>If the repository has no new remote work, finish the demonstration with Push. Tell students that Sync is useful later, after they can predict both operations.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="activity-begin-your-about-me-page" class="slide level2 exercise-slide">
+<h2>Activity: begin your About Me page</h2>
+<p>Your About Me page will become part of your Quarto website.</p>
+<p>Write for a visitor who wants to know:</p>
+<ul>
+<li>Who are you?</li>
+<li>What are you interested in?</li>
+<li>What are you learning or building?</li>
+<li>What should they explore next?</li>
+</ul>
+<div class="key-idea">
+<p>Aim for a clear first draft, not a perfect biography.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes to introduce the activity.</p>
+<p>This is separate from the guided README demonstration. Students now make individual content and design decisions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="about-me-starter" class="slide level2 exercise-slide smaller">
+<h2>About Me starter</h2>
+<p>Create <code>about.qmd</code> and place a photo at <code>images/profile.jpg</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a></a><span class="co">---</span></span>
+<span id="cb3-2"><a></a><span class="an">title:</span><span class="co"> "About Me"</span></span>
+<span id="cb3-3"><a></a><span class="co">---</span></span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a><span class="fu"># Hello, I am Your Name</span></span>
+<span id="cb3-6"><a></a></span>
+<span id="cb3-7"><a></a><span class="al">![Photo of Your Name](images/profile.jpg)</span></span>
+<span id="cb3-8"><a></a></span>
+<span id="cb3-9"><a></a>Write a short introduction here.</span>
+<span id="cb3-10"><a></a></span>
+<span id="cb3-11"><a></a><span class="fu">## What I am interested in</span></span>
+<span id="cb3-12"><a></a></span>
+<span id="cb3-13"><a></a><span class="ss">- </span>One interest</span>
+<span id="cb3-14"><a></a><span class="ss">- </span>Something you want to learn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Explain that <code>.qmd</code> is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata. The brackets describe the image, while the parentheses contain its relative path. Show students how to place <code>profile.jpg</code> inside an <code>images</code> folder.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="about-me-activity-checklist" class="slide level2 exercise-slide smaller">
+<h2>About Me activity checklist</h2>
+<div class="columns-2">
+<div>
+<p><strong>Core task</strong></p>
+<ul>
+<li>Write a short introduction in your own voice</li>
+<li>Use headings and a list</li>
+<li>Add one meaningful link</li>
+<li>Use <strong>Quarto: Preview</strong> and revise for readability</li>
+</ul>
+</div>
+<div>
+<p><strong>If you finish early</strong></p>
+<ul>
+<li>Add an image with useful alternative text</li>
+<li>Ask AI for a clearer structure, then choose what to keep</li>
+<li>Inspect the diff, then stage and commit</li>
+</ul>
+</div>
+</div>
+<p><strong>Final check:</strong> Read the rendered page as if you were visiting it for the first time.</p>
+<aside class="notes">
+<p>Suggested time: 15 to 20 minutes.</p>
+<p>Circulate first for file and preview problems, then for writing support. The Git steps are an extension so the activity remains centered on Markdown and authorship.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-should-you-remember" class="slide level2 takeaway-slide">
+<h2>What should you remember?</h2>
+<ol type="1">
+<li>An IDE gathers project tools into one connected workspace.</li>
+<li>Opening the project folder gives every tool the right context.</li>
+<li>Extensions add capabilities, so choose them intentionally.</li>
+<li>Markdown is readable source for humans, Git, GitHub, Quarto, and AI workflows.</li>
+<li>Positron represents the same Git locations, but push, pull, and sync remain distinct.</li>
+</ol>
+<div class="key-idea">
+<p>Use the interface for visibility and the terminal for verification.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Ask students which tool or concept feels clearer after seeing it in more than one representation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references-and-next-steps" class="slide level2 reference-slide">
+<h2>References and next steps</h2>
+<ul>
+<li><a href="https://positron.posit.co/layout.html">Positron layout</a></li>
+<li><a href="https://positron.posit.co/extensions.html">Positron extensions</a></li>
+<li><a href="https://positron.posit.co/git.html">Git version control in Positron</a></li>
+<li><a href="https://quarto.org/docs/tools/positron/">Quarto in Positron</a></li>
+<li><a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto Markdown basics</a></li>
+</ul>
+<p>Next: we will build on <code>about.qmd</code> as the website takes shape.</p>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>These are official reference pages for students who want to explore beyond today’s workflow.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="questions" class="slide level2 section-card">
+<h2>Questions?</h2>
+<div class="key-idea">
+<p>What would you like to see again in Positron or Markdown?</p>
+</div>
+<aside class="notes">
+<p>Use remaining time to repeat any part of the live workflow students want to see again.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>STAT 386</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -3350,5 +3350,187 @@
     "title": "Git and GitHub Foundations",
     "section": "Files Git should track",
     "text": "Files Git should track\n\nTrack the files someone else needs to understand and reproduce the project.\n\n\nSource files: .py, .qmd\nDocumentation: README.md\nDependency records: pyproject.toml, uv.lock\nSmall data files required by the project\n.gitignore and safe templates such as .env.example\n\n\nLarge or sensitive data usually need storage outside Git.\n\n\nSuggested time: 2 minutes.\nExplain that .env.example documents the names of required settings without containing real credentials. The distinction is not simply important versus unimportant files. Git should preserve the source and instructions needed to recreate the work."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#todays-question",
+    "href": "slides/IDEs_and_Markdown.html#todays-question",
+    "title": "Positron and Markdown",
+    "section": "Today’s question",
+    "text": "Today’s question\n\nHow can an IDE help us see, create, and manage a data science project?\n\nBy the end of class, you should be able to:\n\nExplain what an IDE contributes to a project workflow\nNavigate the core parts of Positron\nExplain how extensions add capabilities to an IDE\nWrite and preview a useful Markdown document\nConnect Git concepts from Day 1 to Positron\n\n\nSuggested time: 2 minutes.\nThe emphasis today is not replacing the terminal. It is learning how an IDE puts several project tools in one visible workspace."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
+    "href": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
+    "title": "Positron and Markdown",
+    "section": "Review: four places work can live",
+    "text": "Review: four places work can live\n\n\n\n\n\n\n\n\nLocation\nWhat lives there\nHow work arrives\n\n\n\n\nLocal machine\nSaved changes in working files\nSave a file\n\n\nStaged\nChanges selected for the next commit\ngit add\n\n\nVersion controlled (local)\nCommits stored in local Git history\ngit commit\n\n\nVersion controlled (GitHub)\nCommits shared in the remote repository\ngit push\n\n\n\nQuestion to keep asking: Where is my change right now?\n\nSuggested time: 3 minutes.\nClarify that the first three locations are on the local computer. The labels distinguish working files, the staging area, and local Git history. GitHub stores the shared remote history. Trace one change down the table from saving through pushing."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#where-is-the-change",
+    "href": "slides/IDEs_and_Markdown.html#where-is-the-change",
+    "title": "Positron and Markdown",
+    "section": "Where is the change?",
+    "text": "Where is the change?\nMatch each situation to a location.\n\n\n\n\n\n\n\nSituation\nLocation\n\n\n\n\nYour commit appears on the repository website\nVersion controlled: GitHub\n\n\nYou saved a new sentence in README.md\nLocal machine: working files\n\n\nYou committed, but have not pushed\nVersion controlled: local\n\n\nYou ran git add README.md\nStaged\n\n\n\n\nSuggested time: 2 to 3 minutes.\nAsk students to answer before revealing each location. The purpose is to reactivate yesterday’s mental model before adding a new interface."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
+    "href": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
+    "title": "Positron and Markdown",
+    "section": "Why use an IDE for data science?",
+    "text": "Why use an IDE for data science?\nAn IDE is a project hub.\n\n\nTools in one place\n\nFile browser\nText and code editor\nConsole and terminal\nPreview and viewer panes\nSource control and diff viewer\nDebugging, notebooks, and data tools\n\n\n\nWhy that matters\n\nLess switching between apps\nFaster feedback while you work\nShared context about the project folder\nVisible feedback about files and errors\n\n\n\nImportant: The tools still require the same underlying understanding.\n\nSuggested time: 3 minutes.\nKeep this broader than Git. Emphasize the repeated data science loop and the value of keeping project context visible."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
+    "href": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
+    "title": "Positron and Markdown",
+    "section": "Positron is a collection of connected tools",
+    "text": "Positron is a collection of connected tools\n\n\n\nPart of Positron\nWhat it helps you do\n\n\n\n\nExplorer\nSee the folders and files in a project\n\n\nEditor\nWrite code, prose, and configuration\n\n\nConsole\nWork interactively with Python or R\n\n\nTerminal\nRun shell commands, Git, and project tools\n\n\nViewer\nPreview Quarto documents and other output\n\n\nSource Control\nInspect, stage, commit, pull, and push changes\n\n\nExtensions\nAdd support for languages, formats, and workflows\n\n\n\n\nSuggested time: 3 minutes.\nPositron is built on Code OSS and adds a layout designed for data science. Point out that the rows provide several views of the same project. Students do not need to use every pane at once."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#open-a-project-not-just-a-file",
+    "href": "slides/IDEs_and_Markdown.html#open-a-project-not-just-a-file",
+    "title": "Positron and Markdown",
+    "section": "Open a project, not just a file",
+    "text": "Open a project, not just a file\nWhen you open a folder, Positron can understand the project around the active file.\n\nThe Explorer shows related files and folders\nThe terminal starts in the project folder\nGit can find the repository and current branch\nSearch and navigation work across the project\nQuarto can find project settings and website navigation\n\n\nDaily habit: use File &gt; Open Folder, then work inside that folder.\n\n\nSuggested time: 2 minutes.\nConnect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
+    "href": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
+    "title": "Positron and Markdown",
+    "section": "Extensions add capabilities",
+    "text": "Extensions add capabilities\nExtensions are add-ons that teach an IDE about new languages, file types, and workflows.\n\n\n\n\n\n\n\n\nType\nPositron example\nCapability\n\n\n\n\nBuilt in\nPython and R support\nConsoles, completion, and data science features\n\n\nIncluded extension\nQuarto\nPreview and render .qmd documents\n\n\nIncluded extension\nRuff\nCheck and format Python code\n\n\nOptional extension\nA language or theme\nCustomize a specific workflow\n\n\n\n\nSuggested time: 3 minutes.\nOpen the Extensions view from the Activity Bar during the demonstration. Positron includes core extensions and a curated set of bootstrapped extensions. The Quarto extension and Quarto CLI are included, so Positron is ready to preview Quarto documents out of the box."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
+    "href": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
+    "title": "Positron and Markdown",
+    "section": "Extensions deserve judgment",
+    "text": "Extensions deserve judgment\n\n\nA useful extension should:\n\nSolve a real need\nCome from a publisher you trust\nBe maintained\nFit the workflow you actually use\n\n\n\nToo many extensions can:\n\nAdd clutter\nCreate conflicting behavior\nSlow startup\nExpand access to files and network resources\n\n\n\n\nWhat would you check before installing an extension?\n\n\nSuggested time: 2 minutes.\nTreat extensions like software packages. Show the publisher, update date, repository, and permissions or trust prompt during the live walkthrough."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#why-markdown",
+    "href": "slides/IDEs_and_Markdown.html#why-markdown",
+    "title": "Positron and Markdown",
+    "section": "Why Markdown?",
+    "text": "Why Markdown?\nMarkdown is plain text with small formatting cues.\n\n\nA durable format\n\nReadable without special software\nMeaningful line-by-line Git changes\nReusable as HTML, slides, reports, or websites\n\n\n\nA working format\n\nRendered automatically by GitHub\nCommonly read and produced by AI chat tools\nUsed for our blogs, website, and final project documentation\n\n\n\nMain idea: Simple source can produce polished output.\n\nSuggested time: 3 minutes.\nConnect today’s README work to the course website and final project. Markdown is not only a formatting lesson. It becomes a common source language across the semester."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#markdown-and-ai",
+    "href": "slides/IDEs_and_Markdown.html#markdown-and-ai",
+    "title": "Positron and Markdown",
+    "section": "Markdown and AI",
+    "text": "Markdown and AI\nWhen you chat with an AI tool, you already encounter Markdown-like structure:\n\nHeadings and lists organize a response\nCode fences preserve code exactly\nTables and links make relationships explicit\n\nAI tools can draft, restructure, and clean Markdown because the structure is explicit plain text.\nYour role: Decide whether the content is accurate and sounds like you.\n\nSuggested time: 3 minutes.\nShow how a structured prompt is easier for both humans and AI to follow. Keep the caution focused on content judgment, not fear of the tool."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
+    "href": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
+    "title": "Positron and Markdown",
+    "section": "Source on the left, rendered result on the right",
+    "text": "Source on the left, rendered result on the right\n\n\nMarkdown source\n# About Me\n\nI study **statistics** and enjoy:\n\n- data visualization\n- basketball\n- learning Python\n\n[My GitHub profile](https://github.com/)\n\nI &lt;3 Data Science!\n\n\nRendered result\n\nAbout Me\n\nI study statistics and enjoy:\n\ndata visualization\nbasketball\nlearning Python\n\nMy GitHub profile\nI &lt;3 Data Science!\n\n\n\nSuggested time: 3 minutes.\nAsk students what information is present in both versions. The preview changes presentation, not meaning."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#markdown-essentials",
+    "href": "slides/IDEs_and_Markdown.html#markdown-essentials",
+    "title": "Positron and Markdown",
+    "section": "Markdown essentials",
+    "text": "Markdown essentials\n\n\n\nGoal\nMarkdown\n\n\n\n\nHeading\n# Heading\n\n\nSmaller heading\n## Smaller heading\n\n\nBold\n**important**\n\n\nItalic\n*emphasis*\n\n\nBulleted list\n- item\n\n\nNumbered list\n1. item\n\n\nLink\n[label](https://example.com)\n\n\nImage\n![description](images/photo.jpg)\n\n\nInline code\n`git status`\n\n\nCode block\nThree backticks before and after the code\n\n\n\n\nSuggested time: 3 minutes.\nDemonstrate only the syntax students need for today’s activity. The table is a reference, not a memorization checklist. Remind students to use headings to describe structure rather than only making text larger."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
+    "href": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
+    "title": "Positron and Markdown",
+    "section": "Live walkthrough: one project, many views",
+    "text": "Live walkthrough: one project, many views\n\nThe instructor shares the real Positron window. Students open yesterday’s repository and mirror each step.\n\nWe will use:\n\nExplorer to locate files\nEditor to revise Markdown\nViewer to preview the result\nSource Control to inspect and record the change\nTerminal to verify what happened\n\n\nSuggested time: 1 minute to set up, followed by the next three walkthrough slides.\nAsk students to arrange their screens so they can see Positron and the projected demonstration. Do not rush past anyone who cannot locate the repository."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 1: orient to the project",
+    "text": "Walkthrough 1: orient to the project\nFollow along\n\nSelect File &gt; Open Folder\nOpen the repository from Day 1\nIn Explorer, locate README.md\nOpen a terminal inside Positron\nRun:\n\npwd\ngit status\n\nCheck: Explorer and pwd identify the same project.\n\n\nSuggested time: 3 to 4 minutes.\nPoint to the Activity Bar, Explorer, Editor, Panel, and Status Bar in the real interface. Ask students to name which part of the interface answered each question."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 2: edit and preview Markdown",
+    "text": "Walkthrough 2: edit and preview Markdown\nFollow along\n\nOpen README.md in the editor\nAdd a heading called ## About This Repository\nAdd one sentence and a three-item list\nSave the file\nOpen a Markdown preview beside the source\n\n\nWhat is easier to understand in the source? What is easier to understand in the preview?\n\n\nSuggested time: 4 minutes.\nUse the Command Palette and search for the Markdown preview command if needed. The goal is to practice finding actions, not memorizing every shortcut."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 3: inspect and record the change",
+    "text": "Walkthrough 3: inspect and record the change\nFollow along\n\nOpen Source Control\nSelect README.md under Changes and read the diff\nStage the file\nVerify with git diff --staged\nEnter a specific commit message and commit\nVerify with git status\n\n\nThe interface and terminal are two views of the same Git repository.\n\n\nSuggested time: 5 to 7 minutes.\nPause before staging and ask where the change lives. Pause after staging and ask again. Commit with a message such as Describe repository in README. Push only after the class distinguishes it from commit."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
+    "href": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
+    "title": "Positron and Markdown",
+    "section": "Day 1 concepts inside Positron",
+    "text": "Day 1 concepts inside Positron\n\n\n\nGit concept or command\nPositron representation\n\n\n\n\nWorking files\nChanges\n\n\ngit diff\nDiff viewer\n\n\ngit add\nStage Changes or +\n\n\nStaging area\nStaged Changes\n\n\ngit commit\nCommit message and Commit\n\n\ngit push\nPush\n\n\nRepository files\nExplorer\n\n\n\n\nSuggested time: 3 minutes.\nReturn to the four-location model. Have students identify which interface action moved the change each time. When the interface surprises them, recommend git status and git diff as direct checks."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
+    "href": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
+    "title": "Positron and Markdown",
+    "section": "Push, pull, and sync are different",
+    "text": "Push, pull, and sync are different\n\n\n\n\n\n\n\n\nAction\nDirection\nPurpose\n\n\n\n\nPush\nLocal to GitHub\nSend local commits to the remote repository\n\n\nPull\nGitHub to local\nBring remote commits into the local repository\n\n\nSync\nBoth directions\nCombine receiving and sending changes\n\n\n\nFor now: Use Push and Pull separately until you can predict what Sync will do.\n\nSuggested time: 3 minutes.\nIf the repository has no new remote work, finish the demonstration with Push. Tell students that Sync is useful later, after they can predict both operations."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
+    "href": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
+    "title": "Positron and Markdown",
+    "section": "Activity: begin your About Me page",
+    "text": "Activity: begin your About Me page\nYour About Me page will become part of your Quarto website.\nWrite for a visitor who wants to know:\n\nWho are you?\nWhat are you interested in?\nWhat are you learning or building?\nWhat should they explore next?\n\n\nAim for a clear first draft, not a perfect biography.\n\n\nSuggested time: 2 minutes to introduce the activity.\nThis is separate from the guided README demonstration. Students now make individual content and design decisions."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#start-with-a-small-structure",
+    "href": "slides/IDEs_and_Markdown.html#start-with-a-small-structure",
+    "title": "Positron and Markdown",
+    "section": "Start with a small structure",
+    "text": "Start with a small structure\nCreate a file named about.qmd in your project.\n---\ntitle: \"About Me\"\n---\n\n# Hello, I am Your Name\n\nWrite a short introduction here.\n\n## What I am interested in\n\n- One interest\n- Something you want to learn\n\n## Find me online\n\n[GitHub](https://github.com/your-user-name)\n\nSuggested time: 2 minutes.\nExplain that .qmd is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
+    "href": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
+    "title": "Positron and Markdown",
+    "section": "About Me activity checklist",
+    "text": "About Me activity checklist\n\n\nCore task\n\nWrite a short introduction in your own voice\nUse headings and a list\nAdd one meaningful link\nUse Quarto: Preview and revise for readability\n\n\n\nIf you finish early\n\nAdd an image with useful alternative text\nAsk AI for a clearer structure, then choose what to keep\nInspect the diff, then stage and commit\n\n\n\nFinal check: Read the rendered page as if you were visiting it for the first time.\n\nSuggested time: 15 to 20 minutes.\nCirculate first for file and preview problems, then for writing support. The Git steps are an extension so the activity remains centered on Markdown and authorship."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#what-should-you-remember",
+    "href": "slides/IDEs_and_Markdown.html#what-should-you-remember",
+    "title": "Positron and Markdown",
+    "section": "What should you remember?",
+    "text": "What should you remember?\n\nAn IDE gathers project tools into one connected workspace.\nOpening the project folder gives every tool the right context.\nExtensions add capabilities, so choose them intentionally.\nMarkdown is readable source for humans, Git, GitHub, Quarto, and AI workflows.\nPositron represents the same Git locations, but push, pull, and sync remain distinct.\n\n\nUse the interface for visibility and the terminal for verification.\n\n\nSuggested time: 2 minutes.\nAsk students which tool or concept feels clearer after seeing it in more than one representation."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#references-and-next-steps",
+    "href": "slides/IDEs_and_Markdown.html#references-and-next-steps",
+    "title": "Positron and Markdown",
+    "section": "References and next steps",
+    "text": "References and next steps\n\nPositron layout\nPositron extensions\nGit version control in Positron\nQuarto in Positron\nQuarto Markdown basics\n\nNext: we will build on about.qmd as the website takes shape.\n\nSuggested time: 1 minute.\nThese are official reference pages for students who want to explore beyond today’s workflow."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#questions",
+    "href": "slides/IDEs_and_Markdown.html#questions",
+    "title": "Positron and Markdown",
+    "section": "Questions?",
+    "text": "Questions?\n\nWhat would you like to see again in Positron or Markdown?\n\n\nUse remaining time to repeat any part of the live workflow students want to see again."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#the-project-folder",
+    "href": "slides/IDEs_and_Markdown.html#the-project-folder",
+    "title": "Positron and Markdown",
+    "section": "The project folder",
+    "text": "The project folder\nOpening a folder gives Positron context for the active file.\n\nThe Explorer shows related files and folders\nThe terminal starts in the project folder\nGit can find the repository and current branch\nSearch and navigation work across the project\nQuarto can find project settings and website navigation\n\n\nDaily habit: use File &gt; Open Folder, then work inside the project.\n\n\nSuggested time: 2 minutes.\nConnect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history."
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#about-me-starter",
+    "href": "slides/IDEs_and_Markdown.html#about-me-starter",
+    "title": "Positron and Markdown",
+    "section": "About Me starter",
+    "text": "About Me starter\nCreate about.qmd and place a photo at images/profile.jpg.\n---\ntitle: \"About Me\"\n---\n\n# Hello, I am Your Name\n\n![Photo of Your Name](images/profile.jpg)\n\nWrite a short introduction here.\n\n## What I am interested in\n\n- One interest\n- Something you want to learn\n\nSuggested time: 2 minutes.\nExplain that .qmd is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata. The brackets describe the image, while the parentheses contain its relative path. Show students how to place profile.jpg inside an images folder."
   }
 ]
