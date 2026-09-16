@@ -25,7 +25,9 @@ website:
         contents:
           - slides.qmd
           - slides/terminal_intro.qmd
+          - slides/git_github_foundations.qmd
           - slides/IDEs_and_Markdown.qmd
+          - slides/collaborative_github.qmd
       # - section: "Demos"
       #   contents:
       #     - demos.qmd

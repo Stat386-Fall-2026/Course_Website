@@ -914,3 +914,48 @@ main.content {
 .reveal .right {
   text-align: right;
 }
+
+/* ============================================================
+   Mermaid diagram styling
+   Uses the "neutral" theme as a light base, then overrides
+   node and edge colors to match the course palette.
+   ============================================================ */
+
+.reveal .mermaid .node rect,
+.reveal .mermaid .node polygon,
+.reveal .mermaid .node circle {
+  fill: $course-royal-soft !important;
+  stroke: $course-royal !important;
+  stroke-width: 1.5px !important;
+}
+
+.reveal .mermaid .nodeLabel {
+  color: $course-navy !important;
+  font-family: $font-family-sans-serif !important;
+}
+
+.reveal .mermaid .edgePath .path {
+  stroke: $course-muted !important;
+  stroke-width: 1.5px !important;
+}
+
+.reveal .mermaid .edgeLabel rect {
+  fill: $course-paper !important;
+}
+
+.reveal .mermaid .edgeLabel {
+  color: $course-navy !important;
+  font-family: $font-family-sans-serif !important;
+}
+
+.reveal .mermaid .cluster rect {
+  fill: rgba(0, 87, 167, 0.05) !important;
+  stroke: $course-border !important;
+  stroke-width: 1px !important;
+  rx: 0.5rem;
+}
+
+.reveal .mermaid .cluster-label {
+  color: $course-navy-2 !important;
+  font-family: $font-family-sans-serif !important;
+}

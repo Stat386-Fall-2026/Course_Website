@@ -10,6 +10,8 @@ format:
     transition: fade
     chalkboard: true
     footer: "STAT 386 — Fall 2026"
+    mermaid:
+      theme: neutral
 execute:
   echo: true
   warning: false

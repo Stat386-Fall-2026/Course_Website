@@ -1,0 +1,952 @@
+---
+title: "Collaborating with Git and GitHub"
+subtitle: "Issues, Branches, Pull Requests, and Merge Conflicts"
+author: "STAT 386"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+    slide-number: true
+    transition: fade
+    incremental: false
+    code-overflow: wrap
+    footer: "STAT 386"
+    width: 1280
+    height: 720
+    margin: 0.06
+    link-external-newwindow: true
+---
+
+## Today's question {.section-card}
+
+::: {.key-idea}
+How can several contributors change one project without losing control of `main`?
+:::
+
+By the end of this sequence, you should be able to:
+
+- Connect issues, branches, commits, pull requests, reviews, and merges
+- Review a proposed change before it enters `main`
+- Create and resolve a simple merge conflict
+- Apply the same workflow to human and AI collaborators
+
+::: notes
+Suggested time: 2 minutes.
+
+This deck is designed as one continuous sequence. It has a natural stopping point after the second pull request example, immediately before the merge conflict section.
+:::
+
+## Two collaborators, one file {.question-slide}
+
+You and a collaborator both clone the same repository.
+
+You each change this line:
+
+```python
+SUMMARY_METRICS = ["mean"]
+```
+
+Your collaborator's work reaches `main` first.
+
+::: {.discussion-box}
+What happens to your change? What should happen next?
+:::
+
+::: notes
+Suggested time: 3 to 5 minutes.
+
+Give students 30 seconds to think alone, then one minute with a partner. Collect predictions without correcting them yet. Listen for assumptions that Git combines everything automatically, overwrites one version, or blocks both people from working.
+:::
+
+## Collaboration requires more than shared access
+
+A team needs answers to four questions:
+
+| Question | GitHub feature |
+|---|---|
+| What work needs attention? | Issue |
+| Where can I work safely? | Branch |
+| What change am I proposing? | Pull request |
+| Should this enter `main`? | Review and merge |
+
+::: {.key-idea}
+Shared access lets people edit. A collaboration process helps them coordinate.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Return to the opening scenario. Both people had access, but access alone did not establish who was doing what or how the changes should be evaluated.
+:::
+
+## The collaboration cycle
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    subgraph A["Plan and build"]
+      direction LR
+      I["Issue"] --> B["Branch"] --> C["Commits"]
+    end
+    subgraph D["Review and integrate"]
+      direction LR
+      P["Pull request"] --> R["Review"] --> M["Merge"]
+    end
+    C --> P
+```
+
+::: {.key-idea}
+Each stage preserves context for the next person who must understand the work.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Build the cycle from left to right. Ask students which stages happen in Git and which depend on GitHub. Branches, commits, and merges are Git concepts. Issues, pull request pages, and review tools are GitHub collaboration features.
+
+Source: https://docs.github.com/en/pull-requests/reference/pull-requests
+:::
+
+## Each stage answers a question {.smaller}
+
+| Stage | Question it answers | Evidence it preserves |
+|---|---|---|
+| **Issue** | What outcome do we need? | Description and acceptance criteria |
+| **Branch** | Where will this work develop? | An isolated line of history |
+| **Commits** | What changed along the way? | Focused project snapshots |
+| **Pull request** | What would this add to `main`? | Diff, discussion, and checks |
+| **Review** | Does the proposal satisfy the issue? | Comments and review decision |
+| **Merge** | Should the shared project adopt it? | Integrated history |
+
+::: notes
+Suggested time: 3 minutes.
+
+Do not treat the table as vocabulary to memorize. Choose one row at a time and connect it to the opening scenario.
+:::
+
+## Before anyone creates a branch {.question-slide}
+
+An issue says:
+
+> Improve the summary function.
+
+What is still unclear?
+
+- What should the function return?
+- Which inputs must it handle?
+- What would count as complete?
+
+::: {.discussion-box}
+Which questions must the team answer before anyone edits code?
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Have students discuss with a neighbor before collecting answers. The point is not to produce one perfect issue. The point is to notice that a vague task gives the author and reviewer no shared standard for success.
+
+Use their answers to motivate issue descriptions and acceptance criteria on the next slide.
+:::
+
+## Issues record future work
+
+An issue can capture:
+
+- The outcome someone wants
+- The reason the work matters
+- Specific requirements or acceptance criteria
+- Discussion, assignments, labels, and links
+
+::: {.discussion-box}
+What would another person need before they could begin this task?
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Open an issue from the demonstration repository. Show the title, body, assignee, labels, and project field in the real GitHub interface. Avoid turning the slide into a tour of every sidebar control.
+
+Source: https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues
+:::
+
+## GitHub Projects organize related work {.smaller}
+
+A Project collects issues and pull requests into a shared planning view.
+
+| Backlog | Ready | In progress | In review | Done |
+|---|---|---|---|---|
+| Ideas worth considering | Defined work | Active branches | Open pull requests | Closed work |
+
+Projects can add:
+
+- Status, priority, dates, and custom fields
+- Table, board, and roadmap views
+- Workflows that update items as work changes
+
+::: {.key-idea}
+Issues describe individual work. Projects show how many work items fit together.
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Show a real Project after discussing the concept. Add the demonstration issue to the Project and move it to In progress. GitHub Projects can track issues, pull requests, and draft ideas in several views.
+
+Source: https://docs.github.com/en/issues/planning-and-tracking-with-projects
+Source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations
+:::
+
+## Branches isolate proposed work {.demo-slide}
+
+A branch gives a set of commits a name.
+
+```bash
+git switch main
+git pull
+git switch -c issue-1-data-range
+git status
+```
+
+- Start from the current `main`
+- Use a name connected to the issue
+- Commit related work to the branch
+- Push the branch when others need to see it
+
+::: notes
+Suggested time: 3 minutes.
+
+Demonstrate the branch indicator in Positron and verify it with git status. Explain that git switch -c creates the branch and moves the working directory onto it. The branch begins at the current commit.
+
+Source: https://docs.github.com/en/pull-requests/reference/branches
+Source: https://git-scm.com/docs/git-switch.html
+:::
+
+## Pull requests are proposals
+
+A pull request compares a **head branch** with a **base branch**.
+
+:::: {.columns}
+
+::: {.column width="47%"}
+
+### The proposal
+
+- Description of the intended change
+- Commits included in the branch
+- Files changed compared with `main`
+
+:::
+
+::: {.column width="53%"}
+
+### The decision
+
+- Discuss the approach
+- Inspect the diff and checks
+- Approve, comment, or request changes
+- Merge only when the proposal is ready
+
+:::
+
+::::
+
+::: {.key-idea}
+Opening a pull request starts review. It does not make the proposal correct.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Emphasize the Files changed tab. GitHub describes pull requests as proposals to merge code changes, with discussion and review before merging.
+
+Source: https://docs.github.com/en/pull-requests/reference/pull-requests
+:::
+
+## Review choices {.reference-slide .smaller}
+
+| Review action | Use it when |
+|---|---|
+| **Comment** | You have feedback or a question without a final decision |
+| **Approve** | The proposal satisfies the issue and is ready to merge |
+| **Request changes** | The author must revise the proposal before merging |
+
+A useful review points to evidence:
+
+- A requirement from the issue
+- A specific changed line
+- A test result or reproducible behavior
+
+::: notes
+Suggested time: 3 minutes.
+
+If possible, use a second course or TA account for the live review because authors cannot formally approve their own pull requests. A student volunteer with repository access can also submit the review while you guide the class.
+
+Source: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews
+:::
+
+## Example 1: a complete proposal {.demo-slide}
+
+### Issue 1: Add a data range helper
+
+Add `data_range(values)` to `stats_helpers.py`.
+
+**Acceptance criteria**
+
+- Return the difference between the largest and smallest values
+- Keep the function independent of external packages
+- Use a descriptive commit message
+
+::: {.discussion-box}
+What evidence would convince you that the issue is complete?
+:::
+
+::: notes
+Suggested time: 2 minutes to frame the example.
+
+Before class, fork the prepared demonstration repository and run its **Seed demo issue** workflow. This creates this task as Issue #1 in the fork. Show the existing issue here, add it to the Project, and mark it In progress.
+
+GitHub forks have their own issues, so Issue #1 is seeded in the fork rather than expected to copy from the upstream repository. Exact setup steps are in `INSTRUCTOR_GUIDE.md`.
+:::
+
+## Example 1: branch and implementation {.demo-slide}
+
+```bash
+git switch main
+git pull
+git switch -c issue-1-data-range
+```
+
+Paste into `stats_helpers.py`:
+
+```python
+def data_range(values):
+    return max(values) - min(values)
+```
+
+Then inspect the saved change in Positron.
+
+::: {.discussion-box}
+Where does the change live before the commit?
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Keep the code ready to copy. The coding should take seconds. Open the Source Control view, inspect the diff, and ask students to locate the branch name. Use git status in the terminal to verify the interface.
+:::
+
+## Example 1: commit, push, and propose {.demo-slide .smaller}
+
+```bash
+git add stats_helpers.py
+git commit -m "Add data range helper"
+git push -u origin issue-1-data-range
+```
+
+Open the pull request on GitHub.
+
+Suggested description:
+
+```markdown
+Fixes #1
+
+Adds `data_range(values)` to calculate the
+difference between the maximum and minimum.
+```
+
+::: notes
+Suggested time: 4 minutes.
+
+Pause after each command. Ask whether the branch and commit are local, remote, or both. Explain that the -u option connects the local branch with its remote tracking branch. Show how the PR selects main as the base and issue-1-data-range as the head.
+
+Source: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
+:::
+
+## Example 1: review, merge, and synchronize {.demo-slide .smaller}
+
+On GitHub:
+
+1. Compare the issue with the PR description
+2. Inspect **Files changed**
+3. Approve the proposal
+4. Merge the pull request
+5. Confirm that the issue closes
+
+Back in Positron:
+
+```bash
+git switch main
+git pull
+git log --oneline -3
+```
+
+::: notes
+Suggested time: 4 minutes.
+
+Use a second reviewer if available. After merging, return to the Project and show the item moving to Done if the Project workflow is configured. Delete the remote feature branch if that matches the course workflow.
+:::
+
+## Where does the work live now? {.question-slide}
+
+After the pull request merges:
+
+| Location | Contains the new function? |
+|---|---:|
+| GitHub `main` | [Yes]{.fragment} |
+| Local `main` before `git pull` | [No]{.fragment} |
+| Local `main` after `git pull` | [Yes]{.fragment} |
+| Original feature branch | [Yes]{.fragment} |
+
+::: {.discussion-box}
+Why does merging on GitHub leave the local repository unchanged?
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+This reconnects collaboration to the four-location model from Days 1 and 2. GitHub cannot silently rewrite the student's local repository. Pull brings the remote commits into the local repository.
+:::
+
+## Example 2: a proposal that needs revision {.demo-slide}
+
+### Issue 2: Add a safe average helper
+
+Add `average_or_none(values)` to `stats_helpers.py`.
+
+**Acceptance criteria**
+
+- Return the arithmetic mean for a nonempty collection
+- Return `None` when the collection is empty
+- Keep the function independent of external packages
+
+::: notes
+Suggested time: 2 minutes.
+
+Create this issue live by copying the prepared title and body from `demo_materials/issue-2-safe-average.md`. This gives students one example of creating an issue after seeing the seeded issue. Add it to the Project and ask them to tell you the next step at each point in this example.
+:::
+
+## Example 2: the first proposal {.demo-slide .smaller}
+
+```python
+def average_or_none(values):
+    return sum(values) / len(values)
+```
+
+Use the same workflow:
+
+```bash
+git switch main
+git pull
+git switch -c issue-2-safe-average
+git add stats_helpers.py
+git commit -m "Add average helper"
+git push -u origin issue-2-safe-average
+```
+
+Open the pull request with `Fixes #2` in its description.
+
+::: notes
+Suggested time: 4 minutes.
+
+Paste the function, inspect the diff, commit, push, and open the pull request. Move briskly because the class already knows the sequence.
+:::
+
+## Does this proposal satisfy the issue? {.question-slide}
+
+```python
+def average_or_none(values):
+    return sum(values) / len(values)
+```
+
+Test these two cases mentally:
+
+```python
+average_or_none([2, 4, 9])
+average_or_none([])
+```
+
+::: {.discussion-box}
+Should the reviewer approve, comment, or request changes?
+:::
+
+::: notes
+Suggested time: 3 to 5 minutes.
+
+Give students time to identify the division by zero. Ask them to connect the failure to the second acceptance criterion rather than merely stating that the code looks wrong.
+:::
+
+## Review changes the proposal {.demo-slide}
+
+The reviewer requests the missing empty case.
+
+Revised implementation:
+
+```python
+def average_or_none(values):
+    if not values:
+        return None
+
+    return sum(values) / len(values)
+```
+
+Commit and push the revision to the same branch.
+
+::: notes
+Suggested time: 4 minutes.
+
+Submit a Request changes review from the reviewer account. Revise the function in Positron, inspect the new diff, commit, and push. A comment works if a second reviewer account is unavailable, but explain the formal review choices.
+:::
+
+## One branch, one evolving proposal
+
+The existing pull request updates when the branch receives another commit.
+
+Review again:
+
+- Does the new code satisfy every acceptance criterion?
+- Did the revision introduce unrelated changes?
+- Does the conversation explain why the code changed?
+
+::: {.key-idea}
+A pull request can improve through several rounds of feedback before anyone merges it.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Show the new commit and updated Files changed tab. Approve and merge only after the class verifies the empty case. Return to the Project briefly and show the completed work.
+
+Source: https://docs.github.com/en/pull-requests/reference/pull-requests
+:::
+
+## The cycle after two examples {.question-slide}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    I["Issue defines the outcome"] --> B["Branch isolates the work"]
+    B --> P["Pull request proposes a change"]
+    P --> R{"Review decision"}
+    R -->|"Revise"| B
+    R -->|"Ready"| M["Merge into main"]
+```
+
+::: {.discussion-box}
+Which stage protects the project when the first implementation is incomplete?
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+The best answer is the process as a whole, with review as the explicit decision point. The issue supplies the criteria used during review.
+
+This is the natural stopping point. If class ends here, begin the next meeting with the following section card and ask students to reconstruct the cycle from memory.
+:::
+
+<!-- Natural stopping point -->
+
+## When branches collide {.section-card}
+
+::: {.key-idea}
+Git can combine many changes automatically. Sometimes it needs a person to decide.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+If this begins a new class meeting, ask students to recall the two pull request examples before advancing.
+:::
+
+## Two valid branches, one shared line {.question-slide}
+
+Both branches begin here:
+
+```python
+SUMMARY_METRICS = ["mean"]
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+### Branch A
+
+```python
+SUMMARY_METRICS = ["mean", "median"]
+```
+
+:::
+
+::: {.column width="50%"}
+
+### Branch B
+
+```python
+SUMMARY_METRICS = [
+    "mean",
+    "standard_deviation",
+]
+```
+
+:::
+
+::::
+
+::: notes
+Suggested time: 3 minutes.
+
+Both changes are reasonable. Ask whether either contributor should discard the other person's goal.
+:::
+
+## What happens after Branch A merges? {.question-slide}
+
+1. Both branches start from the same commit.
+2. Branch A and Branch B change the same line.
+3. The team merges Branch A into `main`.
+4. Branch B tries to incorporate the new `main`.
+
+::: {.discussion-box}
+What information would Git need in order to choose the final line?
+:::
+
+::: notes
+Suggested time: 3 to 5 minutes.
+
+Ask students to predict before showing any commands. Git sees two competing replacements for the same original line. It cannot infer that the team wants all three metrics.
+:::
+
+## A merge conflict pauses the merge
+
+A conflict means Git cannot combine the changes confidently.
+
+Common cases include:
+
+- Two branches change the same lines differently
+- One branch deletes a file that another branch edits
+
+Git preserves both versions and waits for a person to choose the final content.
+
+::: {.key-idea}
+The conflict protects both contributors' work from an automatic guess.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Describe a conflict as a request for judgment rather than a failure. Git has already combined every nonconflicting change it can.
+
+Source: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-using-the-command-line
+:::
+
+## Conflict markers show both versions {.demo-slide .smaller}
+
+```text
+<<<<<<< HEAD
+SUMMARY_METRICS = ["mean", "standard_deviation"]
+=======
+SUMMARY_METRICS = ["mean", "median"]
+>>>>>>> main
+```
+
+| Marker | Meaning in this merge |
+|---|---|
+| `<<<<<<< HEAD` | Current feature branch |
+| `=======` | Boundary between versions |
+| `>>>>>>> main` | Incoming changes from `main` |
+
+::: notes
+Suggested time: 3 minutes.
+
+The meaning of current and incoming depends on which branch is checked out and what is being merged. Do not encourage students to memorize that current always means their personal work.
+:::
+
+## Live conflict: update the feature branch {.demo-slide}
+
+Assume Branch A has merged into `main`.
+
+```bash
+git switch main
+git pull
+
+git switch add-standard-deviation
+git merge main
+```
+
+Then inspect:
+
+```bash
+git status
+```
+
+::: {.discussion-box}
+What has Git completed? What still needs a decision?
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Run each command in the actual repository. After git merge main stops, read the terminal message and git status aloud. Open Source Control in Positron and locate the conflicted file.
+
+Source: https://git-scm.com/docs/git-merge.html
+:::
+
+## Conflict resolution in Positron {.demo-slide}
+
+Use the merge editor or edit the file directly.
+
+The intended final code:
+
+```python
+SUMMARY_METRICS = [
+    "mean",
+    "median",
+    "standard_deviation",
+]
+```
+
+Before saving, verify:
+
+- The final code expresses both intentions
+- No conflict markers remain
+- The file still contains valid Python
+
+::: notes
+Suggested time: 5 minutes.
+
+Show Positron's conflict controls, but emphasize that Accept Current, Accept Incoming, and Accept Both are shortcuts. None of them understands the team's intent. Manually edit the result if the shortcuts produce poor code.
+:::
+
+## Finish or restart the resolution {.demo-slide .smaller}
+
+After resolving:
+
+```bash
+git add analysis_config.py
+git status
+git commit -m "Resolve metric configuration conflict"
+git push
+```
+
+If you need to abandon the merge before committing:
+
+```bash
+git merge --abort
+```
+
+Return to the pull request and confirm that GitHub can merge it.
+
+::: notes
+Suggested time: 4 minutes.
+
+Explain that git add now means "I resolved this file." The commit records the resolution, and the push updates the open pull request. Demonstrate git merge --abort only as a recovery option, not as the normal workflow.
+
+Source: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-using-the-command-line
+:::
+
+## Pair activity: create and resolve a conflict {.exercise-slide}
+
+Work with your assigned partner and shared repository.
+
+Each person will:
+
+- Create a branch from the same `main`
+- Paste a different prepared change into the same line
+- Commit and push the branch
+- Open a pull request
+
+Then the pair will merge one PR and resolve the conflict in the other.
+
+::: {.exercise-check}
+Finish line: both changes appear in `main`, both PRs are merged, and both computers have a clean `git status`.
+:::
+
+::: notes
+Suggested time: 2 minutes to introduce the activity.
+
+Instructor preparation: create or assign one shared repository per pair. Each repository should contain analysis_config.py with SUMMARY_METRICS = ["mean"] on main. Both students need write access.
+:::
+
+## Activity round 1: create the conflict {.exercise-slide .smaller}
+
+### Partner A
+
+1. Create `add-median`
+2. Add `"median"`
+3. Commit, push, and open a PR
+
+### Partner B
+
+1. Create `add-standard-deviation`
+2. Add `"standard_deviation"`
+3. Commit, push, and open a PR
+
+Review and merge Partner A's pull request first.
+
+::: {.warning-box}
+Both partners must create their branches before either pull request merges.
+:::
+
+::: notes
+Suggested time: 8 to 12 minutes.
+
+The short version supplies exact commands on the next reference slide. The standard version asks students to reconstruct the workflow from the two demonstrations. Circulate and confirm that both branches began from the same commit.
+:::
+
+## Activity round 2: resolve the conflict {.exercise-slide .smaller}
+
+Partner B updates the feature branch:
+
+```bash
+git switch main
+git pull
+git switch add-standard-deviation
+git merge main
+```
+
+Together:
+
+1. Read `git status`
+2. Resolve `analysis_config.py` in Positron
+3. Stage and commit the resolution
+4. Push the branch
+5. Review and merge the updated PR
+
+::: notes
+Suggested time: 10 to 15 minutes.
+
+Require both partners to agree on the final code before staging. If students finish early, ask them to explain the merge commit and pull the completed main branch on both computers.
+:::
+
+## Activity verification {.exercise-slide .smaller}
+
+On both computers:
+
+```bash
+git switch main
+git pull
+git status
+git log --oneline --graph --all -8
+```
+
+Check `analysis_config.py`:
+
+```python
+SUMMARY_METRICS = [
+    "mean",
+    "median",
+    "standard_deviation",
+]
+```
+
+::: {.exercise-check}
+Explain to your partner where the conflict occurred and which commit records the resolution.
+:::
+
+::: notes
+Suggested time: 4 minutes.
+
+Use this slide as an accordion. If time is short, verify only the final file and clean status. If time remains, have pairs interpret the graph and locate the merge commit.
+:::
+
+## Merge conflict debrief {.question-slide}
+
+Discuss with your partner:
+
+- Why could Git not choose the final line?
+- What part of the resolution required human judgment?
+- Which commands changed files, history, and GitHub?
+- How could the team reduce unnecessary conflicts?
+
+::: {.discussion-box}
+When does a conflict reveal a coordination problem? When is it simply normal parallel work?
+:::
+
+::: notes
+Suggested time: 4 to 8 minutes.
+
+Take two or three responses. Avoid implying that every conflict means someone made a mistake. Small branches, frequent updates, clear issues, and communication can reduce avoidable conflicts.
+:::
+
+## The same workflow with an AI collaborator {.smaller}
+
+:::: {.columns}
+
+::: {.column width="47%"}
+
+### AI collaborator
+
+- Responds to an issue
+- Creates a branch and commits
+- Opens a pull request
+- Comments on or reviews a PR
+
+:::
+
+::: {.column width="53%"}
+
+### Repository owner
+
+- Defines the requested outcome
+- Inspects the diff and evidence
+- Requests changes when needed
+- Resolves competing intentions
+- Decides what enters `main`
+
+:::
+
+::::
+
+::: {.key-idea}
+AI can propose and revise work. The repository owner remains responsible for the shared project.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Open the relevant lab instructions and point to the repeated workflow. Explain that the configured collaborator may behave more consistently than an open-ended chat, but students still need to review its work.
+:::
+
+## Takeaways {.takeaway-slide}
+
+- Issues define work that the team can discuss and assign
+- Projects organize issues and pull requests across a larger plan
+- Branches isolate work while it develops
+- Pull requests expose proposed changes for review
+- Reviews can approve, comment, or require revision
+- Merge conflicts pause when Git needs human judgment
+
+::: notes
+Suggested time: 2 minutes.
+
+Return to the opening scenario. Ask one student to explain the sequence they would use now.
+:::
+
+## Command reference {.reference-slide .smaller}
+
+| Goal | Command |
+|---|---|
+| Update local `main` | `git switch main` then `git pull` |
+| Create and switch to a branch | `git switch -c <branch-name>` |
+| See the current state | `git status` |
+| Inspect unstaged changes | `git diff` |
+| Stage a resolved file | `git add <file>` |
+| Record a commit | `git commit -m "<message>"` |
+| Publish a new branch | `git push -u origin <branch-name>` |
+| Merge `main` into the current branch | `git merge main` |
+| Abandon an unfinished merge | `git merge --abort` |
+
+::: notes
+This is a reference rather than a lecture slide. Leave it available during the pair activity or share it afterward.
+
+Source: https://git-scm.com/docs
+:::
+
+## Questions? {.section-card}
+
+::: {.key-idea}
+What part of the collaboration cycle still feels uncertain?
+:::
+
+::: notes
+Use remaining time for questions or open the lab instructions and preview the first required issue.
+:::

@@ -4,7 +4,7 @@
     "href": "slides.html",
     "title": "Slides",
     "section": "",
-    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown",
+    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub",
     "crumbs": [
       "Home",
       "Slides",
@@ -16,7 +16,7 @@
     "href": "slides.html#available-decks",
     "title": "Slides",
     "section": "",
-    "text": "Intro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown",
+    "text": "Intro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub",
     "crumbs": [
       "Home",
       "Slides",
@@ -196,7 +196,7 @@
     "href": "slides/vscode-uv.html#questions",
     "title": "IDEs and Virtual Environments for Data Science",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/terminal-commands.html#goals-for-today",
@@ -364,7 +364,7 @@
     "href": "slides/terminal-commands.html#questions",
     "title": "Intro to the Terminal for Data Science",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/regular-expressions.html#what-is-a-regular-expression",
@@ -539,7 +539,7 @@
     "href": "slides/regular-expressions.html#questions",
     "title": "Regular Expressions",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/python-packaging.html#where-students-are-starting",
@@ -672,7 +672,7 @@
     "href": "slides/python-packaging.html#questions",
     "title": "Python Packaging with uv",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/pandas.html#introduction-to-pandas",
@@ -854,7 +854,7 @@
     "href": "slides/pandas.html#questions",
     "title": "Pandas Essentials",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/missing-data.html#why-missing-data-matters",
@@ -1064,7 +1064,295 @@
     "href": "slides/missing-data.html#questions",
     "title": "Missing Data",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#todays-question",
+    "href": "slides/IDEs_and_Markdown.html#todays-question",
+    "title": "Positron and Markdown",
+    "section": "Today’s question",
+    "text": "Today’s question\n\nHow can an IDE help us see, create, and manage a data science project?\n\nBy the end of class, you should be able to:\n\nExplain what an IDE contributes to a project workflow\nNavigate the core parts of Positron\nExplain how extensions add capabilities to an IDE\nWrite and preview a useful Markdown document\nConnect Git concepts from Day 1 to Positron\n\n\nSuggested time: 2 minutes.\nThe emphasis today is not replacing the terminal. It is learning how an IDE puts several project tools in one visible workspace.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
+    "href": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
+    "title": "Positron and Markdown",
+    "section": "Review: four places work can live",
+    "text": "Review: four places work can live\n\n\n\n\n\n\n\n\nLocation\nWhat lives there\nHow work arrives\n\n\n\n\nLocal machine\nSaved changes in working files\nSave a file\n\n\nStaged\nChanges selected for the next commit\ngit add\n\n\nVersion controlled (local)\nCommits stored in local Git history\ngit commit\n\n\nVersion controlled (GitHub)\nCommits shared in the remote repository\ngit push\n\n\n\nQuestion to keep asking: Where is my change right now?\n\nSuggested time: 3 minutes.\nClarify that the first three locations are on the local computer. The labels distinguish working files, the staging area, and local Git history. GitHub stores the shared remote history. Trace one change down the table from saving through pushing.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#where-is-the-change",
+    "href": "slides/IDEs_and_Markdown.html#where-is-the-change",
+    "title": "Positron and Markdown",
+    "section": "Where is the change?",
+    "text": "Where is the change?\nMatch each situation to a location.\n\n\n\n\n\n\n\nSituation\nLocation\n\n\n\n\nYour commit appears on the repository website\nVersion controlled: GitHub\n\n\nYou saved a new sentence in README.md\nLocal machine: working files\n\n\nYou committed, but have not pushed\nVersion controlled: local\n\n\nYou ran git add README.md\nStaged\n\n\n\n\nSuggested time: 2 to 3 minutes.\nAsk students to answer before revealing each location. The purpose is to reactivate yesterday’s mental model before adding a new interface.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
+    "href": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
+    "title": "Positron and Markdown",
+    "section": "Why use an IDE for data science?",
+    "text": "Why use an IDE for data science?\nAn IDE is a project hub.\n\n\nTools in one place\n\nFile browser\nText and code editor\nConsole and terminal\nPreview and viewer panes\nSource control and diff viewer\nDebugging, notebooks, and data tools\n\n\n\nWhy that matters\n\nLess switching between apps\nFaster feedback while you work\nShared context about the project folder\nVisible feedback about files and errors\n\n\n\nImportant: The tools still require the same underlying understanding.\n\nSuggested time: 3 minutes.\nKeep this broader than Git. Emphasize the repeated data science loop and the value of keeping project context visible.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
+    "href": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
+    "title": "Positron and Markdown",
+    "section": "Positron is a collection of connected tools",
+    "text": "Positron is a collection of connected tools\n\n\n\nPart of Positron\nWhat it helps you do\n\n\n\n\nExplorer\nSee the folders and files in a project\n\n\nEditor\nWrite code, prose, and configuration\n\n\nConsole\nWork interactively with Python or R\n\n\nTerminal\nRun shell commands, Git, and project tools\n\n\nViewer\nPreview Quarto documents and other output\n\n\nSource Control\nInspect, stage, commit, pull, and push changes\n\n\nExtensions\nAdd support for languages, formats, and workflows\n\n\n\n\nSuggested time: 3 minutes.\nPositron is built on Code OSS and adds a layout designed for data science. Point out that the rows provide several views of the same project. Students do not need to use every pane at once.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#the-project-folder",
+    "href": "slides/IDEs_and_Markdown.html#the-project-folder",
+    "title": "Positron and Markdown",
+    "section": "The project folder",
+    "text": "The project folder\nOpening a folder gives Positron context for the active file.\n\nThe Explorer shows related files and folders\nThe terminal starts in the project folder\nGit can find the repository and current branch\nSearch and navigation work across the project\nQuarto can find project settings and website navigation\n\n\nDaily habit: use File &gt; Open Folder, then work inside the project.\n\n\nSuggested time: 2 minutes.\nConnect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
+    "href": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
+    "title": "Positron and Markdown",
+    "section": "Extensions add capabilities",
+    "text": "Extensions add capabilities\nExtensions are add-ons that teach an IDE about new languages, file types, and workflows.\n\n\n\n\n\n\n\n\nType\nPositron example\nCapability\n\n\n\n\nBuilt in\nPython and R support\nConsoles, completion, and data science features\n\n\nIncluded extension\nQuarto\nPreview and render .qmd documents\n\n\nIncluded extension\nRuff\nCheck and format Python code\n\n\nOptional extension\nA language or theme\nCustomize a specific workflow\n\n\n\n\nSuggested time: 3 minutes.\nOpen the Extensions view from the Activity Bar during the demonstration. Positron includes core extensions and a curated set of bootstrapped extensions. The Quarto extension and Quarto CLI are included, so Positron is ready to preview Quarto documents out of the box.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
+    "href": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
+    "title": "Positron and Markdown",
+    "section": "Extensions deserve judgment",
+    "text": "Extensions deserve judgment\n\n\nA useful extension should:\n\nSolve a real need\nCome from a publisher you trust\nBe maintained\nFit the workflow you actually use\n\n\n\nToo many extensions can:\n\nAdd clutter\nCreate conflicting behavior\nSlow startup\nExpand access to files and network resources\n\n\n\n\nWhat would you check before installing an extension?\n\n\nSuggested time: 2 minutes.\nTreat extensions like software packages. Show the publisher, update date, repository, and permissions or trust prompt during the live walkthrough.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#why-markdown",
+    "href": "slides/IDEs_and_Markdown.html#why-markdown",
+    "title": "Positron and Markdown",
+    "section": "Why Markdown?",
+    "text": "Why Markdown?\nMarkdown is plain text with small formatting cues.\n\n\nA durable format\n\nReadable without special software\nMeaningful line-by-line Git changes\nReusable as HTML, slides, reports, or websites\n\n\n\nA working format\n\nRendered automatically by GitHub\nCommonly read and produced by AI chat tools\nUsed for our blogs, website, and final project documentation\n\n\n\nMain idea: Simple source can produce polished output.\n\nSuggested time: 3 minutes.\nConnect today’s README work to the course website and final project. Markdown is not only a formatting lesson. It becomes a common source language across the semester.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#markdown-and-ai",
+    "href": "slides/IDEs_and_Markdown.html#markdown-and-ai",
+    "title": "Positron and Markdown",
+    "section": "Markdown and AI",
+    "text": "Markdown and AI\nWhen you chat with an AI tool, you already encounter Markdown-like structure:\n\nHeadings and lists organize a response\nCode fences preserve code exactly\nTables and links make relationships explicit\n\nAI tools can draft, restructure, and clean Markdown because the structure is explicit plain text.\nYour role: Decide whether the content is accurate and sounds like you.\n\nSuggested time: 3 minutes.\nShow how a structured prompt is easier for both humans and AI to follow. Keep the caution focused on content judgment, not fear of the tool.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
+    "href": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
+    "title": "Positron and Markdown",
+    "section": "Source on the left, rendered result on the right",
+    "text": "Source on the left, rendered result on the right\n\n\nMarkdown source\n# About Me\n\nI study **statistics** and enjoy:\n\n- data visualization\n- basketball\n- learning Python\n\n[My GitHub profile](https://github.com/)\n\nI &lt;3 Data Science!\n\n\nRendered result\n\nAbout Me\n\nI study statistics and enjoy:\n\ndata visualization\nbasketball\nlearning Python\n\nMy GitHub profile\nI &lt;3 Data Science!\n\n\n\nSuggested time: 3 minutes.\nAsk students what information is present in both versions. The preview changes presentation, not meaning.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#markdown-essentials",
+    "href": "slides/IDEs_and_Markdown.html#markdown-essentials",
+    "title": "Positron and Markdown",
+    "section": "Markdown essentials",
+    "text": "Markdown essentials\n\n\n\nGoal\nMarkdown\n\n\n\n\nHeading\n# Heading\n\n\nSmaller heading\n## Smaller heading\n\n\nBold\n**important**\n\n\nItalic\n*emphasis*\n\n\nBulleted list\n- item\n\n\nNumbered list\n1. item\n\n\nLink\n[label](https://example.com)\n\n\nImage\n![description](images/photo.jpg)\n\n\nInline code\n`git status`\n\n\nCode block\nThree backticks before and after the code\n\n\n\n\nSuggested time: 3 minutes.\nDemonstrate only the syntax students need for today’s activity. The table is a reference, not a memorization checklist. Remind students to use headings to describe structure rather than only making text larger.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
+    "href": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
+    "title": "Positron and Markdown",
+    "section": "Live walkthrough: one project, many views",
+    "text": "Live walkthrough: one project, many views\n\nThe instructor shares the real Positron window. Students open yesterday’s repository and mirror each step.\n\nWe will use:\n\nExplorer to locate files\nEditor to revise Markdown\nViewer to preview the result\nSource Control to inspect and record the change\nTerminal to verify what happened\n\n\nSuggested time: 1 minute to set up, followed by the next three walkthrough slides.\nAsk students to arrange their screens so they can see Positron and the projected demonstration. Do not rush past anyone who cannot locate the repository.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 1: orient to the project",
+    "text": "Walkthrough 1: orient to the project\nFollow along\n\nSelect File &gt; Open Folder\nOpen the repository from Day 1\nIn Explorer, locate README.md\nOpen a terminal inside Positron\nRun:\n\npwd\ngit status\n\nCheck: Explorer and pwd identify the same project.\n\n\nSuggested time: 3 to 4 minutes.\nPoint to the Activity Bar, Explorer, Editor, Panel, and Status Bar in the real interface. Ask students to name which part of the interface answered each question.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 2: edit and preview Markdown",
+    "text": "Walkthrough 2: edit and preview Markdown\nFollow along\n\nOpen README.md in the editor\nAdd a heading called ## About This Repository\nAdd one sentence and a three-item list\nSave the file\nOpen a Markdown preview beside the source\n\n\nWhat is easier to understand in the source? What is easier to understand in the preview?\n\n\nSuggested time: 4 minutes.\nUse the Command Palette and search for the Markdown preview command if needed. The goal is to practice finding actions, not memorizing every shortcut.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
+    "href": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
+    "title": "Positron and Markdown",
+    "section": "Walkthrough 3: inspect and record the change",
+    "text": "Walkthrough 3: inspect and record the change\nFollow along\n\nOpen Source Control\nSelect README.md under Changes and read the diff\nStage the file\nVerify with git diff --staged\nEnter a specific commit message and commit\nVerify with git status\n\n\nThe interface and terminal are two views of the same Git repository.\n\n\nSuggested time: 5 to 7 minutes.\nPause before staging and ask where the change lives. Pause after staging and ask again. Commit with a message such as Describe repository in README. Push only after the class distinguishes it from commit.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
+    "href": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
+    "title": "Positron and Markdown",
+    "section": "Day 1 concepts inside Positron",
+    "text": "Day 1 concepts inside Positron\n\n\n\nGit concept or command\nPositron representation\n\n\n\n\nWorking files\nChanges\n\n\ngit diff\nDiff viewer\n\n\ngit add\nStage Changes or +\n\n\nStaging area\nStaged Changes\n\n\ngit commit\nCommit message and Commit\n\n\ngit push\nPush\n\n\nRepository files\nExplorer\n\n\n\n\nSuggested time: 3 minutes.\nReturn to the four-location model. Have students identify which interface action moved the change each time. When the interface surprises them, recommend git status and git diff as direct checks.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
+    "href": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
+    "title": "Positron and Markdown",
+    "section": "Push, pull, and sync are different",
+    "text": "Push, pull, and sync are different\n\n\n\n\n\n\n\n\nAction\nDirection\nPurpose\n\n\n\n\nPush\nLocal to GitHub\nSend local commits to the remote repository\n\n\nPull\nGitHub to local\nBring remote commits into the local repository\n\n\nSync\nBoth directions\nCombine receiving and sending changes\n\n\n\nFor now: Use Push and Pull separately until you can predict what Sync will do.\n\nSuggested time: 3 minutes.\nIf the repository has no new remote work, finish the demonstration with Push. Tell students that Sync is useful later, after they can predict both operations.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
+    "href": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
+    "title": "Positron and Markdown",
+    "section": "Activity: begin your About Me page",
+    "text": "Activity: begin your About Me page\nYour About Me page will become part of your Quarto website.\nWrite for a visitor who wants to know:\n\nWho are you?\nWhat are you interested in?\nWhat are you learning or building?\nWhat should they explore next?\n\n\nAim for a clear first draft, not a perfect biography.\n\n\nSuggested time: 2 minutes to introduce the activity.\nThis is separate from the guided README demonstration. Students now make individual content and design decisions.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#about-me-starter",
+    "href": "slides/IDEs_and_Markdown.html#about-me-starter",
+    "title": "Positron and Markdown",
+    "section": "About Me starter",
+    "text": "About Me starter\nCreate about.qmd and place a photo at images/profile.jpg.\n---\ntitle: \"About Me\"\n---\n\n# Hello, I am Your Name\n\n![Photo of Your Name](images/profile.jpg)\n\nWrite a short introduction here.\n\n## What I am interested in\n\n- One interest\n- Something you want to learn\n\nSuggested time: 2 minutes.\nExplain that .qmd is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata. The brackets describe the image, while the parentheses contain its relative path. Show students how to place profile.jpg inside an images folder.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
+    "href": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
+    "title": "Positron and Markdown",
+    "section": "About Me activity checklist",
+    "text": "About Me activity checklist\n\n\nCore task\n\nWrite a short introduction in your own voice\nUse headings and a list\nAdd one meaningful link\nUse Quarto: Preview and revise for readability\n\n\n\nIf you finish early\n\nAdd an image with useful alternative text\nAsk AI for a clearer structure, then choose what to keep\nInspect the diff, then stage and commit\n\n\n\nFinal check: Read the rendered page as if you were visiting it for the first time.\n\nSuggested time: 15 to 20 minutes.\nCirculate first for file and preview problems, then for writing support. The Git steps are an extension so the activity remains centered on Markdown and authorship.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#what-should-you-remember",
+    "href": "slides/IDEs_and_Markdown.html#what-should-you-remember",
+    "title": "Positron and Markdown",
+    "section": "What should you remember?",
+    "text": "What should you remember?\n\nAn IDE gathers project tools into one connected workspace.\nOpening the project folder gives every tool the right context.\nExtensions add capabilities, so choose them intentionally.\nMarkdown is readable source for humans, Git, GitHub, Quarto, and AI workflows.\nPositron represents the same Git locations, but push, pull, and sync remain distinct.\n\n\nUse the interface for visibility and the terminal for verification.\n\n\nSuggested time: 2 minutes.\nAsk students which tool or concept feels clearer after seeing it in more than one representation.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#references-and-next-steps",
+    "href": "slides/IDEs_and_Markdown.html#references-and-next-steps",
+    "title": "Positron and Markdown",
+    "section": "References and next steps",
+    "text": "References and next steps\n\nPositron layout\nPositron extensions\nGit version control in Positron\nQuarto in Positron\nQuarto Markdown basics\n\nNext: we will build on about.qmd as the website takes shape.\n\nSuggested time: 1 minute.\nThese are official reference pages for students who want to explore beyond today’s workflow.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
+  },
+  {
+    "objectID": "slides/IDEs_and_Markdown.html#questions",
+    "href": "slides/IDEs_and_Markdown.html#questions",
+    "title": "Positron and Markdown",
+    "section": "Questions?",
+    "text": "Questions?\n\nWhat would you like to see again in Positron or Markdown?\n\n\nUse remaining time to repeat any part of the live workflow students want to see again.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Positron and Markdown"
+    ]
   },
   {
     "objectID": "slides/github-issues-projects.html#why-these-tools-matter",
@@ -1260,7 +1548,7 @@
     "href": "slides/github-issues-projects.html#questions",
     "title": "GitHub Issues, Projects, and Workflows",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/eda-dimensionality-reduction.html#agenda",
@@ -1421,21 +1709,496 @@
     "href": "slides/eda-dimensionality-reduction.html#questions",
     "title": "Dimensionality Reduction for EDA",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "STAT 386 — Fall 2026",
-    "section": "",
-    "text": "Dr. Tom Kerby\nThis site hosts lecture slides and in-class code demos for STAT 386. The syllabus, assignments, and course resources live in the Canvas course.\n\n\n\nSlides — Reveal.js slide decks for each topic"
+    "objectID": "slides/collaborative_github.html#todays-question",
+    "href": "slides/collaborative_github.html#todays-question",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Today’s question",
+    "text": "Today’s question\n\nHow can several contributors change one project without losing control of main?\n\nBy the end of this sequence, you should be able to:\n\nConnect issues, branches, commits, pull requests, reviews, and merges\nReview a proposed change before it enters main\nCreate and resolve a simple merge conflict\nApply the same workflow to human and AI collaborators\n\n\nSuggested time: 2 minutes.\nThis deck is designed as one continuous sequence. It has a natural stopping point after the second pull request example, immediately before the merge conflict section.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
   },
   {
-    "objectID": "index.html#quick-links",
-    "href": "index.html#quick-links",
-    "title": "STAT 386 — Fall 2026",
+    "objectID": "slides/collaborative_github.html#two-collaborators-one-file",
+    "href": "slides/collaborative_github.html#two-collaborators-one-file",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Two collaborators, one file",
+    "text": "Two collaborators, one file\nYou and a collaborator both clone the same repository.\nYou each change this line:\nSUMMARY_METRICS = [\"mean\"]\nYour collaborator’s work reaches main first.\n\nWhat happens to your change? What should happen next?\n\n\nSuggested time: 3 to 5 minutes.\nGive students 30 seconds to think alone, then one minute with a partner. Collect predictions without correcting them yet. Listen for assumptions that Git combines everything automatically, overwrites one version, or blocks both people from working.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#collaboration-requires-more-than-shared-access",
+    "href": "slides/collaborative_github.html#collaboration-requires-more-than-shared-access",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Collaboration requires more than shared access",
+    "text": "Collaboration requires more than shared access\nA team needs answers to four questions:\n\n\n\nQuestion\nGitHub feature\n\n\n\n\nWhat work needs attention?\nIssue\n\n\nWhere can I work safely?\nBranch\n\n\nWhat change am I proposing?\nPull request\n\n\nShould this enter main?\nReview and merge\n\n\n\n\nShared access lets people edit. A collaboration process helps them coordinate.\n\n\nSuggested time: 2 minutes.\nReturn to the opening scenario. Both people had access, but access alone did not establish who was doing what or how the changes should be evaluated.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#the-collaboration-cycle",
+    "href": "slides/collaborative_github.html#the-collaboration-cycle",
+    "title": "Collaborating with Git and GitHub",
+    "section": "The collaboration cycle",
+    "text": "The collaboration cycle\n\n\n\n\n\nflowchart LR\n    subgraph A[\"Plan and build\"]\n      direction LR\n      I[\"Issue\"] --&gt; B[\"Branch\"] --&gt; C[\"Commits\"]\n    end\n    subgraph D[\"Review and integrate\"]\n      direction LR\n      P[\"Pull request\"] --&gt; R[\"Review\"] --&gt; M[\"Merge\"]\n    end\n    C --&gt; P\n\n\n\n\n\n\n\nEach stage preserves context for the next person who must understand the work.\n\n\nSuggested time: 2 minutes.\nBuild the cycle from left to right. Ask students which stages happen in Git and which depend on GitHub. Branches, commits, and merges are Git concepts. Issues, pull request pages, and review tools are GitHub collaboration features.\nSource: https://docs.github.com/en/pull-requests/reference/pull-requests",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#each-stage-answers-a-question",
+    "href": "slides/collaborative_github.html#each-stage-answers-a-question",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Each stage answers a question",
+    "text": "Each stage answers a question\n\n\n\n\n\n\n\n\nStage\nQuestion it answers\nEvidence it preserves\n\n\n\n\nIssue\nWhat outcome do we need?\nDescription and acceptance criteria\n\n\nBranch\nWhere will this work develop?\nAn isolated line of history\n\n\nCommits\nWhat changed along the way?\nFocused project snapshots\n\n\nPull request\nWhat would this add to main?\nDiff, discussion, and checks\n\n\nReview\nDoes the proposal satisfy the issue?\nComments and review decision\n\n\nMerge\nShould the shared project adopt it?\nIntegrated history\n\n\n\n\nSuggested time: 3 minutes.\nDo not treat the table as vocabulary to memorize. Choose one row at a time and connect it to the opening scenario.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#before-anyone-creates-a-branch",
+    "href": "slides/collaborative_github.html#before-anyone-creates-a-branch",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Before anyone creates a branch",
+    "text": "Before anyone creates a branch\nAn issue says:\n\nImprove the summary function.\n\nWhat is still unclear?\n\nWhat should the function return?\nWhich inputs must it handle?\nWhat would count as complete?\n\n\nWhich questions must the team answer before anyone edits code?\n\n\nSuggested time: 4 minutes.\nHave students discuss with a neighbor before collecting answers. The point is not to produce one perfect issue. The point is to notice that a vague task gives the author and reviewer no shared standard for success.\nUse their answers to motivate issue descriptions and acceptance criteria on the next slide.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#issues-record-future-work",
+    "href": "slides/collaborative_github.html#issues-record-future-work",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Issues record future work",
+    "text": "Issues record future work\nAn issue can capture:\n\nThe outcome someone wants\nThe reason the work matters\nSpecific requirements or acceptance criteria\nDiscussion, assignments, labels, and links\n\n\nWhat would another person need before they could begin this task?\n\n\nSuggested time: 3 minutes.\nOpen an issue from the demonstration repository. Show the title, body, assignee, labels, and project field in the real GitHub interface. Avoid turning the slide into a tour of every sidebar control.\nSource: https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#github-projects-organize-related-work",
+    "href": "slides/collaborative_github.html#github-projects-organize-related-work",
+    "title": "Collaborating with Git and GitHub",
+    "section": "GitHub Projects organize related work",
+    "text": "GitHub Projects organize related work\nA Project collects issues and pull requests into a shared planning view.\n\n\n\n\n\n\n\n\n\n\nBacklog\nReady\nIn progress\nIn review\nDone\n\n\n\n\nIdeas worth considering\nDefined work\nActive branches\nOpen pull requests\nClosed work\n\n\n\nProjects can add:\n\nStatus, priority, dates, and custom fields\nTable, board, and roadmap views\nWorkflows that update items as work changes\n\n\nIssues describe individual work. Projects show how many work items fit together.\n\n\nSuggested time: 4 minutes.\nShow a real Project after discussing the concept. Add the demonstration issue to the Project and move it to In progress. GitHub Projects can track issues, pull requests, and draft ideas in several views.\nSource: https://docs.github.com/en/issues/planning-and-tracking-with-projects Source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#branches-isolate-proposed-work",
+    "href": "slides/collaborative_github.html#branches-isolate-proposed-work",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Branches isolate proposed work",
+    "text": "Branches isolate proposed work\nA branch gives a set of commits a name.\ngit switch main\ngit pull\ngit switch -c issue-1-data-range\ngit status\n\nStart from the current main\nUse a name connected to the issue\nCommit related work to the branch\nPush the branch when others need to see it\n\n\nSuggested time: 3 minutes.\nDemonstrate the branch indicator in Positron and verify it with git status. Explain that git switch -c creates the branch and moves the working directory onto it. The branch begins at the current commit.\nSource: https://docs.github.com/en/pull-requests/reference/branches Source: https://git-scm.com/docs/git-switch.html",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#pull-requests-are-proposals",
+    "href": "slides/collaborative_github.html#pull-requests-are-proposals",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Pull requests are proposals",
+    "text": "Pull requests are proposals\nA pull request compares a head branch with a base branch.\n\n\nThe proposal\n\nDescription of the intended change\nCommits included in the branch\nFiles changed compared with main\n\n\nThe decision\n\nDiscuss the approach\nInspect the diff and checks\nApprove, comment, or request changes\nMerge only when the proposal is ready\n\n\n\nOpening a pull request starts review. It does not make the proposal correct.\n\n\nSuggested time: 3 minutes.\nEmphasize the Files changed tab. GitHub describes pull requests as proposals to merge code changes, with discussion and review before merging.\nSource: https://docs.github.com/en/pull-requests/reference/pull-requests",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#review-choices",
+    "href": "slides/collaborative_github.html#review-choices",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Review choices",
+    "text": "Review choices\n\n\n\n\n\n\n\nReview action\nUse it when\n\n\n\n\nComment\nYou have feedback or a question without a final decision\n\n\nApprove\nThe proposal satisfies the issue and is ready to merge\n\n\nRequest changes\nThe author must revise the proposal before merging\n\n\n\nA useful review points to evidence:\n\nA requirement from the issue\nA specific changed line\nA test result or reproducible behavior\n\n\nSuggested time: 3 minutes.\nIf possible, use a second course or TA account for the live review because authors cannot formally approve their own pull requests. A student volunteer with repository access can also submit the review while you guide the class.\nSource: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-1-a-complete-proposal",
+    "href": "slides/collaborative_github.html#example-1-a-complete-proposal",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 1: a complete proposal",
+    "text": "Example 1: a complete proposal\nIssue 1: Add a data range helper\nAdd data_range(values) to stats_helpers.py.\nAcceptance criteria\n\nReturn the difference between the largest and smallest values\nKeep the function independent of external packages\nUse a descriptive commit message\n\n\nWhat evidence would convince you that the issue is complete?\n\n\nSuggested time: 2 minutes to frame the example.\nBefore class, fork the prepared demonstration repository and run its Seed demo issue workflow. This creates this task as Issue #1 in the fork. Show the existing issue here, add it to the Project, and mark it In progress.\nGitHub forks have their own issues, so Issue #1 is seeded in the fork rather than expected to copy from the upstream repository. Exact setup steps are in INSTRUCTOR_GUIDE.md.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-1-branch-and-implementation",
+    "href": "slides/collaborative_github.html#example-1-branch-and-implementation",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 1: branch and implementation",
+    "text": "Example 1: branch and implementation\ngit switch main\ngit pull\ngit switch -c issue-1-data-range\nPaste into stats_helpers.py:\ndef data_range(values):\n    return max(values) - min(values)\nThen inspect the saved change in Positron.\n\nWhere does the change live before the commit?\n\n\nSuggested time: 4 minutes.\nKeep the code ready to copy. The coding should take seconds. Open the Source Control view, inspect the diff, and ask students to locate the branch name. Use git status in the terminal to verify the interface.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-1-commit-push-and-propose",
+    "href": "slides/collaborative_github.html#example-1-commit-push-and-propose",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 1: commit, push, and propose",
+    "text": "Example 1: commit, push, and propose\ngit add stats_helpers.py\ngit commit -m \"Add data range helper\"\ngit push -u origin issue-1-data-range\nOpen the pull request on GitHub.\nSuggested description:\nFixes #1\n\nAdds `data_range(values)` to calculate the\ndifference between the maximum and minimum.\n\nSuggested time: 4 minutes.\nPause after each command. Ask whether the branch and commit are local, remote, or both. Explain that the -u option connects the local branch with its remote tracking branch. Show how the PR selects main as the base and issue-1-data-range as the head.\nSource: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-1-review-merge-and-synchronize",
+    "href": "slides/collaborative_github.html#example-1-review-merge-and-synchronize",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 1: review, merge, and synchronize",
+    "text": "Example 1: review, merge, and synchronize\nOn GitHub:\n\nCompare the issue with the PR description\nInspect Files changed\nApprove the proposal\nMerge the pull request\nConfirm that the issue closes\n\nBack in Positron:\ngit switch main\ngit pull\ngit log --oneline -3\n\nSuggested time: 4 minutes.\nUse a second reviewer if available. After merging, return to the Project and show the item moving to Done if the Project workflow is configured. Delete the remote feature branch if that matches the course workflow.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#where-does-the-work-live-now",
+    "href": "slides/collaborative_github.html#where-does-the-work-live-now",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Where does the work live now?",
+    "text": "Where does the work live now?\nAfter the pull request merges:\n\n\n\nLocation\nContains the new function?\n\n\n\n\nGitHub main\nYes\n\n\nLocal main before git pull\nNo\n\n\nLocal main after git pull\nYes\n\n\nOriginal feature branch\nYes\n\n\n\n\nWhy does merging on GitHub leave the local repository unchanged?\n\n\nSuggested time: 3 minutes.\nThis reconnects collaboration to the four-location model from Days 1 and 2. GitHub cannot silently rewrite the student’s local repository. Pull brings the remote commits into the local repository.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-2-a-proposal-that-needs-revision",
+    "href": "slides/collaborative_github.html#example-2-a-proposal-that-needs-revision",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 2: a proposal that needs revision",
+    "text": "Example 2: a proposal that needs revision\nIssue 2: Add a safe average helper\nAdd average_or_none(values) to stats_helpers.py.\nAcceptance criteria\n\nReturn the arithmetic mean for a nonempty collection\nReturn None when the collection is empty\nKeep the function independent of external packages\n\n\nSuggested time: 2 minutes.\nCreate this issue live by copying the prepared title and body from demo_materials/issue-2-safe-average.md. This gives students one example of creating an issue after seeing the seeded issue. Add it to the Project and ask them to tell you the next step at each point in this example.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#example-2-the-first-proposal",
+    "href": "slides/collaborative_github.html#example-2-the-first-proposal",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Example 2: the first proposal",
+    "text": "Example 2: the first proposal\ndef average_or_none(values):\n    return sum(values) / len(values)\nUse the same workflow:\ngit switch main\ngit pull\ngit switch -c issue-2-safe-average\ngit add stats_helpers.py\ngit commit -m \"Add average helper\"\ngit push -u origin issue-2-safe-average\nOpen the pull request with Fixes #2 in its description.\n\nSuggested time: 4 minutes.\nPaste the function, inspect the diff, commit, push, and open the pull request. Move briskly because the class already knows the sequence.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#does-this-proposal-satisfy-the-issue",
+    "href": "slides/collaborative_github.html#does-this-proposal-satisfy-the-issue",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Does this proposal satisfy the issue?",
+    "text": "Does this proposal satisfy the issue?\ndef average_or_none(values):\n    return sum(values) / len(values)\nTest these two cases mentally:\naverage_or_none([2, 4, 9])\naverage_or_none([])\n\nShould the reviewer approve, comment, or request changes?\n\n\nSuggested time: 3 to 5 minutes.\nGive students time to identify the division by zero. Ask them to connect the failure to the second acceptance criterion rather than merely stating that the code looks wrong.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#review-changes-the-proposal",
+    "href": "slides/collaborative_github.html#review-changes-the-proposal",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Review changes the proposal",
+    "text": "Review changes the proposal\nThe reviewer requests the missing empty case.\nRevised implementation:\ndef average_or_none(values):\n    if not values:\n        return None\n\n    return sum(values) / len(values)\nCommit and push the revision to the same branch.\n\nSuggested time: 4 minutes.\nSubmit a Request changes review from the reviewer account. Revise the function in Positron, inspect the new diff, commit, and push. A comment works if a second reviewer account is unavailable, but explain the formal review choices.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#one-branch-one-evolving-proposal",
+    "href": "slides/collaborative_github.html#one-branch-one-evolving-proposal",
+    "title": "Collaborating with Git and GitHub",
+    "section": "One branch, one evolving proposal",
+    "text": "One branch, one evolving proposal\nThe existing pull request updates when the branch receives another commit.\nReview again:\n\nDoes the new code satisfy every acceptance criterion?\nDid the revision introduce unrelated changes?\nDoes the conversation explain why the code changed?\n\n\nA pull request can improve through several rounds of feedback before anyone merges it.\n\n\nSuggested time: 3 minutes.\nShow the new commit and updated Files changed tab. Approve and merge only after the class verifies the empty case. Return to the Project briefly and show the completed work.\nSource: https://docs.github.com/en/pull-requests/reference/pull-requests",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#the-cycle-after-two-examples",
+    "href": "slides/collaborative_github.html#the-cycle-after-two-examples",
+    "title": "Collaborating with Git and GitHub",
+    "section": "The cycle after two examples",
+    "text": "The cycle after two examples\n\n\n\n\n\nflowchart LR\n    I[\"Issue defines the outcome\"] --&gt; B[\"Branch isolates the work\"]\n    B --&gt; P[\"Pull request proposes a change\"]\n    P --&gt; R{\"Review decision\"}\n    R --&gt;|\"Revise\"| B\n    R --&gt;|\"Ready\"| M[\"Merge into main\"]\n\n\n\n\n\n\n\nWhich stage protects the project when the first implementation is incomplete?\n\n\nSuggested time: 3 minutes.\nThe best answer is the process as a whole, with review as the explicit decision point. The issue supplies the criteria used during review.\nThis is the natural stopping point. If class ends here, begin the next meeting with the following section card and ask students to reconstruct the cycle from memory.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#when-branches-collide",
+    "href": "slides/collaborative_github.html#when-branches-collide",
+    "title": "Collaborating with Git and GitHub",
+    "section": "When branches collide",
+    "text": "When branches collide\n\nGit can combine many changes automatically. Sometimes it needs a person to decide.\n\n\nSuggested time: 2 minutes.\nIf this begins a new class meeting, ask students to recall the two pull request examples before advancing.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#two-valid-branches-one-shared-line",
+    "href": "slides/collaborative_github.html#two-valid-branches-one-shared-line",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Two valid branches, one shared line",
+    "text": "Two valid branches, one shared line\nBoth branches begin here:\nSUMMARY_METRICS = [\"mean\"]\n\n\nBranch A\nSUMMARY_METRICS = [\"mean\", \"median\"]\n\nBranch B\nSUMMARY_METRICS = [\n    \"mean\",\n    \"standard_deviation\",\n]\n\n\nSuggested time: 3 minutes.\nBoth changes are reasonable. Ask whether either contributor should discard the other person’s goal.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#what-happens-after-branch-a-merges",
+    "href": "slides/collaborative_github.html#what-happens-after-branch-a-merges",
+    "title": "Collaborating with Git and GitHub",
+    "section": "What happens after Branch A merges?",
+    "text": "What happens after Branch A merges?\n\nBoth branches start from the same commit.\nBranch A and Branch B change the same line.\nThe team merges Branch A into main.\nBranch B tries to incorporate the new main.\n\n\nWhat information would Git need in order to choose the final line?\n\n\nSuggested time: 3 to 5 minutes.\nAsk students to predict before showing any commands. Git sees two competing replacements for the same original line. It cannot infer that the team wants all three metrics.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#a-merge-conflict-pauses-the-merge",
+    "href": "slides/collaborative_github.html#a-merge-conflict-pauses-the-merge",
+    "title": "Collaborating with Git and GitHub",
+    "section": "A merge conflict pauses the merge",
+    "text": "A merge conflict pauses the merge\nA conflict means Git cannot combine the changes confidently.\nCommon cases include:\n\nTwo branches change the same lines differently\nOne branch deletes a file that another branch edits\n\nGit preserves both versions and waits for a person to choose the final content.\n\nThe conflict protects both contributors’ work from an automatic guess.\n\n\nSuggested time: 3 minutes.\nDescribe a conflict as a request for judgment rather than a failure. Git has already combined every nonconflicting change it can.\nSource: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-using-the-command-line",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#conflict-markers-show-both-versions",
+    "href": "slides/collaborative_github.html#conflict-markers-show-both-versions",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Conflict markers show both versions",
+    "text": "Conflict markers show both versions\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nSUMMARY_METRICS = [\"mean\", \"standard_deviation\"]\n=======\nSUMMARY_METRICS = [\"mean\", \"median\"]\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; main\n\n\n\nMarker\nMeaning in this merge\n\n\n\n\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nCurrent feature branch\n\n\n=======\nBoundary between versions\n\n\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; main\nIncoming changes from main\n\n\n\n\nSuggested time: 3 minutes.\nThe meaning of current and incoming depends on which branch is checked out and what is being merged. Do not encourage students to memorize that current always means their personal work.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#live-conflict-update-the-feature-branch",
+    "href": "slides/collaborative_github.html#live-conflict-update-the-feature-branch",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Live conflict: update the feature branch",
+    "text": "Live conflict: update the feature branch\nAssume Branch A has merged into main.\ngit switch main\ngit pull\n\ngit switch add-standard-deviation\ngit merge main\nThen inspect:\ngit status\n\nWhat has Git completed? What still needs a decision?\n\n\nSuggested time: 4 minutes.\nRun each command in the actual repository. After git merge main stops, read the terminal message and git status aloud. Open Source Control in Positron and locate the conflicted file.\nSource: https://git-scm.com/docs/git-merge.html",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#conflict-resolution-in-positron",
+    "href": "slides/collaborative_github.html#conflict-resolution-in-positron",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Conflict resolution in Positron",
+    "text": "Conflict resolution in Positron\nUse the merge editor or edit the file directly.\nThe intended final code:\nSUMMARY_METRICS = [\n    \"mean\",\n    \"median\",\n    \"standard_deviation\",\n]\nBefore saving, verify:\n\nThe final code expresses both intentions\nNo conflict markers remain\nThe file still contains valid Python\n\n\nSuggested time: 5 minutes.\nShow Positron’s conflict controls, but emphasize that Accept Current, Accept Incoming, and Accept Both are shortcuts. None of them understands the team’s intent. Manually edit the result if the shortcuts produce poor code.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#finish-or-restart-the-resolution",
+    "href": "slides/collaborative_github.html#finish-or-restart-the-resolution",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Finish or restart the resolution",
+    "text": "Finish or restart the resolution\nAfter resolving:\ngit add analysis_config.py\ngit status\ngit commit -m \"Resolve metric configuration conflict\"\ngit push\nIf you need to abandon the merge before committing:\ngit merge --abort\nReturn to the pull request and confirm that GitHub can merge it.\n\nSuggested time: 4 minutes.\nExplain that git add now means “I resolved this file.” The commit records the resolution, and the push updates the open pull request. Demonstrate git merge –abort only as a recovery option, not as the normal workflow.\nSource: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/resolving-a-merge-conflict-using-the-command-line",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#pair-activity-create-and-resolve-a-conflict",
+    "href": "slides/collaborative_github.html#pair-activity-create-and-resolve-a-conflict",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Pair activity: create and resolve a conflict",
+    "text": "Pair activity: create and resolve a conflict\nWork with your assigned partner and shared repository.\nEach person will:\n\nCreate a branch from the same main\nPaste a different prepared change into the same line\nCommit and push the branch\nOpen a pull request\n\nThen the pair will merge one PR and resolve the conflict in the other.\n\nFinish line: both changes appear in main, both PRs are merged, and both computers have a clean git status.\n\n\nSuggested time: 2 minutes to introduce the activity.\nInstructor preparation: create or assign one shared repository per pair. Each repository should contain analysis_config.py with SUMMARY_METRICS = [“mean”] on main. Both students need write access.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#activity-round-1-create-the-conflict",
+    "href": "slides/collaborative_github.html#activity-round-1-create-the-conflict",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Activity round 1: create the conflict",
+    "text": "Activity round 1: create the conflict\nPartner A\n\nCreate add-median\nAdd \"median\"\nCommit, push, and open a PR\n\nPartner B\n\nCreate add-standard-deviation\nAdd \"standard_deviation\"\nCommit, push, and open a PR\n\nReview and merge Partner A’s pull request first.\n\nBoth partners must create their branches before either pull request merges.\n\n\nSuggested time: 8 to 12 minutes.\nThe short version supplies exact commands on the next reference slide. The standard version asks students to reconstruct the workflow from the two demonstrations. Circulate and confirm that both branches began from the same commit.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#activity-round-2-resolve-the-conflict",
+    "href": "slides/collaborative_github.html#activity-round-2-resolve-the-conflict",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Activity round 2: resolve the conflict",
+    "text": "Activity round 2: resolve the conflict\nPartner B updates the feature branch:\ngit switch main\ngit pull\ngit switch add-standard-deviation\ngit merge main\nTogether:\n\nRead git status\nResolve analysis_config.py in Positron\nStage and commit the resolution\nPush the branch\nReview and merge the updated PR\n\n\nSuggested time: 10 to 15 minutes.\nRequire both partners to agree on the final code before staging. If students finish early, ask them to explain the merge commit and pull the completed main branch on both computers.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#activity-verification",
+    "href": "slides/collaborative_github.html#activity-verification",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Activity verification",
+    "text": "Activity verification\nOn both computers:\ngit switch main\ngit pull\ngit status\ngit log --oneline --graph --all -8\nCheck analysis_config.py:\nSUMMARY_METRICS = [\n    \"mean\",\n    \"median\",\n    \"standard_deviation\",\n]\n\nExplain to your partner where the conflict occurred and which commit records the resolution.\n\n\nSuggested time: 4 minutes.\nUse this slide as an accordion. If time is short, verify only the final file and clean status. If time remains, have pairs interpret the graph and locate the merge commit.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#merge-conflict-debrief",
+    "href": "slides/collaborative_github.html#merge-conflict-debrief",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Merge conflict debrief",
+    "text": "Merge conflict debrief\nDiscuss with your partner:\n\nWhy could Git not choose the final line?\nWhat part of the resolution required human judgment?\nWhich commands changed files, history, and GitHub?\nHow could the team reduce unnecessary conflicts?\n\n\nWhen does a conflict reveal a coordination problem? When is it simply normal parallel work?\n\n\nSuggested time: 4 to 8 minutes.\nTake two or three responses. Avoid implying that every conflict means someone made a mistake. Small branches, frequent updates, clear issues, and communication can reduce avoidable conflicts.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#the-same-workflow-with-an-ai-collaborator",
+    "href": "slides/collaborative_github.html#the-same-workflow-with-an-ai-collaborator",
+    "title": "Collaborating with Git and GitHub",
+    "section": "The same workflow with an AI collaborator",
+    "text": "The same workflow with an AI collaborator\n\n\nAI collaborator\n\nResponds to an issue\nCreates a branch and commits\nOpens a pull request\nComments on or reviews a PR\n\n\nRepository owner\n\nDefines the requested outcome\nInspects the diff and evidence\nRequests changes when needed\nResolves competing intentions\nDecides what enters main\n\n\n\nAI can propose and revise work. The repository owner remains responsible for the shared project.\n\n\nSuggested time: 3 minutes.\nOpen the relevant lab instructions and point to the repeated workflow. Explain that the configured collaborator may behave more consistently than an open-ended chat, but students still need to review its work.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#takeaways",
+    "href": "slides/collaborative_github.html#takeaways",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nIssues define work that the team can discuss and assign\nProjects organize issues and pull requests across a larger plan\nBranches isolate work while it develops\nPull requests expose proposed changes for review\nReviews can approve, comment, or require revision\nMerge conflicts pause when Git needs human judgment\n\n\nSuggested time: 2 minutes.\nReturn to the opening scenario. Ask one student to explain the sequence they would use now.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#command-reference",
+    "href": "slides/collaborative_github.html#command-reference",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Command reference",
+    "text": "Command reference\n\n\n\nGoal\nCommand\n\n\n\n\nUpdate local main\ngit switch main then git pull\n\n\nCreate and switch to a branch\ngit switch -c &lt;branch-name&gt;\n\n\nSee the current state\ngit status\n\n\nInspect unstaged changes\ngit diff\n\n\nStage a resolved file\ngit add &lt;file&gt;\n\n\nRecord a commit\ngit commit -m \"&lt;message&gt;\"\n\n\nPublish a new branch\ngit push -u origin &lt;branch-name&gt;\n\n\nMerge main into the current branch\ngit merge main\n\n\nAbandon an unfinished merge\ngit merge --abort\n\n\n\n\nThis is a reference rather than a lecture slide. Leave it available during the pair activity or share it afterward.\nSource: https://git-scm.com/docs",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "slides/collaborative_github.html#questions",
+    "href": "slides/collaborative_github.html#questions",
+    "title": "Collaborating with Git and GitHub",
+    "section": "Questions?",
+    "text": "Questions?\n\nWhat part of the collaboration cycle still feels uncertain?\n\n\nUse remaining time for questions or open the lab instructions and preview the first required issue.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Collaborating with Git and GitHub"
+    ]
+  },
+  {
+    "objectID": "demos.html",
+    "href": "demos.html",
+    "title": "Demos",
     "section": "",
-    "text": "Slides — Reveal.js slide decks for each topic"
+    "text": "Each week includes an in-class code demo with narrative explanation, executable code, and links to standalone source files.\n\n\n\nWeek 1: First Python Program — week-01-demo.py\n\n\n\n\n\nCreate demos/week-NN.qmd using demos/week-01.qmd as a template.\nCreate demos/week-NN-demo.py (or .R, .jl, etc.) with the standalone script.\nAdd a link on this page.\nAdd the .qmd file to the sidebar in _quarto.yml under the “Demos” section.\nRun quarto render to rebuild the site."
+  },
+  {
+    "objectID": "demos.html#available-demos",
+    "href": "demos.html#available-demos",
+    "title": "Demos",
+    "section": "",
+    "text": "Week 1: First Python Program — week-01-demo.py"
+  },
+  {
+    "objectID": "demos.html#how-to-add-a-new-demo",
+    "href": "demos.html#how-to-add-a-new-demo",
+    "title": "Demos",
+    "section": "",
+    "text": "Create demos/week-NN.qmd using demos/week-01.qmd as a template.\nCreate demos/week-NN-demo.py (or .R, .jl, etc.) with the standalone script.\nAdd a link on this page.\nAdd the .qmd file to the sidebar in _quarto.yml under the “Demos” section.\nRun quarto render to rebuild the site."
   },
   {
     "objectID": "demos/week-01.html",
@@ -1480,25 +2243,18 @@
     "text": "The standalone script is available here: week-01-demo.py"
   },
   {
-    "objectID": "demos.html",
-    "href": "demos.html",
-    "title": "Demos",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "STAT 386 — Fall 2026",
     "section": "",
-    "text": "Each week includes an in-class code demo with narrative explanation, executable code, and links to standalone source files.\n\n\n\nWeek 1: First Python Program — week-01-demo.py\n\n\n\n\n\nCreate demos/week-NN.qmd using demos/week-01.qmd as a template.\nCreate demos/week-NN-demo.py (or .R, .jl, etc.) with the standalone script.\nAdd a link on this page.\nAdd the .qmd file to the sidebar in _quarto.yml under the “Demos” section.\nRun quarto render to rebuild the site."
+    "text": "Dr. Tom Kerby\nThis site hosts lecture slides and in-class code demos for STAT 386. The syllabus, assignments, and course resources live in the Canvas course.\n\n\n\nSlides — Reveal.js slide decks for each topic"
   },
   {
-    "objectID": "demos.html#available-demos",
-    "href": "demos.html#available-demos",
-    "title": "Demos",
+    "objectID": "index.html#quick-links",
+    "href": "index.html#quick-links",
+    "title": "STAT 386 — Fall 2026",
     "section": "",
-    "text": "Week 1: First Python Program — week-01-demo.py"
-  },
-  {
-    "objectID": "demos.html#how-to-add-a-new-demo",
-    "href": "demos.html#how-to-add-a-new-demo",
-    "title": "Demos",
-    "section": "",
-    "text": "Create demos/week-NN.qmd using demos/week-01.qmd as a template.\nCreate demos/week-NN-demo.py (or .R, .jl, etc.) with the standalone script.\nAdd a link on this page.\nAdd the .qmd file to the sidebar in _quarto.yml under the “Demos” section.\nRun quarto render to rebuild the site."
+    "text": "Slides — Reveal.js slide decks for each topic"
   },
   {
     "objectID": "slides/data-joining.html#today",
@@ -1694,7 +2450,7 @@
     "href": "slides/data-joining.html#questions",
     "title": "Joining Data Together in Pandas",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/git-github.html#intro-to-git",
@@ -1939,7 +2695,343 @@
     "href": "slides/git-github.html#questions",
     "title": "Introduction to Git and GitHub",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#todays-question",
+    "href": "slides/git_github_foundations.html#todays-question",
+    "title": "Git and GitHub Foundations",
+    "section": "Today’s question",
+    "text": "Today’s question\n\nWhere is my change right now?\n\nBy the end of class, you should be able to:\n\nExplain how Git records the history of a project\nDistinguish working files, staging, local history, and GitHub\nInspect, commit, and share changes from the terminal\n\n\nSuggested time: 2 minutes.\nFrame every command as an answer to the question on this slide. Students do not need to memorize a recipe if they can determine where a change currently lives and where it needs to go next.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-final_really_final-problem",
+    "href": "slides/git_github_foundations.html#the-final_really_final-problem",
+    "title": "Git and GitHub Foundations",
+    "section": "The final_really_final problem",
+    "text": "The final_really_final problem\n\n\nanalysis.py\nanalysis_v2.py\nanalysis_final.py\nanalysis_final_fixed.py\nanalysis_final_really.py\n\n\n\nWhat information is missing?\n\n\nWhich file should we use?\nWhat changed between versions?\nWhy did it change?\nWhich files belong to the same version of the project?\n\n\n\n\nSuggested time: 3 to 5 minutes.\nGive students 30 seconds to think, then collect several answers. The filenames may imply an order, but they do not reliably preserve authorship, intent, related changes across files, or a trustworthy history.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#version-control",
+    "href": "slides/git_github_foundations.html#version-control",
+    "title": "Git and GitHub Foundations",
+    "section": "Version control",
+    "text": "Version control\n\nVersion control records changes to a project over time.\n\nA version control system helps us:\n\nPreserve earlier versions\nUnderstand what changed and why\nCombine related changes into meaningful checkpoints\nShare a consistent project history\n\n\nSuggested time: 2 minutes.\nAvoid promising that Git prevents conflicts. Git helps people coordinate changes and resolve conflicts when they occur.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-as-a-database",
+    "href": "slides/git_github_foundations.html#git-as-a-database",
+    "title": "Git and GitHub Foundations",
+    "section": "Git as a database",
+    "text": "Git as a database\nGit stores structured records that describe a project’s contents and history.\n\n\n\nGit object\nWhat it represents\n\n\n\n\nBlob\nThe contents of a file\n\n\nTree\nA directory and its contents\n\n\nCommit\nA project snapshot, its metadata, and its parent\n\n\n\n\nYou do not need to memorize the object names. Focus on how they connect.\n\n\nSuggested time: 3 minutes.\nThis slide provides the deeper explanation without making internal Git commands part of the learning objectives. Explain that filenames live in trees, while blobs store contents.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
+    "href": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
+    "title": "Git and GitHub Foundations",
+    "section": "A commit connects contents and history",
+    "text": "A commit connects contents and history\n\n\n\n\n\nflowchart TD\n    C[\"Commit\"] --&gt; T[\"Project tree\"]\n    C --&gt; P[\"Parent commit\"]\n    C --&gt; M[\"Author, time, message\"]\n    T --&gt; B1[\"README contents\"]\n    T --&gt; B2[\"Data contents\"]\n\n\n\n\n\n\n\nEach commit describes the project at one moment and links it to the preceding history.\n\n\nSuggested time: 2 minutes.\nThe commit points to a tree rather than copying a visible folder into a special archive. The parent connection creates the history students later see with git log.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
+    "href": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
+    "title": "Git and GitHub Foundations",
+    "section": "Unchanged contents can be reused",
+    "text": "Unchanged contents can be reused\n\n\n\n\n\nflowchart TD\n    C2[\"Commit 2\"] --&gt; T2[\"Tree 2\"]\n    C2 --&gt; C1[\"Commit 1\"]\n    T2 --&gt; R2[\"Updated README\"]\n    T2 --&gt; D[\"Unchanged data\"]\n    C1 --&gt; T1[\"Tree 1\"]\n    T1 --&gt; R1[\"Original README\"]\n    T1 --&gt; D\n\n\n\n\n\n\nGit presents each commit as a complete project snapshot while reusing file contents that have not changed.\n\nSuggested time: 2 minutes.\nThis is the main answer to the storage question. Do not discuss packfiles unless a student asks or you choose the optional extension later.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#what-changes-in-the-database",
+    "href": "slides/git_github_foundations.html#what-changes-in-the-database",
+    "title": "Git and GitHub Foundations",
+    "section": "What changes in the database?",
+    "text": "What changes in the database?\n\nA repository contains 100 files. You change one line in one file and commit.\nWhat new information must Git store? What can it reuse?\n\n\nGit needs a new version of the changed file, a new tree describing the snapshot, and a new commit. It can reuse the contents of the other 99 files.\n\n\nSuggested time: 3 to 6 minutes.\nThis is the first adjustable activity. For the short version, take one or two answers. For the longer version, give students one minute alone and two minutes with a partner before revealing the answer.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-and-github",
+    "href": "slides/git_github_foundations.html#git-and-github",
+    "title": "Git and GitHub Foundations",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\n\nGit\n\nSoftware on your computer\nRecords local project history\nWorks offline\nstatus, add, commit\n\nGitHub\n\nHosts Git repositories\nStores a shared remote copy\nAdds issues, pull requests, reviews\nRequires a network connection\n\n\n\nSuggested time: 3 minutes.\nConnect this distinction to the preceding slides: Git manages the database. GitHub can host and share a copy of it. Collaboration features will receive their own class meeting.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#four-locations-for-a-change",
+    "href": "slides/git_github_foundations.html#four-locations-for-a-change",
+    "title": "Git and GitHub Foundations",
+    "section": "Four locations for a change",
+    "text": "Four locations for a change\n\n\n\n\n\nflowchart LR\n    W[\"Working files\"] --&gt;|\"git add\"| S[\"Staging area\"]\n    S --&gt;|\"git commit\"| L[\"Local history\"]\n    L --&gt;|\"git push\"| G[\"GitHub\"]\n\n\n\n\n\n\n\nThe staging area describes the contents of the next commit.\n\ngit status helps you determine where your changes currently live.\n\nSuggested time: 3 minutes.\nThis is the central visual for the lesson. Return to it after each part of the demonstration. Explain that git pull synchronizes remote changes back into the local repository and working files, but postpone details until the final remote slides.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-can-explain-its-commands",
+    "href": "slides/git_github_foundations.html#git-can-explain-its-commands",
+    "title": "Git and GitHub Foundations",
+    "section": "Git can explain its commands",
+    "text": "Git can explain its commands\ngit status\ngit &lt;command&gt; -h\ngit help &lt;command&gt;\n\ngit status describes the current repository state\n-h displays a short command summary\ngit help opens the full documentation\n\n\nWhen you are unsure, begin with git status.\n\n\nSuggested time: 2 minutes.\nDemonstrate git status and one short help command. This gives students a recovery strategy before they begin working.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#a-practice-repository",
+    "href": "slides/git_github_foundations.html#a-practice-repository",
+    "title": "Git and GitHub Foundations",
+    "section": "A practice repository",
+    "text": "A practice repository\n\ncd ~/Desktop/School/STAT_386\nmkdir git_practice\ncd git_practice\n\ngit init\ngit status\nls -a\n\n\nThe hidden .git directory contains the repository’s database. Leave its contents alone during normal work.\n\n\nSuggested time: 4 minutes.\nHave students work along with the demonstration. Pause after git init and ask whether GitHub has been involved yet. The answer is no. Use ls -a to reveal the .git directory.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-first-project-files",
+    "href": "slides/git_github_foundations.html#the-first-project-files",
+    "title": "Git and GitHub Foundations",
+    "section": "The first project files",
+    "text": "The first project files\n\necho \"# Git Practice\" &gt; README.md\necho \"Questions about Git\" &gt; questions.md\n\ngit status\n\n\nWhat does Git know about these files? What has Git recorded in its history?\n\n\nSuggested time: 3 minutes.\nBoth files are untracked. Git can see that they exist, but no commit contains them yet. Connect the output to the working-files box in the central diagram.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#the-first-snapshot",
+    "href": "slides/git_github_foundations.html#the-first-snapshot",
+    "title": "Git and GitHub Foundations",
+    "section": "The first snapshot",
+    "text": "The first snapshot\n\ngit add README.md questions.md\ngit status\ngit diff --staged\n\ngit commit -m \"Start Git practice repository\"\ngit log --oneline\n\n\nStaging proposes the snapshot. Committing records it.\n\n\nSuggested time: 5 minutes.\nPause after each command. Before the commit, ask where the files live. After the commit, ask again. Point out the abbreviated commit hash and message in git log –oneline.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#two-files-two-changes",
+    "href": "slides/git_github_foundations.html#two-files-two-changes",
+    "title": "Git and GitHub Foundations",
+    "section": "Two files, two changes",
+    "text": "Two files, two changes\n\necho \"This repository records our Git practice.\" &gt;&gt; README.md\necho \"How does staging work?\" &gt;&gt; questions.md\n\ngit diff\ngit add README.md\ngit status\n\n\nIf we commit now, which change will Git record?\n\n\nSuggested time: 3 minutes before the activity.\nThe README change is staged. The questions change remains unstaged. Do not answer immediately. Continue to the next slide for the adjustable activity.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#commit-planner",
+    "href": "slides/git_github_foundations.html#commit-planner",
+    "title": "Git and GitHub Foundations",
+    "section": "Commit planner",
+    "text": "Commit planner\n\nUse the evidence from Git to plan two focused commits.\n\n\nRun git diff to inspect the unstaged change.\nRun git diff --staged to inspect the proposed commit.\nCommit the staged README change.\nRun git status and explain what remains.\nStage and commit the question as a separate change.\n\n\nSuggested time: 4 to 12 minutes.\nThis is the main accordion activity.\nShort version: Students predict the first commit and you execute it together.\nStandard version: Students complete both commits independently.\nExtended version: Partners compare git log –oneline output and explain whether the two commit messages tell a coherent story.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#inside-a-commit",
+    "href": "slides/git_github_foundations.html#inside-a-commit",
+    "title": "Git and GitHub Foundations",
+    "section": "Inside a commit",
+    "text": "Inside a commit\n\ngit cat-file -p HEAD\ngit cat-file -p HEAD^{tree}\n\nLook for the commit identifier, the tree identifier, the parent, the author, and each blob.\n\nThese commands reveal the structure. You will rarely need them during ordinary work.\n\n\nOptional expansion: 3 to 8 minutes.\nSkip this slide if the guided practice ran long. For the shortest version, run only git cat-file -p HEAD. For the extended version, copy one blob hash from the tree output and inspect it with git cat-file -p followed by the hash. Students will see the stored file contents.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#commit-messages",
+    "href": "slides/git_github_foundations.html#commit-messages",
+    "title": "Git and GitHub Foundations",
+    "section": "Commit messages",
+    "text": "Commit messages\n\nUseful\n\nStart Git practice repo\nExplain project purpose in README\nAdd question about staging\n\nUnhelpful\n\nupdate\nstuff\nfinal final v2\n\n\n\nA useful message completes: “This commit will…”\n\n\nSuggested time: 2 minutes.\nAsk students whether someone unfamiliar with the project could reconstruct the sequence of work from the messages alone. The message should describe the result of applying the commit.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#local-and-remote-repositories",
+    "href": "slides/git_github_foundations.html#local-and-remote-repositories",
+    "title": "Git and GitHub Foundations",
+    "section": "Local and remote repositories",
+    "text": "Local and remote repositories\n\nLocal repository\n\nLives on your computer\nContains your commits\nAvailable without GitHub\n\nRemote repository\n\nUsually hosted on GitHub\nShared through a URL\nCommonly named origin\n\n\ngit remote -v\n\nSuggested time: 2 minutes.\nExplain that origin is a conventional short name for a remote URL. It does not mean “the original repository” in every possible workflow.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#connecting-the-repository-to-github",
+    "href": "slides/git_github_foundations.html#connecting-the-repository-to-github",
+    "title": "Git and GitHub Foundations",
+    "section": "Connecting the repository to GitHub",
+    "text": "Connecting the repository to GitHub\nFirst, create an empty GitHub repository named &lt;netid&gt;_git_practice.\n\ngit branch -M main\ngit remote add origin &lt;repository-url&gt;\ngit remote -v\ngit push -u origin main\n\n\nWhich parts of the project now exist on GitHub?\n\n\nSuggested time: 5 to 8 minutes.\nCreate the GitHub repository without initializing a README, license, or .gitignore. Authentication may make this section longer than planned. After pushing, open the GitHub commit history and compare it with git log –oneline.\nThe -u option connects the local main branch to origin/main, which allows later pushes to use git push without additional arguments.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#files-git-should-ignore",
+    "href": "slides/git_github_foundations.html#files-git-should-ignore",
+    "title": "Git and GitHub Foundations",
+    "section": "Files Git should ignore",
+    "text": "Files Git should ignore\n\nIgnore files that belong only to your computer or that the project can recreate.\n\n\nGenerated output and caches: .quarto/, __pycache__/\nLocal environments: .venv/\nMachine-specific files: .DS_Store\nLocal secrets: .env\n\n\nNever commit passwords, tokens, or private keys. Ignoring them does not erase earlier commits.\n\n\nSuggested time: 2 minutes.\nEmphasize the principle before the examples. Some choices depend on the project. For example, GitHub Pages built by an Action can ignore the locally generated site, while a project that publishes from a docs directory may intentionally track that output.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#files-git-should-track",
+    "href": "slides/git_github_foundations.html#files-git-should-track",
+    "title": "Git and GitHub Foundations",
+    "section": "Files Git should track",
+    "text": "Files Git should track\n\nTrack the files someone else needs to understand and reproduce the project.\n\n\nSource files: .py, .qmd\nDocumentation: README.md\nDependency records: pyproject.toml, uv.lock\nSmall data files required by the project\n.gitignore and safe templates such as .env.example\n\n\nLarge or sensitive data usually need storage outside Git.\n\n\nSuggested time: 2 minutes.\nExplain that .env.example documents the names of required settings without containing real credentials. The distinction is not simply important versus unimportant files. Git should preserve the source and instructions needed to recreate the work.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#editing-.gitignore",
+    "href": "slides/git_github_foundations.html#editing-.gitignore",
+    "title": "Git and GitHub Foundations",
+    "section": "Editing .gitignore",
+    "text": "Editing .gitignore\n\nAdd a rule\necho \"scratch.txt\" &gt;&gt; .gitignore\necho \"Temporary notes\" &gt; scratch.txt\ngit status --ignored\nReview or remove a rule\nnano .gitignore\nOne pattern goes on each line. Delete the line to stop ignoring that pattern.\n\n\n.gitignore affects untracked files. It does not make Git forget a file that was already committed.\n\n\nSuggested time: 3 to 5 minutes.\nDemonstrate that scratch.txt appears under the ignored section of git status –ignored. Remove the scratch.txt line, save the file, and rerun git status to make it appear as untracked.\nIf a file was already committed, add the ignore rule and run git rm –cached followed by the filename to remove it from future commits while leaving the local file in place. Avoid demonstrating this extra command unless time permits.\nMention that # starts a comment, * acts as a wildcard, and a trailing slash identifies a directory. Revisit these patterns during the uv class.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#repository-archaeology",
+    "href": "slides/git_github_foundations.html#repository-archaeology",
+    "title": "Git and GitHub Foundations",
+    "section": "Repository archaeology",
+    "text": "Repository archaeology\n\nUse the history to reconstruct what happened.\n\ngit log --oneline\ngit show HEAD\ngit show &lt;earlier-commit-hash&gt;\nExplain to a partner:\n\nWhat each commit changed\nWhether the commit message describes it accurately\nWhat the history cannot tell you\n\n\nOptional expansion: 3 to 8 minutes.\nUse this activity only if time remains after the push. The short version inspects HEAD as a class. The extended version has partners inspect one another’s histories and compare what they can reconstruct.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#where-is-the-change",
+    "href": "slides/git_github_foundations.html#where-is-the-change",
+    "title": "Git and GitHub Foundations",
+    "section": "Where is the change?",
+    "text": "Where is the change?\nFor each situation, decide whether the change appears in local history and on GitHub.\n\n\n\nSituation\nLocal history?\nGitHub?\n\n\n\n\nFile saved\n\n\n\n\nChange staged\n\n\n\n\nChange committed\n\n\n\n\nCommit pushed\n\n\n\n\n\n\nOnly committed changes appear in local history. Only pushed commits appear on GitHub.\n\n\nSuggested time: 3 minutes.\nUse this as the exit check. Ask students to answer before revealing the final statement. If time permits, add a fifth situation verbally: a student modifies a file after staging it. The file can then contain both staged and unstaged changes.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#takeaways",
+    "href": "slides/git_github_foundations.html#takeaways",
+    "title": "Git and GitHub Foundations",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nGit records project snapshots in a structured database\nThe staging area defines the contents of the next commit\ngit status and git diff provide evidence about the current state\nCommits live locally until git push sends them to GitHub\n\n\nWhen Git feels confusing, ask: Where is my change right now?\n\n\nSuggested time: 1 minute.\nPreview the next class: Positron will display the same working files, staging area, diffs, commits, and remote operations through a visual interface.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#command-reference",
+    "href": "slides/git_github_foundations.html#command-reference",
+    "title": "Git and GitHub Foundations",
+    "section": "Command reference",
+    "text": "Command reference\n\nInspect\n\ngit status\ngit diff\ngit diff --staged\ngit log --oneline\n\nRecord\n\ngit add &lt;file&gt;\ngit commit -m \"message\"\n\nConnect\n\ngit remote -v\ngit remote add origin &lt;url&gt;\n\nSynchronize\n\ngit push\ngit pull\n\n\n\nReference slide. Do not lecture through every command. Leave this available while students work.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#git-identity",
+    "href": "slides/git_github_foundations.html#git-identity",
+    "title": "Git and GitHub Foundations",
+    "section": "Git identity",
+    "text": "Git identity\nIf Git does not know who you are:\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"email@example.com\"\nCheck the current configuration:\ngit config --global --list\n\nUse an email address connected to your GitHub account, including a GitHub-provided private email if you prefer.\n\n\nReference slide. Most students should already have configured Git if they completed the earlier clone and push activity. Use only when needed.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
+  },
+  {
+    "objectID": "slides/git_github_foundations.html#questions",
+    "href": "slides/git_github_foundations.html#questions",
+    "title": "Git and GitHub Foundations",
+    "section": "Questions?",
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Git and GitHub Foundations"
+    ]
   },
   {
     "objectID": "slides/importing-data.html#importing-data-into-pandas",
@@ -2079,7 +3171,7 @@
     "href": "slides/importing-data.html#questions",
     "title": "Brief Introduction to Importing Data",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/numpy.html#introduction-to-numpy",
@@ -2219,7 +3311,7 @@
     "href": "slides/numpy.html#questions",
     "title": "NumPy Essentials",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/python-packages.html#assumed-knowledge",
@@ -2394,7 +3486,7 @@
     "href": "slides/python-packages.html#questions",
     "title": "Python Packages",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/quarto-github-pages.html#where-we-are-where-were-going",
@@ -2576,7 +3668,7 @@
     "href": "slides/quarto-github-pages.html#questions",
     "title": "From Repo to Website",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/streamlit-dashboards.html#agenda",
@@ -2730,7 +3822,7 @@
     "href": "slides/streamlit-dashboards.html#questions",
     "title": "Streamlit and Dashboards for Data Science",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
+    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
   },
   {
     "objectID": "slides/terminal_intro.html#todays-goal",
@@ -3146,511 +4238,6 @@
     "href": "slides/week-01.html#questions",
     "title": "Week 1: Course Introduction",
     "section": "Questions?",
-    "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?\n\nSee the schedule for what’s coming next."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#todays-question",
-    "href": "slides/git_github_foundations.html#todays-question",
-    "title": "Git and GitHub Foundations",
-    "section": "Today’s question",
-    "text": "Today’s question\n\nWhere is my change right now?\n\nBy the end of class, you should be able to:\n\nExplain how Git records the history of a project\nDistinguish working files, staging, local history, and GitHub\nInspect, commit, and share changes from the terminal\n\n\nSuggested time: 2 minutes.\nFrame every command as an answer to the question on this slide. Students do not need to memorize a recipe if they can determine where a change currently lives and where it needs to go next."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#the-final_really_final-problem",
-    "href": "slides/git_github_foundations.html#the-final_really_final-problem",
-    "title": "Git and GitHub Foundations",
-    "section": "The final_really_final problem",
-    "text": "The final_really_final problem\n\n\nanalysis.py\nanalysis_v2.py\nanalysis_final.py\nanalysis_final_fixed.py\nanalysis_final_really.py\n\n\n\nWhat information is missing?\n\n\nWhich file should we use?\nWhat changed between versions?\nWhy did it change?\nWhich files belong to the same version of the project?\n\n\n\n\nSuggested time: 3 to 5 minutes.\nGive students 30 seconds to think, then collect several answers. The filenames may imply an order, but they do not reliably preserve authorship, intent, related changes across files, or a trustworthy history."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#version-control",
-    "href": "slides/git_github_foundations.html#version-control",
-    "title": "Git and GitHub Foundations",
-    "section": "Version control",
-    "text": "Version control\n\nVersion control records changes to a project over time.\n\nA version control system helps us:\n\nPreserve earlier versions\nUnderstand what changed and why\nCombine related changes into meaningful checkpoints\nShare a consistent project history\n\n\nSuggested time: 2 minutes.\nAvoid promising that Git prevents conflicts. Git helps people coordinate changes and resolve conflicts when they occur."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#git-as-a-database",
-    "href": "slides/git_github_foundations.html#git-as-a-database",
-    "title": "Git and GitHub Foundations",
-    "section": "Git as a database",
-    "text": "Git as a database\nGit stores structured records that describe a project’s contents and history.\n\n\n\nGit object\nWhat it represents\n\n\n\n\nBlob\nThe contents of a file\n\n\nTree\nA directory and its contents\n\n\nCommit\nA project snapshot, its metadata, and its parent\n\n\n\n\nYou do not need to memorize the object names. Focus on how they connect.\n\n\nSuggested time: 3 minutes.\nThis slide provides the deeper explanation without making internal Git commands part of the learning objectives. Explain that filenames live in trees, while blobs store contents."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
-    "href": "slides/git_github_foundations.html#a-commit-connects-contents-and-history",
-    "title": "Git and GitHub Foundations",
-    "section": "A commit connects contents and history",
-    "text": "A commit connects contents and history\n\n\n\n\n\nflowchart TD\n    C[\"Commit\"] --&gt; T[\"Project tree\"]\n    C --&gt; P[\"Parent commit\"]\n    C --&gt; M[\"Author, time, message\"]\n    T --&gt; B1[\"README contents\"]\n    T --&gt; B2[\"Data contents\"]\n\n\n\n\n\n\n\nEach commit describes the project at one moment and links it to the preceding history.\n\n\nSuggested time: 2 minutes.\nThe commit points to a tree rather than copying a visible folder into a special archive. The parent connection creates the history students later see with git log."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
-    "href": "slides/git_github_foundations.html#unchanged-contents-can-be-reused",
-    "title": "Git and GitHub Foundations",
-    "section": "Unchanged contents can be reused",
-    "text": "Unchanged contents can be reused\n\n\n\n\n\nflowchart TD\n    C2[\"Commit 2\"] --&gt; T2[\"Tree 2\"]\n    C2 --&gt; C1[\"Commit 1\"]\n    T2 --&gt; R2[\"Updated README\"]\n    T2 --&gt; D[\"Unchanged data\"]\n    C1 --&gt; T1[\"Tree 1\"]\n    T1 --&gt; R1[\"Original README\"]\n    T1 --&gt; D\n\n\n\n\n\n\nGit presents each commit as a complete project snapshot while reusing file contents that have not changed.\n\nSuggested time: 2 minutes.\nThis is the main answer to the storage question. Do not discuss packfiles unless a student asks or you choose the optional extension later."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#what-changes-in-the-database",
-    "href": "slides/git_github_foundations.html#what-changes-in-the-database",
-    "title": "Git and GitHub Foundations",
-    "section": "What changes in the database?",
-    "text": "What changes in the database?\n\nA repository contains 100 files. You change one line in one file and commit.\nWhat new information must Git store? What can it reuse?\n\n\nGit needs a new version of the changed file, a new tree describing the snapshot, and a new commit. It can reuse the contents of the other 99 files.\n\n\nSuggested time: 3 to 6 minutes.\nThis is the first adjustable activity. For the short version, take one or two answers. For the longer version, give students one minute alone and two minutes with a partner before revealing the answer."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#git-and-github",
-    "href": "slides/git_github_foundations.html#git-and-github",
-    "title": "Git and GitHub Foundations",
-    "section": "Git and GitHub",
-    "text": "Git and GitHub\n\nGit\n\nSoftware on your computer\nRecords local project history\nWorks offline\nstatus, add, commit\n\nGitHub\n\nHosts Git repositories\nStores a shared remote copy\nAdds issues, pull requests, reviews\nRequires a network connection\n\n\n\nSuggested time: 3 minutes.\nConnect this distinction to the preceding slides: Git manages the database. GitHub can host and share a copy of it. Collaboration features will receive their own class meeting."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#four-locations-for-a-change",
-    "href": "slides/git_github_foundations.html#four-locations-for-a-change",
-    "title": "Git and GitHub Foundations",
-    "section": "Four locations for a change",
-    "text": "Four locations for a change\n\n\n\n\n\nflowchart LR\n    W[\"Working files\"] --&gt;|\"git add\"| S[\"Staging area\"]\n    S --&gt;|\"git commit\"| L[\"Local history\"]\n    L --&gt;|\"git push\"| G[\"GitHub\"]\n\n\n\n\n\n\n\nThe staging area describes the contents of the next commit.\n\ngit status helps you determine where your changes currently live.\n\nSuggested time: 3 minutes.\nThis is the central visual for the lesson. Return to it after each part of the demonstration. Explain that git pull synchronizes remote changes back into the local repository and working files, but postpone details until the final remote slides."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#git-can-explain-its-commands",
-    "href": "slides/git_github_foundations.html#git-can-explain-its-commands",
-    "title": "Git and GitHub Foundations",
-    "section": "Git can explain its commands",
-    "text": "Git can explain its commands\ngit status\ngit &lt;command&gt; -h\ngit help &lt;command&gt;\n\ngit status describes the current repository state\n-h displays a short command summary\ngit help opens the full documentation\n\n\nWhen you are unsure, begin with git status.\n\n\nSuggested time: 2 minutes.\nDemonstrate git status and one short help command. This gives students a recovery strategy before they begin working."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#a-practice-repository",
-    "href": "slides/git_github_foundations.html#a-practice-repository",
-    "title": "Git and GitHub Foundations",
-    "section": "A practice repository",
-    "text": "A practice repository\n\ncd ~/Desktop/School/STAT_386\nmkdir git_practice\ncd git_practice\n\ngit init\ngit status\nls -a\n\n\nThe hidden .git directory contains the repository’s database. Leave its contents alone during normal work.\n\n\nSuggested time: 4 minutes.\nHave students work along with the demonstration. Pause after git init and ask whether GitHub has been involved yet. The answer is no. Use ls -a to reveal the .git directory."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#the-first-project-files",
-    "href": "slides/git_github_foundations.html#the-first-project-files",
-    "title": "Git and GitHub Foundations",
-    "section": "The first project files",
-    "text": "The first project files\n\necho \"# Git Practice\" &gt; README.md\necho \"Questions about Git\" &gt; questions.md\n\ngit status\n\n\nWhat does Git know about these files? What has Git recorded in its history?\n\n\nSuggested time: 3 minutes.\nBoth files are untracked. Git can see that they exist, but no commit contains them yet. Connect the output to the working-files box in the central diagram."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#the-first-snapshot",
-    "href": "slides/git_github_foundations.html#the-first-snapshot",
-    "title": "Git and GitHub Foundations",
-    "section": "The first snapshot",
-    "text": "The first snapshot\n\ngit add README.md questions.md\ngit status\ngit diff --staged\n\ngit commit -m \"Start Git practice repository\"\ngit log --oneline\n\n\nStaging proposes the snapshot. Committing records it.\n\n\nSuggested time: 5 minutes.\nPause after each command. Before the commit, ask where the files live. After the commit, ask again. Point out the abbreviated commit hash and message in git log –oneline."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#two-files-two-changes",
-    "href": "slides/git_github_foundations.html#two-files-two-changes",
-    "title": "Git and GitHub Foundations",
-    "section": "Two files, two changes",
-    "text": "Two files, two changes\n\necho \"This repository records our Git practice.\" &gt;&gt; README.md\necho \"How does staging work?\" &gt;&gt; questions.md\n\ngit diff\ngit add README.md\ngit status\n\n\nIf we commit now, which change will Git record?\n\n\nSuggested time: 3 minutes before the activity.\nThe README change is staged. The questions change remains unstaged. Do not answer immediately. Continue to the next slide for the adjustable activity."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#commit-planner",
-    "href": "slides/git_github_foundations.html#commit-planner",
-    "title": "Git and GitHub Foundations",
-    "section": "Commit planner",
-    "text": "Commit planner\n\nUse the evidence from Git to plan two focused commits.\n\n\nRun git diff to inspect the unstaged change.\nRun git diff --staged to inspect the proposed commit.\nCommit the staged README change.\nRun git status and explain what remains.\nStage and commit the question as a separate change.\n\n\nSuggested time: 4 to 12 minutes.\nThis is the main accordion activity.\nShort version: Students predict the first commit and you execute it together.\nStandard version: Students complete both commits independently.\nExtended version: Partners compare git log –oneline output and explain whether the two commit messages tell a coherent story."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#inside-a-commit",
-    "href": "slides/git_github_foundations.html#inside-a-commit",
-    "title": "Git and GitHub Foundations",
-    "section": "Inside a commit",
-    "text": "Inside a commit\n\ngit cat-file -p HEAD\ngit cat-file -p HEAD^{tree}\n\nLook for the commit identifier, the tree identifier, the parent, the author, and each blob.\n\nThese commands reveal the structure. You will rarely need them during ordinary work.\n\n\nOptional expansion: 3 to 8 minutes.\nSkip this slide if the guided practice ran long. For the shortest version, run only git cat-file -p HEAD. For the extended version, copy one blob hash from the tree output and inspect it with git cat-file -p followed by the hash. Students will see the stored file contents."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#commit-messages",
-    "href": "slides/git_github_foundations.html#commit-messages",
-    "title": "Git and GitHub Foundations",
-    "section": "Commit messages",
-    "text": "Commit messages\n\nUseful\n\nStart Git practice repo\nExplain project purpose in README\nAdd question about staging\n\nUnhelpful\n\nupdate\nstuff\nfinal final v2\n\n\n\nA useful message completes: “This commit will…”\n\n\nSuggested time: 2 minutes.\nAsk students whether someone unfamiliar with the project could reconstruct the sequence of work from the messages alone. The message should describe the result of applying the commit."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#local-and-remote-repositories",
-    "href": "slides/git_github_foundations.html#local-and-remote-repositories",
-    "title": "Git and GitHub Foundations",
-    "section": "Local and remote repositories",
-    "text": "Local and remote repositories\n\nLocal repository\n\nLives on your computer\nContains your commits\nAvailable without GitHub\n\nRemote repository\n\nUsually hosted on GitHub\nShared through a URL\nCommonly named origin\n\n\ngit remote -v\n\nSuggested time: 2 minutes.\nExplain that origin is a conventional short name for a remote URL. It does not mean “the original repository” in every possible workflow."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#connecting-the-repository-to-github",
-    "href": "slides/git_github_foundations.html#connecting-the-repository-to-github",
-    "title": "Git and GitHub Foundations",
-    "section": "Connecting the repository to GitHub",
-    "text": "Connecting the repository to GitHub\nFirst, create an empty GitHub repository named &lt;netid&gt;_git_practice.\n\ngit branch -M main\ngit remote add origin &lt;repository-url&gt;\ngit remote -v\ngit push -u origin main\n\n\nWhich parts of the project now exist on GitHub?\n\n\nSuggested time: 5 to 8 minutes.\nCreate the GitHub repository without initializing a README, license, or .gitignore. Authentication may make this section longer than planned. After pushing, open the GitHub commit history and compare it with git log –oneline.\nThe -u option connects the local main branch to origin/main, which allows later pushes to use git push without additional arguments."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#files-git-should-ignore",
-    "href": "slides/git_github_foundations.html#files-git-should-ignore",
-    "title": "Git and GitHub Foundations",
-    "section": "Files Git should ignore",
-    "text": "Files Git should ignore\n\nIgnore files that belong only to your computer or that the project can recreate.\n\n\nGenerated output and caches: .quarto/, __pycache__/\nLocal environments: .venv/\nMachine-specific files: .DS_Store\nLocal secrets: .env\n\n\nNever commit passwords, tokens, or private keys. Ignoring them does not erase earlier commits.\n\n\nSuggested time: 2 minutes.\nEmphasize the principle before the examples. Some choices depend on the project. For example, GitHub Pages built by an Action can ignore the locally generated site, while a project that publishes from a docs directory may intentionally track that output."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#repository-archaeology",
-    "href": "slides/git_github_foundations.html#repository-archaeology",
-    "title": "Git and GitHub Foundations",
-    "section": "Repository archaeology",
-    "text": "Repository archaeology\n\nUse the history to reconstruct what happened.\n\ngit log --oneline\ngit show HEAD\ngit show &lt;earlier-commit-hash&gt;\nExplain to a partner:\n\nWhat each commit changed\nWhether the commit message describes it accurately\nWhat the history cannot tell you\n\n\nOptional expansion: 3 to 8 minutes.\nUse this activity only if time remains after the push. The short version inspects HEAD as a class. The extended version has partners inspect one another’s histories and compare what they can reconstruct."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#where-is-the-change",
-    "href": "slides/git_github_foundations.html#where-is-the-change",
-    "title": "Git and GitHub Foundations",
-    "section": "Where is the change?",
-    "text": "Where is the change?\nFor each situation, decide whether the change appears in local history and on GitHub.\n\n\n\nSituation\nLocal history?\nGitHub?\n\n\n\n\nFile saved\n\n\n\n\nChange staged\n\n\n\n\nChange committed\n\n\n\n\nCommit pushed\n\n\n\n\n\n\nOnly committed changes appear in local history. Only pushed commits appear on GitHub.\n\n\nSuggested time: 3 minutes.\nUse this as the exit check. Ask students to answer before revealing the final statement. If time permits, add a fifth situation verbally: a student modifies a file after staging it. The file can then contain both staged and unstaged changes."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#takeaways",
-    "href": "slides/git_github_foundations.html#takeaways",
-    "title": "Git and GitHub Foundations",
-    "section": "Takeaways",
-    "text": "Takeaways\n\nGit records project snapshots in a structured database\nThe staging area defines the contents of the next commit\ngit status and git diff provide evidence about the current state\nCommits live locally until git push sends them to GitHub\n\n\nWhen Git feels confusing, ask: Where is my change right now?\n\n\nSuggested time: 1 minute.\nPreview the next class: Positron will display the same working files, staging area, diffs, commits, and remote operations through a visual interface."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#command-reference",
-    "href": "slides/git_github_foundations.html#command-reference",
-    "title": "Git and GitHub Foundations",
-    "section": "Command reference",
-    "text": "Command reference\n\nInspect\n\ngit status\ngit diff\ngit diff --staged\ngit log --oneline\n\nRecord\n\ngit add &lt;file&gt;\ngit commit -m \"message\"\n\nConnect\n\ngit remote -v\ngit remote add origin &lt;url&gt;\n\nSynchronize\n\ngit push\ngit pull\n\n\n\nReference slide. Do not lecture through every command. Leave this available while students work."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#git-identity",
-    "href": "slides/git_github_foundations.html#git-identity",
-    "title": "Git and GitHub Foundations",
-    "section": "Git identity",
-    "text": "Git identity\nIf Git does not know who you are:\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"email@example.com\"\nCheck the current configuration:\ngit config --global --list\n\nUse an email address connected to your GitHub account, including a GitHub-provided private email if you prefer.\n\n\nReference slide. Most students should already have configured Git if they completed the earlier clone and push activity. Use only when needed."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#questions",
-    "href": "slides/git_github_foundations.html#questions",
-    "title": "Git and GitHub Foundations",
-    "section": "Questions?",
     "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#what-belongs-in-.gitignore",
-    "href": "slides/git_github_foundations.html#what-belongs-in-.gitignore",
-    "title": "Git and GitHub Foundations",
-    "section": "What belongs in .gitignore?",
-    "text": "What belongs in .gitignore?\n\nUsually ignore\n.venv/\n__pycache__/\n*.py[cod]\n.quarto/\n_site/\n.env\n.DS_Store\nGenerated files, local environments, machine-specific files, and secrets do not belong in the shared history.\nUsually commit\n\nSource files such as .py and .qmd\nREADME.md and other documentation\npyproject.toml and uv.lock\nSmall data files required to reproduce the project\n.gitignore itself\nA safe template such as .env.example\n\n\n\nIgnoring a secret does not remove it from earlier commits. Never commit passwords, tokens, or private keys.\n\n\nSuggested time: 3 minutes.\nThe general rule is to track source material and reproducibility information while ignoring files that the project can regenerate or that belong only to one computer. Some choices depend on the project. For example, a class may commit small data files but store large or sensitive data elsewhere.\nExplain that .env.example documents the required variable names without containing real credentials."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#editing-.gitignore",
-    "href": "slides/git_github_foundations.html#editing-.gitignore",
-    "title": "Git and GitHub Foundations",
-    "section": "Editing .gitignore",
-    "text": "Editing .gitignore\n\nAdd a rule\necho \"scratch.txt\" &gt;&gt; .gitignore\necho \"Temporary notes\" &gt; scratch.txt\ngit status --ignored\nReview or remove a rule\nnano .gitignore\nOne pattern goes on each line. Delete the line to stop ignoring that pattern.\n\n\n.gitignore affects untracked files. It does not make Git forget a file that was already committed.\n\n\nSuggested time: 3 to 5 minutes.\nDemonstrate that scratch.txt appears under the ignored section of git status –ignored. Remove the scratch.txt line, save the file, and rerun git status to make it appear as untracked.\nIf a file was already committed, add the ignore rule and run git rm –cached followed by the filename to remove it from future commits while leaving the local file in place. Avoid demonstrating this extra command unless time permits.\nMention that # starts a comment, * acts as a wildcard, and a trailing slash identifies a directory. Revisit these patterns during the uv class."
-  },
-  {
-    "objectID": "slides/git_github_foundations.html#files-git-should-track",
-    "href": "slides/git_github_foundations.html#files-git-should-track",
-    "title": "Git and GitHub Foundations",
-    "section": "Files Git should track",
-    "text": "Files Git should track\n\nTrack the files someone else needs to understand and reproduce the project.\n\n\nSource files: .py, .qmd\nDocumentation: README.md\nDependency records: pyproject.toml, uv.lock\nSmall data files required by the project\n.gitignore and safe templates such as .env.example\n\n\nLarge or sensitive data usually need storage outside Git.\n\n\nSuggested time: 2 minutes.\nExplain that .env.example documents the names of required settings without containing real credentials. The distinction is not simply important versus unimportant files. Git should preserve the source and instructions needed to recreate the work."
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#todays-question",
-    "href": "slides/IDEs_and_Markdown.html#todays-question",
-    "title": "Positron and Markdown",
-    "section": "Today’s question",
-    "text": "Today’s question\n\nHow can an IDE help us see, create, and manage a data science project?\n\nBy the end of class, you should be able to:\n\nExplain what an IDE contributes to a project workflow\nNavigate the core parts of Positron\nExplain how extensions add capabilities to an IDE\nWrite and preview a useful Markdown document\nConnect Git concepts from Day 1 to Positron\n\n\nSuggested time: 2 minutes.\nThe emphasis today is not replacing the terminal. It is learning how an IDE puts several project tools in one visible workspace.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
-    "href": "slides/IDEs_and_Markdown.html#review-four-places-work-can-live",
-    "title": "Positron and Markdown",
-    "section": "Review: four places work can live",
-    "text": "Review: four places work can live\n\n\n\n\n\n\n\n\nLocation\nWhat lives there\nHow work arrives\n\n\n\n\nLocal machine\nSaved changes in working files\nSave a file\n\n\nStaged\nChanges selected for the next commit\ngit add\n\n\nVersion controlled (local)\nCommits stored in local Git history\ngit commit\n\n\nVersion controlled (GitHub)\nCommits shared in the remote repository\ngit push\n\n\n\nQuestion to keep asking: Where is my change right now?\n\nSuggested time: 3 minutes.\nClarify that the first three locations are on the local computer. The labels distinguish working files, the staging area, and local Git history. GitHub stores the shared remote history. Trace one change down the table from saving through pushing.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#where-is-the-change",
-    "href": "slides/IDEs_and_Markdown.html#where-is-the-change",
-    "title": "Positron and Markdown",
-    "section": "Where is the change?",
-    "text": "Where is the change?\nMatch each situation to a location.\n\n\n\n\n\n\n\nSituation\nLocation\n\n\n\n\nYour commit appears on the repository website\nVersion controlled: GitHub\n\n\nYou saved a new sentence in README.md\nLocal machine: working files\n\n\nYou committed, but have not pushed\nVersion controlled: local\n\n\nYou ran git add README.md\nStaged\n\n\n\n\nSuggested time: 2 to 3 minutes.\nAsk students to answer before revealing each location. The purpose is to reactivate yesterday’s mental model before adding a new interface.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
-    "href": "slides/IDEs_and_Markdown.html#why-use-an-ide-for-data-science",
-    "title": "Positron and Markdown",
-    "section": "Why use an IDE for data science?",
-    "text": "Why use an IDE for data science?\nAn IDE is a project hub.\n\n\nTools in one place\n\nFile browser\nText and code editor\nConsole and terminal\nPreview and viewer panes\nSource control and diff viewer\nDebugging, notebooks, and data tools\n\n\n\nWhy that matters\n\nLess switching between apps\nFaster feedback while you work\nShared context about the project folder\nVisible feedback about files and errors\n\n\n\nImportant: The tools still require the same underlying understanding.\n\nSuggested time: 3 minutes.\nKeep this broader than Git. Emphasize the repeated data science loop and the value of keeping project context visible.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
-    "href": "slides/IDEs_and_Markdown.html#positron-is-a-collection-of-connected-tools",
-    "title": "Positron and Markdown",
-    "section": "Positron is a collection of connected tools",
-    "text": "Positron is a collection of connected tools\n\n\n\nPart of Positron\nWhat it helps you do\n\n\n\n\nExplorer\nSee the folders and files in a project\n\n\nEditor\nWrite code, prose, and configuration\n\n\nConsole\nWork interactively with Python or R\n\n\nTerminal\nRun shell commands, Git, and project tools\n\n\nViewer\nPreview Quarto documents and other output\n\n\nSource Control\nInspect, stage, commit, pull, and push changes\n\n\nExtensions\nAdd support for languages, formats, and workflows\n\n\n\n\nSuggested time: 3 minutes.\nPositron is built on Code OSS and adds a layout designed for data science. Point out that the rows provide several views of the same project. Students do not need to use every pane at once.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#open-a-project-not-just-a-file",
-    "href": "slides/IDEs_and_Markdown.html#open-a-project-not-just-a-file",
-    "title": "Positron and Markdown",
-    "section": "Open a project, not just a file",
-    "text": "Open a project, not just a file\nWhen you open a folder, Positron can understand the project around the active file.\n\nThe Explorer shows related files and folders\nThe terminal starts in the project folder\nGit can find the repository and current branch\nSearch and navigation work across the project\nQuarto can find project settings and website navigation\n\n\nDaily habit: use File &gt; Open Folder, then work inside that folder.\n\n\nSuggested time: 2 minutes.\nConnect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history."
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
-    "href": "slides/IDEs_and_Markdown.html#extensions-add-capabilities",
-    "title": "Positron and Markdown",
-    "section": "Extensions add capabilities",
-    "text": "Extensions add capabilities\nExtensions are add-ons that teach an IDE about new languages, file types, and workflows.\n\n\n\n\n\n\n\n\nType\nPositron example\nCapability\n\n\n\n\nBuilt in\nPython and R support\nConsoles, completion, and data science features\n\n\nIncluded extension\nQuarto\nPreview and render .qmd documents\n\n\nIncluded extension\nRuff\nCheck and format Python code\n\n\nOptional extension\nA language or theme\nCustomize a specific workflow\n\n\n\n\nSuggested time: 3 minutes.\nOpen the Extensions view from the Activity Bar during the demonstration. Positron includes core extensions and a curated set of bootstrapped extensions. The Quarto extension and Quarto CLI are included, so Positron is ready to preview Quarto documents out of the box.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
-    "href": "slides/IDEs_and_Markdown.html#extensions-deserve-judgment",
-    "title": "Positron and Markdown",
-    "section": "Extensions deserve judgment",
-    "text": "Extensions deserve judgment\n\n\nA useful extension should:\n\nSolve a real need\nCome from a publisher you trust\nBe maintained\nFit the workflow you actually use\n\n\n\nToo many extensions can:\n\nAdd clutter\nCreate conflicting behavior\nSlow startup\nExpand access to files and network resources\n\n\n\n\nWhat would you check before installing an extension?\n\n\nSuggested time: 2 minutes.\nTreat extensions like software packages. Show the publisher, update date, repository, and permissions or trust prompt during the live walkthrough.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#why-markdown",
-    "href": "slides/IDEs_and_Markdown.html#why-markdown",
-    "title": "Positron and Markdown",
-    "section": "Why Markdown?",
-    "text": "Why Markdown?\nMarkdown is plain text with small formatting cues.\n\n\nA durable format\n\nReadable without special software\nMeaningful line-by-line Git changes\nReusable as HTML, slides, reports, or websites\n\n\n\nA working format\n\nRendered automatically by GitHub\nCommonly read and produced by AI chat tools\nUsed for our blogs, website, and final project documentation\n\n\n\nMain idea: Simple source can produce polished output.\n\nSuggested time: 3 minutes.\nConnect today’s README work to the course website and final project. Markdown is not only a formatting lesson. It becomes a common source language across the semester.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#markdown-and-ai",
-    "href": "slides/IDEs_and_Markdown.html#markdown-and-ai",
-    "title": "Positron and Markdown",
-    "section": "Markdown and AI",
-    "text": "Markdown and AI\nWhen you chat with an AI tool, you already encounter Markdown-like structure:\n\nHeadings and lists organize a response\nCode fences preserve code exactly\nTables and links make relationships explicit\n\nAI tools can draft, restructure, and clean Markdown because the structure is explicit plain text.\nYour role: Decide whether the content is accurate and sounds like you.\n\nSuggested time: 3 minutes.\nShow how a structured prompt is easier for both humans and AI to follow. Keep the caution focused on content judgment, not fear of the tool.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
-    "href": "slides/IDEs_and_Markdown.html#source-on-the-left-rendered-result-on-the-right",
-    "title": "Positron and Markdown",
-    "section": "Source on the left, rendered result on the right",
-    "text": "Source on the left, rendered result on the right\n\n\nMarkdown source\n# About Me\n\nI study **statistics** and enjoy:\n\n- data visualization\n- basketball\n- learning Python\n\n[My GitHub profile](https://github.com/)\n\nI &lt;3 Data Science!\n\n\nRendered result\n\nAbout Me\n\nI study statistics and enjoy:\n\ndata visualization\nbasketball\nlearning Python\n\nMy GitHub profile\nI &lt;3 Data Science!\n\n\n\nSuggested time: 3 minutes.\nAsk students what information is present in both versions. The preview changes presentation, not meaning.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#markdown-essentials",
-    "href": "slides/IDEs_and_Markdown.html#markdown-essentials",
-    "title": "Positron and Markdown",
-    "section": "Markdown essentials",
-    "text": "Markdown essentials\n\n\n\nGoal\nMarkdown\n\n\n\n\nHeading\n# Heading\n\n\nSmaller heading\n## Smaller heading\n\n\nBold\n**important**\n\n\nItalic\n*emphasis*\n\n\nBulleted list\n- item\n\n\nNumbered list\n1. item\n\n\nLink\n[label](https://example.com)\n\n\nImage\n![description](images/photo.jpg)\n\n\nInline code\n`git status`\n\n\nCode block\nThree backticks before and after the code\n\n\n\n\nSuggested time: 3 minutes.\nDemonstrate only the syntax students need for today’s activity. The table is a reference, not a memorization checklist. Remind students to use headings to describe structure rather than only making text larger.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
-    "href": "slides/IDEs_and_Markdown.html#live-walkthrough-one-project-many-views",
-    "title": "Positron and Markdown",
-    "section": "Live walkthrough: one project, many views",
-    "text": "Live walkthrough: one project, many views\n\nThe instructor shares the real Positron window. Students open yesterday’s repository and mirror each step.\n\nWe will use:\n\nExplorer to locate files\nEditor to revise Markdown\nViewer to preview the result\nSource Control to inspect and record the change\nTerminal to verify what happened\n\n\nSuggested time: 1 minute to set up, followed by the next three walkthrough slides.\nAsk students to arrange their screens so they can see Positron and the projected demonstration. Do not rush past anyone who cannot locate the repository.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
-    "href": "slides/IDEs_and_Markdown.html#walkthrough-1-orient-to-the-project",
-    "title": "Positron and Markdown",
-    "section": "Walkthrough 1: orient to the project",
-    "text": "Walkthrough 1: orient to the project\nFollow along\n\nSelect File &gt; Open Folder\nOpen the repository from Day 1\nIn Explorer, locate README.md\nOpen a terminal inside Positron\nRun:\n\npwd\ngit status\n\nCheck: Explorer and pwd identify the same project.\n\n\nSuggested time: 3 to 4 minutes.\nPoint to the Activity Bar, Explorer, Editor, Panel, and Status Bar in the real interface. Ask students to name which part of the interface answered each question.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
-    "href": "slides/IDEs_and_Markdown.html#walkthrough-2-edit-and-preview-markdown",
-    "title": "Positron and Markdown",
-    "section": "Walkthrough 2: edit and preview Markdown",
-    "text": "Walkthrough 2: edit and preview Markdown\nFollow along\n\nOpen README.md in the editor\nAdd a heading called ## About This Repository\nAdd one sentence and a three-item list\nSave the file\nOpen a Markdown preview beside the source\n\n\nWhat is easier to understand in the source? What is easier to understand in the preview?\n\n\nSuggested time: 4 minutes.\nUse the Command Palette and search for the Markdown preview command if needed. The goal is to practice finding actions, not memorizing every shortcut.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
-    "href": "slides/IDEs_and_Markdown.html#walkthrough-3-inspect-and-record-the-change",
-    "title": "Positron and Markdown",
-    "section": "Walkthrough 3: inspect and record the change",
-    "text": "Walkthrough 3: inspect and record the change\nFollow along\n\nOpen Source Control\nSelect README.md under Changes and read the diff\nStage the file\nVerify with git diff --staged\nEnter a specific commit message and commit\nVerify with git status\n\n\nThe interface and terminal are two views of the same Git repository.\n\n\nSuggested time: 5 to 7 minutes.\nPause before staging and ask where the change lives. Pause after staging and ask again. Commit with a message such as Describe repository in README. Push only after the class distinguishes it from commit.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
-    "href": "slides/IDEs_and_Markdown.html#day-1-concepts-inside-positron",
-    "title": "Positron and Markdown",
-    "section": "Day 1 concepts inside Positron",
-    "text": "Day 1 concepts inside Positron\n\n\n\nGit concept or command\nPositron representation\n\n\n\n\nWorking files\nChanges\n\n\ngit diff\nDiff viewer\n\n\ngit add\nStage Changes or +\n\n\nStaging area\nStaged Changes\n\n\ngit commit\nCommit message and Commit\n\n\ngit push\nPush\n\n\nRepository files\nExplorer\n\n\n\n\nSuggested time: 3 minutes.\nReturn to the four-location model. Have students identify which interface action moved the change each time. When the interface surprises them, recommend git status and git diff as direct checks.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
-    "href": "slides/IDEs_and_Markdown.html#push-pull-and-sync-are-different",
-    "title": "Positron and Markdown",
-    "section": "Push, pull, and sync are different",
-    "text": "Push, pull, and sync are different\n\n\n\n\n\n\n\n\nAction\nDirection\nPurpose\n\n\n\n\nPush\nLocal to GitHub\nSend local commits to the remote repository\n\n\nPull\nGitHub to local\nBring remote commits into the local repository\n\n\nSync\nBoth directions\nCombine receiving and sending changes\n\n\n\nFor now: Use Push and Pull separately until you can predict what Sync will do.\n\nSuggested time: 3 minutes.\nIf the repository has no new remote work, finish the demonstration with Push. Tell students that Sync is useful later, after they can predict both operations.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
-    "href": "slides/IDEs_and_Markdown.html#activity-begin-your-about-me-page",
-    "title": "Positron and Markdown",
-    "section": "Activity: begin your About Me page",
-    "text": "Activity: begin your About Me page\nYour About Me page will become part of your Quarto website.\nWrite for a visitor who wants to know:\n\nWho are you?\nWhat are you interested in?\nWhat are you learning or building?\nWhat should they explore next?\n\n\nAim for a clear first draft, not a perfect biography.\n\n\nSuggested time: 2 minutes to introduce the activity.\nThis is separate from the guided README demonstration. Students now make individual content and design decisions.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#start-with-a-small-structure",
-    "href": "slides/IDEs_and_Markdown.html#start-with-a-small-structure",
-    "title": "Positron and Markdown",
-    "section": "Start with a small structure",
-    "text": "Start with a small structure\nCreate a file named about.qmd in your project.\n---\ntitle: \"About Me\"\n---\n\n# Hello, I am Your Name\n\nWrite a short introduction here.\n\n## What I am interested in\n\n- One interest\n- Something you want to learn\n\n## Find me online\n\n[GitHub](https://github.com/your-user-name)\n\nSuggested time: 2 minutes.\nExplain that .qmd is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata."
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
-    "href": "slides/IDEs_and_Markdown.html#about-me-activity-checklist",
-    "title": "Positron and Markdown",
-    "section": "About Me activity checklist",
-    "text": "About Me activity checklist\n\n\nCore task\n\nWrite a short introduction in your own voice\nUse headings and a list\nAdd one meaningful link\nUse Quarto: Preview and revise for readability\n\n\n\nIf you finish early\n\nAdd an image with useful alternative text\nAsk AI for a clearer structure, then choose what to keep\nInspect the diff, then stage and commit\n\n\n\nFinal check: Read the rendered page as if you were visiting it for the first time.\n\nSuggested time: 15 to 20 minutes.\nCirculate first for file and preview problems, then for writing support. The Git steps are an extension so the activity remains centered on Markdown and authorship.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#what-should-you-remember",
-    "href": "slides/IDEs_and_Markdown.html#what-should-you-remember",
-    "title": "Positron and Markdown",
-    "section": "What should you remember?",
-    "text": "What should you remember?\n\nAn IDE gathers project tools into one connected workspace.\nOpening the project folder gives every tool the right context.\nExtensions add capabilities, so choose them intentionally.\nMarkdown is readable source for humans, Git, GitHub, Quarto, and AI workflows.\nPositron represents the same Git locations, but push, pull, and sync remain distinct.\n\n\nUse the interface for visibility and the terminal for verification.\n\n\nSuggested time: 2 minutes.\nAsk students which tool or concept feels clearer after seeing it in more than one representation.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#references-and-next-steps",
-    "href": "slides/IDEs_and_Markdown.html#references-and-next-steps",
-    "title": "Positron and Markdown",
-    "section": "References and next steps",
-    "text": "References and next steps\n\nPositron layout\nPositron extensions\nGit version control in Positron\nQuarto in Positron\nQuarto Markdown basics\n\nNext: we will build on about.qmd as the website takes shape.\n\nSuggested time: 1 minute.\nThese are official reference pages for students who want to explore beyond today’s workflow.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#questions",
-    "href": "slides/IDEs_and_Markdown.html#questions",
-    "title": "Positron and Markdown",
-    "section": "Questions?",
-    "text": "Questions?\n\nWhat would you like to see again in Positron or Markdown?\n\n\nUse remaining time to repeat any part of the live workflow students want to see again.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#the-project-folder",
-    "href": "slides/IDEs_and_Markdown.html#the-project-folder",
-    "title": "Positron and Markdown",
-    "section": "The project folder",
-    "text": "The project folder\nOpening a folder gives Positron context for the active file.\n\nThe Explorer shows related files and folders\nThe terminal starts in the project folder\nGit can find the repository and current branch\nSearch and navigation work across the project\nQuarto can find project settings and website navigation\n\n\nDaily habit: use File &gt; Open Folder, then work inside the project.\n\n\nSuggested time: 2 minutes.\nConnect this to relative paths and reproducibility. A file rarely makes sense alone. It depends on nearby data, images, code, configuration, and history.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
-  },
-  {
-    "objectID": "slides/IDEs_and_Markdown.html#about-me-starter",
-    "href": "slides/IDEs_and_Markdown.html#about-me-starter",
-    "title": "Positron and Markdown",
-    "section": "About Me starter",
-    "text": "About Me starter\nCreate about.qmd and place a photo at images/profile.jpg.\n---\ntitle: \"About Me\"\n---\n\n# Hello, I am Your Name\n\n![Photo of Your Name](images/profile.jpg)\n\nWrite a short introduction here.\n\n## What I am interested in\n\n- One interest\n- Something you want to learn\n\nSuggested time: 2 minutes.\nExplain that .qmd is a Quarto document whose main writing language is Markdown. The YAML at the top supplies document metadata. The brackets describe the image, while the parentheses contain its relative path. Show students how to place profile.jpg inside an images folder.",
-    "crumbs": [
-      "Home",
-      "Slides",
-      "Positron and Markdown"
-    ]
   }
 ]

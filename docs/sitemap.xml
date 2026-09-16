@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/slides.html</loc>
-    <lastmod>2026-09-14T15:42:42.520Z</lastmod>
+    <lastmod>2026-09-16T15:43:47.222Z</lastmod>
   </url>
   <url>
     <loc>/slides/vscode-uv.html</loc>
@@ -29,6 +29,10 @@
     <lastmod>2026-08-06T19:14:54.786Z</lastmod>
   </url>
   <url>
+    <loc>/slides/IDEs_and_Markdown.html</loc>
+    <lastmod>2026-09-14T15:40:32.717Z</lastmod>
+  </url>
+  <url>
     <loc>/slides/github-issues-projects.html</loc>
     <lastmod>2026-09-11T14:35:26.694Z</lastmod>
   </url>
@@ -37,16 +41,20 @@
     <lastmod>2026-08-06T19:17:02.387Z</lastmod>
   </url>
   <url>
-    <loc>/index.html</loc>
-    <lastmod>2026-09-09T14:52:26.692Z</lastmod>
+    <loc>/slides/collaborative_github.html</loc>
+    <lastmod>2026-09-16T15:41:59.254Z</lastmod>
+  </url>
+  <url>
+    <loc>/demos.html</loc>
+    <lastmod>2026-09-09T14:48:05.357Z</lastmod>
   </url>
   <url>
     <loc>/demos/week-01.html</loc>
     <lastmod>2026-09-09T15:14:54.669Z</lastmod>
   </url>
   <url>
-    <loc>/demos.html</loc>
-    <lastmod>2026-09-09T14:48:05.357Z</lastmod>
+    <loc>/index.html</loc>
+    <lastmod>2026-09-09T14:52:26.692Z</lastmod>
   </url>
   <url>
     <loc>/slides/data-joining.html</loc>
@@ -55,6 +63,10 @@
   <url>
     <loc>/slides/git-github.html</loc>
     <lastmod>2026-08-06T19:14:52.085Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/git_github_foundations.html</loc>
+    <lastmod>2026-09-11T15:49:11.652Z</lastmod>
   </url>
   <url>
     <loc>/slides/importing-data.html</loc>
@@ -83,13 +95,5 @@
   <url>
     <loc>/slides/week-01.html</loc>
     <lastmod>2026-09-09T15:16:20.636Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/git_github_foundations.html</loc>
-    <lastmod>2026-09-11T15:49:11.652Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/IDEs_and_Markdown.html</loc>
-    <lastmod>2026-09-14T15:40:32.717Z</lastmod>
   </url>
 </urlset>
