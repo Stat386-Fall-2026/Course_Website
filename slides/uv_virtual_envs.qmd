@@ -1,0 +1,641 @@
+---
+title: "Reproducible Python Projects"
+subtitle: "Virtual Environments and uv"
+author: "STAT 386"
+format:
+  revealjs:
+    title-slide-attributes:
+      class: title-slide
+    slide-number: true
+    transition: fade
+    incremental: false
+    code-overflow: wrap
+    footer: "STAT 386"
+    width: 1280
+    height: 720
+    margin: 0.06
+    link-external-newwindow: true
+---
+
+## Today's question {.section-card}
+
+::: {.key-idea}
+How can someone else recreate the Python environment that made your analysis work?
+:::
+
+By the end of class, you should be able to:
+
+- Explain why projects use separate environments
+- Identify the files that describe a `uv` project
+- Create, change, and run a project with `uv`
+- Reconstruct an existing project's environment
+- Decide which environment files belong in Git
+
+::: notes
+Suggested time: 1 minute.
+
+Connect today's question to Lab 1. Students already ran `uv sync` because the README told them to. Today they will learn why that command worked and how to manage the same process themselves.
+:::
+
+## Warm-up: where did R install that package? {.question-slide}
+
+You have probably run code like this:
+
+```r
+install.packages("dplyr")
+library(dplyr)
+```
+
+::: {.discussion-box}
+Where did R install `dplyr`? Would two R projects on your computer use the same installed copy?
+:::
+
+You can inspect R's package search locations with:
+
+```r
+.libPaths()
+```
+
+::: notes
+Suggested time: 3 minutes.
+
+Give students 30 seconds to think alone, then one minute with a partner. Many will know how to install a package without knowing where the files live.
+
+In a typical R installation, packages go into a user or site library. Projects using the same R installation often search the same libraries.
+
+Source: https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html
+:::
+
+## Same problem, different defaults
+
+| Introductory R workflow | Common Python workflow |
+|---|---|
+| Projects often share a user package library | Each project commonly receives a `.venv/` |
+| One main R installation may serve many analyses | Several Python interpreters may coexist |
+| Package management stays in the background | The project environment stays visible |
+
+Both approaches can encounter dependency conflicts. Updating a shared package may help one project and break another.
+
+::: {.key-idea}
+Project environments solve a general software problem rather than a Python-specific problem.
+:::
+
+::: notes
+Suggested time: 1 minute.
+
+Explain that R projects do not automatically receive separate package libraries. The shared library often works well for current course assignments, especially when everyone updates packages regularly. Python's diverse applications and frequent use of multiple interpreters made per-project environments a more visible convention.
+
+Avoid portraying R as careless. The point is that introductory R workflows often make the shared environment less visible.
+:::
+
+## R also has project environments
+
+The `renv` package gives an R project a private package library and a lockfile.
+
+| R with `renv` | Python with `uv` | Purpose |
+|---|---|---|
+| Project library | `.venv/` | Installed packages for one project |
+| `renv.lock` | `uv.lock` | Exact package resolution |
+| `renv::install()` | `uv add` | Add a dependency |
+| `renv::restore()` | `uv sync` | Reconstruct the environment |
+
+::: {.key-idea}
+R and Python face the same dependency problem. Their introductory workflows make it visible at different times.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Ask whether anyone has used `renv`. Emphasize that an RStudio or Positron project organizes files but does not automatically isolate package versions. `renv` adds that behavior.
+
+Source: https://rstudio.github.io/renv/
+:::
+
+## Two projects can require incompatible versions {.question-slide}
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+### Older analysis
+
+```text
+Python 3.11
+pandas 1.x
+scikit-learn 1.3
+```
+
+The code depends on an older package interface.
+
+:::
+
+::: {.column width="48%"}
+
+### New analysis
+
+```text
+Python 3.14
+pandas 3.x
+scikit-learn 1.8
+```
+
+The code uses newer package behavior.
+
+:::
+
+::::
+
+::: {.discussion-box}
+What happens if both projects must share one Python installation and one set of packages?
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Collect a few predictions. The machine can install one selected version of each package into a particular environment. Changing that version may help one project and break another.
+
+The exact package versions here provide a concrete scenario rather than a recommendation for current work.
+
+Source: https://docs.python.org/3/tutorial/venv.html
+:::
+
+## Three layers of a Python project
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    P["Python interpreter<br/>Runs the language"]
+    E["Virtual environment<br/>Isolates one project"]
+    D["Installed dependencies<br/>pandas, NumPy, pytest"]
+    P --> E --> D
+```
+
+| Layer | Question |
+|---|---|
+| Interpreter | Which Python runs the code? |
+| Environment | Which isolated package location does it use? |
+| Dependencies | Which packages and versions are available? |
+
+::: notes
+Suggested time: 2 minutes.
+
+Distinguish the interpreter from the environment. A virtual environment points to a Python interpreter and supplies a project-specific location for installed packages and commands.
+
+Ask which layer Positron must select when it runs Python code. It should use the interpreter associated with the project environment.
+:::
+
+## Isolation and reproducibility answer different questions
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+### Isolation
+
+Can this project change its packages without changing another project?
+
+A separate `.venv/` provides isolation on one computer.
+
+:::
+
+::: {.column width="48%"}
+
+### Reproducibility
+
+Can another computer recreate compatible package versions?
+
+Project metadata and a lockfile provide the instructions.
+
+:::
+
+::::
+
+::: {.key-idea}
+A virtual environment isolates installed files. A lockfile records how to recreate them.
+:::
+
+::: notes
+Suggested time: 1 minute.
+
+Students often use virtual environment and reproducible environment as synonyms. Keep these ideas separate. A private environment with undocumented packages provides isolation but remains difficult to reproduce.
+:::
+
+## Environment tools and the course choice {.comparison-slide .smaller}
+
+| Tool or workflow | What it manages | Common use |
+|---|---|---|
+| `venv` and `pip` | Python environment and package installation | Standard tools included with Python |
+| Conda or Mamba | Environments, Python, and non-Python packages | Scientific stacks with system dependencies |
+| Poetry | Python projects, dependencies, and packaging | Application and package development |
+| `uv` | Python, environments, dependencies, lockfiles, and commands | One integrated project workflow |
+
+::: {.key-idea}
+STAT 386 uses `uv` so starting, revisiting, and sharing a project follow the same workflow.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Treat this as orientation rather than a tool contest. Each option can support good work. Students need enough context to recognize these names when they encounter other projects.
+
+Source: https://docs.python.org/3/tutorial/venv.html
+Source: https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html
+Source: https://python-poetry.org/docs/basic-usage/
+Source: https://docs.astral.sh/uv/
+:::
+
+## Anatomy of a `uv` project {.smaller}
+
+| Item | Role | Git decision |
+|---|---|---|
+| `.python-version` | Names the intended Python version | Commit |
+| `pyproject.toml` | Declares direct dependencies and project settings | Commit |
+| `uv.lock` | Records exact direct and transitive versions | Commit |
+| `.venv/` | Stores the installed local environment | Ignore |
+| Project code | Performs the analysis | Commit |
+
+::: {.key-idea}
+Git shares the code and environment description. `uv` recreates the installed environment.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Return to the Git mental model from earlier lectures. Files that describe the project belong in its history. Generated local installations do not.
+
+Source: https://docs.astral.sh/uv/guides/projects/
+:::
+
+## From project description to running code
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A[".python-version<br/>Python choice"] --> D[".venv/<br/>Installed environment"]
+    B["pyproject.toml<br/>Declared needs"] --> C["uv.lock<br/>Exact resolution"] --> D
+    D --> E["uv run<br/>Project command"]
+```
+
+`uv` keeps these layers connected:
+
+- Project commands update the lockfile when dependencies change
+- The lockfile includes direct and transitive dependencies
+- `uv sync` makes `.venv/` agree with the lockfile
+- `uv run` checks the environment before running a command
+
+::: notes
+Suggested time: 2 minutes.
+
+Follow each input into the local environment. The lockfile should be read as a resolved plan rather than a second copy of `pyproject.toml`.
+
+Source: https://docs.astral.sh/uv/concepts/projects/sync/
+Source: https://docs.astral.sh/uv/concepts/projects/run/
+:::
+
+## What belongs in Git? {.question-slide}
+
+For each item, decide whether you would commit it:
+
+```text
+.python-version
+pyproject.toml
+uv.lock
+.venv/
+analysis.py
+```
+
+::: {.discussion-box}
+Which files describe the project? Which files can `uv` regenerate on each computer?
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Have students vote by raising a hand for each item. Commit `.python-version`, `pyproject.toml`, `uv.lock`, and `analysis.py`. Ignore `.venv/`.
+
+Open `.gitignore` briefly and locate `.venv`. Connect this decision to the `.gitignore` discussion from Day 1.
+:::
+
+## Live walkthrough: build a reproducible project {.section-card}
+
+::: {.key-idea}
+We will create a project, add a dependency, run an analysis, and inspect what Git sees.
+:::
+
+Students can follow along in the integrated terminal.
+
+::: notes
+Suggested time: 1 minute.
+
+Use a real Positron window for the walkthrough. Keep this slide visible while everyone opens the integrated terminal.
+:::
+
+## Walkthrough 1: initialize the project {.demo-slide}
+
+```bash
+cd ~/Desktop/School/STAT_386
+uv init --no-package environment-demo
+cd environment-demo
+ls -la
+```
+
+Look for:
+
+```text
+.git/
+.gitignore
+.python-version
+README.md
+main.py
+pyproject.toml
+```
+
+::: {.exercise-check}
+Check: `pwd` ends in `environment-demo`, and `git status` recognizes a repository.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Adapt the first path to the course folder students created earlier. `--no-package` creates a flat application project, which fits a small data analysis better than a distributable Python package.
+
+Point out that `.venv` and `uv.lock` appear lazily when the project first syncs.
+
+Source: https://docs.astral.sh/uv/reference/cli/#uv-init
+:::
+
+## Walkthrough 2: add a dependency {.demo-slide}
+
+```bash
+uv add pandas
+```
+
+Then inspect the project:
+
+```bash
+git status
+uv tree
+```
+
+`uv add` performs three connected actions:
+
+1. Declares `pandas` in `pyproject.toml`
+2. Resolves exact compatible versions in `uv.lock`
+3. Synchronizes those packages into `.venv/`
+
+::: notes
+Suggested time: 2 minutes.
+
+Open `pyproject.toml` and locate the direct dependency. Open `uv.lock` only long enough to show that it contains exact versions and transitive dependencies. Do not read the lockfile line by line.
+
+Use `uv tree` to reveal the dependency structure more clearly than the raw lockfile.
+
+Source: https://docs.astral.sh/uv/reference/cli/#uv-add
+:::
+
+## Walkthrough 3: run inside the environment {.demo-slide .smaller}
+
+Replace `main.py` with:
+
+```python
+import pandas as pd
+
+scores = pd.DataFrame(
+    {
+        "section": ["A", "A", "B", "B"],
+        "score": [82, 94, 88, 92],
+    }
+)
+
+print(scores.groupby("section")["score"].mean())
+```
+
+Run it with:
+
+```bash
+uv run python main.py
+```
+
+::: notes
+Suggested time: 3 minutes.
+
+Prepare this code for copy and paste before class. `uv run` checks the project state, synchronizes when needed, and executes Python inside the project environment.
+
+Ask students which installed copy of pandas the script imports. It should come from this project's `.venv`.
+
+Source: https://docs.astral.sh/uv/concepts/projects/run/
+:::
+
+## Walkthrough 4: connect Positron to `.venv` {.demo-slide}
+
+In Positron:
+
+1. Open the `environment-demo` folder
+2. Select the Python interpreter from `.venv`
+3. Open `main.py`
+4. Run the file
+
+Verify the interpreter from the terminal:
+
+```bash
+uv run python -c "import sys; print(sys.executable)"
+```
+
+::: {.exercise-check}
+The printed path should point inside `environment-demo/.venv`.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Use Positron's interpreter selector in the status area or Command Palette. If Positron already detected `.venv`, show students where that choice appears.
+
+Explain the common failure mode: the terminal uses the project environment while the editor uses another Python interpreter.
+:::
+
+## Walkthrough 5: inspect the Git boundary {.demo-slide}
+
+```bash
+git status
+git diff
+```
+
+Git should show project files such as:
+
+```text
+.python-version
+pyproject.toml
+uv.lock
+main.py
+```
+
+Git should leave `.venv/` untracked and ignored.
+
+::: {.discussion-box}
+Why would committing `.venv/` make collaboration harder?
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Possible answers include size, operating-system differences, machine-specific paths, noisy changes, and the fact that `uv` can regenerate the directory.
+
+Open `.gitignore` and confirm the rule instead of relying only on `git status`.
+:::
+
+## Reconstructing someone else's project
+
+A collaborator receives the repository and runs:
+
+```bash
+git clone REPOSITORY_URL
+cd REPOSITORY_NAME
+uv sync
+uv run python main.py
+```
+
+`uv sync` reads the tracked project files and creates the collaborator's local `.venv/`.
+
+::: {.key-idea}
+The two computers store different `.venv` directories built from the same project description.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+This is the conceptual replacement for emailing a folder of installed packages. Connect `uv sync` to the same command students used after cloning Lab 1.
+
+Source: https://docs.astral.sh/uv/concepts/projects/sync/
+:::
+
+## A short diagnostic routine {.reference-slide .smaller}
+
+| Symptom | First check | Likely action |
+|---|---|---|
+| `pyproject.toml` cannot be found | Current directory | `cd` into the project |
+| Import fails in the terminal | Project synchronization | Run `uv sync`, then use `uv run` |
+| Import fails only in Positron | Selected interpreter | Choose the interpreter inside `.venv` |
+| A package works only for you | Dependency declaration | Add it with `uv add` and commit both project files |
+| Environment behaves unexpectedly | Agreement with lockfile | Run `uv sync` |
+
+::: {.key-idea}
+Start with location, synchronization, and interpreter selection.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Walk through one example. A student can run the program with `uv run`, but Positron shows a missing import. The project environment probably works, while Positron points to another interpreter.
+:::
+
+## Activity: make one reproducible change {.exercise-slide}
+
+In `environment-demo`:
+
+1. Add `tabulate` with `uv add tabulate`
+2. Replace the final line of `main.py` with:
+
+```python
+summary = scores.groupby("section", as_index=False)["score"].mean()
+print(summary.to_markdown(index=False))
+```
+
+3. Run the analysis with `uv run python main.py`
+4. Inspect `git status` and `git diff`
+5. Explain to a partner which files another computer would need
+
+::: {.exercise-check}
+Finish line: the Markdown table prints, and you can explain every changed or generated file.
+:::
+
+::: notes
+Suggested time: 6 to 8 minutes.
+
+Circulate first for directory and interpreter problems, then ask students to explain what changed. The key evidence is that `pyproject.toml` and `uv.lock` record the new dependency while `.venv` remains local.
+
+If time is short, perform the first two steps together and let students complete the inspection and explanation.
+:::
+
+## Activity debrief {.question-slide}
+
+After `uv add tabulate`:
+
+- Which file records that your code directly needs `tabulate`?
+- Which file records its exact resolved version?
+- Where did `uv` install the package?
+- Which of those files should Git track?
+- What would your collaborator run after pulling the commit?
+
+::: {.discussion-box}
+Could your collaborator reproduce the result without receiving your `.venv/` directory?
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Expected answers: `pyproject.toml`, `uv.lock`, `.venv`, track the first two, and run `uv sync` or `uv run` after pulling.
+:::
+
+## Takeaways {.takeaway-slide}
+
+1. R and Python both face dependency conflicts.
+2. A virtual environment isolates one project's installed packages.
+3. `pyproject.toml` describes direct needs, while `uv.lock` records the exact resolution.
+4. Git tracks the project description and leaves `.venv/` local.
+5. `uv sync` reconstructs an environment, and `uv run` executes inside it.
+6. Positron must use the interpreter from the project's `.venv`.
+
+::: notes
+Suggested time: 1 minute.
+
+Ask students to explain the fourth point in their own words. That answer connects today's environment lesson to the previous Git sequence.
+:::
+
+## Command reference {.reference-slide .smaller}
+
+| Goal | Command |
+|---|---|
+| Start a flat analysis project | `uv init --no-package PROJECT_NAME` |
+| Add a dependency | `uv add PACKAGE` |
+| Remove a dependency | `uv remove PACKAGE` |
+| Reconstruct the environment | `uv sync` |
+| Run a Python file | `uv run python FILE.py` |
+| Inspect the dependency tree | `uv tree` |
+
+::: {.tip-box}
+Run project commands from the folder that contains `pyproject.toml`.
+:::
+
+::: notes
+Reference slide for students after class.
+
+This slide serves as a reference after class. Students do not need to memorize every command today.
+:::
+
+## References and next steps {.reference-slide .smaller}
+
+- [Working on projects with `uv`](https://docs.astral.sh/uv/guides/projects/)
+- [`uv` project structure and files](https://docs.astral.sh/uv/concepts/projects/layout/)
+- [Locking and syncing](https://docs.astral.sh/uv/concepts/projects/sync/)
+- [Running commands](https://docs.astral.sh/uv/concepts/projects/run/)
+- [Python virtual environments](https://docs.python.org/3/tutorial/venv.html)
+- [R library paths](https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html)
+- [`renv` project environments](https://rstudio.github.io/renv/)
+
+Next: use this project environment as we begin working with Python data tools.
+
+::: notes
+Reference slide for students after class.
+
+Point students to the `uv` project guide as the main reference. The remaining links support the R comparison and the broader Python concept.
+:::
+
+## Questions? {.section-card}
+
+::: {.key-idea}
+Which part of the environment still feels hidden?
+:::
+
+::: notes
+Use remaining time to repeat the file model or one part of the live workflow.
+:::
