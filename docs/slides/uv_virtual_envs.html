@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="STAT 386">
   <title>STAT 386 — Fall 2026 – Reproducible Python Projects</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-1a1f18d4a655ca290ef04ee99f618baf.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dd2fc48f25af76fd2b852377c3459bb.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -200,7 +200,7 @@
 
 <section id="title-slide" class="title-slide center">
   <h1 class="title">Reproducible Python Projects</h1>
-  <p class="subtitle">Virtual Environments and uv</p>
+  <p class="subtitle">Virtual Environments, Dependencies, and uv</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -211,22 +211,21 @@ STAT 386
 </div>
 
 </section>
-<section id="todays-question" class="slide level2 section-card">
-<h2>Today’s question</h2>
+<section id="todays-durable-question" class="slide level2 section-card">
+<h2>Today’s durable question</h2>
 <div class="key-idea">
-<p>How can someone else recreate the Python environment that made your analysis work?</p>
+<p>What information lets another computer recreate the environment that made your analysis work?</p>
 </div>
 <p>By the end of class, you should be able to:</p>
 <ul>
-<li>Explain why projects use separate environments</li>
-<li>Identify the files that describe a <code>uv</code> project</li>
-<li>Create, change, and run a project with <code>uv</code></li>
-<li>Reconstruct an existing project’s environment</li>
-<li>Decide which environment files belong in Git</li>
+<li>Explain the problems solved by project environments and dependency management</li>
+<li>Distinguish a dependency manifest, a lockfile, and an installed environment</li>
+<li>Translate a general reproducible workflow into <code>uv</code> commands</li>
+<li>Share a version-controlled project that another person can reconstruct</li>
 </ul>
 <aside class="notes">
 <p>Suggested time: 1 minute.</p>
-<p>Connect today’s question to Lab 1. Students already ran <code>uv sync</code> because the README told them to. Today they will learn why that command worked and how to manage the same process themselves.</p>
+<p>Tell students that <code>uv</code> supplies today’s commands, but the underlying ideas apply across languages and tools. A future tool may change the syntax without changing the problems that the workflow must solve.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -239,20 +238,41 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="warm-up-where-did-r-install-that-package" class="slide level2 question-slide">
-<h2>Warm-up: where did R install that package?</h2>
-<p>You have probably run code like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="think-pair-share-one-project-changes-another" class="slide level2 question-slide">
+<h2>Think, pair, share: one project changes another</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>What happened?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Monday</td>
+<td>Project A runs correctly with <code>dplyr</code></td>
+</tr>
+<tr class="even">
+<td>Tuesday</td>
+<td>You update <code>dplyr</code> while working on Project B</td>
+</tr>
+<tr class="odd">
+<td>Wednesday</td>
+<td>Project A behaves differently, although none of its files changed</td>
+</tr>
+</tbody>
+</table>
 <div class="discussion-box">
-<p>Where did R install <code>dplyr</code>? Would two R projects on your computer use the same installed copy?</p>
+<p>How could work in Project B affect Project A? What important information lived outside Project A’s files? What would prevent this connection?</p>
 </div>
-<p>You can inspect R’s package search locations with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">.libPaths</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Suggested time: 3 minutes.</p>
-<p>Give students 30 seconds to think alone, then one minute with a partner. Many will know how to install a package without knowing where the files live.</p>
-<p>In a typical R installation, packages go into a user or site library. Projects using the same R installation often search the same libraries.</p>
+<p>Give students 30 seconds to think, one minute to discuss, and one minute to share. Ask one pair to explain the mechanism and another pair to propose a prevention strategy.</p>
+<p>Listen for a shared user library, a changed package version, missing environment information, and project-specific isolation. If needed, show <code>.libPaths()</code> after the discussion to reveal where R searches for installed packages.</p>
 <p>Source: https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -266,8 +286,8 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="same-problem-different-defaults" class="slide level2">
-<h2>Same problem, different defaults</h2>
+<section id="why-r-can-make-the-problem-less-visible" class="slide level2 smaller">
+<h2>Why R can make the problem less visible</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -275,48 +295,29 @@ STAT 386
 </colgroup>
 <thead>
 <tr class="header">
-<th>Introductory R workflow</th>
-<th>Common Python workflow</th>
+<th>Observation</th>
+<th>What it means</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Projects often share a user package library</td>
-<td>Each project commonly receives a <code>.venv/</code></td>
+<td>R projects often search the same user library</td>
+<td>Updating a package can affect several projects</td>
 </tr>
 <tr class="even">
-<td>One main R installation may serve many analyses</td>
-<td>Several Python interpreters may coexist</td>
+<td>Project A’s files did not change</td>
+<td>Part of its computational state lived outside the project</td>
 </tr>
 <tr class="odd">
-<td>Package management stays in the background</td>
-<td>The project environment stays visible</td>
+<td>A private project library separates installed packages</td>
+<td>Changes in one project stay contained</td>
+</tr>
+<tr class="even">
+<td>A lockfile records the selected versions</td>
+<td>A collaborator can reconstruct the resolution later</td>
 </tr>
 </tbody>
 </table>
-<p>Both approaches can encounter dependency conflicts. Updating a shared package may help one project and break another.</p>
-<div class="key-idea">
-<p>Project environments solve a general software problem rather than a Python-specific problem.</p>
-</div>
-<aside class="notes">
-<p>Suggested time: 1 minute.</p>
-<p>Explain that R projects do not automatically receive separate package libraries. The shared library often works well for current course assignments, especially when everyone updates packages regularly. Python’s diverse applications and frequent use of multiple interpreters made per-project environments a more visible convention.</p>
-<p>Avoid portraying R as careless. The point is that introductory R workflows often make the shared environment less visible.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="r-also-has-project-environments" class="slide level2">
-<h2>R also has project environments</h2>
-<p>The <code>renv</code> package gives an R project a private package library and a lockfile.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -329,31 +330,23 @@ STAT 386
 <tr class="odd">
 <td>Project library</td>
 <td><code>.venv/</code></td>
-<td>Installed packages for one project</td>
+<td>Local packages for one project</td>
 </tr>
 <tr class="even">
 <td><code>renv.lock</code></td>
 <td><code>uv.lock</code></td>
-<td>Exact package resolution</td>
+<td>Recorded dependency resolution</td>
 </tr>
 <tr class="odd">
-<td><code>renv::install()</code></td>
-<td><code>uv add</code></td>
-<td>Add a dependency</td>
-</tr>
-<tr class="even">
 <td><code>renv::restore()</code></td>
 <td><code>uv sync</code></td>
-<td>Reconstruct the environment</td>
+<td>Reconstruct the local environment</td>
 </tr>
 </tbody>
 </table>
-<div class="key-idea">
-<p>R and Python face the same dependency problem. Their introductory workflows make it visible at different times.</p>
-</div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Ask whether anyone has used <code>renv</code>. Emphasize that an RStudio or Positron project organizes files but does not automatically isolate package versions. <code>renv</code> adds that behavior.</p>
+<p>Use this slide to close the discussion. R and Python face the same dependency problem. Introductory R workflows often share a package library, so the environment stays in the background. <code>renv</code> makes project isolation and reconstruction explicit, much like <code>uv</code> in today’s Python workflow.</p>
 <p>Source: https://rstudio.github.io/renv/</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -367,30 +360,44 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="two-projects-can-require-incompatible-versions" class="slide level2 question-slide">
-<h2>Two projects can require incompatible versions</h2>
-<div class="columns">
-<div class="column" style="width:48%;">
-<h3 id="older-analysis">Older analysis</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>Python 3.11</span>
-<span id="cb3-2"><a></a>pandas 1.x</span>
-<span id="cb3-3"><a></a>scikit-learn 1.3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The code depends on an older package interface.</p>
-</div><div class="column" style="width:48%;">
-<h3 id="new-analysis">New analysis</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a></a>Python 3.14</span>
-<span id="cb4-2"><a></a>pandas 3.x</span>
-<span id="cb4-3"><a></a>scikit-learn 1.8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The code uses newer package behavior.</p>
-</div></div>
-<div class="discussion-box">
-<p>What happens if both projects must share one Python installation and one set of packages?</p>
+<section id="four-jobs-behind-a-reproducible-environment" class="slide level2">
+<h2>Four jobs behind a reproducible environment</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Job</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Isolation</strong></td>
+<td>Can this project change without disturbing another project?</td>
+</tr>
+<tr class="even">
+<td><strong>Declaration</strong></td>
+<td>Which packages does the project’s code directly require?</td>
+</tr>
+<tr class="odd">
+<td><strong>Resolution</strong></td>
+<td>Which complete set of package versions works together?</td>
+</tr>
+<tr class="even">
+<td><strong>Reconstruction</strong></td>
+<td>Can another computer install a compatible environment?</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>A virtual environment handles isolation. Dependency metadata and a lockfile make reconstruction possible.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Collect a few predictions. The machine can install one selected version of each package into a particular environment. Changing that version may help one project and break another.</p>
-<p>The exact package versions here provide a concrete scenario rather than a recommendation for current work.</p>
-<p>Source: https://docs.python.org/3/tutorial/venv.html</p>
+<p>Keep the four jobs distinct. A <code>.venv</code> with undocumented packages provides isolation but remains difficult to reproduce. A package list without isolation can still let projects interfere with one another.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -403,18 +410,15 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="three-layers-of-a-python-project" class="slide level2">
-<h2>Three layers of a Python project</h2>
+<section id="intent-resolution-and-local-installation" class="slide level2">
+<h2>Intent, resolution, and local installation</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart TD
-    P["Python interpreter&lt;br/&gt;Runs the language"]
-    E["Virtual environment&lt;br/&gt;Isolates one project"]
-    D["Installed dependencies&lt;br/&gt;pandas, NumPy, pytest"]
-    P --&gt; E --&gt; D
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Manifest&lt;br/&gt;What the project needs"] --&gt; B["Lockfile&lt;br/&gt;Exact compatible resolution"] --&gt; C["Environment&lt;br/&gt;Packages installed here"]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -425,28 +429,32 @@ STAT 386
 <thead>
 <tr class="header">
 <th>Layer</th>
-<th>Question</th>
+<th>Python example</th>
+<th>Human or generated?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Interpreter</td>
-<td>Which Python runs the code?</td>
+<td>Intent</td>
+<td><code>pyproject.toml</code></td>
+<td>Human-readable project declaration</td>
 </tr>
 <tr class="even">
-<td>Environment</td>
-<td>Which isolated package location does it use?</td>
+<td>Resolution</td>
+<td><code>uv.lock</code></td>
+<td>Tool-generated exact dependency graph</td>
 </tr>
 <tr class="odd">
-<td>Dependencies</td>
-<td>Which packages and versions are available?</td>
+<td>Local installation</td>
+<td><code>.venv/</code></td>
+<td>Generated files on one computer</td>
 </tr>
 </tbody>
 </table>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Distinguish the interpreter from the environment. A virtual environment points to a Python interpreter and supplies a project-specific location for installed packages and commands.</p>
-<p>Ask which layer Positron must select when it runs Python code. It should use the interpreter associated with the project environment.</p>
+<p>Emphasize the direction. The manifest describes the project’s needs. A resolver chooses a complete compatible set. The package manager installs that resolution into a local environment.</p>
+<p>The installed environment is an output of the process rather than the source of truth.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -459,81 +467,39 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="isolation-and-reproducibility-answer-different-questions" class="slide level2">
-<h2>Isolation and reproducibility answer different questions</h2>
-<div class="columns">
-<div class="column" style="width:48%;">
-<h3 id="isolation">Isolation</h3>
-<p>Can this project change its packages without changing another project?</p>
-<p>A separate <code>.venv/</code> provides isolation on one computer.</p>
-</div><div class="column" style="width:48%;">
-<h3 id="reproducibility">Reproducibility</h3>
-<p>Can another computer recreate compatible package versions?</p>
-<p>Project metadata and a lockfile provide the instructions.</p>
-</div></div>
-<div class="key-idea">
-<p>A virtual environment isolates installed files. A lockfile records how to recreate them.</p>
-</div>
-<aside class="notes">
-<p>Suggested time: 1 minute.</p>
-<p>Students often use virtual environment and reproducible environment as synonyms. Keep these ideas separate. A private environment with undocumented packages provides isolation but remains difficult to reproduce.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="environment-tools-and-the-course-choice" class="slide level2 comparison-slide smaller">
-<h2>Environment tools and the course choice</h2>
+<section id="direct-and-transitive-dependencies" class="slide level2">
+<h2>Direct and transitive dependencies</h2>
+<p>Your code may directly require one package:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>main.py imports pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That package may require several others:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>pandas depends on NumPy and other packages</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Tool or workflow</th>
-<th>What it manages</th>
-<th>Common use</th>
+<th>Dependency</th>
+<th>Who chose it?</th>
+<th>Where is it recorded?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>venv</code> and <code>pip</code></td>
-<td>Python environment and package installation</td>
-<td>Standard tools included with Python</td>
+<td>Direct</td>
+<td>Project author</td>
+<td>Manifest and lockfile</td>
 </tr>
 <tr class="even">
-<td>Conda or Mamba</td>
-<td>Environments, Python, and non-Python packages</td>
-<td>Scientific stacks with system dependencies</td>
-</tr>
-<tr class="odd">
-<td>Poetry</td>
-<td>Python projects, dependencies, and packaging</td>
-<td>Application and package development</td>
-</tr>
-<tr class="even">
-<td><code>uv</code></td>
-<td>Python, environments, dependencies, lockfiles, and commands</td>
-<td>One integrated project workflow</td>
+<td>Transitive</td>
+<td>Dependency resolver</td>
+<td>Lockfile</td>
 </tr>
 </tbody>
 </table>
 <div class="key-idea">
-<p>STAT 386 uses <code>uv</code> so starting, revisiting, and sharing a project follow the same workflow.</p>
+<p>The lockfile records the complete dependency graph, including packages your code never imports directly.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Treat this as orientation rather than a tool contest. Each option can support good work. Students need enough context to recognize these names when they encounter other projects.</p>
-<p>Source: https://docs.python.org/3/tutorial/venv.html Source: https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html Source: https://python-poetry.org/docs/basic-usage/ Source: https://docs.astral.sh/uv/</p>
+<p>This explains why a lockfile contains more package names than the student added. The author declares direct needs. The resolver computes a full compatible graph.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -546,8 +512,32 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="anatomy-of-a-uv-project" class="slide level2 smaller">
-<h2>Anatomy of a <code>uv</code> project</h2>
+<section id="think-pair-share-what-belongs-in-git" class="slide level2 question-slide smaller">
+<h2>Think, pair, share: what belongs in Git?</h2>
+<p>Suppose a project contains:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>.python-version     pyproject.toml     uv.lock</span>
+<span id="cb3-2"><a></a>main.py             .venv/             __pycache__/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="discussion-box">
+<p>Sort the items into two groups: durable project inputs and locally generated outputs. Which items should Git track, and why?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Give pairs one minute to sort the files, then ask two pairs to justify one disputed item. Press for a general rule rather than a memorized list.</p>
+<p>Expected distinction: another computer needs the Python requirement, manifest, lockfile, and code as inputs. The environment and caches can be regenerated locally.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="git-stores-the-reconstruction-inputs" class="slide level2 smaller">
+<h2>Git stores the reconstruction inputs</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -564,38 +554,42 @@ STAT 386
 <tbody>
 <tr class="odd">
 <td><code>.python-version</code></td>
-<td>Names the intended Python version</td>
+<td>Records the intended Python version</td>
 <td>Commit</td>
 </tr>
 <tr class="even">
 <td><code>pyproject.toml</code></td>
-<td>Declares direct dependencies and project settings</td>
+<td>Declares direct dependencies and settings</td>
 <td>Commit</td>
 </tr>
 <tr class="odd">
 <td><code>uv.lock</code></td>
-<td>Records exact direct and transitive versions</td>
+<td>Records the complete dependency resolution</td>
 <td>Commit</td>
 </tr>
 <tr class="even">
-<td><code>.venv/</code></td>
-<td>Stores the installed local environment</td>
-<td>Ignore</td>
+<td><code>main.py</code> and other project files</td>
+<td>Define the analysis</td>
+<td>Commit</td>
 </tr>
 <tr class="odd">
-<td>Project code</td>
-<td>Performs the analysis</td>
-<td>Commit</td>
+<td><code>.venv/</code></td>
+<td>Stores one local installation</td>
+<td>Ignore</td>
+</tr>
+<tr class="even">
+<td><code>__pycache__/</code></td>
+<td>Stores disposable Python cache files</td>
+<td>Ignore</td>
 </tr>
 </tbody>
 </table>
 <div class="key-idea">
-<p>Git shares the code and environment description. <code>uv</code> recreates the installed environment.</p>
+<p>Version-control the files another computer needs as inputs. Ignore files the project tools can regenerate.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Return to the Git mental model from earlier lectures. Files that describe the project belong in its history. Generated local installations do not.</p>
-<p>Source: https://docs.astral.sh/uv/guides/projects/</p>
+<p>Use this slide to summarize the discussion. The repository preserves the recipe and the analysis. The package manager builds a local installation from those tracked inputs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -608,82 +602,209 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="from-project-description-to-running-code" class="slide level2">
-<h2>From project description to running code</h2>
+<section id="think-pair-share-enough-information-to-reproduce" class="slide level2 question-slide smaller">
+<h2>Think, pair, share: enough information to reproduce?</h2>
+<p>A collaborator receives one of these bundles:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Bundle</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>Code only</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>Code and somebody else’s <code>.venv/</code></td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>Code and a dependency manifest</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>Code, Python requirement, manifest, and lockfile</td>
+</tr>
+</tbody>
+</table>
+<div class="discussion-box">
+<p>Rank the bundles from least to most useful for reproducibility and later debugging.</p>
+<p>Be ready to defend your ranking using portability, recorded environment information, and what could still change. Which comparison was hardest?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>Think for 30 seconds, discuss for 90 seconds, then ask two pairs with different rankings to defend their choices. Give the second pair a chance to respond to the first.</p>
+<p>The comparison between B and C should produce useful disagreement. Bundle B contains more installed files, but those files may depend on the original operating system, architecture, and paths. Bundle C is portable but may resolve to different package versions later.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ranking-debrief-the-strongest-project-contract" class="slide level2 smaller">
+<h2>Ranking debrief: the strongest project contract</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bundle</th>
+<th>What it provides</th>
+<th>Main limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A: code only</td>
+<td>The analysis logic</td>
+<td>No environment information</td>
+</tr>
+<tr class="even">
+<td>B: code and <code>.venv/</code></td>
+<td>One installed environment</td>
+<td>Generated files may not transfer across computers</td>
+</tr>
+<tr class="odd">
+<td>C: code and manifest</td>
+<td>Portable dependency intent</td>
+<td>A later resolution may select different versions</td>
+</tr>
+<tr class="even">
+<td>D: code, Python requirement, manifest, and lockfile</td>
+<td>Intent plus the exact dependency resolution</td>
+<td>Does not capture every operating-system or hardware difference</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>Bundle D gives the strongest project-level basis for reconstruction and debugging.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Use this slide to settle the ranking. A reasonable pair may place B above C for immediate forensics on a compatible machine, but C usually transfers more cleanly. D combines portable project inputs with a recorded resolution.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-tool-independent-workflow" class="slide level2">
+<h2>A tool-independent workflow</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[".python-version&lt;br/&gt;Python choice"] --&gt; D[".venv/&lt;br/&gt;Installed environment"]
-    B["pyproject.toml&lt;br/&gt;Declared needs"] --&gt; C["uv.lock&lt;br/&gt;Exact resolution"] --&gt; D
-    D --&gt; E["uv run&lt;br/&gt;Project command"]
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Choose a runtime"] --&gt; B["Create project isolation"] --&gt; C["Declare direct dependencies"]
+    C --&gt; D["Resolve and lock versions"] --&gt; E["Install and run"] --&gt; F["Share the specification"]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p><code>uv</code> keeps these layers connected:</p>
-<ul>
-<li>Project commands update the lockfile when dependencies change</li>
-<li>The lockfile includes direct and transitive dependencies</li>
-<li><code>uv sync</code> makes <code>.venv/</code> agree with the lockfile</li>
-<li><code>uv run</code> checks the environment before running a command</li>
-</ul>
-<aside class="notes">
-<p>Suggested time: 2 minutes.</p>
-<p>Follow each input into the local environment. The lockfile should be read as a resolved plan rather than a second copy of <code>pyproject.toml</code>.</p>
-<p>Source: https://docs.astral.sh/uv/concepts/projects/sync/ Source: https://docs.astral.sh/uv/concepts/projects/run/</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-belongs-in-git" class="slide level2 question-slide">
-<h2>What belongs in Git?</h2>
-<p>For each item, decide whether you would commit it:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>.python-version</span>
-<span id="cb5-2"><a></a>pyproject.toml</span>
-<span id="cb5-3"><a></a>uv.lock</span>
-<span id="cb5-4"><a></a>.venv/</span>
-<span id="cb5-5"><a></a>analysis.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="discussion-box">
-<p>Which files describe the project? Which files can <code>uv</code> regenerate on each computer?</p>
-</div>
-<aside class="notes">
-<p>Suggested time: 2 minutes.</p>
-<p>Have students vote by raising a hand for each item. Commit <code>.python-version</code>, <code>pyproject.toml</code>, <code>uv.lock</code>, and <code>analysis.py</code>. Ignore <code>.venv/</code>.</p>
-<p>Open <code>.gitignore</code> briefly and locate <code>.venv</code>. Connect this decision to the <code>.gitignore</code> discussion from Day 1.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="live-walkthrough-build-a-reproducible-project" class="slide level2 section-card">
-<h2>Live walkthrough: build a reproducible project</h2>
+<p>Any replacement for <code>uv</code> must still help with these operations.</p>
 <div class="key-idea">
-<p>We will create a project, add a dependency, run an analysis, and inspect what Git sees.</p>
+<p>Learn the purpose of each operation first. Command syntax becomes a translation exercise.</p>
 </div>
-<p>Students can follow along in the integrated terminal.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Read the workflow using generic verbs. Ask students which steps they have already encountered in R, even if the tools hid them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-general-workflow-in-uv" class="slide level2 comparison-slide smaller">
+<h2>The general workflow in <code>uv</code></h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>General operation</th>
+<th><code>uv</code> project representation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Record the Python version</td>
+<td><code>.python-version</code></td>
+</tr>
+<tr class="even">
+<td>Create project isolation</td>
+<td><code>.venv/</code></td>
+</tr>
+<tr class="odd">
+<td>Declare direct dependencies</td>
+<td><code>pyproject.toml</code> and <code>uv add</code></td>
+</tr>
+<tr class="even">
+<td>Record the exact resolution</td>
+<td><code>uv.lock</code></td>
+</tr>
+<tr class="odd">
+<td>Reconstruct local packages</td>
+<td><code>uv sync</code></td>
+</tr>
+<tr class="even">
+<td>Run inside the environment</td>
+<td><code>uv run</code></td>
+</tr>
+</tbody>
+</table>
+<p>Other tools use different commands and filenames while performing similar jobs.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>This is the bridge from theory to the command-line toolbox. Students should be able to replace the right column later without discarding the left column.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="live-workflow-author-and-reproducer" class="slide level2 section-card">
+<h2>Live workflow: author and reproducer</h2>
+<div class="key-idea">
+<p>We will build a project on one computer and reconstruct it from a fresh clone on another.</p>
+</div>
+<p><strong>Author:</strong> initialize, add, run, commit, and share<br>
+<strong>Reproducer:</strong> clone, sync, and run</p>
 <aside class="notes">
 <p>Suggested time: 1 minute.</p>
-<p>Use a real Positron window for the walkthrough. Keep this slide visible while everyone opens the integrated terminal.</p>
+<p>The class follows the author steps from an empty folder. Create the GitHub repository during the demo. Choose a student reproducer before starting and confirm that the student can access GitHub and has Git and <code>uv</code> installed.</p>
+<p>For a 50-minute class, everyone can follow the local author steps while the instructor or one assigned pair creates and pushes the shared repository. One student then clones it on a different computer.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -696,27 +817,24 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="walkthrough-1-initialize-the-project" class="slide level2 demo-slide">
-<h2>Walkthrough 1: initialize the project</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="bu">cd</span> ~/Desktop/School/STAT_386</span>
-<span id="cb6-2"><a></a><span class="ex">uv</span> init <span class="at">--no-package</span> environment-demo</span>
-<span id="cb6-3"><a></a><span class="bu">cd</span> environment-demo</span>
-<span id="cb6-4"><a></a><span class="fu">ls</span> <span class="at">-la</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="author-1-initialize-the-project" class="slide level2 demo-slide">
+<h2>Author 1: initialize the project</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="bu">cd</span> ~/Desktop/School/STAT_386</span>
+<span id="cb4-2"><a></a><span class="ex">uv</span> init <span class="at">--no-package</span> environment-demo</span>
+<span id="cb4-3"><a></a><span class="bu">cd</span> environment-demo</span>
+<span id="cb4-4"><a></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Look for:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a></a>.git/</span>
-<span id="cb7-2"><a></a>.gitignore</span>
-<span id="cb7-3"><a></a>.python-version</span>
-<span id="cb7-4"><a></a>README.md</span>
-<span id="cb7-5"><a></a>main.py</span>
-<span id="cb7-6"><a></a>pyproject.toml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>.git/              .python-version</span>
+<span id="cb5-2"><a></a>.gitignore         main.py</span>
+<span id="cb5-3"><a></a>README.md          pyproject.toml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="exercise-check">
 <p>Check: <code>pwd</code> ends in <code>environment-demo</code>, and <code>git status</code> recognizes a repository.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Adapt the first path to the course folder students created earlier. <code>--no-package</code> creates a flat application project, which fits a small data analysis better than a distributable Python package.</p>
-<p>Point out that <code>.venv</code> and <code>uv.lock</code> appear lazily when the project first syncs.</p>
-<p>Source: https://docs.astral.sh/uv/reference/cli/#uv-init</p>
+<p>Adapt the first path to the course folder students created earlier. <code>--no-package</code> creates a flat application project suited to a small data analysis.</p>
+<p>Point out that <code>uv init</code> created both the project files and the local Git repository. <code>.venv/</code> and <code>uv.lock</code> will appear when the project first resolves and installs dependencies.</p>
+<p>Source: https://docs.astral.sh/uv/concepts/projects/init/</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -729,55 +847,26 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="walkthrough-2-add-a-dependency" class="slide level2 demo-slide">
-<h2>Walkthrough 2: add a dependency</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="ex">uv</span> add pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then inspect the project:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">git</span> status</span>
-<span id="cb9-2"><a></a><span class="ex">uv</span> tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>uv add</code> performs three connected actions:</p>
-<ol type="1">
-<li>Declares <code>pandas</code> in <code>pyproject.toml</code></li>
-<li>Resolves exact compatible versions in <code>uv.lock</code></li>
-<li>Synchronizes those packages into <code>.venv/</code></li>
-</ol>
-<aside class="notes">
-<p>Suggested time: 2 minutes.</p>
-<p>Open <code>pyproject.toml</code> and locate the direct dependency. Open <code>uv.lock</code> only long enough to show that it contains exact versions and transitive dependencies. Do not read the lockfile line by line.</p>
-<p>Use <code>uv tree</code> to reveal the dependency structure more clearly than the raw lockfile.</p>
-<p>Source: https://docs.astral.sh/uv/reference/cli/#uv-add</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="walkthrough-3-run-inside-the-environment" class="slide level2 demo-slide smaller">
-<h2>Walkthrough 3: run inside the environment</h2>
-<p>Replace <code>main.py</code> with:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>scores <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb10-4"><a></a>    {</span>
-<span id="cb10-5"><a></a>        <span class="st">"section"</span>: [<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>],</span>
-<span id="cb10-6"><a></a>        <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">94</span>, <span class="dv">88</span>, <span class="dv">92</span>],</span>
-<span id="cb10-7"><a></a>    }</span>
-<span id="cb10-8"><a></a>)</span>
-<span id="cb10-9"><a></a></span>
-<span id="cb10-10"><a></a><span class="bu">print</span>(scores.groupby(<span class="st">"section"</span>)[<span class="st">"score"</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Run it with:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="ex">uv</span> run python main.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="author-2-create-and-connect-the-remote" class="slide level2 demo-slide smaller">
+<h2>Author 2: create and connect the remote</h2>
+<p>On GitHub, create a new repository named <code>environment-demo</code>:</p>
+<ul>
+<li>Choose Public, or give the student reproducer access to a private repository</li>
+<li>Leave README, <code>.gitignore</code>, and license initialization unchecked</li>
+<li>Create the repository and copy its URL</li>
+</ul>
+<p>Connect the local repository:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb6-2"><a></a><span class="fu">git</span> remote add origin REPOSITORY_URL</span>
+<span id="cb6-3"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="exercise-check">
+<p>Check: <code>git remote -v</code> shows the GitHub URL for <code>origin</code>.</p>
+</div>
 <aside class="notes">
 <p>Suggested time: 3 minutes.</p>
-<p>Prepare this code for copy and paste before class. <code>uv run</code> checks the project state, synchronizes when needed, and executes Python inside the project environment.</p>
-<p>Ask students which installed copy of pandas the script imports. It should come from this project’s <code>.venv</code>.</p>
-<p>Source: https://docs.astral.sh/uv/concepts/projects/run/</p>
+<p>Create the remote during class so students see that the local Git repository and the GitHub repository begin as separate objects. Leaving the remote empty avoids a competing first commit.</p>
+<p>Students must already have GitHub authentication configured for the later push. If every student creates a remote, circulate while they copy their URLs. For a tighter demo, create one class remote while everyone connects conceptually.</p>
+<p>Source: https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -790,24 +879,77 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="walkthrough-4-connect-positron-to-.venv" class="slide level2 demo-slide">
-<h2>Walkthrough 4: connect Positron to <code>.venv</code></h2>
-<p>In Positron:</p>
-<ol type="1">
-<li>Open the <code>environment-demo</code> folder</li>
-<li>Select the Python interpreter from <code>.venv</code></li>
-<li>Open <code>main.py</code></li>
-<li>Run the file</li>
-</ol>
-<p>Verify the interpreter from the terminal:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">uv</span> run python <span class="at">-c</span> <span class="st">"import sys; print(sys.executable)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="exercise-check">
-<p>The printed path should point inside <code>environment-demo/.venv</code>.</p>
-</div>
+<section id="author-3-add-a-dependency-and-run-code" class="slide level2 demo-slide smaller">
+<h2>Author 3: add a dependency and run code</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">uv</span> add pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>main.py</code> with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a>scores <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb8-4"><a></a>    {</span>
+<span id="cb8-5"><a></a>        <span class="st">"section"</span>: [<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>],</span>
+<span id="cb8-6"><a></a>        <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">94</span>, <span class="dv">88</span>, <span class="dv">92</span>],</span>
+<span id="cb8-7"><a></a>    }</span>
+<span id="cb8-8"><a></a>)</span>
+<span id="cb8-9"><a></a></span>
+<span id="cb8-10"><a></a><span class="bu">print</span>(scores.groupby(<span class="st">"section"</span>)[<span class="st">"score"</span>].mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="ex">uv</span> run python main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>Prepare the Python code for copy and paste. <code>uv add</code> declares pandas in the manifest, resolves and records the dependency graph, and installs the resolved packages into <code>.venv/</code>.</p>
+<p><code>uv run</code> executes inside the project environment. Ask which installed copy of pandas the script imports.</p>
+<p>Source: https://docs.astral.sh/uv/reference/cli/#uv-add Source: https://docs.astral.sh/uv/concepts/projects/run/</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-theory-becomes-visible" class="slide level2 demo-slide">
+<h2>The theory becomes visible</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">git</span> status</span>
+<span id="cb10-2"><a></a><span class="ex">uv</span> tree</span>
+<span id="cb10-3"><a></a><span class="ex">uv</span> run python <span class="at">-c</span> <span class="st">"import sys; print(sys.executable)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th>Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.venv/</code> now exists</td>
+<td>Local isolation and installation</td>
+</tr>
+<tr class="even">
+<td><code>pyproject.toml</code> lists <code>pandas</code></td>
+<td>Direct dependency declaration</td>
+</tr>
+<tr class="odd">
+<td><code>uv.lock</code> contains more packages</td>
+<td>Complete dependency resolution</td>
+</tr>
+<tr class="even">
+<td>Python path points inside <code>.venv</code></td>
+<td>Code runs in the project environment</td>
+</tr>
+</tbody>
+</table>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Use Positron’s interpreter selector in the status area or Command Palette. If Positron already detected <code>.venv</code>, show students where that choice appears.</p>
-<p>Explain the common failure mode: the terminal uses the project environment while the editor uses another Python interpreter.</p>
+<p>Open <code>pyproject.toml</code> and locate the direct dependency. Open <code>uv.lock</code> only long enough to show exact versions and transitive dependencies. Use <code>uv tree</code> to make the dependency graph easier to read.</p>
+<p>In Positron, select the interpreter inside <code>.venv</code> so editor execution uses the same environment.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -820,23 +962,50 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="walkthrough-5-inspect-the-git-boundary" class="slide level2 demo-slide">
-<h2>Walkthrough 5: inspect the Git boundary</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">git</span> status</span>
-<span id="cb13-2"><a></a><span class="fu">git</span> diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Git should show project files such as:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a></a>.python-version</span>
-<span id="cb14-2"><a></a>pyproject.toml</span>
-<span id="cb14-3"><a></a>uv.lock</span>
-<span id="cb14-4"><a></a>main.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Git should leave <code>.venv/</code> untracked and ignored.</p>
+<section id="author-4-commit-and-share-the-specification" class="slide level2 demo-slide smaller">
+<h2>Author 4: commit and share the specification</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">git</span> status</span>
+<span id="cb11-2"><a></a><span class="fu">git</span> diff</span>
+<span id="cb11-3"><a></a><span class="fu">git</span> add .</span>
+<span id="cb11-4"><a></a><span class="fu">git</span> diff <span class="at">--staged</span></span>
+<span id="cb11-5"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Create reproducible score summary"</span></span>
+<span id="cb11-6"><a></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Before committing, verify that Git includes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a></a>.gitignore          main.py</span>
+<span id="cb12-2"><a></a>.python-version     pyproject.toml</span>
+<span id="cb12-3"><a></a>README.md           uv.lock</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Git should ignore <code>.venv/</code>.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Connect every tracked file to the earlier theory. Inspect <code>.gitignore</code> and confirm the <code>.venv</code> rule. <code>git add .</code> is appropriate here only after reviewing <code>git status</code> and the diff.</p>
+<p>After the push, open the GitHub repository and verify that <code>pyproject.toml</code> and <code>uv.lock</code> appear while <code>.venv/</code> does not. The remote receives the code and reconstruction inputs rather than the author’s installed environment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="predict-before-uv-sync" class="slide level2 question-slide">
+<h2>Predict before <code>uv sync</code></h2>
+<p>The reproducer is about to clone the project on a different computer.</p>
 <div class="discussion-box">
-<p>Why would committing <code>.venv/</code> make collaboration harder?</p>
+<p>Before running anything, predict:</p>
+<ol type="1">
+<li>Which project files will arrive through Git?</li>
+<li>Will <code>.venv/</code> already exist?</li>
+<li>What must <code>uv sync</code> read and create?</li>
+<li>Which file should remain unchanged during synchronization?</li>
+</ol>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Possible answers include size, operating-system differences, machine-specific paths, noisy changes, and the fact that <code>uv</code> can regenerate the directory.</p>
-<p>Open <code>.gitignore</code> and confirm the rule instead of relying only on <code>git status</code>.</p>
+<p>Give pairs one minute. Expected answers: Git brings the tracked code and specification, <code>.venv</code> is absent, <code>uv sync</code> reads the Python requirement, manifest, and lockfile, then creates the local environment. When the manifest and lockfile already agree, synchronization should not need to change the lockfile.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -849,21 +1018,137 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="reconstructing-someone-elses-project" class="slide level2">
-<h2>Reconstructing someone else’s project</h2>
-<p>A collaborator receives the repository and runs:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="fu">git</span> clone REPOSITORY_URL</span>
-<span id="cb15-2"><a></a><span class="bu">cd</span> REPOSITORY_NAME</span>
-<span id="cb15-3"><a></a><span class="ex">uv</span> sync</span>
-<span id="cb15-4"><a></a><span class="ex">uv</span> run python main.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>uv sync</code> reads the tracked project files and creates the collaborator’s local <code>.venv/</code>.</p>
+<section id="student-reproducer-clone-sync-and-run" class="slide level2 demo-slide smaller">
+<h2>Student reproducer: clone, sync, and run</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="bu">cd</span> ~/Desktop/School/STAT_386</span>
+<span id="cb13-2"><a></a><span class="fu">git</span> clone REPOSITORY_URL</span>
+<span id="cb13-3"><a></a><span class="bu">cd</span> environment-demo</span>
+<span id="cb13-4"><a></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Confirm that <code>.venv/</code> is absent, then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="ex">uv</span> sync</span>
+<span id="cb14-2"><a></a><span class="ex">uv</span> run python main.py</span>
+<span id="cb14-3"><a></a><span class="ex">uv</span> run python <span class="at">-c</span> <span class="st">"import sys; print(sys.executable)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="exercise-check">
+<p>The environment-setup step on the second computer is <code>uv sync</code>.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>Have the selected student clone on a different computer and share the terminal output. If the author and reproducer roles must happen on one computer, clone into <code>environment-demo-copy</code> instead.</p>
+<p>After <code>uv sync</code>, show that <code>.venv/</code> now exists, the program produces the same summary, and the interpreter path points inside the student’s project. <code>uv run</code> also checks synchronization automatically, but use explicit <code>uv sync</code> today so students can see the reconstruction step.</p>
+<p>Source: https://docs.astral.sh/uv/concepts/projects/sync/</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reconstruction-rather-than-copying" class="slide level2">
+<h2>Reconstruction rather than copying</h2>
+<p>The author and reproducer now have:</p>
+<ul>
+<li>The same tracked code</li>
+<li>The same declared dependencies</li>
+<li>The same locked dependency resolution</li>
+<li>Different locally generated <code>.venv/</code> directories</li>
+</ul>
 <div class="key-idea">
-<p>The two computers store different <code>.venv</code> directories built from the same project description.</p>
+<p>The tracked specification had to match. Each computer generated its own local environment from that specification.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>This is the conceptual replacement for emailing a folder of installed packages. Connect <code>uv sync</code> to the same command students used after cloning Lab 1.</p>
-<p>Source: https://docs.astral.sh/uv/concepts/projects/sync/</p>
+<p>This is the main conceptual payoff. Ask a student to name what Git transferred and what <code>uv sync</code> constructed. The two <code>.venv</code> directories do not need to be copied or byte-for-byte identical. The repository supplies a shared specification from which each machine builds a compatible local environment.</p>
+<p>Natural stopping point for a 50-minute class. Continue to extended practice if time remains or begin here next time.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="extended-practice-the-project-evolves" class="slide level2 section-card">
+<h2>Extended practice: the project evolves</h2>
+<div class="key-idea">
+<p>Adding a library changes the project specification, so the author and reproducer repeat the same cycle.</p>
+</div>
+<p><strong>Author:</strong> add, change, run, commit, push<br>
+<strong>Reproducer:</strong> pull, sync, run</p>
+<aside class="notes">
+<p>Optional extension: 8 to 12 minutes.</p>
+<p>Use this section if the core workflow finishes early. It can also open the next meeting as retrieval practice.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="extended-practice-1-add-tabulate" class="slide level2 exercise-slide smaller">
+<h2>Extended practice 1: add <code>tabulate</code></h2>
+<p>On the author’s copy:</p>
+<div class="discussion-box">
+<p>Predict which tracked files and which local-only directory will change.</p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">uv</span> add tabulate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace the final line of <code>main.py</code> with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>summary <span class="op">=</span> scores.groupby(<span class="st">"section"</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">"score"</span>].mean()</span>
+<span id="cb16-2"><a></a><span class="bu">print</span>(summary.to_markdown(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then run and share the update:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="ex">uv</span> run python main.py</span>
+<span id="cb17-2"><a></a><span class="fu">git</span> status</span>
+<span id="cb17-3"><a></a><span class="fu">git</span> diff</span>
+<span id="cb17-4"><a></a><span class="fu">git</span> add .</span>
+<span id="cb17-5"><a></a><span class="fu">git</span> diff <span class="at">--staged</span></span>
+<span id="cb17-6"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Print summary as a Markdown table"</span></span>
+<span id="cb17-7"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Suggested time: 4 to 6 minutes.</p>
+<p>Before running <code>uv add</code>, ask students which tracked files they expect to change. Expected answers: <code>pyproject.toml</code>, <code>uv.lock</code>, and then <code>main.py</code> after editing. <code>.venv/</code> also changes locally but remains ignored.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="extended-practice-2-reproduce-the-update" class="slide level2 exercise-slide">
+<h2>Extended practice 2: reproduce the update</h2>
+<p>On the reproducer’s copy:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a></a><span class="fu">git</span> pull</span>
+<span id="cb18-2"><a></a><span class="ex">uv</span> sync</span>
+<span id="cb18-3"><a></a><span class="ex">uv</span> run python main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verify:</p>
+<ul>
+<li><code>git pull</code> retrieves the changed code and project specification</li>
+<li><code>uv sync</code> installs the new dependency into the local <code>.venv/</code></li>
+<li>The program prints a Markdown table</li>
+</ul>
+<div class="discussion-box">
+<p>What stayed the same about the workflow even though the code and dependencies changed?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 4 to 6 minutes.</p>
+<p>The durable cycle remains unchanged: update the specification, share it through version control, reconstruct locally, and run inside the environment.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -887,44 +1172,39 @@ STAT 386
 <thead>
 <tr class="header">
 <th>Symptom</th>
-<th>First check</th>
+<th>First question</th>
 <th>Likely action</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>pyproject.toml</code> cannot be found</td>
-<td>Current directory</td>
-<td><code>cd</code> into the project</td>
+<td>Project metadata cannot be found</td>
+<td>Am I in the project directory?</td>
+<td><code>cd</code> to <code>pyproject.toml</code></td>
 </tr>
 <tr class="even">
 <td>Import fails in the terminal</td>
-<td>Project synchronization</td>
-<td>Run <code>uv sync</code>, then use <code>uv run</code></td>
+<td>Does the environment match the lockfile?</td>
+<td>Run <code>uv sync</code>, then <code>uv run</code></td>
 </tr>
 <tr class="odd">
 <td>Import fails only in Positron</td>
-<td>Selected interpreter</td>
+<td>Which interpreter did Positron select?</td>
 <td>Choose the interpreter inside <code>.venv</code></td>
 </tr>
 <tr class="even">
-<td>A package works only for you</td>
-<td>Dependency declaration</td>
-<td>Add it with <code>uv add</code> and commit both project files</td>
-</tr>
-<tr class="odd">
-<td>Environment behaves unexpectedly</td>
-<td>Agreement with lockfile</td>
-<td>Run <code>uv sync</code></td>
+<td>A package works only for the author</td>
+<td>Did the author declare and commit it?</td>
+<td>Use <code>uv add</code>, then commit the manifest and lockfile</td>
 </tr>
 </tbody>
 </table>
 <div class="key-idea">
-<p>Start with location, synchronization, and interpreter selection.</p>
+<p>Check location, project specification, synchronization, and interpreter selection.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Walk through one example. A student can run the program with <code>uv run</code>, but Positron shows a missing import. The project environment probably works, while Positron points to another interpreter.</p>
+<p>Walk through one example. If <code>uv run</code> works but Positron shows a missing import, the project environment probably works while Positron points to another interpreter.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -937,55 +1217,23 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="activity-make-one-reproducible-change" class="slide level2 exercise-slide">
-<h2>Activity: make one reproducible change</h2>
-<p>In <code>environment-demo</code>:</p>
+<section id="if-the-tool-changes" class="slide level2">
+<h2>If the tool changes</h2>
+<p>Suppose a future course uses a different environment manager.</p>
+<p>Ask the new tool how to:</p>
 <ol type="1">
-<li>Add <code>tabulate</code> with <code>uv add tabulate</code></li>
-<li>Replace the final line of <code>main.py</code> with:</li>
+<li>Create project isolation</li>
+<li>Declare direct dependencies</li>
+<li>Resolve and lock the full dependency graph</li>
+<li>Reconstruct the environment from tracked files</li>
+<li>Run code inside that environment</li>
 </ol>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>summary <span class="op">=</span> scores.groupby(<span class="st">"section"</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">"score"</span>].mean()</span>
-<span id="cb16-2"><a></a><span class="bu">print</span>(summary.to_markdown(index<span class="op">=</span><span class="va">False</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ol start="3" type="1">
-<li>Run the analysis with <code>uv run python main.py</code></li>
-<li>Inspect <code>git status</code> and <code>git diff</code></li>
-<li>Explain to a partner which files another computer would need</li>
-</ol>
-<div class="exercise-check">
-<p>Finish line: the Markdown table prints, and you can explain every changed or generated file.</p>
-</div>
-<aside class="notes">
-<p>Suggested time: 6 to 8 minutes.</p>
-<p>Circulate first for directory and interpreter problems, then ask students to explain what changed. The key evidence is that <code>pyproject.toml</code> and <code>uv.lock</code> record the new dependency while <code>.venv</code> remains local.</p>
-<p>If time is short, perform the first two steps together and let students complete the inspection and explanation.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="activity-debrief" class="slide level2 question-slide">
-<h2>Activity debrief</h2>
-<p>After <code>uv add tabulate</code>:</p>
-<ul>
-<li>Which file records that your code directly needs <code>tabulate</code>?</li>
-<li>Which file records its exact resolved version?</li>
-<li>Where did <code>uv</code> install the package?</li>
-<li>Which of those files should Git track?</li>
-<li>What would your collaborator run after pulling the commit?</li>
-</ul>
-<div class="discussion-box">
-<p>Could your collaborator reproduce the result without receiving your <code>.venv/</code> directory?</p>
+<div class="key-idea">
+<p>The commands may change. The questions and responsibilities remain recognizable.</p>
 </div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
-<p>Expected answers: <code>pyproject.toml</code>, <code>uv.lock</code>, <code>.venv</code>, track the first two, and run <code>uv sync</code> or <code>uv run</code> after pulling.</p>
+<p>Return directly to the desired durable outcome. Students should leave with a checklist for evaluating or learning the next tool rather than treating <code>uv</code> commands as isolated facts.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1002,15 +1250,15 @@ STAT 386
 <h2>Takeaways</h2>
 <ol type="1">
 <li>R and Python both face dependency conflicts.</li>
-<li>A virtual environment isolates one project’s installed packages.</li>
-<li><code>pyproject.toml</code> describes direct needs, while <code>uv.lock</code> records the exact resolution.</li>
-<li>Git tracks the project description and leaves <code>.venv/</code> local.</li>
-<li><code>uv sync</code> reconstructs an environment, and <code>uv run</code> executes inside it.</li>
-<li>Positron must use the interpreter from the project’s <code>.venv</code>.</li>
+<li>Isolation prevents projects from changing one another’s installed packages.</li>
+<li>A manifest records direct needs, while a lockfile records the complete resolution.</li>
+<li>Git shares the code and project specification while the environment remains local.</li>
+<li>A collaborator reconstructs the environment rather than receiving somebody else’s installation.</li>
+<li><code>uv</code> provides a small toolbox for this general workflow.</li>
 </ol>
 <aside class="notes">
 <p>Suggested time: 1 minute.</p>
-<p>Ask students to explain the fourth point in their own words. That answer connects today’s environment lesson to the previous Git sequence.</p>
+<p>Ask students to explain the fifth point in their own words. That explanation reveals whether they understand the purpose behind <code>uv sync</code>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1054,7 +1302,7 @@ STAT 386
 <td><code>uv run python FILE.py</code></td>
 </tr>
 <tr class="even">
-<td>Inspect the dependency tree</td>
+<td>Inspect the dependency graph</td>
 <td><code>uv tree</code></td>
 </tr>
 </tbody>
@@ -1064,7 +1312,6 @@ STAT 386
 </div>
 <aside class="notes">
 <p>Reference slide for students after class.</p>
-<p>This slide serves as a reference after class. Students do not need to memorize every command today.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1077,21 +1324,21 @@ STAT 386
           display:block!important;
       }</style></aside>
 </section>
-<section id="references-and-next-steps" class="slide level2 reference-slide smaller">
-<h2>References and next steps</h2>
+<section id="references" class="slide level2 reference-slide smaller">
+<h2>References</h2>
 <ul>
+<li><a href="https://docs.astral.sh/uv/concepts/projects/init/">Creating projects with <code>uv</code></a></li>
 <li><a href="https://docs.astral.sh/uv/guides/projects/">Working on projects with <code>uv</code></a></li>
 <li><a href="https://docs.astral.sh/uv/concepts/projects/layout/"><code>uv</code> project structure and files</a></li>
 <li><a href="https://docs.astral.sh/uv/concepts/projects/sync/">Locking and syncing</a></li>
 <li><a href="https://docs.astral.sh/uv/concepts/projects/run/">Running commands</a></li>
+<li><a href="https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github">Adding local code to GitHub</a></li>
 <li><a href="https://docs.python.org/3/tutorial/venv.html">Python virtual environments</a></li>
 <li><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html">R library paths</a></li>
 <li><a href="https://rstudio.github.io/renv/"><code>renv</code> project environments</a></li>
 </ul>
-<p>Next: use this project environment as we begin working with Python data tools.</p>
 <aside class="notes">
 <p>Reference slide for students after class.</p>
-<p>Point students to the <code>uv</code> project guide as the main reference. The remaining links support the R comparison and the broader Python concept.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1107,10 +1354,10 @@ STAT 386
 <section id="questions" class="slide level2 section-card">
 <h2>Questions?</h2>
 <div class="key-idea">
-<p>Which part of the environment still feels hidden?</p>
+<p>Which responsibility of an environment manager would you want to see again?</p>
 </div>
 <aside class="notes">
-<p>Use remaining time to repeat the file model or one part of the live workflow.</p>
+<p>Use remaining time to revisit the general model or one part of the live workflow.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1316,7 +1563,7 @@ STAT 386
         margin: 6.0e-2,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1390,13 +1637,14 @@ STAT 386
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

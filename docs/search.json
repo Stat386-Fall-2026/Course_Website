@@ -4405,7 +4405,7 @@
     "href": "slides/uv_virtual_envs.html#a-short-diagnostic-routine",
     "title": "Reproducible Python Projects",
     "section": "A short diagnostic routine",
-    "text": "A short diagnostic routine\n\n\n\n\n\n\n\n\nSymptom\nFirst check\nLikely action\n\n\n\n\npyproject.toml cannot be found\nCurrent directory\ncd into the project\n\n\nImport fails in the terminal\nProject synchronization\nRun uv sync, then use uv run\n\n\nImport fails only in Positron\nSelected interpreter\nChoose the interpreter inside .venv\n\n\nA package works only for you\nDependency declaration\nAdd it with uv add and commit both project files\n\n\nEnvironment behaves unexpectedly\nAgreement with lockfile\nRun uv sync\n\n\n\n\nStart with location, synchronization, and interpreter selection.\n\n\nSuggested time: 2 minutes.\nWalk through one example. A student can run the program with uv run, but Positron shows a missing import. The project environment probably works, while Positron points to another interpreter.",
+    "text": "A short diagnostic routine\n\n\n\n\n\n\n\n\nSymptom\nFirst question\nLikely action\n\n\n\n\nProject metadata cannot be found\nAm I in the project directory?\ncd to pyproject.toml\n\n\nImport fails in the terminal\nDoes the environment match the lockfile?\nRun uv sync, then uv run\n\n\nImport fails only in Positron\nWhich interpreter did Positron select?\nChoose the interpreter inside .venv\n\n\nA package works only for the author\nDid the author declare and commit it?\nUse uv add, then commit the manifest and lockfile\n\n\n\n\nCheck location, project specification, synchronization, and interpreter selection.\n\n\nSuggested time: 2 minutes.\nWalk through one example. If uv run works but Positron shows a missing import, the project environment probably works while Positron points to another interpreter.",
     "crumbs": [
       "Home",
       "Slides",
@@ -4441,7 +4441,7 @@
     "href": "slides/uv_virtual_envs.html#takeaways",
     "title": "Reproducible Python Projects",
     "section": "Takeaways",
-    "text": "Takeaways\n\nR and Python both face dependency conflicts.\nA virtual environment isolates one project’s installed packages.\npyproject.toml describes direct needs, while uv.lock records the exact resolution.\nGit tracks the project description and leaves .venv/ local.\nuv sync reconstructs an environment, and uv run executes inside it.\nPositron must use the interpreter from the project’s .venv.\n\n\nSuggested time: 1 minute.\nAsk students to explain the fourth point in their own words. That answer connects today’s environment lesson to the previous Git sequence.",
+    "text": "Takeaways\n\nR and Python both face dependency conflicts.\nIsolation prevents projects from changing one another’s installed packages.\nA manifest records direct needs, while a lockfile records the complete resolution.\nGit shares the code and project specification while the environment remains local.\nA collaborator reconstructs the environment rather than receiving somebody else’s installation.\nuv provides a small toolbox for this general workflow.\n\n\nSuggested time: 1 minute.\nAsk students to explain the fifth point in their own words. That explanation reveals whether they understand the purpose behind uv sync.",
     "crumbs": [
       "Home",
       "Slides",
@@ -4453,7 +4453,7 @@
     "href": "slides/uv_virtual_envs.html#command-reference",
     "title": "Reproducible Python Projects",
     "section": "Command reference",
-    "text": "Command reference\n\n\n\nGoal\nCommand\n\n\n\n\nStart a flat analysis project\nuv init --no-package PROJECT_NAME\n\n\nAdd a dependency\nuv add PACKAGE\n\n\nRemove a dependency\nuv remove PACKAGE\n\n\nReconstruct the environment\nuv sync\n\n\nRun a Python file\nuv run python FILE.py\n\n\nInspect the dependency tree\nuv tree\n\n\n\n\nRun project commands from the folder that contains pyproject.toml.\n\n\nReference slide for students after class.\nThis slide serves as a reference after class. Students do not need to memorize every command today.",
+    "text": "Command reference\n\n\n\nGoal\nCommand\n\n\n\n\nStart a flat analysis project\nuv init --no-package PROJECT_NAME\n\n\nAdd a dependency\nuv add PACKAGE\n\n\nRemove a dependency\nuv remove PACKAGE\n\n\nReconstruct the environment\nuv sync\n\n\nRun a Python file\nuv run python FILE.py\n\n\nInspect the dependency graph\nuv tree\n\n\n\n\nRun project commands from the folder that contains pyproject.toml.\n\n\nReference slide for students after class.",
     "crumbs": [
       "Home",
       "Slides",
@@ -4477,7 +4477,7 @@
     "href": "slides/uv_virtual_envs.html#questions",
     "title": "Reproducible Python Projects",
     "section": "Questions?",
-    "text": "Questions?\n\nWhich part of the environment still feels hidden?\n\n\nUse remaining time to repeat the file model or one part of the live workflow.",
+    "text": "Questions?\n\nWhich responsibility of an environment manager would you want to see again?\n\n\nUse remaining time to revisit the general model or one part of the live workflow.",
     "crumbs": [
       "Home",
       "Slides",
@@ -4539,5 +4539,425 @@
     "title": "Week 1: Course Introduction",
     "section": "Questions?",
     "text": "Questions?\n\nTake 2 minutes — what is one thing from today that is still unclear?"
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#todays-durable-question",
+    "href": "slides/uv_virtual_envs.html#todays-durable-question",
+    "title": "Reproducible Python Projects",
+    "section": "Today’s durable question",
+    "text": "Today’s durable question\n\nWhat information lets another computer recreate the environment that made your analysis work?\n\nBy the end of class, you should be able to:\n\nExplain the problems solved by project environments and dependency management\nDistinguish a dependency manifest, a lockfile, and an installed environment\nTranslate a general reproducible workflow into uv commands\nShare a version-controlled project that another person can reconstruct\n\n\nSuggested time: 1 minute.\nTell students that uv supplies today’s commands, but the underlying ideas apply across languages and tools. A future tool may change the syntax without changing the problems that the workflow must solve.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#think-pair-share-r-package-libraries",
+    "href": "slides/uv_virtual_envs.html#think-pair-share-r-package-libraries",
+    "title": "Reproducible Python Projects",
+    "section": "Think, pair, share: R package libraries",
+    "text": "Think, pair, share: R package libraries\nYou have probably run code like this:\ninstall.packages(\"dplyr\")\nlibrary(dplyr)\n\nWhere did R install dplyr? Would two R projects on your computer use the same installed copy?\n\nYou can inspect R’s package search locations with:\n.libPaths()\n\nSuggested time: 3 minutes.\nThink for 30 seconds, discuss with a partner for one minute, then collect two or three answers. Many students know how to install an R package without knowing where the files live.\nIn a typical R installation, packages go into a user or site library. Projects using the same R installation often search the same libraries.\nSource: https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#r-and-python-face-the-same-dependency-problem",
+    "href": "slides/uv_virtual_envs.html#r-and-python-face-the-same-dependency-problem",
+    "title": "Reproducible Python Projects",
+    "section": "R and Python face the same dependency problem",
+    "text": "R and Python face the same dependency problem\n\n\n\n\n\n\n\nIntroductory R workflow\nCommon Python workflow\n\n\n\n\nProjects often share a user package library\nEach project commonly receives a .venv/\n\n\nPackage management stays in the background\nThe project environment stays visible\n\n\nrenv adds a private library and renv.lock\nuv manages .venv/ and uv.lock\n\n\n\n\n\n\nR with renv\nPython with uv\nPurpose\n\n\n\n\nProject library\n.venv/\nInstalled packages for one project\n\n\nrenv.lock\nuv.lock\nExact dependency resolution\n\n\nrenv::restore()\nuv sync\nReconstruct the environment\n\n\n\n\nSuggested time: 2 minutes.\nR does not escape dependency conflicts. Introductory R workflows often make the shared environment less visible. An RStudio or Positron project organizes files, while renv adds dependency isolation and locking.\nSource: https://rstudio.github.io/renv/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#think-pair-share-conflicting-requirements",
+    "href": "slides/uv_virtual_envs.html#think-pair-share-conflicting-requirements",
+    "title": "Reproducible Python Projects",
+    "section": "Think, pair, share: conflicting requirements",
+    "text": "Think, pair, share: conflicting requirements\n\n\nOlder analysis\nPython 3.11\npandas 1.x\nscikit-learn 1.3\nThe code depends on an older package interface.\n\nNew analysis\nPython 3.14\npandas 3.x\nscikit-learn 1.8\nThe code uses newer package behavior.\n\n\nWhat could go wrong if both projects share one interpreter and one set of installed packages?\n\n\nSuggested time: 3 minutes.\nThink for 30 seconds, discuss for one minute, then share. Listen for conflicts in package versions, Python versions, and transitive dependencies. Ask whether updating one project could change another project that nobody opened.\nThe versions provide a concrete scenario rather than a recommendation for current work.\nSource: https://docs.python.org/3/tutorial/venv.html",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#four-jobs-behind-a-reproducible-environment",
+    "href": "slides/uv_virtual_envs.html#four-jobs-behind-a-reproducible-environment",
+    "title": "Reproducible Python Projects",
+    "section": "Four jobs behind a reproducible environment",
+    "text": "Four jobs behind a reproducible environment\n\n\n\n\n\n\n\nJob\nQuestion it answers\n\n\n\n\nIsolation\nCan this project change without disturbing another project?\n\n\nDeclaration\nWhich packages does the project’s code directly require?\n\n\nResolution\nWhich complete set of package versions works together?\n\n\nReconstruction\nCan another computer install a compatible environment?\n\n\n\n\nA virtual environment handles isolation. Dependency metadata and a lockfile make reconstruction possible.\n\n\nSuggested time: 2 minutes.\nKeep the four jobs distinct. A .venv with undocumented packages provides isolation but remains difficult to reproduce. A package list without isolation can still let projects interfere with one another.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#intent-resolution-and-local-installation",
+    "href": "slides/uv_virtual_envs.html#intent-resolution-and-local-installation",
+    "title": "Reproducible Python Projects",
+    "section": "Intent, resolution, and local installation",
+    "text": "Intent, resolution, and local installation\n\n\n\n\n\nflowchart LR\n    A[\"Manifest&lt;br/&gt;What the project needs\"] --&gt; B[\"Lockfile&lt;br/&gt;Exact compatible resolution\"] --&gt; C[\"Environment&lt;br/&gt;Packages installed here\"]\n\n\n\n\n\n\n\n\n\nLayer\nPython example\nHuman or generated?\n\n\n\n\nIntent\npyproject.toml\nHuman-readable project declaration\n\n\nResolution\nuv.lock\nTool-generated exact dependency graph\n\n\nLocal installation\n.venv/\nGenerated files on one computer\n\n\n\n\nSuggested time: 2 minutes.\nEmphasize the direction. The manifest describes the project’s needs. A resolver chooses a complete compatible set. The package manager installs that resolution into a local environment.\nThe installed environment is an output of the process rather than the source of truth.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#direct-and-transitive-dependencies",
+    "href": "slides/uv_virtual_envs.html#direct-and-transitive-dependencies",
+    "title": "Reproducible Python Projects",
+    "section": "Direct and transitive dependencies",
+    "text": "Direct and transitive dependencies\nYour code may directly require one package:\nmain.py imports pandas\nThat package may require several others:\npandas depends on NumPy and other packages\n\n\n\nDependency\nWho chose it?\nWhere is it recorded?\n\n\n\n\nDirect\nProject author\nManifest and lockfile\n\n\nTransitive\nDependency resolver\nLockfile\n\n\n\n\nThe lockfile records the complete dependency graph, including packages your code never imports directly.\n\n\nSuggested time: 2 minutes.\nThis explains why a lockfile contains more package names than the student added. The author declares direct needs. The resolver computes a full compatible graph.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#think-pair-share-enough-information-to-reproduce",
+    "href": "slides/uv_virtual_envs.html#think-pair-share-enough-information-to-reproduce",
+    "title": "Reproducible Python Projects",
+    "section": "Think, pair, share: enough information to reproduce?",
+    "text": "Think, pair, share: enough information to reproduce?\nA collaborator receives one of these bundles:\n\n\n\nBundle\nContents\n\n\n\n\nA\nCode only\n\n\nB\nCode and somebody else’s .venv/\n\n\nC\nCode and a dependency manifest\n\n\nD\nCode, Python requirement, manifest, and lockfile\n\n\n\n\nRank the bundles from least to most useful for reproducibility and later debugging.\nBe ready to defend your ranking using portability, recorded environment information, and what could still change. Which comparison was hardest?\n\n\nSuggested time: 4 minutes.\nThink for 30 seconds, discuss for 90 seconds, then ask two pairs with different rankings to defend their choices. Give the second pair a chance to respond to the first.\nThe comparison between B and C should produce useful disagreement. Bundle B contains more installed files, but those files may depend on the original operating system, architecture, and paths. Bundle C is portable but may resolve to different package versions later.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#a-tool-independent-workflow",
+    "href": "slides/uv_virtual_envs.html#a-tool-independent-workflow",
+    "title": "Reproducible Python Projects",
+    "section": "A tool-independent workflow",
+    "text": "A tool-independent workflow\n\n\n\n\n\nflowchart TD\n    A[\"Choose a runtime\"] --&gt; B[\"Create project isolation\"] --&gt; C[\"Declare direct dependencies\"]\n    C --&gt; D[\"Resolve and lock versions\"] --&gt; E[\"Install and run\"] --&gt; F[\"Share the specification\"]\n\n\n\n\n\n\nAny replacement for uv must still help with these operations.\n\nLearn the purpose of each operation first. Command syntax becomes a translation exercise.\n\n\nSuggested time: 2 minutes.\nRead the workflow using generic verbs. Ask students which steps they have already encountered in R, even if the tools hid them.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#the-general-workflow-in-uv",
+    "href": "slides/uv_virtual_envs.html#the-general-workflow-in-uv",
+    "title": "Reproducible Python Projects",
+    "section": "The general workflow in uv",
+    "text": "The general workflow in uv\n\n\n\nGeneral operation\nuv project representation\n\n\n\n\nRecord the Python version\n.python-version\n\n\nCreate project isolation\n.venv/\n\n\nDeclare direct dependencies\npyproject.toml and uv add\n\n\nRecord the exact resolution\nuv.lock\n\n\nReconstruct local packages\nuv sync\n\n\nRun inside the environment\nuv run\n\n\n\nOther tools use different commands and filenames while performing similar jobs.\n\nSuggested time: 2 minutes.\nThis is the bridge from theory to the command-line toolbox. Students should be able to replace the right column later without discarding the left column.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#the-git-boundary-in-a-uv-project",
+    "href": "slides/uv_virtual_envs.html#the-git-boundary-in-a-uv-project",
+    "title": "Reproducible Python Projects",
+    "section": "The Git boundary in a uv project",
+    "text": "The Git boundary in a uv project\n\n\n\n\n\n\n\n\nItem\nRole\nGit decision\n\n\n\n\n.python-version\nNames the intended Python version\nCommit\n\n\npyproject.toml\nDeclares direct dependencies and settings\nCommit\n\n\nuv.lock\nRecords the exact dependency resolution\nCommit\n\n\nProject code\nPerforms the analysis\nCommit\n\n\n.venv/\nStores one local installation\nIgnore\n\n\n\n\nGit shares the project specification. The package manager reconstructs the local environment.\n\n\nSuggested time: 2 minutes.\nReturn to the earlier Git lessons. The repository stores durable project inputs. It omits generated, machine-specific installation files.\nSource: https://docs.astral.sh/uv/guides/projects/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#live-workflow-author-and-reproducer",
+    "href": "slides/uv_virtual_envs.html#live-workflow-author-and-reproducer",
+    "title": "Reproducible Python Projects",
+    "section": "Live workflow: author and reproducer",
+    "text": "Live workflow: author and reproducer\n\nWe will build a project on one computer and reconstruct it from a fresh clone on another.\n\nAuthor: initialize, add, run, commit, and share\nReproducer: clone, sync, and run\n\nSuggested time: 1 minute.\nThe class follows the author steps from an empty folder. Create the GitHub repository during the demo. Choose a student reproducer before starting and confirm that the student can access GitHub and has Git and uv installed.\nFor a 50-minute class, everyone can follow the local author steps while the instructor or one assigned pair creates and pushes the shared repository. One student then clones it on a different computer.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-1-initialize-the-project",
+    "href": "slides/uv_virtual_envs.html#author-1-initialize-the-project",
+    "title": "Reproducible Python Projects",
+    "section": "Author 1: initialize the project",
+    "text": "Author 1: initialize the project\ncd ~/Desktop/School/STAT_386\nuv init --no-package environment-demo\ncd environment-demo\nls -la\nLook for:\n.git/              .python-version\n.gitignore         main.py\nREADME.md          pyproject.toml\n\nCheck: pwd ends in environment-demo, and git status recognizes a repository.\n\n\nSuggested time: 2 minutes.\nAdapt the first path to the course folder students created earlier. --no-package creates a flat application project suited to a small data analysis.\nPoint out that uv init created both the project files and the local Git repository. .venv/ and uv.lock will appear when the project first resolves and installs dependencies.\nSource: https://docs.astral.sh/uv/concepts/projects/init/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-2-add-a-dependency-and-run-code",
+    "href": "slides/uv_virtual_envs.html#author-2-add-a-dependency-and-run-code",
+    "title": "Reproducible Python Projects",
+    "section": "Author 2: add a dependency and run code",
+    "text": "Author 2: add a dependency and run code\nuv add pandas\nReplace main.py with:\nimport pandas as pd\n\nscores = pd.DataFrame(\n    {\n        \"section\": [\"A\", \"A\", \"B\", \"B\"],\n        \"score\": [82, 94, 88, 92],\n    }\n)\n\nprint(scores.groupby(\"section\")[\"score\"].mean())\nuv run python main.py\n\nSuggested time: 4 minutes.\nPrepare the Python code for copy and paste. uv add updates the manifest, resolves and records the dependency graph, and installs packages into .venv/.\nuv run executes inside the project environment. Ask which installed copy of pandas the script imports.\nSource: https://docs.astral.sh/uv/reference/cli/#uv-add Source: https://docs.astral.sh/uv/concepts/projects/run/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#the-theory-becomes-visible",
+    "href": "slides/uv_virtual_envs.html#the-theory-becomes-visible",
+    "title": "Reproducible Python Projects",
+    "section": "The theory becomes visible",
+    "text": "The theory becomes visible\ngit status\nuv tree\nuv run python -c \"import sys; print(sys.executable)\"\n\n\n\n\n\n\n\nObservation\nConcept\n\n\n\n\n.venv/ now exists\nLocal isolation and installation\n\n\npyproject.toml lists pandas\nDirect dependency declaration\n\n\nuv.lock contains more packages\nComplete dependency resolution\n\n\nPython path points inside .venv\nCode runs in the project environment\n\n\n\n\nSuggested time: 2 minutes.\nOpen pyproject.toml and locate the direct dependency. Open uv.lock only long enough to show exact versions and transitive dependencies. Use uv tree to make the dependency graph easier to read.\nIn Positron, select the interpreter inside .venv so editor execution uses the same environment.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-3-version-control-the-specification",
+    "href": "slides/uv_virtual_envs.html#author-3-version-control-the-specification",
+    "title": "Reproducible Python Projects",
+    "section": "Author 3: version-control the specification",
+    "text": "Author 3: version-control the specification\ngit status\ngit diff\ngit add .\ngit diff --staged\ngit commit -m \"Create reproducible score summary\"\nBefore committing, verify that Git includes:\n.gitignore          main.py\n.python-version     pyproject.toml\nREADME.md           uv.lock\nGit should ignore .venv/.\n\nSuggested time: 2 minutes.\nConnect every tracked file to the earlier theory. Inspect .gitignore and confirm the .venv rule. git add . is appropriate here only after reviewing git status and the diff.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-4-share-the-repository",
+    "href": "slides/uv_virtual_envs.html#author-4-share-the-repository",
+    "title": "Reproducible Python Projects",
+    "section": "Author 4: share the repository",
+    "text": "Author 4: share the repository\nConnect the local project to the empty course repository:\ngit branch -M main\ngit remote add origin REPOSITORY_URL\ngit push -u origin main\nThe remote repository receives the code and project specification.\nIt does not receive .venv/.\n\nSuggested time: 2 minutes.\nUse the prepared repository URL. Open the GitHub repository and verify that pyproject.toml and uv.lock appear while .venv/ does not.\nIf students work in assigned pairs with shared repositories, Partner A performs this step. Otherwise, the instructor pushes the class copy while everyone verifies their own local commit.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#predict-before-uv-sync",
+    "href": "slides/uv_virtual_envs.html#predict-before-uv-sync",
+    "title": "Reproducible Python Projects",
+    "section": "Predict before uv sync",
+    "text": "Predict before uv sync\nThe reproducer is about to clone the project on a different computer.\n\nBefore running anything, predict:\n\nWhich project files will arrive through Git?\nWill .venv/ already exist?\nWhat must uv sync read and create?\nWhich file should remain unchanged during synchronization?\n\n\n\nSuggested time: 2 minutes.\nGive pairs one minute. Expected answers: Git brings the tracked code and specification, .venv is absent, uv sync reads the Python requirement, manifest, and lockfile, then creates the local environment. When the manifest and lockfile already agree, synchronization should not need to change the lockfile.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#reproducer-clone-sync-and-run",
+    "href": "slides/uv_virtual_envs.html#reproducer-clone-sync-and-run",
+    "title": "Reproducible Python Projects",
+    "section": "Reproducer: clone, sync, and run",
+    "text": "Reproducer: clone, sync, and run\ncd ~/Desktop/School/STAT_386\ngit clone REPOSITORY_URL environment-demo-copy\ncd environment-demo-copy\nls -la\nConfirm that .venv/ is absent, then run:\nuv sync\nuv run python main.py\n\nThe environment-setup step on the second computer is uv sync.\n\n\nSuggested time: 4 minutes.\nUse environment-demo-copy so this works even when the author and reproducer roles happen on one computer. On separate computers, the alternate folder name is optional.\nAfter uv sync, show that .venv/ now exists and the program produces the same summary. uv run also checks synchronization automatically, but use explicit uv sync today so students can see the reconstruction step.\nSource: https://docs.astral.sh/uv/concepts/projects/sync/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#what-did-the-repository-actually-share",
+    "href": "slides/uv_virtual_envs.html#what-did-the-repository-actually-share",
+    "title": "Reproducible Python Projects",
+    "section": "What did the repository actually share?",
+    "text": "What did the repository actually share?\nThe author and reproducer now have:\n\nThe same tracked code\nThe same declared dependencies\nThe same locked dependency resolution\nDifferent locally generated .venv/ directories\n\n\nWhich parts had to match? Which parts only had to be reconstructable?\n\n\nSuggested time: 2 minutes.\nThis is the main conceptual payoff. The two .venv directories do not need to be copied or byte-for-byte identical. The repository supplies a shared specification from which each machine builds a compatible local environment.\nNatural stopping point for a 50-minute class. Continue to extended practice if time remains or begin here next time.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#extended-practice-the-project-evolves",
+    "href": "slides/uv_virtual_envs.html#extended-practice-the-project-evolves",
+    "title": "Reproducible Python Projects",
+    "section": "Extended practice: the project evolves",
+    "text": "Extended practice: the project evolves\n\nAdding a library changes the project specification, so the author and reproducer repeat the same cycle.\n\nAuthor: add, change, run, commit, push\nReproducer: pull, sync, run\n\nOptional extension: 8 to 12 minutes.\nUse this section if the core workflow finishes early. It can also open the next meeting as retrieval practice.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#extended-practice-1-add-tabulate",
+    "href": "slides/uv_virtual_envs.html#extended-practice-1-add-tabulate",
+    "title": "Reproducible Python Projects",
+    "section": "Extended practice 1: add tabulate",
+    "text": "Extended practice 1: add tabulate\nOn the author’s copy:\n\nPredict which tracked files and which local-only directory will change.\n\nuv add tabulate\nReplace the final line of main.py with:\nsummary = scores.groupby(\"section\", as_index=False)[\"score\"].mean()\nprint(summary.to_markdown(index=False))\nThen run and share the update:\nuv run python main.py\ngit status\ngit diff\ngit add .\ngit diff --staged\ngit commit -m \"Print summary as a Markdown table\"\ngit push\n\nSuggested time: 4 to 6 minutes.\nBefore running uv add, ask students which tracked files they expect to change. Expected answers: pyproject.toml, uv.lock, and then main.py after editing. .venv/ also changes locally but remains ignored.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#extended-practice-2-reproduce-the-update",
+    "href": "slides/uv_virtual_envs.html#extended-practice-2-reproduce-the-update",
+    "title": "Reproducible Python Projects",
+    "section": "Extended practice 2: reproduce the update",
+    "text": "Extended practice 2: reproduce the update\nOn the reproducer’s copy:\ngit pull\nuv sync\nuv run python main.py\nVerify:\n\ngit pull retrieves the changed code and project specification\nuv sync installs the new dependency into the local .venv/\nThe program prints a Markdown table\n\n\nWhat stayed the same about the workflow even though the code and dependencies changed?\n\n\nSuggested time: 4 to 6 minutes.\nThe durable cycle remains unchanged: update the specification, share it through version control, reconstruct locally, and run inside the environment.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#if-the-tool-changes",
+    "href": "slides/uv_virtual_envs.html#if-the-tool-changes",
+    "title": "Reproducible Python Projects",
+    "section": "If the tool changes",
+    "text": "If the tool changes\nSuppose a future course uses a different environment manager.\nAsk the new tool how to:\n\nCreate project isolation\nDeclare direct dependencies\nResolve and lock the full dependency graph\nReconstruct the environment from tracked files\nRun code inside that environment\n\n\nThe commands may change. The questions and responsibilities remain recognizable.\n\n\nSuggested time: 2 minutes.\nReturn directly to the desired durable outcome. Students should leave with a checklist for evaluating or learning the next tool rather than treating uv commands as isolated facts.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#references",
+    "href": "slides/uv_virtual_envs.html#references",
+    "title": "Reproducible Python Projects",
+    "section": "References",
+    "text": "References\n\nCreating projects with uv\nWorking on projects with uv\nuv project structure and files\nLocking and syncing\nRunning commands\nAdding local code to GitHub\nPython virtual environments\nR library paths\nrenv project environments\n\n\nReference slide for students after class.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#think-pair-share-one-project-changes-another",
+    "href": "slides/uv_virtual_envs.html#think-pair-share-one-project-changes-another",
+    "title": "Reproducible Python Projects",
+    "section": "Think, pair, share: one project changes another",
+    "text": "Think, pair, share: one project changes another\n\n\n\n\n\n\n\nDay\nWhat happened?\n\n\n\n\nMonday\nProject A runs correctly with dplyr\n\n\nTuesday\nYou update dplyr while working on Project B\n\n\nWednesday\nProject A behaves differently, although none of its files changed\n\n\n\n\nHow could work in Project B affect Project A? What important information lived outside Project A’s files? What would prevent this connection?\n\n\nSuggested time: 3 minutes.\nGive students 30 seconds to think, one minute to discuss, and one minute to share. Ask one pair to explain the mechanism and another pair to propose a prevention strategy.\nListen for a shared user library, a changed package version, missing environment information, and project-specific isolation. If needed, show .libPaths() after the discussion to reveal where R searches for installed packages.\nSource: https://stat.ethz.ch/R-manual/R-devel/library/base/html/libPaths.html",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#why-r-can-make-the-problem-less-visible",
+    "href": "slides/uv_virtual_envs.html#why-r-can-make-the-problem-less-visible",
+    "title": "Reproducible Python Projects",
+    "section": "Why R can make the problem less visible",
+    "text": "Why R can make the problem less visible\n\n\n\n\n\n\n\nObservation\nWhat it means\n\n\n\n\nR projects often search the same user library\nUpdating a package can affect several projects\n\n\nProject A’s files did not change\nPart of its computational state lived outside the project\n\n\nA private project library separates installed packages\nChanges in one project stay contained\n\n\nA lockfile records the selected versions\nA collaborator can reconstruct the resolution later\n\n\n\n\n\n\nR with renv\nPython with uv\nPurpose\n\n\n\n\nProject library\n.venv/\nLocal packages for one project\n\n\nrenv.lock\nuv.lock\nRecorded dependency resolution\n\n\nrenv::restore()\nuv sync\nReconstruct the local environment\n\n\n\n\nSuggested time: 2 minutes.\nUse this slide to close the discussion. R and Python face the same dependency problem. Introductory R workflows often share a package library, so the environment stays in the background. renv makes project isolation and reconstruction explicit, much like uv in today’s Python workflow.\nSource: https://rstudio.github.io/renv/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#think-pair-share-what-belongs-in-git",
+    "href": "slides/uv_virtual_envs.html#think-pair-share-what-belongs-in-git",
+    "title": "Reproducible Python Projects",
+    "section": "Think, pair, share: what belongs in Git?",
+    "text": "Think, pair, share: what belongs in Git?\nSuppose a project contains:\n.python-version     pyproject.toml     uv.lock\nmain.py             .venv/             __pycache__/\n\nSort the items into two groups: durable project inputs and locally generated outputs. Which items should Git track, and why?\n\n\nSuggested time: 3 minutes.\nGive pairs one minute to sort the files, then ask two pairs to justify one disputed item. Press for a general rule rather than a memorized list.\nExpected distinction: another computer needs the Python requirement, manifest, lockfile, and code as inputs. The environment and caches can be regenerated locally.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#git-stores-the-reconstruction-inputs",
+    "href": "slides/uv_virtual_envs.html#git-stores-the-reconstruction-inputs",
+    "title": "Reproducible Python Projects",
+    "section": "Git stores the reconstruction inputs",
+    "text": "Git stores the reconstruction inputs\n\n\n\n\n\n\n\n\nItem\nRole\nGit decision\n\n\n\n\n.python-version\nRecords the intended Python version\nCommit\n\n\npyproject.toml\nDeclares direct dependencies and settings\nCommit\n\n\nuv.lock\nRecords the complete dependency resolution\nCommit\n\n\nmain.py and other project files\nDefine the analysis\nCommit\n\n\n.venv/\nStores one local installation\nIgnore\n\n\n__pycache__/\nStores disposable Python cache files\nIgnore\n\n\n\n\nVersion-control the files another computer needs as inputs. Ignore files the project tools can regenerate.\n\n\nSuggested time: 2 minutes.\nUse this slide to summarize the discussion. The repository preserves the recipe and the analysis. The package manager builds a local installation from those tracked inputs.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#ranking-debrief-the-strongest-project-contract",
+    "href": "slides/uv_virtual_envs.html#ranking-debrief-the-strongest-project-contract",
+    "title": "Reproducible Python Projects",
+    "section": "Ranking debrief: the strongest project contract",
+    "text": "Ranking debrief: the strongest project contract\n\n\n\n\n\n\n\n\nBundle\nWhat it provides\nMain limitation\n\n\n\n\nA: code only\nThe analysis logic\nNo environment information\n\n\nB: code and .venv/\nOne installed environment\nGenerated files may not transfer across computers\n\n\nC: code and manifest\nPortable dependency intent\nA later resolution may select different versions\n\n\nD: code, Python requirement, manifest, and lockfile\nIntent plus the exact dependency resolution\nDoes not capture every operating-system or hardware difference\n\n\n\n\nBundle D gives the strongest project-level basis for reconstruction and debugging.\n\n\nSuggested time: 2 minutes.\nUse this slide to settle the ranking. A reasonable pair may place B above C for immediate forensics on a compatible machine, but C usually transfers more cleanly. D combines portable project inputs with a recorded resolution.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-2-create-and-connect-the-remote",
+    "href": "slides/uv_virtual_envs.html#author-2-create-and-connect-the-remote",
+    "title": "Reproducible Python Projects",
+    "section": "Author 2: create and connect the remote",
+    "text": "Author 2: create and connect the remote\nOn GitHub, create a new repository named environment-demo:\n\nChoose Public, or give the student reproducer access to a private repository\nLeave README, .gitignore, and license initialization unchecked\nCreate the repository and copy its URL\n\nConnect the local repository:\ngit branch -M main\ngit remote add origin REPOSITORY_URL\ngit remote -v\n\nCheck: git remote -v shows the GitHub URL for origin.\n\n\nSuggested time: 3 minutes.\nCreate the remote during class so students see that the local Git repository and the GitHub repository begin as separate objects. Leaving the remote empty avoids a competing first commit.\nStudents must already have GitHub authentication configured for the later push. If every student creates a remote, circulate while they copy their URLs. For a tighter demo, create one class remote while everyone connects conceptually.\nSource: https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-3-add-a-dependency-and-run-code",
+    "href": "slides/uv_virtual_envs.html#author-3-add-a-dependency-and-run-code",
+    "title": "Reproducible Python Projects",
+    "section": "Author 3: add a dependency and run code",
+    "text": "Author 3: add a dependency and run code\nuv add pandas\nReplace main.py with:\nimport pandas as pd\n\nscores = pd.DataFrame(\n    {\n        \"section\": [\"A\", \"A\", \"B\", \"B\"],\n        \"score\": [82, 94, 88, 92],\n    }\n)\n\nprint(scores.groupby(\"section\")[\"score\"].mean())\nuv run python main.py\n\nSuggested time: 4 minutes.\nPrepare the Python code for copy and paste. uv add declares pandas in the manifest, resolves and records the dependency graph, and installs the resolved packages into .venv/.\nuv run executes inside the project environment. Ask which installed copy of pandas the script imports.\nSource: https://docs.astral.sh/uv/reference/cli/#uv-add Source: https://docs.astral.sh/uv/concepts/projects/run/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#author-4-commit-and-share-the-specification",
+    "href": "slides/uv_virtual_envs.html#author-4-commit-and-share-the-specification",
+    "title": "Reproducible Python Projects",
+    "section": "Author 4: commit and share the specification",
+    "text": "Author 4: commit and share the specification\ngit status\ngit diff\ngit add .\ngit diff --staged\ngit commit -m \"Create reproducible score summary\"\ngit push -u origin main\nBefore committing, verify that Git includes:\n.gitignore          main.py\n.python-version     pyproject.toml\nREADME.md           uv.lock\nGit should ignore .venv/.\n\nSuggested time: 3 minutes.\nConnect every tracked file to the earlier theory. Inspect .gitignore and confirm the .venv rule. git add . is appropriate here only after reviewing git status and the diff.\nAfter the push, open the GitHub repository and verify that pyproject.toml and uv.lock appear while .venv/ does not. The remote receives the code and reconstruction inputs rather than the author’s installed environment.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#student-reproducer-clone-sync-and-run",
+    "href": "slides/uv_virtual_envs.html#student-reproducer-clone-sync-and-run",
+    "title": "Reproducible Python Projects",
+    "section": "Student reproducer: clone, sync, and run",
+    "text": "Student reproducer: clone, sync, and run\ncd ~/Desktop/School/STAT_386\ngit clone REPOSITORY_URL\ncd environment-demo\nls -la\nConfirm that .venv/ is absent, then run:\nuv sync\nuv run python main.py\nuv run python -c \"import sys; print(sys.executable)\"\n\nThe environment-setup step on the second computer is uv sync.\n\n\nSuggested time: 4 minutes.\nHave the selected student clone on a different computer and share the terminal output. If the author and reproducer roles must happen on one computer, clone into environment-demo-copy instead.\nAfter uv sync, show that .venv/ now exists, the program produces the same summary, and the interpreter path points inside the student’s project. uv run also checks synchronization automatically, but use explicit uv sync today so students can see the reconstruction step.\nSource: https://docs.astral.sh/uv/concepts/projects/sync/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
+  },
+  {
+    "objectID": "slides/uv_virtual_envs.html#reconstruction-rather-than-copying",
+    "href": "slides/uv_virtual_envs.html#reconstruction-rather-than-copying",
+    "title": "Reproducible Python Projects",
+    "section": "Reconstruction rather than copying",
+    "text": "Reconstruction rather than copying\nThe author and reproducer now have:\n\nThe same tracked code\nThe same declared dependencies\nThe same locked dependency resolution\nDifferent locally generated .venv/ directories\n\n\nThe tracked specification had to match. Each computer generated its own local environment from that specification.\n\n\nSuggested time: 2 minutes.\nThis is the main conceptual payoff. Ask a student to name what Git transferred and what uv sync constructed. The two .venv directories do not need to be copied or byte-for-byte identical. The repository supplies a shared specification from which each machine builds a compatible local environment.\nNatural stopping point for a 50-minute class. Continue to extended practice if time remains or begin here next time.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Reproducible Python Projects"
+    ]
   }
 ]
