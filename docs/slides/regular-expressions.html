@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Regular Expressions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -544,12 +544,12 @@
 <section id="extract-phone-numbers-solution" class="slide level2 demo-slide">
 <h2>Extract Phone Numbers — Solution</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> re</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> re</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>text <span class="op">=</span> <span class="st">"Call 801-555-1234 or 212-999-8888 today!"</span></span>
 <span id="cb1-4"><a></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b\d</span><span class="op">{3}</span><span class="vs">-</span><span class="dv">\d</span><span class="op">{3}</span><span class="vs">-</span><span class="dv">\d</span><span class="op">{4}</span><span class="dv">\b</span><span class="vs">"</span></span>
 <span id="cb1-5"><a></a><span class="bu">print</span>(re.findall(pattern, text))</span>
-<span id="cb1-6"><a></a><span class="co"># ['801-555-1234', '212-999-8888']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a></a><span class="co"># ['801-555-1234', '212-999-8888']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="tip-box">
 <p>The <code>\b</code> anchors ensure we don’t grab digits embedded in longer numbers.</p>
@@ -568,12 +568,12 @@
 <section id="extract-email-addresses-solution" class="slide level2 demo-slide">
 <h2>Extract Email Addresses — Solution</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> re</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> re</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>text <span class="op">=</span> <span class="st">"Contact us at help@university.edu"</span></span>
 <span id="cb2-4"><a></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b\w</span><span class="op">+</span><span class="vs">@</span><span class="dv">\w</span><span class="op">+</span><span class="ch">\.</span><span class="dv">\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">"</span></span>
 <span id="cb2-5"><a></a><span class="bu">print</span>(re.findall(pattern, text))</span>
-<span id="cb2-6"><a></a><span class="co"># ['help@university.edu']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a></a><span class="co"># ['help@university.edu']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="tip-box">
 <p><code>\w+</code> matches one or more word characters — the local part and the domain.</p>
@@ -664,7 +664,7 @@
 <section id="pandas-example" class="slide level2 demo-slide">
 <h2>Pandas Example</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a></a><span class="im">import</span> re</span>
 <span id="cb3-3"><a></a></span>
 <span id="cb3-4"><a></a>data <span class="op">=</span> {<span class="st">'text'</span>: [<span class="st">"Hello, World!"</span>,</span>
@@ -675,7 +675,7 @@
 <span id="cb3-9"><a></a>df[<span class="st">'uppercase_text'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">str</span>.upper()</span>
 <span id="cb3-10"><a></a>df[<span class="st">'words_starting_with_S'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">apply</span>(</span>
 <span id="cb3-11"><a></a>    <span class="kw">lambda</span> x: re.findall(<span class="vs">r'</span><span class="dv">\b</span><span class="vs">S</span><span class="dv">\w</span><span class="op">+</span><span class="vs">'</span>, x)</span>
-<span id="cb3-12"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="tip-box">
 <p><code>.str.upper()</code> needs no regex; <code>.apply()</code> with <code>re.findall</code> unlocks pattern power.</p>
@@ -901,7 +901,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -975,13 +975,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

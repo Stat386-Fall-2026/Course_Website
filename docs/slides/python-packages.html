@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Python Packages</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -268,7 +268,7 @@
 </section>
 <section id="modern-package-directory-src-layout" class="slide level2 demo-slide">
 <h2>Modern Package Directory (src layout)</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>myproject/</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>myproject/</span>
 <span id="cb1-2"><a></a>  LICENSE</span>
 <span id="cb1-3"><a></a>  README.md</span>
 <span id="cb1-4"><a></a>  pyproject.toml</span>
@@ -276,14 +276,14 @@
 <span id="cb1-6"><a></a>    myproject/</span>
 <span id="cb1-7"><a></a>      __init__.py</span>
 <span id="cb1-8"><a></a>      core.py</span>
-<span id="cb1-9"><a></a>  tests/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a></a>  tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Why <code>src/</code>?</strong> It prevents accidental imports from the project root — you test the <em>installed</em> package, not the loose files.</p>
 </div>
 </section>
 <section id="minimal-pyproject.toml-setuptools-backend" class="slide level2 demo-slide">
 <h2>Minimal pyproject.toml (Setuptools backend)</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a></a><span class="kw">[build-system]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a></a><span class="kw">[build-system]</span></span>
 <span id="cb2-2"><a></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools&gt;=68"</span><span class="op">,</span> <span class="st">"wheel"</span><span class="op">]</span></span>
 <span id="cb2-3"><a></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
 <span id="cb2-4"><a></a></span>
@@ -297,15 +297,15 @@
 <span id="cb2-12"><a></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[{ </span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"you@example.com"</span><span class="op"> }]</span></span>
 <span id="cb2-13"><a></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span><span class="st">"Programming Language :: Python :: 3"</span><span class="op">,</span></span>
 <span id="cb2-14"><a></a>               <span class="st">"Operating System :: OS Independent"</span><span class="op">]</span></span>
-<span id="cb2-15"><a></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="editable-install-dev-versioning" class="slide level2 demo-slide">
 <h2>Editable install (dev) &amp; versioning</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="co"># install locally for development</span></span>
-<span id="cb3-2"><a></a><span class="ex">uv</span> pip install <span class="at">-e</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb4-1"><a></a><span class="co"># bump version when publishing (PEP 440)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="co"># install locally for development</span></span>
+<span id="cb3-2"><a></a><span class="ex">uv</span> pip install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb4-1"><a></a><span class="co"># bump version when publishing (PEP 440)</span></span>
 <span id="cb4-2"><a></a><span class="co"># MAJOR.MINOR.PATCH, e.g. 0.1.0 -&gt; 0.1.1</span></span>
-<span id="cb4-3"><a></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.1"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="key-idea">
 <p>Editable installs (<code>-e</code>) link your source so edits take effect immediately — no reinstall needed.</p>
 </div>
@@ -336,19 +336,19 @@
 </section>
 <section id="bridging-the-two-uv-commands" class="slide level2 demo-slide">
 <h2>Bridging the two (uv commands)</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># export a lock file from your project</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># export a lock file from your project</span></span>
 <span id="cb5-2"><a></a><span class="ex">uv</span> export <span class="at">--format</span> requirements-txt <span class="at">-o</span> requirements.txt</span>
 <span id="cb5-3"><a></a></span>
 <span id="cb5-4"><a></a><span class="co"># compile pyproject.toml into pinned requirements</span></span>
-<span id="cb5-5"><a></a><span class="ex">uv</span> pip compile pyproject.toml <span class="at">-o</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a></a><span class="ex">uv</span> pip compile pyproject.toml <span class="at">-o</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> With <code>uv</code>, you can export a lock or <code>requirements.txt</code> whenever an app-style pin file is needed.</p>
 </div>
 </section>
 <section id="build-distributions" class="slide level2 demo-slide">
 <h2>Build distributions</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="co"># uses your chosen backend via uv</span></span>
-<span id="cb6-2"><a></a><span class="ex">uv</span> build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="co"># uses your chosen backend via uv</span></span>
+<span id="cb6-2"><a></a><span class="ex">uv</span> build</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Outputs:</strong></p>
 <ul>
 <li><code>dist/*.tar.gz</code> — <strong>sdist</strong> (source distribution)</li>
@@ -360,20 +360,20 @@
 </section>
 <section id="publish-to-testpypi-trial-first" class="slide level2 demo-slide">
 <h2>Publish to TestPyPI (trial first)</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">uvx</span> twine upload <span class="at">--repository</span> testpypi dist/<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">uvx</span> twine upload <span class="at">--repository</span> testpypi dist/<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>~/.pypirc</code> config:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource ini number-lines code-with-copy"><code class="sourceCode ini"><span id="cb8-1"><a></a><span class="kw">[testpypi]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource ini number-lines code-with-copy"><code class="sourceCode ini"><span id="cb8-1"><a></a><span class="kw">[testpypi]</span></span>
 <span id="cb8-2"><a></a><span class="dt">  username </span><span class="ot">=</span><span class="st"> __token__</span></span>
-<span id="cb8-3"><a></a><span class="dt">  password </span><span class="ot">=</span><span class="st"> &lt;testpypi_api_key&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a></a><span class="dt">  password </span><span class="ot">=</span><span class="st"> &lt;testpypi_api_key&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Warning:</strong> Use <strong>TestPyPI</strong> first — it’s a sandbox. Don’t push broken builds to the real PyPI.</p>
 </div>
 </section>
 <section id="install-verify-from-testpypi" class="slide level2 demo-slide">
 <h2>Install &amp; verify from TestPyPI</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--index-url</span> https://test.pypi.org/simple/ <span class="dt">\</span></span>
-<span id="cb9-2"><a></a>                      <span class="at">--no-deps</span> myproject</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>python <span class="op">-</span>c <span class="st">"import myproject; print('import ok')"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--index-url</span> https://test.pypi.org/simple/ <span class="dt">\</span></span>
+<span id="cb9-2"><a></a>                      <span class="at">--no-deps</span> myproject</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>python <span class="op">-</span>c <span class="st">"import myproject; print('import ok')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="demo-box">
 <p>Try installing your own package from TestPyPI and importing it in a fresh environment. Did it work?</p>
 </div>
@@ -392,7 +392,7 @@
 </section>
 <section id="a-tiny-test-arrange-act-assert" class="slide level2 demo-slide">
 <h2>A tiny test: Arrange Act Assert</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># tests/test_core.py</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># tests/test_core.py</span></span>
 <span id="cb11-2"><a></a><span class="im">from</span> myproject <span class="im">import</span> core</span>
 <span id="cb11-3"><a></a></span>
 <span id="cb11-4"><a></a><span class="kw">def</span> test_add_one():</span>
@@ -401,17 +401,17 @@
 <span id="cb11-7"><a></a>    <span class="co"># Act</span></span>
 <span id="cb11-8"><a></a>    y <span class="op">=</span> core.add_one(x)</span>
 <span id="cb11-9"><a></a>    <span class="co"># Assert</span></span>
-<span id="cb11-10"><a></a>    <span class="cf">assert</span> y <span class="op">==</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">uvx</span> pytest <span class="at">-q</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-10"><a></a>    <span class="cf">assert</span> y <span class="op">==</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">uvx</span> pytest <span class="at">-q</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="parametrized-tests-bonus" class="slide level2 demo-slide">
 <h2>Parametrized tests (bonus)</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="im">import</span> pytest</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="im">import</span> pytest</span>
 <span id="cb13-2"><a></a><span class="im">from</span> myproject <span class="im">import</span> core</span>
 <span id="cb13-3"><a></a></span>
 <span id="cb13-4"><a></a><span class="at">@pytest.mark.parametrize</span>(<span class="st">"x,expected"</span>, [(<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">2</span>, <span class="dv">3</span>), (<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>)])</span>
 <span id="cb13-5"><a></a><span class="kw">def</span> test_add_one_param(x, expected):</span>
-<span id="cb13-6"><a></a>    <span class="cf">assert</span> core.add_one(x) <span class="op">==</span> expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a></a>    <span class="cf">assert</span> core.add_one(x) <span class="op">==</span> expected</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> <code>parametrize</code> runs the same test logic across many inputs — one test, many cases.</p>
 </div>
@@ -443,7 +443,7 @@
 </section>
 <section id="including-data-with-setuptools" class="slide level2 demo-slide">
 <h2>Including data with Setuptools</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb14-1"><a></a><span class="kw">[tool.setuptools]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb14-1"><a></a><span class="kw">[tool.setuptools]</span></span>
 <span id="cb14-2"><a></a><span class="dt">package-dir</span> <span class="op">=</span> <span class="op">{</span><span class="dt">""</span><span class="op"> =</span> <span class="st">"src"</span><span class="op">}</span></span>
 <span id="cb14-3"><a></a><span class="dt">include-package-data</span> <span class="op">=</span> <span class="cn">true</span></span>
 <span id="cb14-4"><a></a></span>
@@ -451,20 +451,20 @@
 <span id="cb14-6"><a></a><span class="dt">where</span> <span class="op">=</span> <span class="op">[</span><span class="st">"src"</span><span class="op">]</span></span>
 <span id="cb14-7"><a></a></span>
 <span id="cb14-8"><a></a><span class="kw">[tool.setuptools.package-data]</span></span>
-<span id="cb14-9"><a></a><span class="dt">myproject</span> <span class="op">=</span> <span class="op">[</span><span class="st">"data/*.csv"</span><span class="op">,</span> <span class="st">"templates/*.html"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-9"><a></a><span class="dt">myproject</span> <span class="op">=</span> <span class="op">[</span><span class="st">"data/*.csv"</span><span class="op">,</span> <span class="st">"templates/*.html"</span><span class="op">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="key-idea">
 <p><code>include-package-data = true</code> + globs in <code>package-data</code> tell Setuptools which non-Python files to bundle.</p>
 </div>
 </section>
 <section id="loading-data-at-runtime" class="slide level2 demo-slide">
 <h2>Loading data at runtime</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">from</span> importlib.resources <span class="im">import</span> files, as_file</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">from</span> importlib.resources <span class="im">import</span> files, as_file</span>
 <span id="cb15-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb15-3"><a></a></span>
 <span id="cb15-4"><a></a><span class="kw">def</span> load_demo():</span>
 <span id="cb15-5"><a></a>    target <span class="op">=</span> files(<span class="st">"myproject"</span>).joinpath(<span class="st">"data/temples.csv"</span>)</span>
 <span id="cb15-6"><a></a>    <span class="cf">with</span> as_file(target) <span class="im">as</span> path:</span>
-<span id="cb15-7"><a></a>        <span class="cf">return</span> pd.read_csv(path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-7"><a></a>        <span class="cf">return</span> pd.read_csv(path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> <code>as_file</code> gives you a real filesystem path — works whether the package is installed as a wheel or from source.</p>
 </div>
@@ -482,13 +482,13 @@
 </section>
 <section id="minimal-cli-entry-point" class="slide level2 demo-slide">
 <h2>Minimal CLI entry point</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb16-1"><a></a><span class="co"># pyproject.toml</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb16-1"><a></a><span class="co"># pyproject.toml</span></span>
 <span id="cb16-2"><a></a><span class="kw">[project.scripts]</span></span>
-<span id="cb16-3"><a></a><span class="dt">mypkg</span> <span class="op">=</span> <span class="st">"myproject.cli:main"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="co"># src/myproject/cli.py</span></span>
+<span id="cb16-3"><a></a><span class="dt">mypkg</span> <span class="op">=</span> <span class="st">"myproject.cli:main"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="co"># src/myproject/cli.py</span></span>
 <span id="cb17-2"><a></a><span class="kw">def</span> main() <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
 <span id="cb17-3"><a></a>    <span class="bu">print</span>(<span class="st">"Hello from myproject!"</span>)</span>
-<span id="cb17-4"><a></a>    <span class="cf">return</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a></a>    <span class="cf">return</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="demo-box">
 <p>After install, <code>mypkg</code> runs <code>main()</code> directly from the shell. Try it!</p>
 </div>
@@ -738,7 +738,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -812,13 +812,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

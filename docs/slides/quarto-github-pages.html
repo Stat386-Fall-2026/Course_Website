@@ -6,10 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
-  <title>STAT 386 — Fall 2026 – From Repo to Website</title>
+  <meta name="author" content="STAT 386">
+  <title>STAT 386 — Fall 2026 – Reproducible Publishing with Quarto</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -94,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dd2fc48f25af76fd2b852377c3459bb.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -188,392 +189,43 @@
       margin-right: 0; 
     }
   </style>
+  <meta name="mermaid-theme" content="neutral">
+  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="title-slide center">
-  <h1 class="title">From Repo to Website</h1>
-  <p class="subtitle">Quarto + GitHub Pages</p>
+  <h1 class="title">Reproducible Publishing with Quarto</h1>
+  <p class="subtitle">From Analysis to a Public Website</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+STAT 386 
+</div>
+</div>
 </div>
 
 </section>
-<section id="where-we-are-where-were-going" class="slide level2">
-<h2>Where we are / where we’re going</h2>
+<section id="todays-durable-question" class="slide level2 section-card">
+<h2>Today’s durable question</h2>
 <div class="key-idea">
-<p><strong>Already have:</strong> Git/GitHub, Markdown, terminal + VS Code, uv environments.</p>
+<p>How can one project communicate a result clearly, preserve the evidence behind it, and stay useful when the data or question changes?</p>
 </div>
-<p><strong>Today:</strong> turn a repo into a website.</p>
-<p><strong>Learning goals:</strong></p>
+<p>By the end of class, you should be able to:</p>
 <ul>
-<li>Explain what GitHub Pages hosts (static files) and how URL works</li>
-<li>Create a Quarto website project and preview locally</li>
-<li>Publish your site so it updates when you push</li>
+<li>Explain how Quarto connects code, results, visuals, and explanation</li>
+<li>Distinguish source files, rendered output, and a published website</li>
+<li>Publish a Quarto website with GitHub Pages</li>
+<li>Debug a website that does not show the expected update</li>
 </ul>
-</section>
-<section id="agenda" class="slide level2 section-card">
-<h2>Agenda</h2>
-<ol type="1">
-<li>The big picture</li>
-<li>GitHub Pages (the hosting)</li>
-<li>Quarto (the builder)</li>
-<li>Publishing (making it live)</li>
-<li>Troubleshooting + portfolio tips</li>
-</ol>
-</section>
-<section id="mental-model-keep-this-in-your-head" class="slide level2 section-card">
-<h2>Mental model (keep this in your head)</h2>
-<div class="columns-2">
-<div>
-<p><strong>Input</strong></p>
-<ul>
-<li><code>.qmd</code></li>
-<li>data</li>
-<li>images</li>
-</ul>
-</div>
-<div>
-<p><strong>Pipeline</strong></p>
-<ul>
-<li><strong>Render:</strong> Quarto + Pandoc (+ Jupyter)</li>
-<li><strong>Output:</strong> static HTML files</li>
-<li><strong>Host:</strong> GitHub Pages</li>
-</ul>
-</div>
-</div>
-<div class="key-idea">
-<p>GitHub Pages does <strong>not</strong> run Python. Quarto runs Python <strong>before</strong> publishing and saves results into static files.</p>
-</div>
-</section>
-<section id="discussion" class="slide level2 question-slide">
-<h2>Discussion</h2>
-<div class="discussion-box">
-<p>Where do you think the most common failure happens in this pipeline: writing the <code>.qmd</code>, executing code, rendering to <code>_site</code>, or GitHub Pages hosting, and why?</p>
-</div>
-</section>
-<section id="github-pages-what-it-is" class="slide level2 comparison-slide">
-<h2>GitHub Pages: what it is</h2>
-<div class="columns-2">
-<div>
-<p><strong>Pages IS</strong></p>
-<ul>
-<li>Static hosting from a GitHub repo</li>
-<li>Great for portfolios/docs/class sites</li>
-<li>Configured in Settings</li>
-</ul>
-</div>
-<div>
-<p><strong>Pages is NOT</strong></p>
-<ul>
-<li>A database/server</li>
-<li>A place for secrets (assume public)</li>
-<li>A Python runtime</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="urls-repo-choices" class="slide level2">
-<h2>URLs + repo choices</h2>
-<div class="tip-box">
-<p><strong>Project site (most common):</strong> <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code></p>
-</div>
-<p><strong>User site (special repo):</strong> <code>https://&lt;user&gt;.github.io/</code> from repo named <code>&lt;user&gt;.github.io</code></p>
-<div class="key-idea">
-<p><strong>Class tip:</strong> Use one repo per site so URLs stay clean.</p>
-</div>
-</section>
-<section id="pages-settings-what-to-click" class="slide level2">
-<h2>Pages settings (what to click)</h2>
-<ol type="1">
-<li><strong>Settings &gt; Pages</strong></li>
-<li>Choose Source:
-<ul>
-<li>Deploy from a branch (simple)</li>
-<li>GitHub Actions (best for Quarto)</li>
-</ul></li>
-<li>If deploying from branch: pick <code>main</code> and folder <code>/docs</code></li>
-</ol>
-<div class="tip-box">
-<p><strong>Why <code>docs/</code>?</strong> Keeps source files on <code>main</code> and built website in <code>docs/</code>.</p>
-</div>
-</section>
-<section id="mini-demo-hello-pages" class="slide level2 demo-slide">
-<h2>Mini-demo: “hello Pages”</h2>
-<div class="demo-box">
-<ol type="1">
-<li>Create repo, add <code>index.html</code></li>
-<li>Push to GitHub</li>
-<li>Turn on Pages</li>
-<li>Visit the URL</li>
-</ol>
-</div>
-<div class="warning-box">
-<p><strong>If 404:</strong> Wait, then check Settings &gt; Pages for deployed URL and build status.</p>
-</div>
-</section>
-<section id="what-is-quarto" class="slide level2">
-<h2>What is Quarto?</h2>
-<div class="key-idea">
-<p>Quarto lets you publish Markdown + code + LaTeX to HTML, PDF, slides, and websites.</p>
-</div>
-<ul>
-<li>Can execute code using Jupyter kernels</li>
-<li>Works with <code>.qmd</code> and <code>.ipynb</code></li>
-<li><strong>In class:</strong> portfolio + assignment pages that update from GitHub</li>
-</ul>
-</section>
-<section id="workflow-new-project-terminal-friendly" class="slide level2 demo-slide">
-<h2>Workflow: new project (terminal-friendly)</h2>
-<div class="demo-box">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">mkdir</span> my_site</span>
-<span id="cb1-2"><a></a><span class="bu">cd</span> my_site</span>
-<span id="cb1-3"><a></a><span class="fu">git</span> init</span>
-<span id="cb1-4"><a></a><span class="ex">uv</span> init</span>
-<span id="cb1-5"><a></a><span class="ex">uv</span> add jupyter ipykernel</span>
-<span id="cb1-6"><a></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="quarto-website-project-structure" class="slide level2">
-<h2>Quarto website project structure</h2>
-<div class="key-idea">
-<p><strong>Two layers of config:</strong></p>
-</div>
-<ul>
-<li><strong><code>_quarto.yml</code></strong> = site-wide settings (nav, theme, output dir)</li>
-<li><strong>Each <code>.qmd</code> page</strong> = page-level title, format options, content</li>
-</ul>
-<div class="tip-box">
-<p><strong>Rule:</strong> If it applies to the whole site, put it in <code>_quarto.yml</code>. If specific to one page, put it in page front matter.</p>
-</div>
-</section>
-<section id="discussion-1" class="slide level2 question-slide">
-<h2>Discussion</h2>
-<div class="discussion-box">
-<p>What belongs in <code>_quarto.yml</code> (site-wide) versus in a page’s YAML front matter, and what would break if you put it in the wrong place?</p>
-</div>
-</section>
-<section id="create-a-website-project-fast-start" class="slide level2 demo-slide">
-<h2>Create a website project (fast start)</h2>
-<div class="demo-box">
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">quarto</span> create project website my_site</span>
-<span id="cb2-2"><a></a><span class="bu">cd</span> my_site</span>
-<span id="cb2-3"><a></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>What you’ll see:</strong> <code>_quarto.yml</code>, <code>index.qmd</code>, <code>about.qmd</code></p>
-</section>
-<section id="minimal-_quarto.yml-for-github-pages" class="slide level2 demo-slide">
-<h2>Minimal <code>_quarto.yml</code> for GitHub Pages</h2>
-<div class="demo-box">
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a></a><span class="fu">project</span><span class="kw">:</span></span>
-<span id="cb3-2"><a></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
-<span id="cb3-3"><a></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span>
-<span id="cb3-4"><a></a><span class="fu">website</span><span class="kw">:</span></span>
-<span id="cb3-5"><a></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Portfolio"</span></span>
-<span id="cb3-6"><a></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
-<span id="cb3-7"><a></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
-<span id="cb3-8"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
-<span id="cb3-9"><a></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
-<span id="cb3-10"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> projects.qmd</span></span>
-<span id="cb3-11"><a></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Projects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="warning-box">
-<p><strong>Important:</strong> Set <code>output-dir: docs</code> if Pages is serving <code>/docs</code> on <code>main</code>.</p>
-</div>
-</section>
-<section id="a-.qmd-page-prose-code" class="slide level2 demo-slide">
-<h2>A <code>.qmd</code> page: prose + code</h2>
-<div class="demo-box">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a></a><span class="pp">---</span></span>
-<span id="cb4-2"><a></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"EDA: Penguins"</span></span>
-<span id="cb4-3"><a></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb4-4"><a></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb4-5"><a></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb4-6"><a></a><span class="fu">jupyter</span><span class="kw">:</span><span class="at"> python3</span></span>
-<span id="cb4-7"><a></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="key-idea">
-<p><strong>Good portfolio pages:</strong> Short intro (what question?), 1-3 key visuals, a “so what?” paragraph.</p>
-</div>
-</section>
-<section id="the-local-loop" class="slide level2">
-<h2>The local loop</h2>
-<div class="columns-2">
-<div>
-<p><strong>The loop</strong></p>
-<ul>
-<li>Edit in VS Code</li>
-<li>Run <code>quarto preview</code></li>
-<li>Browser auto-refreshes on save</li>
-<li><code>quarto render</code> to build full site</li>
-</ul>
-</div>
-<div>
-<p><strong>Why preview?</strong></p>
-<ul>
-<li>Fast feedback</li>
-<li>Don’t debug deploy problems while also debugging your analysis</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="reproducibility-.gitignore-environments" class="slide level2">
-<h2>Reproducibility: <code>.gitignore</code> + environments</h2>
-<div class="demo-box">
-<p><strong>Add to <code>.gitignore</code>:</strong></p>
-<pre><code>.quarto/
-site_libs/
-*_files/</code></pre>
-</div>
-<div class="key-idea">
-<p><strong>Keep Python environment in repo:</strong> <code>uv</code> manages dependencies. If needed: <code>uv pip freeze &gt; requirements.txt</code></p>
-</div>
-</section>
-<section id="two-deployment-strategies" class="slide level2 comparison-slide">
-<h2>Two deployment strategies</h2>
-<div class="columns-2">
-<div>
-<p><strong>A. Build locally, commit <code>docs/</code></strong></p>
-<ul>
-<li>Simple mental model</li>
-<li>Works without Actions</li>
-<li><strong>Downside:</strong> must remember to render + commit</li>
-</ul>
-</div>
-<div>
-<p><strong>B. GitHub Actions builds on push</strong></p>
-<ul>
-<li>Best for “always up to date”</li>
-<li>More moving parts</li>
-<li>Once set, it’s done</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="strategy-a-build-locally-fastest-to-teach" class="slide level2 demo-slide">
-<h2>Strategy A: build locally (fastest to teach)</h2>
-<div class="demo-box">
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">quarto</span> render</span>
-<span id="cb6-2"><a></a><span class="fu">git</span> add docs</span>
-<span id="cb6-3"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Render site"</span></span>
-<span id="cb6-4"><a></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="tip-box">
-<p><strong>Pages setting:</strong> Settings &gt; Pages &gt; Deploy from branch: <code>main</code> + <code>/docs</code></p>
-</div>
-</section>
-<section id="strategy-b-github-actions-starter-concept" class="slide level2 demo-slide">
-<h2>Strategy B: GitHub Actions (starter concept)</h2>
-<div class="demo-box">
-<ul>
-<li>Workflow file under <code>.github/workflows/</code></li>
-<li>Pages source set to <strong>GitHub Actions</strong></li>
-</ul>
-</div>
-<p><strong>Conceptual steps:</strong></p>
-<ol type="1">
-<li>Checkout repo</li>
-<li>Install Quarto + Python</li>
-<li><code>quarto render</code></li>
-<li>Upload site to Pages</li>
-</ol>
-<div class="key-idea">
-<p><strong>Class note:</strong> Provide pre-made workflow so students don’t write YAML from scratch.</p>
-</div>
-</section>
-<section id="common-gotchas-and-quick-fixes" class="slide level2 reference-slide">
-<h2>Common gotchas (and quick fixes)</h2>
-<div class="cheat-grid">
-<div>
-<p><strong>404 or blank page</strong></p>
-<p>Pages not pointed at right folder (use <code>docs/</code>)</p>
-</div>
-<div>
-<p><strong>Site doesn’t update</strong></p>
-<p>Forgot to push, or Actions failed</p>
-</div>
-<div>
-<p><strong>Broken images</strong></p>
-<p>Path issues (use relative paths)</p>
-</div>
-<div>
-<p><strong>Render fails</strong></p>
-<p>Missing package in your environment</p>
-</div>
-</div>
-<div class="warning-box">
-<p><strong>Debug routine:</strong> Check (1) local preview, (2) repo contents (<code>docs/</code>), (3) Pages/Actions status.</p>
-</div>
-</section>
-<section id="troubleshooting-pipeline-diagram-repeat" class="slide level2">
-<h2>Troubleshooting (pipeline diagram repeat)</h2>
-<div class="key-idea">
-<p>Input → Render → Output → Host</p>
-</div>
-<div class="columns-2">
-<div>
-<p><strong>Check each stage</strong></p>
-<ul>
-<li>Input: <code>.qmd</code> valid?</li>
-<li>Render: packages present?</li>
-</ul>
-</div>
-<div>
-<p><strong>Check each stage</strong></p>
-<ul>
-<li>Output: <code>docs/</code> built?</li>
-<li>Host: Pages pointed at <code>docs/</code>?</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="portfolio-structure-that-scales" class="slide level2">
-<h2>Portfolio structure that scales</h2>
-<div class="tip-box">
-<p><strong>Recommended navbar:</strong> Home (who you are), Projects (2-4 highlights), Assignments (organized by week/topic), Final Project, About/Resume.</p>
-</div>
-<div class="key-idea">
-<p><strong>Design rule:</strong> Make it skimmable: headings, short paragraphs, figures with captions.</p>
-</div>
-</section>
-<section id="in-class-checklist-today" class="slide level2 exercise-slide">
-<h2>In-class checklist (today)</h2>
-<div class="exercise-check">
-<ol type="1">
-<li>Create Quarto website project</li>
-<li>Set <code>output-dir: docs</code> in <code>_quarto.yml</code></li>
-<li>Preview locally</li>
-<li>Push to GitHub</li>
-<li>Turn on Pages (<code>main</code> + <code>/docs</code>)</li>
-<li>Confirm your site URL works</li>
-</ol>
-</div>
-</section>
-<section id="wrap-up" class="slide level2 takeaway-slide">
-<h2>Wrap-up</h2>
-<ul>
-<li>Quarto builds the static site from <code>.qmd</code></li>
-<li>GitHub Pages hosts the built static files</li>
-<li>Your portfolio is a software project: version control + environment + reproducible build</li>
-</ul>
-<div class="key-idea">
-<p><strong>“Ship your work.”</strong></p>
-</div>
 <aside class="notes">
-<p>This deck walks students from repo to live website in one session.</p>
-<ul>
-<li>Slide 2 sets learning goals; emphasize that GitHub Pages only serves static files.</li>
-<li>Slide 4 mental model is the backbone — return to it when troubleshooting.</li>
-<li>Slide 6 IS/NOT comparison clarifies the most common misconceptions about Pages.</li>
-<li>Slides 11 and 14 give two paths to a project: manual (terminal-friendly) vs.&nbsp;<code>quarto create</code>.</li>
-<li>Slide 15 minimal <code>_quarto.yml</code> is the config students will actually use.</li>
-<li>Slides 19-21 contrast the two deployment strategies; recommend Strategy A for first-time setup.</li>
-<li>Slide 22 gotchas reference is worth bookmarking — most student issues live here.</li>
-<li>Slide 25 is the in-class exercise; confirm each step before moving on.</li>
-<li>Close with the wrap-up: the portfolio is a reproducible software project.</li>
-</ul>
+<p>Suggested time: 1 minute.</p>
+<p>Connect this lecture to the previous sequence. Students already have Markdown, Git, GitHub, project environments, and uv. Today those pieces become a publishing workflow.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -586,10 +238,1623 @@ site_libs/
           display:block!important;
       }</style></aside>
 </section>
-<section id="questions" class="slide level2 question-slide">
-<h2>Questions?</h2>
+<section id="a-familiar-request" class="slide level2">
+<h2>A familiar request</h2>
+<p>Your manager gives you data from a regional pilot program.</p>
+<blockquote>
+<p>Compare participation and retention across regions. Recommend where the organization should expand the pilot next.</p>
+</blockquote>
+<p>You have:</p>
+<ul>
+<li>A CSV with monthly results</li>
+<li>A notebook for exploring the data</li>
+<li>A meeting at the end of the week</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>Keep the fictional setting simple. The analytical details should remain familiar enough that students can focus on communication and reproducibility.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-first-delivery" class="slide level2">
+<h2>The first delivery</h2>
+<p>You complete the analysis:</p>
+<ol type="1">
+<li>Run the notebook</li>
+<li>Export two figures</li>
+<li>Paste them into a document</li>
+<li>Write a recommendation</li>
+<li>Email the report</li>
+</ol>
+<div class="key-idea">
+<p>The manager receives a readable answer on time.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>Treat this as a reasonable workflow for a first request. Its weaknesses become visible only when the work changes or another person needs to inspect it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-situation-changes" class="slide level2 smaller">
+<h2>The situation changes</h2>
+<p>The manager sends an updated CSV and asks for a revised recommendation.</p>
+<p>Meanwhile, your teammate notices the surprising increase in West-region retention:</p>
+<blockquote>
+<p>“Does that increase appear among both new and returning participants?”</p>
+</blockquote>
+<p>The work now needs to support three uses:</p>
+<ul>
+<li>Communicate the result clearly</li>
+<li>Let a teammate investigate further</li>
+<li>Update reliably when the data change</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 1 to 2 minutes.</p>
+<p>Introduce both pressures before asking students to discuss the workflow. Keep the teammate’s question positive. The result sparked useful curiosity rather than distrust.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="design-the-handoff" class="slide level2 question-slide smaller">
+<h2>Design the handoff</h2>
 <div class="discussion-box">
-<p>Take 2 minutes — what is one thing from today that is still unclear?</p>
+<p>What would you hand off so the manager can understand the result, your teammate can investigate it, and you can update it when new data arrive?</p>
+<p>What must the project contain? Which pieces must remain connected?</p>
+</div>
+<ol type="1">
+<li><strong>Think:</strong> List the minimum pieces the handoff needs.</li>
+<li><strong>Pair:</strong> Agree on the most important connections.</li>
+<li><strong>Share:</strong> Name one connection and the failure it prevents.</li>
+</ol>
+<aside class="notes">
+<p>Suggested time: 4 to 6 minutes.</p>
+<p>Give students about 45 seconds to think and 90 seconds to compare answers. During the share, ask each pair for one connection rather than a complete workflow. Listen for links among data, code, figures, explanation, environment information, and versions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-project-supports-three-needs" class="slide level2 smaller">
+<h2>One project supports three needs</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Need</th>
+<th>Entry point</th>
+<th>What must remain connected</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Understand the result</td>
+<td>Rendered website with visuals and explanation</td>
+<td>Claims must match the current results</td>
+</tr>
+<tr class="even">
+<td>Investigate further</td>
+<td>Repository with source, code, and data</td>
+<td>Figures must trace back to their inputs</td>
+</tr>
+<tr class="odd">
+<td>Update the analysis</td>
+<td>Reproducible environment and render process</td>
+<td>New inputs must regenerate the visible output</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>One project can provide a readable result, an inspectable analysis, and a repeatable update path.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 to 3 minutes.</p>
+<p>Use this slide to organize the ideas students contributed. The three entry points serve different needs, but they must describe the same analysis and version.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="data-science-communication-uses-several-forms" class="slide level2 smaller">
+<h2>Data science communication uses several forms</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Form</th>
+<th>What it contributes</th>
+<th>What it cannot provide alone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Data</strong></td>
+<td>The recorded observations</td>
+<td>Meaning or interpretation</td>
+</tr>
+<tr class="even">
+<td><strong>Code</strong></td>
+<td>The transformations and calculations</td>
+<td>A concise explanation for most audiences</td>
+</tr>
+<tr class="odd">
+<td><strong>Visuals</strong></td>
+<td>Patterns, comparisons, and uncertainty</td>
+<td>Complete provenance and context</td>
+</tr>
+<tr class="even">
+<td><strong>Text</strong></td>
+<td>Framing, interpretation, and recommendations</td>
+<td>Reproducible evidence by itself</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>The forms become more useful when they remain connected.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Emphasize that a figure is often the fastest way to see a pattern, while prose explains why the pattern matters. Code and data let another analyst verify how the figure came to exist.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="copying-results-creates-separate-versions" class="slide level2 smaller">
+<h2>Copying results creates separate versions</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Data"] --&gt; B["Notebook"]
+    B --&gt; C["Exported figure"]
+    C --&gt; D["Report"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Each handoff can preserve an older result:</p>
+<ul>
+<li>The notebook may read an earlier file</li>
+<li>The exported image may come from an earlier run</li>
+<li>The report may contain a figure that was never replaced</li>
+<li>The recommendation may describe a result that has changed</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Do not frame this as carelessness. The workflow asks the analyst to synchronize several separate artifacts manually.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-foundation-is-already-in-place" class="slide level2 smaller">
+<h2>The foundation is already in place</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Responsibility in the project</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Git</strong></td>
+<td>Records which version produced the work</td>
+</tr>
+<tr class="even">
+<td><strong>GitHub</strong></td>
+<td>Gives collaborators a shared remote project</td>
+</tr>
+<tr class="odd">
+<td><strong>uv</strong></td>
+<td>Reconstructs the Python environment</td>
+</tr>
+<tr class="even">
+<td><strong>Quarto</strong></td>
+<td>Generates the explanation and results together</td>
+</tr>
+<tr class="odd">
+<td><strong>GitHub Pages</strong></td>
+<td>Serves the rendered result to an audience</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>Quarto completes the reproducible workflow built during the previous classes.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Ask students which rows they already know. Today adds the last two rows while reusing the first three.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="computational-documents" class="slide level2 section-card">
+<h2>Computational documents</h2>
+<div class="big-idea">
+<p>A computational document combines narrative, executable code, and generated results in one source.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-quarto-page" class="slide level2">
+<h2>A Quarto page</h2>
+<p>One <code>.qmd</code> file can contain:</p>
+<ul>
+<li>Markdown explanation</li>
+<li>Python code cells</li>
+<li>Generated figures and tables</li>
+<li>Mathematical notation</li>
+<li>Links, citations, and page metadata</li>
+</ul>
+<div class="key-idea">
+<p>Rendering turns the source into a document that a reader can open in a browser.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Students already know Markdown. Present code cells and rendering as the important extension.</p>
+<p>Source: https://quarto.org/docs/guide/</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="source-and-rendered-result" class="slide level2 comparison-slide smaller">
+<h2>Source and rendered result</h2>
+<div class="columns-2">
+<div>
+<p><strong>Quarto source</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a></a><span class="fu">## Regional retention</span></span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>The figure compares the four pilot regions.</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a><span class="in">```{python}</span></span>
+<span id="cb1-6"><a></a><span class="co">#| echo: false</span></span>
+<span id="cb1-7"><a></a>plot_retention(results)</span>
+<span id="cb1-8"><a></a><span class="in">```</span></span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a>West improved during the latest month.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div>
+<p><strong>Rendered page</strong></p>
+<h3 id="regional-retention">Regional retention</h3>
+<p>The figure compares the four pilot regions.</p>
+<p><em>A generated retention figure appears here.</em></p>
+<p>West improved during the latest month.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Connect this to the earlier Markdown lecture. The reader sees a polished page. The source preserves how the page was assembled.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-render-rebuilds-the-evidence" class="slide level2">
+<h2>A render rebuilds the evidence</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Current data"] --&gt; C["Analysis code"]
+    B["Current question"] --&gt; C
+    C --&gt; D["Figures and tables"]
+    D --&gt; E["Rendered page"]
+    F["Explanation"] --&gt; E
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="key-idea">
+<p>During a full render, the figures and tables come from the code and data in the project.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>The render strengthens provenance, but it does not replace judgment. After new data changes the results, the analyst must still reconsider the written interpretation and recommendation.</p>
+<p>Source: https://quarto.org/docs/computations/python.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="generated-output-reduces-ambiguity" class="slide level2">
+<h2>Generated output reduces ambiguity</h2>
+<p>When a reader sees a pasted image, they may ask:</p>
+<ul>
+<li>Which dataset produced this?</li>
+<li>Which code created it?</li>
+<li>Does it include the latest observations?</li>
+</ul>
+<p>When Quarto generates the image during rendering, the project preserves the path from data to visible result.</p>
+<div class="warning-box">
+<p>The connection depends on rendering the current source. A stale render can still publish an older result.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>This warning prepares students for the later debugging activity. Quarto makes the update repeatable, but the analyst must still run the workflow.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="return-to-the-teammates-question" class="slide level2">
+<h2>Return to the teammate’s question</h2>
+<p>The updated report shows a large retention increase in the West.</p>
+<blockquote>
+<p>“That increase is fascinating. Does it appear for both new and returning participants?”</p>
+</blockquote>
+<p>The published figure gives the teammate a starting point. The repository provides the path back to the analysis.</p>
+<div class="key-idea">
+<p>Reproducibility turns curiosity into a question the teammate can examine directly.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>Call back to the opening scenario. The website and repository are two entry points into the same project.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-teammate-continues-the-analysis" class="slide level2 demo-slide smaller">
+<h2>The teammate continues the analysis</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">git</span> clone https://github.com/ORG/pilot-analysis.git</span>
+<span id="cb2-2"><a></a><span class="bu">cd</span> pilot-analysis</span>
+<span id="cb2-3"><a></a><span class="ex">uv</span> sync</span>
+<span id="cb2-4"><a></a><span class="ex">uv</span> run quarto preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The teammate can then:</p>
+<ol type="1">
+<li>Inspect the code behind the figure</li>
+<li>Add the participant-type comparison</li>
+<li>Render the extended analysis</li>
+<li>Propose the change through GitHub</li>
+</ol>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>This should feel familiar from the uv and collaboration lectures. Avoid reteaching clone, sync, branches, or pull requests. Their value becomes visible in a new setting.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-project-two-ways-to-enter" class="slide level2 comparison-slide">
+<h2>One project, two ways to enter</h2>
+<div class="columns-2">
+<div>
+<p><strong>Open the website</strong></p>
+<p>The manager reads the result in a browser.</p>
+<p>No Python environment is required.</p>
+</div>
+<div>
+<p><strong>Clone the repository</strong></p>
+<p>The teammate reconstructs and extends the analysis.</p>
+<p>The project preserves the technical details.</p>
+</div>
+</div>
+<div class="key-idea">
+<p>GitHub Pages lowers the barrier for readers while GitHub preserves access to the source.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-minimal-toolbox" class="slide level2 section-card">
+<h2>The minimal toolbox</h2>
+<div class="big-idea">
+<p>Four file roles and three commands are enough to understand the basic workflow.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="two-github-pages-site-types" class="slide level2 smaller">
+<h2>Two GitHub Pages site types</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Site type</th>
+<th>Repository name</th>
+<th>Default public address</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>User site</strong></td>
+<td><code>USERNAME.github.io</code></td>
+<td><code>https://USERNAME.github.io/</code></td>
+</tr>
+<tr class="even">
+<td><strong>Project site</strong></td>
+<td>A regular name such as <code>stat386-portfolio</code></td>
+<td><code>https://USERNAME.github.io/stat386-portfolio/</code></td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>We will use a user site because a personal portfolio belongs naturally at the root of a student’s GitHub Pages address.</p>
+</div>
+<p>Each account can have one user site. A student who already has one can add to it or create a project site instead.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>The repository belongs under the student’s personal GitHub account. The special repository name creates the shorter root address. Project sites are a useful fallback and work well for standalone analyses.</p>
+<p>Source: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#types-of-github-pages-sites</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="anatomy-of-a-quarto-website" class="slide level2 smaller">
+<h2>Anatomy of a Quarto website</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>username.github.io/</span>
+<span id="cb3-2"><a></a>├── _quarto.yml</span>
+<span id="cb3-3"><a></a>├── index.qmd</span>
+<span id="cb3-4"><a></a>├── about.qmd</span>
+<span id="cb3-5"><a></a>├── projects.qmd</span>
+<span id="cb3-6"><a></a>├── projects/</span>
+<span id="cb3-7"><a></a>│   └── pilot-analysis.qmd</span>
+<span id="cb3-8"><a></a>├── data/</span>
+<span id="cb3-9"><a></a>├── pyproject.toml</span>
+<span id="cb3-10"><a></a>├── uv.lock</span>
+<span id="cb3-11"><a></a>└── docs/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.qmd</code> files</td>
+<td>Page content and executable analysis</td>
+</tr>
+<tr class="even">
+<td><code>_quarto.yml</code></td>
+<td>Website-wide configuration</td>
+</tr>
+<tr class="odd">
+<td>Project and data files</td>
+<td>Reproducible inputs</td>
+</tr>
+<tr class="even">
+<td><code>docs/</code></td>
+<td>Rendered website served by GitHub Pages</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>The exact set of pages can grow during the semester. Focus on the role of each part rather than the names of every file.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="website-configuration" class="slide level2 demo-slide smaller">
+<h2>Website configuration</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb4-2"><a></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb4-3"><a></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb4-6"><a></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
+<span id="cb4-7"><a></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb4-8"><a></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb4-9"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb4-10"><a></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb4-11"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> projects.qmd</span></span>
+<span id="cb4-12"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="cb4-13"><a></a></span>
+<span id="cb4-14"><a></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb4-15"><a></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb4-16"><a></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb4-17"><a></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-18"><a></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>_quarto.yml</code> supplies defaults and navigation for the entire site.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Explain only the options students will change today. Quarto renders to <code>_site/</code> by default. We select <code>docs/</code> because GitHub Pages can publish that folder from the main branch.</p>
+<p>Source: https://quarto.org/docs/websites/ Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="site-settings-and-page-metadata" class="slide level2 comparison-slide smaller">
+<h2>Site settings and page metadata</h2>
+<div class="columns-2">
+<div>
+<p><strong>Whole website</strong></p>
+<p><code>_quarto.yml</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb5-2"><a></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Avery Lee"</span></span>
+<span id="cb5-3"><a></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb5-4"><a></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb5-5"><a></a><span class="at">      </span><span class="kw">-</span><span class="at"> projects.qmd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div>
+<p><strong>One page</strong></p>
+<p>YAML at the top of a <code>.qmd</code> file</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a></a><span class="pp">---</span></span>
+<span id="cb6-2"><a></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Pilot Analysis"</span></span>
+<span id="cb6-3"><a></a><span class="fu">date</span><span class="kw">:</span><span class="at"> 2026-09-22</span></span>
+<span id="cb6-4"><a></a><span class="fu">categories</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">pandas</span><span class="kw">]</span></span>
+<span id="cb6-5"><a></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Reuse the distinction from the earlier Quarto material. The project configuration sets shared behavior. Page metadata describes one document.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="preview-render-and-publish" class="slide level2 reference-slide smaller">
+<h2>Preview, render, and publish</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operation</th>
+<th>What it does</th>
+<th>Where you inspect the result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>uv run quarto preview</code></td>
+<td>Renders changes and runs a local preview server</td>
+<td>Your computer</td>
+</tr>
+<tr class="even">
+<td><code>uv run quarto render</code></td>
+<td>Builds the complete static website in <code>docs/</code></td>
+<td>The <code>docs/</code> folder</td>
+</tr>
+<tr class="odd">
+<td>Git commit and push</td>
+<td>Sends source and rendered output to GitHub</td>
+<td>The repository</td>
+</tr>
+<tr class="even">
+<td>GitHub Pages</td>
+<td>Serves the selected files as a website</td>
+<td>A public URL</td>
+</tr>
+</tbody>
+</table>
+<div class="tip-box">
+<p>Run a full <code>uv run quarto render</code> before publishing, even after using preview.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Preview supports a rapid editing loop. A full render ensures that global settings and all pages have current output.</p>
+<p>Source: https://quarto.org/docs/websites/#website-preview Source: https://quarto.org/docs/websites/#website-render</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="where-does-the-python-code-run" class="slide level2 question-slide">
+<h2>Where does the Python code run?</h2>
+<p>Someone opens your published analysis at:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a></a>https://username.github.io/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="discussion-box">
+<p>Does GitHub Pages run your Python code when the visitor opens the page? What files does the visitor actually receive?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Use this as a quick poll rather than a full think-pair-share. Students may assume that the web server executes the notebook for each visitor.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="static-publishing" class="slide level2">
+<h2>Static publishing</h2>
+<p>The analysis code runs when Quarto renders the site.</p>
+<p>GitHub Pages serves the resulting:</p>
+<ul>
+<li>HTML pages</li>
+<li>Stylesheets</li>
+<li>JavaScript</li>
+<li>Figures and other site assets</li>
+</ul>
+<div class="key-idea">
+<p>The reader receives the result without installing Python or the project’s packages.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Some browser-based interactivity can live inside a static page. Applications that require a continuously running Python process need a server-based host.</p>
+<p>Source: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-.nojekyll-exists" class="slide level2 reference-slide">
+<h2>Why <code>.nojekyll</code> exists</h2>
+<p>GitHub Pages normally assumes that a site published from a branch may need a Jekyll build.</p>
+<p>Quarto has already built the website.</p>
+<p>An empty <code>.nojekyll</code> file tells GitHub Pages to serve the rendered files without applying another Jekyll build.</p>
+<div class="key-idea">
+<p>The file contains no settings. Its presence is the instruction.</p>
+</div>
+<p>Create it once in the project root and track it with Git.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Spell the filename carefully: dot, nojekyll, with no underscore. This file matters for the branch-based publishing workflow used today. Quarto’s GitHub Pages documentation includes it as part of the render-to-docs setup.</p>
+<p>Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs Source: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#static-site-generators</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="source-files-and-generated-files" class="slide level2 smaller">
+<h2>Source files and generated files</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Git decision</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.qmd</code>, <code>_quarto.yml</code>, and analysis code</td>
+<td>Track</td>
+<td>They define the website and analysis</td>
+</tr>
+<tr class="even">
+<td><code>pyproject.toml</code> and <code>uv.lock</code></td>
+<td>Track</td>
+<td>They support environment reconstruction</td>
+</tr>
+<tr class="odd">
+<td>Public data used by the site</td>
+<td>Track when appropriate</td>
+<td>The analysis needs its inputs</td>
+</tr>
+<tr class="even">
+<td><code>docs/</code></td>
+<td>Track for this deployment method</td>
+<td>GitHub Pages serves these files</td>
+</tr>
+<tr class="odd">
+<td><code>.venv/</code> and <code>.quarto/</code></td>
+<td>Ignore</td>
+<td>Tools can regenerate them locally</td>
+</tr>
+<tr class="even">
+<td><code>.env</code> and credentials</td>
+<td>Ignore and keep private</td>
+<td>A public repository must not expose secrets</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>The deployment method makes <code>docs/</code> a deliberate exception to the usual rule for generated output.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Connect this to the earlier discussion of durable inputs and generated outputs. We commit docs here because the chosen Pages configuration consumes that generated directory directly.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="our-publishing-choice" class="slide level2">
+<h2>Our publishing choice</h2>
+<p>Today we will publish from the <code>docs/</code> folder on the <code>main</code> branch:</p>
+<ol type="1">
+<li>Quarto renders the site on our computer.</li>
+<li>Git records the source and the rendered <code>docs/</code> files.</li>
+<li>GitHub Pages serves the contents of <code>docs/</code>.</li>
+</ol>
+<div class="key-idea">
+<p>This method keeps every stage visible, which makes the workflow easier to understand and debug.</p>
+</div>
+<p>The tradeoff is that we must keep the source and rendered output synchronized.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Quarto also supports publishing to a separate <code>gh-pages</code> branch and automated deployment. We use <code>main</code> and <code>docs/</code> because this exposes the full pipeline and requires no automation. Return to the alternatives later in the semester if useful.</p>
+<p>Source: https://quarto.org/docs/publishing/github-pages.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-publishing-pipeline" class="slide level2">
+<h2>The publishing pipeline</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["Edit source&lt;br/&gt;qmd, code, data"] --&gt; B["Preview locally"]
+    B --&gt; C["Render the site&lt;br/&gt;docs/"]
+    C --&gt; D["Commit and push"]
+    D --&gt; E["GitHub Pages serves the site"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="key-idea">
+<p>Each stage leaves evidence that helps locate a failure later.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>This diagram becomes the debugging model. Students should be able to identify the last stage that produced the expected state.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="live-workflow" class="slide level2 section-card">
+<h2>Live workflow</h2>
+<div class="key-idea">
+<p>We will build a small site, add a reproducible analysis, and publish the rendered result.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>Prepare the analysis code and small CSV before class so the demonstration focuses on Quarto rather than pandas syntax.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-1-create-and-preview-the-site" class="slide level2 demo-slide smaller">
+<h2>Demo 1: create and preview the site</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="ex">quarto</span> create project website USERNAME.github.io</span>
+<span id="cb8-2"><a></a><span class="bu">cd</span> USERNAME.github.io</span>
+<span id="cb8-3"><a></a><span class="ex">uv</span> init <span class="at">--no-package</span></span>
+<span id="cb8-4"><a></a><span class="ex">uv</span> add jupyter pandas matplotlib</span>
+<span id="cb8-5"><a></a><span class="ex">uv</span> run quarto preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then inspect:</p>
+<ul>
+<li><code>_quarto.yml</code></li>
+<li><code>index.qmd</code></li>
+<li><code>about.qmd</code></li>
+<li>The local browser preview</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 5 minutes.</p>
+<p>Replace USERNAME with the GitHub username used for the demonstration. Keep the generated Quarto scaffold. If setup time is a concern, begin from a prepared copy of this initial state.</p>
+<p>Use <code>uv run</code> for preview and rendering so the Python code executes with the packages from the project environment.</p>
+<p>Source: https://quarto.org/docs/websites/#quick-start Source: https://docs.astral.sh/uv/concepts/projects/run/</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-2-add-the-analysis-page" class="slide level2 demo-slide smaller">
+<h2>Demo 2: add the analysis page</h2>
+<p>Create <code>projects/pilot-analysis.qmd</code> with:</p>
+<ul>
+<li>The manager’s question</li>
+<li>A code cell that reads <code>data/pilot_results.csv</code></li>
+<li>A generated retention figure</li>
+<li>A short interpretation</li>
+<li>A proposed next step</li>
+</ul>
+<p>Add the page to the site’s navigation, then preview it.</p>
+<div class="demo-box">
+<p>The browser should show the explanation and figure together.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 5 minutes.</p>
+<p>Keep the code ready to paste. Show the source beside the rendered result. If possible, fold or hide the code so the page remains accessible to a nontechnical reader.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-3-create-and-connect-the-remote" class="slide level2 demo-slide smaller">
+<h2>Demo 3: create and connect the remote</h2>
+<p>On GitHub, create an empty public repository named:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a></a>USERNAME.github.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Connect the local project:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb10-2"><a></a><span class="fu">git</span> remote add origin https://github.com/USERNAME/USERNAME.github.io.git</span>
+<span id="cb10-3"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Create the remote without a README, license, or gitignore because the local project already contains files and Git history. Use the student’s personal account for the eventual portfolio.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-4-render-and-record-the-first-publication" class="slide level2 demo-slide smaller">
+<h2>Demo 4: render and record the first publication</h2>
+<p>Create an empty <code>.nojekyll</code> file in the project root.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="ex">uv</span> run quarto render</span>
+<span id="cb11-2"><a></a><span class="fu">git</span> status</span>
+<span id="cb11-3"><a></a><span class="fu">git</span> add .</span>
+<span id="cb11-4"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Publish initial regional pilot analysis"</span></span>
+<span id="cb11-5"><a></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inspect <code>git status</code> before committing:</p>
+<ul>
+<li>Source files should show the analysis changes</li>
+<li><code>docs/</code> should show the corresponding rendered changes</li>
+</ul>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>Pause at git status. Ask students to identify source changes and generated website changes. The commit records the relationship between the two.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-5-configure-github-pages" class="slide level2 demo-slide smaller">
+<h2>Demo 5: configure GitHub Pages</h2>
+<p>In the repository settings:</p>
+<ol type="1">
+<li>Open <strong>Pages</strong></li>
+<li>Select <strong>Deploy from a branch</strong></li>
+<li>Select the <code>main</code> branch</li>
+<li>Select the <code>/docs</code> folder</li>
+<li>Save and open the published URL</li>
+</ol>
+<p>For a user site, the URL is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a></a>https://USERNAME.github.io/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Suggested time: 4 minutes plus deployment time.</p>
+<p>GitHub may take a few minutes to complete the first deployment. Keep an already-published backup site ready so class time does not depend on deployment speed.</p>
+<p>Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="demo-6-a-routine-data-update" class="slide level2 demo-slide smaller">
+<h2>Demo 6: a routine data update</h2>
+<p>Append the latest month to <code>data/pilot_results.csv</code>, then return to the local preview.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">git</span> add data/pilot_results.csv projects/pilot-analysis.qmd</span>
+<span id="cb13-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Update pilot analysis with latest month"</span></span>
+<span id="cb13-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open the public website after the new deployment finishes.</p>
+<aside class="notes">
+<p>Suggested time: 4 minutes.</p>
+<p>The local preview should show an updated figure and generated summary. Revise the written recommendation if the new evidence changes the decision.</p>
+<p>Deliberately omit the full render before committing. Do not call attention to the omission. The updated source reaches GitHub, but the existing files in docs remain unchanged. This creates the evidence for the think-pair-share on the next slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-website-still-shows-the-old-figure" class="slide level2 question-slide">
+<h2>The website still shows the old figure</h2>
+<p>You observe three facts:</p>
+<ol type="1">
+<li>The local preview shows the updated figure.</li>
+<li>GitHub contains the updated <code>.qmd</code> source.</li>
+<li>The public website still shows the earlier figure.</li>
+</ol>
+<div class="discussion-box">
+<p>What do these observations tell you? Where could the update have stopped? What would you inspect first?</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 4 to 6 minutes.</p>
+<p>Use a full think-pair-share. Give students 30 seconds to reason individually, 90 seconds with a partner, then ask pairs to defend the order in which they would investigate.</p>
+<p>Do not reveal that the deliberate mistake was committing and pushing the qmd change without first rendering and committing the updated docs output.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="debugging-the-publishing-pipeline" class="slide level2 smaller">
+<h2>Debugging the publishing pipeline</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check</th>
+<th>Evidence to inspect</th>
+<th>What success means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Source</td>
+<td>Saved <code>.qmd</code>, code, and data</td>
+<td>The intended change exists locally</td>
+</tr>
+<tr class="even">
+<td>Local execution</td>
+<td><code>uv run quarto preview</code></td>
+<td>The analysis can run and looks correct</td>
+</tr>
+<tr class="odd">
+<td>Full render</td>
+<td>Updated files in <code>docs/</code></td>
+<td>The publishable artifact is current</td>
+</tr>
+<tr class="even">
+<td>Commit</td>
+<td><code>git status</code> and <code>git show</code></td>
+<td>Source and output entered Git history</td>
+</tr>
+<tr class="odd">
+<td>Remote</td>
+<td>The latest GitHub commit</td>
+<td>The push reached the remote repository</td>
+</tr>
+<tr class="even">
+<td>Deployment</td>
+<td>Pages deployment status</td>
+<td>GitHub served the selected branch and folder</td>
+</tr>
+<tr class="odd">
+<td>Browser</td>
+<td>Refresh the published URL</td>
+<td>The reader received the new deployment</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>Find the last stage that worked, then inspect the next boundary.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Walk through the evidence from the prompt. The correct local preview shows that the source can run. The updated source on GitHub shows that a commit and push occurred. Those facts do not prove that docs was rendered or included in the commit.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-missing-render" class="slide level2 demo-slide">
+<h2>The missing render</h2>
+<p>Inspect the repository:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">git</span> status</span>
+<span id="cb14-2"><a></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then repair the update:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">uv</span> run quarto render</span>
+<span id="cb15-2"><a></a><span class="fu">git</span> add docs</span>
+<span id="cb15-3"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Render updated pilot results"</span></span>
+<span id="cb15-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Confirm that GitHub Pages completes the new deployment.</p>
+<aside class="notes">
+<p>Suggested time: 3 minutes.</p>
+<p>Return to the live site after the deployment completes. Reconnect the corrected public figure to the current data and code.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<!-- Natural stopping point -->
+</section>
+<section id="a-portfolio-that-grows-with-the-course" class="slide level2 section-card">
+<h2>A portfolio that grows with the course</h2>
+<div class="big-idea">
+<p>The same workflow can publish every blog and selected project produced this semester.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 1 minute.</p>
+<p>This is a natural stopping point. If the live demonstration takes longer than expected, move the remaining setup activity to the next class or lab.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-simple-portfolio-structure" class="slide level2">
+<h2>A simple portfolio structure</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a></a>Home</span>
+<span id="cb16-2"><a></a>├── About</span>
+<span id="cb16-3"><a></a>├── Projects</span>
+<span id="cb16-4"><a></a>│   ├── Selected lab or analysis</span>
+<span id="cb16-5"><a></a>│   └── Final project</span>
+<span id="cb16-6"><a></a>└── Blog</span>
+<span id="cb16-7"><a></a>    ├── Tutorial</span>
+<span id="cb16-8"><a></a>    ├── Data acquisition</span>
+<span id="cb16-9"><a></a>    └── Book reflection</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each new item follows the publishing pipeline introduced earlier.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Explain that the website is a stable home for work created throughout the course. Students will reuse the publishing workflow rather than start over for every assignment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="activity-begin-your-portfolio" class="slide level2 exercise-slide smaller">
+<h2>Activity: begin your portfolio</h2>
+<p>Create a public repository under your personal GitHub account named:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb17-1"><a></a>YOUR_USERNAME.github.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then:</p>
+<ol type="1">
+<li>Create or clone the starter website</li>
+<li>Open the project in Positron</li>
+<li>Change the site title to your name</li>
+<li>Write a short homepage introduction</li>
+<li>Run <code>uv run quarto preview</code></li>
+</ol>
+<div class="exercise-check">
+<p><strong>Check:</strong> A partner can open your local preview and identify whose portfolio it is.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 8 to 12 minutes.</p>
+<p>Use personal GitHub accounts so students retain the portfolio after the course. A course template can reduce setup time while leaving every important file visible.</p>
+<p>Before students create the repository, have them check whether <code>USERNAME.github.io</code> already exists. Students with an existing user site can add the course pages there or use a project site such as <code>stat386-portfolio</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="portfolio-publishing-checklist" class="slide level2 exercise-slide smaller">
+<h2>Portfolio publishing checklist</h2>
+<p>Before publishing:</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>_quarto.yml</code> uses <code>output-dir: docs</code></label></li>
+<li><label><input type="checkbox">The repository root contains <code>.nojekyll</code></label></li>
+<li><label><input type="checkbox"><code>uv run quarto render</code> finishes without errors</label></li>
+<li><label><input type="checkbox"><code>docs/index.html</code> exists</label></li>
+<li><label><input type="checkbox">The commit contains both source and rendered changes</label></li>
+<li><label><input type="checkbox">GitHub Pages uses <code>main</code> and <code>/docs</code></label></li>
+<li><label><input type="checkbox">The public URL opens in a private browser window</label></li>
+</ul>
+<div class="exercise-check">
+<p><strong>Check:</strong> Save both the repository URL and the published website URL.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 5 to 8 minutes if students publish during class. The first deployment may continue after class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="public-work-needs-a-final-check" class="slide level2 reference-slide smaller">
+<h2>Public work needs a final check</h2>
+<p>Before pushing a public portfolio, confirm that it contains:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Safe to publish</th>
+<th>Keep private</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Your explanation and original visuals</td>
+<td>API keys, tokens, and passwords</td>
+</tr>
+<tr class="even">
+<td>Public or properly licensed data</td>
+<td>Restricted or personally identifiable data</td>
+</tr>
+<tr class="odd">
+<td>Attributed external sources</td>
+<td><code>.env</code> files and private configuration</td>
+</tr>
+<tr class="even">
+<td>Project code you can share</td>
+<td>Material you do not have permission to publish</td>
+</tr>
+</tbody>
+</table>
+<p>Also check figure descriptions, readable colors, and meaningful link text.</p>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Connect credentials to the earlier gitignore lesson. Remind students that removing a secret from the latest commit does not automatically remove it from Git history.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="where-this-workflow-leads" class="slide level2">
+<h2>Where this workflow leads</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Today</th>
+<th>Later in the course</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Reproducible reports</td>
+<td>Reusable Python packages</td>
+</tr>
+<tr class="even">
+<td>Static portfolio pages</td>
+<td>Richer interactive dashboards</td>
+</tr>
+<tr class="odd">
+<td>Manual rendering and publishing</td>
+<td>More automated project workflows</td>
+</tr>
+</tbody>
+</table>
+<div class="key-idea">
+<p>The tools may become more capable, but the same principles remain: traceable inputs, reproducible computation, and accessible results.</p>
+</div>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Avoid teaching deployment automation today. GitHub Actions can return later when students package code and have a stronger reason to automate checks and publishing.</p>
+<p>Clarify that GitHub Pages supports static sites and browser-based interactivity. A dashboard that needs a continuously running Python process requires server-based hosting.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="takeaways" class="slide level2 takeaway-slide smaller">
+<h2>Takeaways</h2>
+<ol type="1">
+<li>Data science results need visuals and explanation, while code and data preserve the evidence beneath them.</li>
+<li>Quarto generates figures and tables from the analysis during rendering.</li>
+<li>Git, GitHub, and uv let a teammate reconstruct and extend the project.</li>
+<li>GitHub Pages gives nontechnical readers a browser-based result.</li>
+<li>Debugging begins by locating the last successful stage in the publishing pipeline.</li>
+<li>The same workflow can support every blog and project added to the portfolio.</li>
+</ol>
+<aside class="notes">
+<p>Suggested time: 2 minutes.</p>
+<p>Ask students to choose one takeaway and connect it to a tool or activity from an earlier class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="command-reference" class="slide level2 reference-slide smaller">
+<h2>Command reference</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Goal</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Create a website</td>
+<td><code>quarto create project website NAME</code></td>
+</tr>
+<tr class="even">
+<td>Preview the website</td>
+<td><code>uv run quarto preview</code></td>
+</tr>
+<tr class="odd">
+<td>Render the complete website</td>
+<td><code>uv run quarto render</code></td>
+</tr>
+<tr class="even">
+<td>Reconstruct Python packages</td>
+<td><code>uv sync</code></td>
+</tr>
+<tr class="odd">
+<td>Inspect pending changes</td>
+<td><code>git status</code></td>
+</tr>
+<tr class="even">
+<td>Record the update</td>
+<td><code>git add .</code> and <code>git commit</code></td>
+</tr>
+<tr class="odd">
+<td>Share the update</td>
+<td><code>git push</code></td>
+</tr>
+</tbody>
+</table>
+<div class="tip-box">
+<p>Run project commands from the folder containing <code>_quarto.yml</code> and <code>pyproject.toml</code>.</p>
+</div>
+<aside class="notes">
+<p>Reference slide for students after class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level2 reference-slide smaller">
+<h2>References</h2>
+<ul>
+<li><a href="https://quarto.org/docs/websites/">Creating a Quarto website</a></li>
+<li><a href="https://quarto.org/docs/computations/python.html">Computations with Python</a></li>
+<li><a href="https://quarto.org/docs/publishing/github-pages.html">Publishing Quarto sites with GitHub Pages</a></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">What is GitHub Pages?</a></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#types-of-github-pages-sites">GitHub Pages site types</a></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Configuring a GitHub Pages publishing source</a></li>
+<li><a href="https://docs.astral.sh/uv/guides/projects/">Working on projects with uv</a></li>
+<li><a href="https://docs.astral.sh/uv/concepts/projects/run/">Running commands with uv</a></li>
+</ul>
+<aside class="notes">
+<p>Reference slide for students after class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="questions" class="slide level2 section-card">
+<h2>Questions?</h2>
+<div class="key-idea">
+<p>Which stage of the publishing workflow would you want to practice again?</p>
 </div>
 
 
@@ -597,7 +1862,7 @@ site_libs/
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>STAT 386 — Fall 2026</p>
+<p>STAT 386</p>
 </div>
 </div></div>
 
@@ -777,15 +2042,15 @@ site_libs/
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.1,
+        margin: 6.0e-2,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -859,13 +2124,14 @@ site_libs/
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -894,6 +2160,11 @@ site_libs/
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
             }
           }
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

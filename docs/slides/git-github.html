@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Introduction to Git and GitHub</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -320,8 +320,8 @@
 <section id="configure-git" class="slide level2 demo-slide">
 <h2>Configure Git</h2>
 <p>Set your identity — run <strong>once</strong> on your computer:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name Here"</span></span>
-<span id="cb1-2"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name Here"</span></span>
+<span id="cb1-2"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> These values are attached to every commit you make. Use the same email as your GitHub account.</p>
 </div>
@@ -367,7 +367,7 @@
 <section id="stages-for-file-status" class="slide level2">
 <h2>Stages for File Status</h2>
 <p>The file lifecycle:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>Untracked  →  Staged  →  Committed  →  Modified</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>Untracked  →  Staged  →  Committed  →  Modified</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Untracked:</strong> Git is not yet tracking the file</li>
 <li><strong>Staged:</strong> Added with <code>git add</code>, ready to commit</li>
@@ -490,14 +490,14 @@
 </section>
 <section id="gitignore-example" class="slide level2 demo-slide">
 <h2><code>.gitignore</code> Example</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="co"># Ignore all .log files</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="co"># Ignore all .log files</span></span>
 <span id="cb3-2"><a></a><span class="ex">*.log</span></span>
 <span id="cb3-3"><a></a></span>
 <span id="cb3-4"><a></a><span class="co"># Ignore the node_modules directory</span></span>
 <span id="cb3-5"><a></a><span class="ex">node_modules/</span></span>
 <span id="cb3-6"><a></a></span>
 <span id="cb3-7"><a></a><span class="co"># Ignore system-specific files</span></span>
-<span id="cb3-8"><a></a><span class="ex">.DS_Store</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a></a><span class="ex">.DS_Store</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> Commit a <code>.gitignore</code> early — before unwanted files get tracked.</p>
 </div>
@@ -547,8 +547,8 @@
 <section id="branching-merging" class="slide level2 demo-slide">
 <h2>Branching: Merging</h2>
 <p><strong>Merging</strong> brings changes from one branch into another:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">git</span> checkout main          <span class="co"># move to target branch</span></span>
-<span id="cb4-2"><a></a><span class="fu">git</span> merge <span class="op">&lt;</span>branch-name<span class="op">&gt;</span>    <span class="co"># merge in the feature branch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">git</span> checkout main          <span class="co"># move to target branch</span></span>
+<span id="cb4-2"><a></a><span class="fu">git</span> merge <span class="op">&lt;</span>branch-name<span class="op">&gt;</span>    <span class="co"># merge in the feature branch</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Best practices:</strong></p>
 <ul>
 <li>Keep branches small and focused</li>
@@ -567,11 +567,11 @@
 </ul></li>
 </ul>
 <p>Git marks conflicts with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
 <span id="cb5-2"><a></a>your changes</span>
 <span id="cb5-3"><a></a>=======</span>
 <span id="cb5-4"><a></a>their changes</span>
-<span id="cb5-5"><a></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="merge-conflicts-resolving" class="slide level2 demo-slide">
 <h2>Merge Conflicts: Resolving</h2>
@@ -851,7 +851,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -925,13 +925,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – IDEs and Virtual Environments for Data Science</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -332,8 +332,8 @@
 <section id="quarto-in-vs-code" class="slide level2 demo-slide">
 <h2>Quarto in VS Code</h2>
 <p>With the Quarto extension, you can preview <code>.qmd</code> inside VS Code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">touch</span> report.qmd</span>
-<span id="cb1-2"><a></a><span class="ex">quarto</span> render report.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="fu">touch</span> report.qmd</span>
+<span id="cb1-2"><a></a><span class="ex">quarto</span> render report.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In VS Code: run the command <strong>Quarto: Preview</strong>.</p>
 <div class="demo-box">
 <p><strong>Demo flow:</strong> create <code>report.qmd</code> → add a heading and a code cell → Preview in viewer pane → edit and watch it update.</p>
@@ -401,11 +401,11 @@
 <section id="conflict-resolution-in-vs-code" class="slide level2">
 <h2>Conflict Resolution in VS Code</h2>
 <p><strong>Markers</strong> in the file:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; current branch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>&lt;&lt;&lt;&lt;&lt;&lt;&lt; current branch</span>
 <span id="cb2-2"><a></a>your changes</span>
 <span id="cb2-3"><a></a>=======</span>
 <span id="cb2-4"><a></a>incoming changes</span>
-<span id="cb2-5"><a></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; incoming branch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; incoming branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>VS Code adds inline actions: <strong>Accept Current</strong>, <strong>Accept Incoming</strong>, <strong>Accept Both</strong>, <strong>Compare changes</strong>, <strong>3-way merge editor</strong></li>
 <li>After resolving: save file, stage it, commit the merge resolution</li>
@@ -452,22 +452,22 @@
 <h2>uv Project Structure (What to Commit)</h2>
 <p><strong>Commit:</strong> <code>pyproject.toml</code>, <code>uv.lock</code>, <code>.python-version</code></p>
 <p><strong>Do NOT commit:</strong> <code>.venv/</code> (local environment)</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>myproject/</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>myproject/</span>
 <span id="cb3-2"><a></a>  pyproject.toml</span>
 <span id="cb3-3"><a></a>  uv.lock</span>
 <span id="cb3-4"><a></a>  .python-version</span>
-<span id="cb3-5"><a></a>  .venv/   # ignore in git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a></a>  .venv/   # ignore in git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Note:</strong> Add <code>.venv/</code> to <code>.gitignore</code>. The environment is local; the lockfile is shared.</p>
 </div>
 </section>
 <section id="uv-the-commands-youll-use-most" class="slide level2 demo-slide">
 <h2>uv: The Commands You’ll Use Most</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">uv</span> init myproject</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">uv</span> init myproject</span>
 <span id="cb4-2"><a></a><span class="bu">cd</span> myproject</span>
 <span id="cb4-3"><a></a><span class="ex">uv</span> add httpx rich</span>
 <span id="cb4-4"><a></a><span class="ex">uv</span> sync</span>
-<span id="cb4-5"><a></a><span class="ex">uv</span> run python main.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a></a><span class="ex">uv</span> run python main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="demo-box">
 <p><strong>What happens:</strong> <code>uv init</code> scaffolds the project, <code>uv add</code> updates <code>pyproject.toml</code> and <code>uv.lock</code>, <code>uv sync</code> builds <code>.venv</code>, and <code>uv run</code> executes inside that environment.</p>
 </div>
@@ -773,7 +773,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -847,13 +847,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

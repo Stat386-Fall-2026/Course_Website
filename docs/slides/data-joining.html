@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Joining Data Together in Pandas</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -238,7 +238,7 @@
 </section>
 <section id="the-workhorse-pd.merge" class="slide level2">
 <h2>The Workhorse: <code>pd.merge</code></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>pd.merge(left, right, how<span class="op">=</span>..., on<span class="op">=</span>...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>pd.merge(left, right, how<span class="op">=</span>..., on<span class="op">=</span>...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Think “SQL join” but in pandas. Key params:</p>
 <ul>
 <li><code>how</code> — <code>"inner"</code>, <code>"left"</code>, <code>"right"</code>, <code>"outer"</code></li>
@@ -251,23 +251,23 @@
 <h2>Inner Join</h2>
 <p>Keeps rows with keys found in <strong>BOTH</strong> tables.</p>
 <p>Good when analysis requires matched records and you expect near-perfect coverage.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"inner"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"inner"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="left-join" class="slide level2 demo-slide">
 <h2>Left Join</h2>
 <p>Keeps <strong>all rows</strong> from the left table. Adds columns from the right when keys match. Unmatched keys become <code>NaN</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>pd.merge(orders, customers,</span>
-<span id="cb3-2"><a></a>         how<span class="op">=</span><span class="st">"left"</span>, on<span class="op">=</span><span class="st">"customer_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>pd.merge(orders, customers,</span>
+<span id="cb3-2"><a></a>         how<span class="op">=</span><span class="st">"left"</span>, on<span class="op">=</span><span class="st">"customer_id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="right-join" class="slide level2 demo-slide">
 <h2>Right Join</h2>
 <p>Keeps all rows from the right table. Mostly symmetric with left join — just swap table order.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"right"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"right"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="outer-join" class="slide level2 demo-slide">
 <h2>Outer Join</h2>
 <p>Keeps rows whose keys appear in <strong>EITHER</strong> table. Useful for a “union of coverage.” Often requires follow-up cleaning.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"outer"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"outer"</span>, on<span class="op">=</span><span class="st">"id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="quick-reference-join-types" class="slide level2 reference-slide">
 <h2>Quick Reference: Join Types</h2>
@@ -313,9 +313,9 @@
 </section>
 <section id="use-validate-to-sanity-check-joins" class="slide level2 demo-slide">
 <h2>Use <code>validate=</code> to Sanity-Check Joins</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>pd.merge(customers, demographics,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>pd.merge(customers, demographics,</span>
 <span id="cb6-2"><a></a>         on<span class="op">=</span><span class="st">"customer_id"</span>, how<span class="op">=</span><span class="st">"left"</span>,</span>
-<span id="cb6-3"><a></a>         validate<span class="op">=</span><span class="st">"one_to_one"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a></a>         validate<span class="op">=</span><span class="st">"one_to_one"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Options: <code>"one_to_one"</code>, <code>"one_to_many"</code>, <code>"many_to_one"</code>, <code>"many_to_many"</code></p>
 <div class="tip-box">
 <p>If <code>validate</code> fails, you have unexpected duplicates. Fix them before trusting the join.</p>
@@ -323,8 +323,8 @@
 </section>
 <section id="use-indicator-to-see-what-matched" class="slide level2 demo-slide">
 <h2>Use <code>indicator=</code> to See What Matched</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>m <span class="op">=</span> pd.merge(a, b, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"outer"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-2"><a></a>m[<span class="st">"_merge"</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>m <span class="op">=</span> pd.merge(a, b, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"outer"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-2"><a></a>m[<span class="st">"_merge"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>both</code> — matched</li>
 <li><code>left_only</code> — missing from right</li>
@@ -333,10 +333,10 @@
 </section>
 <section id="joining-on-indexes" class="slide level2 demo-slide">
 <h2>Joining on Indexes</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>customers <span class="op">=</span> customers.set_index(<span class="st">"customer_id"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>customers <span class="op">=</span> customers.set_index(<span class="st">"customer_id"</span>)</span>
 <span id="cb8-2"><a></a>orders    <span class="op">=</span> orders.set_index(<span class="st">"customer_id"</span>)</span>
 <span id="cb8-3"><a></a></span>
-<span id="cb8-4"><a></a>orders.join(customers, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a></a>orders.join(customers, how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="key-idea">
 <p><code>.join()</code> defaults to joining on the index — handy when the index already encodes your key.</p>
 </div>
@@ -364,11 +364,11 @@
 <li>Expand monthly → daily (forward-fill)</li>
 </ul>
 <p><strong>Use <code>merge_asof</code> for “nearest previous” matches:</strong></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>pd.merge_asof(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>pd.merge_asof(</span>
 <span id="cb9-2"><a></a>    daily.sort_values(<span class="st">"date"</span>),</span>
 <span id="cb9-3"><a></a>    monthly.sort_values(<span class="st">"date"</span>),</span>
 <span id="cb9-4"><a></a>    on<span class="op">=</span><span class="st">"date"</span>, direction<span class="op">=</span><span class="st">"backward"</span></span>
-<span id="cb9-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="problem-different-geographic-levels" class="slide level2">
 <h2>Problem: Different Geographic Levels</h2>
@@ -402,13 +402,13 @@
 <div>
 <p><strong><code>merge</code></strong></p>
 <p>Combines columns using key matches (relational join).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>pd.merge(left, right,</span>
-<span id="cb10-2"><a></a>         on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>pd.merge(left, right,</span>
+<span id="cb10-2"><a></a>         on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div>
 <p><strong><code>concat</code></strong></p>
 <p>Stacks dataframes along rows or columns.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># stack rows (same columns)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="co"># stack rows (same columns)</span></span>
 <span id="cb11-2"><a></a>all_months <span class="op">=</span> pd.concat(</span>
 <span id="cb11-3"><a></a>    list_of_monthly_dfs,</span>
 <span id="cb11-4"><a></a>    ignore_index<span class="op">=</span><span class="va">True</span>)</span>
@@ -417,15 +417,15 @@
 <span id="cb11-7"><a></a>wide <span class="op">=</span> pd.concat(</span>
 <span id="cb11-8"><a></a>    [left.set_index(<span class="st">"id"</span>),</span>
 <span id="cb11-9"><a></a>     right.set_index(<span class="st">"id"</span>)],</span>
-<span id="cb11-10"><a></a>    axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-10"><a></a>    axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
 <section id="multi-key-joins" class="slide level2 demo-slide">
 <h2>Multi-Key Joins</h2>
 <p>Many real joins need <strong>multiple keys</strong>: <code>(state, year)</code>, <code>(customer_id, order_date)</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"left"</span>,</span>
-<span id="cb12-2"><a></a>         on<span class="op">=</span>[<span class="st">"state"</span>, <span class="st">"year"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>pd.merge(a, b, how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb12-2"><a></a>         on<span class="op">=</span>[<span class="st">"state"</span>, <span class="st">"year"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="demo-1-a-straightforward-join" class="slide level2 demo-slide">
 <h2>Demo 1: A Straightforward Join</h2>
@@ -706,7 +706,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -780,13 +780,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

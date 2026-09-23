@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Brief Introduction to Importing Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -233,17 +233,17 @@
 <section id="pandas-read_csv" class="slide level2 demo-slide">
 <h2>Pandas <code>read_csv</code></h2>
 <p>The go-to reader for flat files:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data.csv"</span>)</span>
-<span id="cb1-4"><a></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> <code>read_csv</code> is flexible — it handles TSV, pipe-delimited, and many other flat formats by changing <code>sep</code>.</p>
 </div>
 </section>
 <section id="common-arguments-for-read_csv" class="slide level2 demo-slide">
 <h2>Common Arguments for <code>read_csv</code></h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>df <span class="op">=</span> pd.read_csv(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb2-2"><a></a>    <span class="st">"data.csv"</span>,</span>
 <span id="cb2-3"><a></a>    sep<span class="op">=</span><span class="st">","</span>,            <span class="co"># delimiter ("," default; "\t" for TSV)</span></span>
 <span id="cb2-4"><a></a>    header<span class="op">=</span><span class="dv">0</span>,           <span class="co"># row number for column names</span></span>
@@ -253,7 +253,7 @@
 <span id="cb2-8"><a></a>    usecols<span class="op">=</span>[<span class="st">"a"</span>, <span class="st">"b"</span>], <span class="co"># keep only these columns</span></span>
 <span id="cb2-9"><a></a>    dtype<span class="op">=</span>{<span class="st">"a"</span>: <span class="st">"int64"</span>},</span>
 <span id="cb2-10"><a></a>    compression<span class="op">=</span><span class="st">"gzip"</span>  <span class="co"># auto-detect if .gz/.zip</span></span>
-<span id="cb2-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-11"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="excel" class="slide level2 section-card">
 <h2>Excel</h2>
@@ -263,11 +263,11 @@
 <li>Import <strong>all sheets</strong> as a dictionary</li>
 <li>See also <code>pd.ExcelFile()</code> for inspection</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># One sheet</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># One sheet</span></span>
 <span id="cb3-2"><a></a>df <span class="op">=</span> pd.read_excel(<span class="st">"file.xlsx"</span>, sheet_name<span class="op">=</span><span class="st">"Sheet1"</span>)</span>
 <span id="cb3-3"><a></a></span>
 <span id="cb3-4"><a></a><span class="co"># All sheets -&gt; dict of DataFrames</span></span>
-<span id="cb3-5"><a></a>all_sheets <span class="op">=</span> pd.read_excel(<span class="st">"file.xlsx"</span>, sheet_name<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a></a>all_sheets <span class="op">=</span> pd.read_excel(<span class="st">"file.xlsx"</span>, sheet_name<span class="op">=</span><span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="json" class="slide level2 section-card">
 <h2>JSON</h2>
@@ -282,7 +282,7 @@
 <section id="json-example" class="slide level2 demo-slide">
 <h2>JSON Example</h2>
 <p>A JSON object looks like a Python dictionary with string keys:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a></a><span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"John"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">,</span> <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"New York"</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a></a><span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"John"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">,</span> <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"New York"</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="key-idea">
 <p><strong>Key idea:</strong> JSON keys and string values are wrapped in double quotes (<code>"</code>). Numbers are unquoted.</p>
 </div>
@@ -290,13 +290,13 @@
 <section id="python-and-json" class="slide level2 demo-slide">
 <h2>Python and JSON</h2>
 <p>Convert a JSON string into a Python object:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> json</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> json</span>
 <span id="cb5-2"><a></a></span>
 <span id="cb5-3"><a></a>x <span class="op">=</span> <span class="st">'{"name":"John", "age":30, "city":"New York"}'</span></span>
 <span id="cb5-4"><a></a>y <span class="op">=</span> json.loads(x)        <span class="co"># string -&gt; dict</span></span>
 <span id="cb5-5"><a></a></span>
 <span id="cb5-6"><a></a><span class="bu">print</span>(y[<span class="st">"name"</span>])         <span class="co"># John</span></span>
-<span id="cb5-7"><a></a><span class="bu">print</span>(<span class="bu">type</span>(y))           <span class="co"># &lt;class 'dict'&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a></a><span class="bu">print</span>(<span class="bu">type</span>(y))           <span class="co"># &lt;class 'dict'&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Result:</strong> <code>json.loads</code> returns a Python dictionary you can index normally.</p>
 </div>
@@ -304,14 +304,14 @@
 <section id="working-with-json-data" class="slide level2 demo-slide">
 <h2>Working with JSON Data</h2>
 <p>Convert a Python object into a JSON string:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> json</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> json</span>
 <span id="cb6-2"><a></a></span>
 <span id="cb6-3"><a></a>x <span class="op">=</span> {<span class="st">"name"</span>: <span class="st">"John"</span>, <span class="st">"age"</span>: <span class="dv">30</span>, <span class="st">"city"</span>: <span class="st">"New York"</span>}</span>
 <span id="cb6-4"><a></a>y <span class="op">=</span> json.dumps(x)        <span class="co"># dict -&gt; JSON string</span></span>
 <span id="cb6-5"><a></a></span>
 <span id="cb6-6"><a></a><span class="bu">print</span>(y)</span>
 <span id="cb6-7"><a></a><span class="co"># {"name": "John", "age": 30, "city": "New York"}</span></span>
-<span id="cb6-8"><a></a><span class="bu">print</span>(<span class="bu">type</span>(y))           <span class="co"># &lt;class 'str'&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-8"><a></a><span class="bu">print</span>(<span class="bu">type</span>(y))           <span class="co"># &lt;class 'str'&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="yaml" class="slide level2 section-card">
 <h2>YAML</h2>
@@ -326,7 +326,7 @@
 <section id="example-yaml" class="slide level2 demo-slide">
 <h2>Example YAML</h2>
 <p>A sample YAML config:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a></a><span class="co"># database config</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a></a><span class="co"># database config</span></span>
 <span id="cb7-2"><a></a><span class="fu">database</span><span class="kw">:</span></span>
 <span id="cb7-3"><a></a><span class="at">  </span><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost</span></span>
 <span id="cb7-4"><a></a><span class="at">  </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5432</span></span>
@@ -336,7 +336,7 @@
 <span id="cb7-8"><a></a><span class="fu">model</span><span class="kw">:</span></span>
 <span id="cb7-9"><a></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> random_forest</span></span>
 <span id="cb7-10"><a></a><span class="at">  </span><span class="fu">n_estimators</span><span class="kw">:</span><span class="at"> </span><span class="dv">100</span></span>
-<span id="cb7-11"><a></a><span class="at">  </span><span class="fu">max_depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-11"><a></a><span class="at">  </span><span class="fu">max_depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Note:</strong> YAML supports <code>#</code> comments — JSON does not.</p>
 </div>
@@ -352,7 +352,7 @@
 <li>Machine parsing / interoperability</li>
 <li>Standard for HTTP / APIs</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a></a><span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"John"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a></a><span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"John"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div>
 <p><strong>YAML</strong></p>
@@ -362,8 +362,8 @@
 <li>Human readability (configs)</li>
 <li>Used for config files</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a></a><span class="fu">name</span><span class="kw">:</span><span class="at"> John</span></span>
-<span id="cb9-2"><a></a><span class="fu">age</span><span class="kw">:</span><span class="at"> </span><span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a></a><span class="fu">name</span><span class="kw">:</span><span class="at"> John</span></span>
+<span id="cb9-2"><a></a><span class="fu">age</span><span class="kw">:</span><span class="at"> </span><span class="dv">30</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -394,9 +394,9 @@
 </section>
 <section id="reading-a-file" class="slide level2 demo-slide">
 <h2>Reading a File</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>)</span>
 <span id="cb10-2"><a></a>text <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb10-3"><a></a><span class="bu">file</span>.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a></a><span class="bu">file</span>.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>"r"</code> means <strong>reading mode</strong></li>
 <li><code>file.read()</code> reads the whole file into a string</li>
@@ -408,31 +408,31 @@
 <section id="reading-lines-continued" class="slide level2 demo-slide">
 <h2>Reading Lines (continued)</h2>
 <p><code>file.read()</code> reads from start to finish.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>text1 <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># full content</span></span>
-<span id="cb11-2"><a></a>text2 <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># ""  (empty!)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>text1 <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># full content</span></span>
+<span id="cb11-2"><a></a>text2 <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># ""  (empty!)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Gotcha:</strong> Calling <code>read()</code> again returns an empty string because the cursor is at the end.</p>
 </div>
 <p>To reset the cursor:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">file</span>.seek(<span class="dv">0</span>)          <span class="co"># jump back to start</span></span>
-<span id="cb12-2"><a></a>text <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># works again</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="bu">file</span>.seek(<span class="dv">0</span>)          <span class="co"># jump back to start</span></span>
+<span id="cb12-2"><a></a>text <span class="op">=</span> <span class="bu">file</span>.read()   <span class="co"># works again</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="or-make-a-list-of-lines" class="slide level2 demo-slide">
 <h2>Or Make a List of Lines</h2>
 <p><code>.readlines()</code> reads each line as a separate item in a list. New lines end with <code>"\n"</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>)</span>
 <span id="cb13-2"><a></a>text_list <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
 <span id="cb13-3"><a></a><span class="bu">file</span>.close()</span>
 <span id="cb13-4"><a></a></span>
 <span id="cb13-5"><a></a><span class="bu">print</span>(text_list)</span>
-<span id="cb13-6"><a></a><span class="co"># ["first line\n", "second line\n", ...]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a></a><span class="co"># ["first line\n", "second line\n", ...]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="context-manager" class="slide level2 demo-slide">
 <h2>Context Manager</h2>
 <p>The <code>with</code> block opens <strong>and</strong> closes the file automatically:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>) <span class="im">as</span> myfile:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"filename.txt"</span>, mode<span class="op">=</span><span class="st">"r"</span>) <span class="im">as</span> myfile:</span>
 <span id="cb14-2"><a></a>    text_list <span class="op">=</span> myfile.readlines()</span>
-<span id="cb14-3"><a></a><span class="co"># file is closed here — even if an error occurred</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a></a><span class="co"># file is closed here — even if an error occurred</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Best practice:</strong> Prefer <code>with</code> over manual <code>open()</code>/<code>close()</code>. It guarantees the file closes.</p>
 </div>
@@ -444,8 +444,8 @@
 <li>Input: a <strong>URL</strong> or <strong>raw HTML</strong> string</li>
 <li>Output: a <strong>list</strong> of all tables — even if only one</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>tables <span class="op">=</span> pd.read_html(<span class="st">"https://example.com/data.html"</span>)</span>
-<span id="cb15-2"><a></a>df <span class="op">=</span> tables[<span class="dv">0</span>]    <span class="co"># first table on the page</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>tables <span class="op">=</span> pd.read_html(<span class="st">"https://example.com/data.html"</span>)</span>
+<span id="cb15-2"><a></a>df <span class="op">=</span> tables[<span class="dv">0</span>]    <span class="co"># first table on the page</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Note:</strong> <code>read_html</code> requires <code>lxml</code>, <code>html5lib</code>, or <code>beautifulsoup4</code> installed.</p>
 </div>
@@ -662,7 +662,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -736,13 +736,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

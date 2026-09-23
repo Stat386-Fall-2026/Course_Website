@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Streamlit and Dashboards for Data Science</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -314,7 +314,7 @@
 </section>
 <section id="hello-streamlit" class="slide level2 demo-slide">
 <h2>Hello, Streamlit</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>st.set_page_config(page_title<span class="op">=</span><span class="st">"Hello Streamlit"</span>, layout<span class="op">=</span><span class="st">"wide"</span>)</span>
 <span id="cb1-4"><a></a>st.title(<span class="st">"Hello, Streamlit!"</span>)</span>
@@ -324,14 +324,14 @@
 <span id="cb1-8"><a></a>age <span class="op">=</span> st.slider(<span class="st">"Age"</span>, <span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">42</span>)</span>
 <span id="cb1-9"><a></a></span>
 <span id="cb1-10"><a></a><span class="cf">if</span> st.button(<span class="st">"Say hi"</span>):</span>
-<span id="cb1-11"><a></a>    st.success(<span class="ss">f"Hi </span><span class="sc">{</span>name <span class="kw">or</span> <span class="st">'friend'</span><span class="sc">}</span><span class="ss">! You are </span><span class="sc">{</span>age<span class="sc">}</span><span class="ss"> years young."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a></a>    st.success(<span class="ss">f"Hi </span><span class="sc">{</span>name <span class="kw">or</span> <span class="st">'friend'</span><span class="sc">}</span><span class="ss">! You are </span><span class="sc">{</span>age<span class="sc">}</span><span class="ss"> years young."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="demo-box">
 <p>Run with <code>streamlit run app.py</code>. Change the slider and watch the whole script rerun.</p>
 </div>
 </section>
 <section id="layout-columns-tabs-expanders" class="slide level2 demo-slide">
 <h2>Layout: Columns, Tabs, Expanders</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>left, right <span class="op">=</span> st.columns([<span class="dv">2</span>, <span class="dv">3</span>])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>left, right <span class="op">=</span> st.columns([<span class="dv">2</span>, <span class="dv">3</span>])</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a><span class="cf">with</span> left:</span>
 <span id="cb2-4"><a></a>    st.metric(<span class="st">"Active Users"</span>, <span class="dv">1248</span>, <span class="st">"+38 vs. last week"</span>)</span>
@@ -345,11 +345,11 @@
 <span id="cb2-12"><a></a>        st.bar_chart(dataframe[[<span class="st">"segment"</span>, <span class="st">"users"</span>]].set_index(<span class="st">"segment"</span>))</span>
 <span id="cb2-13"><a></a></span>
 <span id="cb2-14"><a></a><span class="cf">with</span> st.expander(<span class="st">"Notes"</span>):</span>
-<span id="cb2-15"><a></a>    st.write(<span class="st">"Definitions, caveats, links to docs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a></a>    st.write(<span class="st">"Definitions, caveats, links to docs"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="caching-for-speed" class="slide level2 demo-slide">
 <h2>Caching for Speed</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a></a><span class="im">import</span> time</span>
 <span id="cb3-3"><a></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
 <span id="cb3-4"><a></a></span>
@@ -364,7 +364,7 @@
 <span id="cb3-13"><a></a>    <span class="cf">return</span> bigquery.Client()</span>
 <span id="cb3-14"><a></a></span>
 <span id="cb3-15"><a></a>df <span class="op">=</span> load_sales()</span>
-<span id="cb3-16"><a></a>st.dataframe(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-16"><a></a>st.dataframe(df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><code>@st.cache_data</code> caches return values (data); <code>@st.cache_resource</code> caches singleton objects (connections, models).</p>
 </div>
@@ -689,7 +689,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -763,13 +763,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

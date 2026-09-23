@@ -29,6 +29,7 @@ website:
           - slides/IDEs_and_Markdown.qmd
           - slides/collaborative_github.qmd
           - slides/uv_virtual_envs.qmd
+          - slides/quarto-github-pages.qmd
       # - section: "Demos"
       #   contents:
       #     - demos.qmd

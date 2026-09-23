@@ -2,95 +2,99 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/slides.html</loc>
-    <lastmod>2026-09-18T15:45:10.631Z</lastmod>
+    <lastmod>2026-09-23T15:49:57.081Z</lastmod>
   </url>
   <url>
     <loc>/slides/vscode-uv.html</loc>
-    <lastmod>2026-08-06T19:15:29.441Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.356Z</lastmod>
   </url>
   <url>
     <loc>/slides/terminal_intro.html</loc>
-    <lastmod>2026-09-09T14:26:41.156Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.356Z</lastmod>
   </url>
   <url>
     <loc>/slides/streamlit-dashboards.html</loc>
-    <lastmod>2026-08-06T19:14:30.912Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.355Z</lastmod>
   </url>
   <url>
     <loc>/slides/quarto-github-pages.html</loc>
-    <lastmod>2026-08-06T19:18:07.440Z</lastmod>
+    <lastmod>2026-09-23T15:30:52.696Z</lastmod>
   </url>
   <url>
     <loc>/slides/python-packages.html</loc>
-    <lastmod>2026-08-06T19:15:27.173Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
     <loc>/slides/numpy.html</loc>
-    <lastmod>2026-08-06T19:00:14.035Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
-    <loc>/slides/importing-data.html</loc>
-    <lastmod>2026-08-06T19:14:35.555Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/git_github_foundations.html</loc>
-    <lastmod>2026-09-11T15:49:11.652Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/git-github.html</loc>
-    <lastmod>2026-08-06T19:14:52.085Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/data-joining.html</loc>
-    <lastmod>2026-08-06T19:15:27.413Z</lastmod>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-    <lastmod>2026-09-09T14:52:26.692Z</lastmod>
-  </url>
-  <url>
-    <loc>/demos/week-01.html</loc>
-    <lastmod>2026-09-09T15:14:54.669Z</lastmod>
-  </url>
-  <url>
-    <loc>/demos.html</loc>
-    <lastmod>2026-09-09T14:48:05.357Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/collaborative_github.html</loc>
-    <lastmod>2026-09-16T15:41:59.254Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/eda-dimensionality-reduction.html</loc>
-    <lastmod>2026-08-06T19:17:02.387Z</lastmod>
-  </url>
-  <url>
-    <loc>/slides/github-issues-projects.html</loc>
-    <lastmod>2026-09-11T14:35:26.694Z</lastmod>
+    <loc>/slides/importing_and_loading_data.html</loc>
+    <lastmod>2026-09-23T03:00:24.769Z</lastmod>
   </url>
   <url>
     <loc>/slides/IDEs_and_Markdown.html</loc>
-    <lastmod>2026-09-14T15:40:32.717Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.350Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/github-issues-projects.html</loc>
+    <lastmod>2026-09-21T13:33:49.352Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/eda-dimensionality-reduction.html</loc>
+    <lastmod>2026-09-21T13:33:49.352Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/collaborative_github.html</loc>
+    <lastmod>2026-09-21T13:33:49.351Z</lastmod>
+  </url>
+  <url>
+    <loc>/demos.html</loc>
+    <lastmod>2026-09-21T13:33:49.205Z</lastmod>
+  </url>
+  <url>
+    <loc>/demos/week-01.html</loc>
+    <lastmod>2026-09-21T13:33:49.207Z</lastmod>
+  </url>
+  <url>
+    <loc>/index.html</loc>
+    <lastmod>2026-09-21T13:33:49.349Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/data-joining.html</loc>
+    <lastmod>2026-09-21T13:33:49.351Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/git-github.html</loc>
+    <lastmod>2026-09-21T13:33:49.352Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/git_github_foundations.html</loc>
+    <lastmod>2026-09-21T13:33:49.352Z</lastmod>
+  </url>
+  <url>
+    <loc>/slides/importing-data.html</loc>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
     <loc>/slides/missing-data.html</loc>
-    <lastmod>2026-08-06T19:14:54.786Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
     <loc>/slides/pandas.html</loc>
-    <lastmod>2026-08-06T19:00:31.016Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
     <loc>/slides/python-packaging.html</loc>
-    <lastmod>2026-08-06T19:15:16.115Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.353Z</lastmod>
   </url>
   <url>
     <loc>/slides/regular-expressions.html</loc>
-    <lastmod>2026-08-06T19:17:57.756Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.355Z</lastmod>
   </url>
   <url>
     <loc>/slides/terminal-commands.html</loc>
-    <lastmod>2026-08-06T16:54:42.412Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.355Z</lastmod>
   </url>
   <url>
     <loc>/slides/uv_virtual_envs.html</loc>
@@ -98,6 +102,6 @@
   </url>
   <url>
     <loc>/slides/week-01.html</loc>
-    <lastmod>2026-09-09T15:16:20.636Z</lastmod>
+    <lastmod>2026-09-21T13:33:49.358Z</lastmod>
   </url>
 </urlset>

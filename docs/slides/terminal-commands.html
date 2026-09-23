@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Intro to the Terminal for Data Science</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -243,19 +243,19 @@
 <li><code>/</code> is the root (top of the tree)</li>
 <li>Your home directory is your default starting point</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>(/)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>(/)</span>
 <span id="cb1-2"><a></a>├── home</span>
 <span id="cb1-3"><a></a>│   └── you</span>
 <span id="cb1-4"><a></a>│       ├── Desktop</span>
 <span id="cb1-5"><a></a>│       ├── Documents</span>
 <span id="cb1-6"><a></a>│       └── project</span>
 <span id="cb1-7"><a></a>├── tmp</span>
-<span id="cb1-8"><a></a>└── usr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a></a>└── usr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="where-am-i-pwd" class="slide level2">
 <h2>Where Am I? <code>pwd</code></h2>
 <p><strong>Print Working Directory</strong> shows your current location.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>What you will see:</p>
 <ul>
 <li>macOS: something like <code>/Users/yourname</code></li>
@@ -268,9 +268,9 @@
 <section id="what-is-here-ls" class="slide level2">
 <h2>What Is Here? <code>ls</code></h2>
 <p><code>ls</code> lists directory contents.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">ls</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">ls</span></span>
 <span id="cb3-2"><a></a><span class="fu">ls</span> <span class="at">-l</span>     <span class="co"># long format (details)</span></span>
-<span id="cb3-3"><a></a><span class="fu">ls</span> <span class="at">-a</span>     <span class="co"># show hidden files (often start with .)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a></a><span class="fu">ls</span> <span class="at">-a</span>     <span class="co"># show hidden files (often start with .)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> Use <strong>Tab</strong> to auto-complete names.</p>
 </div>
@@ -278,10 +278,10 @@
 <section id="move-around-cd" class="slide level2">
 <h2>Move Around: <code>cd</code></h2>
 <p><code>cd</code> changes directory.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="bu">cd</span> Desktop   <span class="co"># go to Desktop</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="bu">cd</span> Desktop   <span class="co"># go to Desktop</span></span>
 <span id="cb4-2"><a></a><span class="bu">cd</span> ..        <span class="co"># parent directory</span></span>
 <span id="cb4-3"><a></a><span class="bu">cd</span> ~         <span class="co"># home directory</span></span>
-<span id="cb4-4"><a></a><span class="bu">cd</span> <span class="at">-</span>         <span class="co"># toggle to previous directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a></a><span class="bu">cd</span> <span class="at">-</span>         <span class="co"># toggle to previous directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="quick-exercise-1-navigate" class="slide level2 exercise-slide">
 <h2>Quick Exercise 1: Navigate</h2>
@@ -299,12 +299,12 @@
 <section id="make-a-workspace-mkdir" class="slide level2">
 <h2>Make a Workspace: <code>mkdir</code></h2>
 <p>Create a folder for today.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="bu">cd</span> ~</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="bu">cd</span> ~</span>
 <span id="cb5-2"><a></a><span class="fu">mkdir</span> ds-terminal</span>
-<span id="cb5-3"><a></a><span class="bu">cd</span> ds-terminal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a></a><span class="bu">cd</span> ds-terminal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Create nested folders:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> data/raw</span>
-<span id="cb6-2"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> notes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> data/raw</span>
+<span id="cb6-2"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> notes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> <code>-p</code> creates parent folders as needed.</p>
 </div>
@@ -312,10 +312,10 @@
 <section id="create-a-file-quickly" class="slide level2">
 <h2>Create a File Quickly</h2>
 <p>For quick practice, you can create small text files with output redirection:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="bu">echo</span> <span class="st">"name,score"</span> <span class="op">&gt;</span> data/raw/scores.csv</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="bu">echo</span> <span class="st">"name,score"</span> <span class="op">&gt;</span> data/raw/scores.csv</span>
 <span id="cb7-2"><a></a><span class="bu">echo</span> <span class="st">"Ada,98"</span>   <span class="op">&gt;&gt;</span> data/raw/scores.csv</span>
 <span id="cb7-3"><a></a><span class="bu">echo</span> <span class="st">"Sam,87"</span>   <span class="op">&gt;&gt;</span> data/raw/scores.csv</span>
-<span id="cb7-4"><a></a><span class="bu">echo</span> <span class="st">"Rae,92"</span>   <span class="op">&gt;&gt;</span> data/raw/scores.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a></a><span class="bu">echo</span> <span class="st">"Rae,92"</span>   <span class="op">&gt;&gt;</span> data/raw/scores.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>&gt;</code> — overwrite (create or replace)</li>
 <li><code>&gt;&gt;</code> — append</li>
@@ -324,9 +324,9 @@
 <section id="copy-files-cp" class="slide level2">
 <h2>Copy Files: <code>cp</code></h2>
 <p>Copy a file:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">cp</span> data/raw/scores.csv data/raw/scores_copy.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">cp</span> data/raw/scores.csv data/raw/scores_copy.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Copy a folder recursively:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">cp</span> <span class="at">-r</span> data data_backup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">cp</span> <span class="at">-r</span> data data_backup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> Use <code>ls</code> to confirm what changed.</p>
 </div>
@@ -347,17 +347,17 @@
 <section id="view-text-cat-and-less" class="slide level2">
 <h2>View Text: <code>cat</code> and <code>less</code></h2>
 <p><code>cat</code> prints a file to the screen:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">cat</span> data/raw/scores.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="fu">cat</span> data/raw/scores.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>less</code> lets you scroll (recommended for longer files):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">less</span> data/raw/scores.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">less</span> data/raw/scores.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In <code>less</code>: press <strong>q</strong> to quit.</p>
 </section>
 <section id="search-text-grep" class="slide level2">
 <h2>Search Text: <code>grep</code></h2>
 <p>Find lines that match a pattern:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="fu">grep</span> <span class="st">"Ada"</span> data/raw/scores.csv</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="fu">grep</span> <span class="st">"Ada"</span> data/raw/scores.csv</span>
 <span id="cb12-2"><a></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">"a"</span> data/raw/scores.csv     <span class="co"># -n: show line numbers</span></span>
-<span id="cb12-3"><a></a><span class="fu">grep</span> <span class="at">-i</span> <span class="st">"ada"</span> data/raw/scores.csv   <span class="co"># -i: case-insensitive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a></a><span class="fu">grep</span> <span class="at">-i</span> <span class="st">"ada"</span> data/raw/scores.csv   <span class="co"># -i: case-insensitive</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="quick-exercise-3-grep-like-a-data-scientist" class="slide level2 exercise-slide">
 <h2>Quick Exercise 3: Grep Like a Data Scientist</h2>
@@ -372,22 +372,22 @@
 <section id="pipes-turning-small-tools-into-workflows" class="slide level2">
 <h2>Pipes: Turning Small Tools into Workflows</h2>
 <p>A pipe <code>|</code> sends output of the left command into the right command.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">cat</span> data/raw/scores.csv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"9"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">cat</span> data/raw/scores.csv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"9"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Common helpers:</p>
 <ul>
 <li><code>head</code> — first lines</li>
 <li><code>tail</code> — last lines</li>
 <li><code>wc -l</code> — count lines</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">cat</span> data/raw/scores.csv <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 3 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">cat</span> data/raw/scores.csv <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 3 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="search-your-command-history" class="slide level2">
 <h2>Search Your Command History</h2>
 <p>View recent commands:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 20</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Find a previous command by keyword:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"grep"</span></span>
-<span id="cb16-2"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"mkdir"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"grep"</span></span>
+<span id="cb16-2"><a></a><span class="bu">history</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"mkdir"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Tip:</strong> On many shells, <strong>Ctrl+r</strong> opens interactive reverse search.</p>
 </div>
@@ -422,8 +422,8 @@
 <section id="vim-demo-edit-a-readme" class="slide level2">
 <h2>Vim Demo: Edit a README</h2>
 <p>Create and open a file:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="bu">cd</span> ~/ds-terminal</span>
-<span id="cb17-2"><a></a><span class="ex">vim</span> notes/README.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="bu">cd</span> ~/ds-terminal</span>
+<span id="cb17-2"><a></a><span class="ex">vim</span> notes/README.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Try:</p>
 <ol type="1">
 <li>Press <code>i</code>, type 2 lines about what you learned, press <code>Esc</code></li>
@@ -711,7 +711,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -785,13 +785,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

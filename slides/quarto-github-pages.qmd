@@ -1,404 +1,1065 @@
 ---
-title: "From Repo to Website"
-subtitle: "Quarto + GitHub Pages"
+title: "Reproducible Publishing with Quarto"
+subtitle: "From Analysis to a Public Website"
+author: "STAT 386"
 format:
   revealjs:
     title-slide-attributes:
       class: title-slide
+    slide-number: true
+    transition: fade
+    incremental: false
+    code-overflow: wrap
+    footer: "STAT 386"
+    width: 1280
+    height: 720
+    margin: 0.06
+    link-external-newwindow: true
 ---
 
-## Where we are / where we're going
+## Today's durable question {.section-card}
 
 ::: {.key-idea}
-**Already have:** Git/GitHub, Markdown, terminal + VS Code, uv environments.
+How can one project communicate a result clearly, preserve the evidence behind it, and stay useful when the data or question changes?
 :::
 
-**Today:** turn a repo into a website.
+By the end of class, you should be able to:
 
-**Learning goals:**
+- Explain how Quarto connects code, results, visuals, and explanation
+- Distinguish source files, rendered output, and a published website
+- Publish a Quarto website with GitHub Pages
+- Debug a website that does not show the expected update
 
-- Explain what GitHub Pages hosts (static files) and how URL works
-- Create a Quarto website project and preview locally
-- Publish your site so it updates when you push
+::: notes
+Suggested time: 1 minute.
 
-## Agenda {.section-card}
-
-1. The big picture
-2. GitHub Pages (the hosting)
-3. Quarto (the builder)
-4. Publishing (making it live)
-5. Troubleshooting + portfolio tips
-
-## Mental model (keep this in your head) {.section-card}
-
-::: {.columns-2}
-<div>
-**Input**
-
-- `.qmd`
-- data
-- images
-</div>
-
-<div>
-**Pipeline**
-
-- **Render:** Quarto + Pandoc (+ Jupyter)
-- **Output:** static HTML files
-- **Host:** GitHub Pages
-</div>
+Connect this lecture to the previous sequence. Students already have Markdown, Git, GitHub, project environments, and uv. Today those pieces become a publishing workflow.
 :::
+
+## A familiar request
+
+Your manager gives you data from a regional pilot program.
+
+> Compare participation and retention across regions. Recommend where the organization should expand the pilot next.
+
+You have:
+
+- A CSV with monthly results
+- A notebook for exploring the data
+- A meeting at the end of the week
+
+::: notes
+Suggested time: 1 minute.
+
+Keep the fictional setting simple. The analytical details should remain familiar enough that students can focus on communication and reproducibility.
+:::
+
+## The first delivery
+
+You complete the analysis:
+
+1. Run the notebook
+2. Export two figures
+3. Paste them into a document
+4. Write a recommendation
+5. Email the report
 
 ::: {.key-idea}
-GitHub Pages does **not** run Python. Quarto runs Python **before** publishing and saves results into static files.
+The manager receives a readable answer on time.
 :::
 
-## Discussion {.question-slide}
+::: notes
+Suggested time: 1 minute.
+
+Treat this as a reasonable workflow for a first request. Its weaknesses become visible only when the work changes or another person needs to inspect it.
+:::
+
+## The situation changes {.smaller}
+
+The manager sends an updated CSV and asks for a revised recommendation.
+
+Meanwhile, your teammate notices the surprising increase in West-region retention:
+
+> “Does that increase appear among both new and returning participants?”
+
+The work now needs to support three uses:
+
+- Communicate the result clearly
+- Let a teammate investigate further
+- Update reliably when the data change
+
+::: notes
+Suggested time: 1 to 2 minutes.
+
+Introduce both pressures before asking students to discuss the workflow. Keep the teammate's question positive. The result sparked useful curiosity rather than distrust.
+:::
+
+## Design the handoff {.question-slide .smaller}
 
 ::: {.discussion-box}
-Where do you think the most common failure happens in this pipeline: writing the `.qmd`, executing code, rendering to `_site`, or GitHub Pages hosting, and why?
+What would you hand off so the manager can understand the result, your teammate can investigate it, and you can update it when new data arrive?
+
+What must the project contain? Which pieces must remain connected?
 :::
 
-## GitHub Pages: what it is {.comparison-slide}
+1. **Think:** List the minimum pieces the handoff needs.
+2. **Pair:** Agree on the most important connections.
+3. **Share:** Name one connection and the failure it prevents.
+
+::: notes
+Suggested time: 4 to 6 minutes.
+
+Give students about 45 seconds to think and 90 seconds to compare answers. During the share, ask each pair for one connection rather than a complete workflow. Listen for links among data, code, figures, explanation, environment information, and versions.
+:::
+
+## One project supports three needs {.smaller}
+
+| Need | Entry point | What must remain connected |
+|---|---|---|
+| Understand the result | Rendered website with visuals and explanation | Claims must match the current results |
+| Investigate further | Repository with source, code, and data | Figures must trace back to their inputs |
+| Update the analysis | Reproducible environment and render process | New inputs must regenerate the visible output |
+
+::: {.key-idea}
+One project can provide a readable result, an inspectable analysis, and a repeatable update path.
+:::
+
+::: notes
+Suggested time: 2 to 3 minutes.
+
+Use this slide to organize the ideas students contributed. The three entry points serve different needs, but they must describe the same analysis and version.
+:::
+
+## Data science communication uses several forms {.smaller}
+
+| Form | What it contributes | What it cannot provide alone |
+|---|---|---|
+| **Data** | The recorded observations | Meaning or interpretation |
+| **Code** | The transformations and calculations | A concise explanation for most audiences |
+| **Visuals** | Patterns, comparisons, and uncertainty | Complete provenance and context |
+| **Text** | Framing, interpretation, and recommendations | Reproducible evidence by itself |
+
+::: {.key-idea}
+The forms become more useful when they remain connected.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Emphasize that a figure is often the fastest way to see a pattern, while prose explains why the pattern matters. Code and data let another analyst verify how the figure came to exist.
+:::
+
+## Copying results creates separate versions {.smaller}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A["Data"] --> B["Notebook"]
+    B --> C["Exported figure"]
+    C --> D["Report"]
+```
+
+Each handoff can preserve an older result:
+
+- The notebook may read an earlier file
+- The exported image may come from an earlier run
+- The report may contain a figure that was never replaced
+- The recommendation may describe a result that has changed
+
+::: notes
+Suggested time: 2 minutes.
+
+Do not frame this as carelessness. The workflow asks the analyst to synchronize several separate artifacts manually.
+:::
+
+## The foundation is already in place {.smaller}
+
+| Tool | Responsibility in the project |
+|---|---|
+| **Git** | Records which version produced the work |
+| **GitHub** | Gives collaborators a shared remote project |
+| **uv** | Reconstructs the Python environment |
+| **Quarto** | Generates the explanation and results together |
+| **GitHub Pages** | Serves the rendered result to an audience |
+
+::: {.key-idea}
+Quarto completes the reproducible workflow built during the previous classes.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Ask students which rows they already know. Today adds the last two rows while reusing the first three.
+:::
+
+## Computational documents {.section-card}
+
+::: {.big-idea}
+A computational document combines narrative, executable code, and generated results in one source.
+:::
+
+::: notes
+Suggested time: 1 minute.
+:::
+
+## A Quarto page
+
+One `.qmd` file can contain:
+
+- Markdown explanation
+- Python code cells
+- Generated figures and tables
+- Mathematical notation
+- Links, citations, and page metadata
+
+::: {.key-idea}
+Rendering turns the source into a document that a reader can open in a browser.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Students already know Markdown. Present code cells and rendering as the important extension.
+
+Source: https://quarto.org/docs/guide/
+:::
+
+## Source and rendered result {.comparison-slide .smaller}
 
 ::: {.columns-2}
 <div>
-**Pages IS**
 
-- Static hosting from a GitHub repo
-- Great for portfolios/docs/class sites
-- Configured in Settings
+**Quarto source**
+
+````markdown
+## Regional retention
+
+The figure compares the four pilot regions.
+
+```{{python}}
+#| echo: false
+plot_retention(results)
+```
+
+West improved during the latest month.
+````
+
 </div>
-
 <div>
-**Pages is NOT**
 
-- A database/server
-- A place for secrets (assume public)
-- A Python runtime
+**Rendered page**
+
+### Regional retention
+
+The figure compares the four pilot regions.
+
+*A generated retention figure appears here.*
+
+West improved during the latest month.
+
 </div>
 :::
 
-## URLs + repo choices
+::: notes
+Suggested time: 2 minutes.
 
-::: {.tip-box}
-**Project site (most common):** `https://<user>.github.io/<repo>/`
+Connect this to the earlier Markdown lecture. The reader sees a polished page. The source preserves how the page was assembled.
 :::
 
-**User site (special repo):** `https://<user>.github.io/` from repo named `<user>.github.io`
+## A render rebuilds the evidence
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+    A["Current data"] --> C["Analysis code"]
+    B["Current question"] --> C
+    C --> D["Figures and tables"]
+    D --> E["Rendered page"]
+    F["Explanation"] --> E
+```
 
 ::: {.key-idea}
-**Class tip:** Use one repo per site so URLs stay clean.
+During a full render, the figures and tables come from the code and data in the project.
 :::
 
-## Pages settings (what to click)
+::: notes
+Suggested time: 2 minutes.
 
-1. **Settings > Pages**
-2. Choose Source:
-   - Deploy from a branch (simple)
-   - GitHub Actions (best for Quarto)
-3. If deploying from branch: pick `main` and folder `/docs`
+The render strengthens provenance, but it does not replace judgment. After new data changes the results, the analyst must still reconsider the written interpretation and recommendation.
 
-::: {.tip-box}
-**Why `docs/`?** Keeps source files on `main` and built website in `docs/`.
+Source: https://quarto.org/docs/computations/python.html
 :::
 
-## Mini-demo: "hello Pages" {.demo-slide}
+## Generated output reduces ambiguity
 
-::: {.demo-box}
-1. Create repo, add `index.html`
-2. Push to GitHub
-3. Turn on Pages
-4. Visit the URL
-:::
+When a reader sees a pasted image, they may ask:
+
+- Which dataset produced this?
+- Which code created it?
+- Does it include the latest observations?
+
+When Quarto generates the image during rendering, the project preserves the path from data to visible result.
 
 ::: {.warning-box}
-**If 404:** Wait, then check Settings > Pages for deployed URL and build status.
+The connection depends on rendering the current source. A stale render can still publish an older result.
 :::
 
-## What is Quarto?
+::: notes
+Suggested time: 2 minutes.
+
+This warning prepares students for the later debugging activity. Quarto makes the update repeatable, but the analyst must still run the workflow.
+:::
+
+## Return to the teammate's question
+
+The updated report shows a large retention increase in the West.
+
+> “That increase is fascinating. Does it appear for both new and returning participants?”
+
+The published figure gives the teammate a starting point. The repository provides the path back to the analysis.
 
 ::: {.key-idea}
-Quarto lets you publish Markdown + code + LaTeX to HTML, PDF, slides, and websites.
+Reproducibility turns curiosity into a question the teammate can examine directly.
 :::
 
-- Can execute code using Jupyter kernels
-- Works with `.qmd` and `.ipynb`
-- **In class:** portfolio + assignment pages that update from GitHub
+::: notes
+Suggested time: 1 minute.
 
-## Workflow: new project (terminal-friendly) {.demo-slide}
+Call back to the opening scenario. The website and repository are two entry points into the same project.
+:::
 
-::: {.demo-box}
+## The teammate continues the analysis {.demo-slide .smaller}
+
 ```bash
-mkdir my_site
-cd my_site
-git init
-uv init
-uv add jupyter ipykernel
-quarto preview
+git clone https://github.com/ORG/pilot-analysis.git
+cd pilot-analysis
+uv sync
+uv run quarto preview
 ```
+
+The teammate can then:
+
+1. Inspect the code behind the figure
+2. Add the participant-type comparison
+3. Render the extended analysis
+4. Propose the change through GitHub
+
+::: notes
+Suggested time: 2 minutes.
+
+This should feel familiar from the uv and collaboration lectures. Avoid reteaching clone, sync, branches, or pull requests. Their value becomes visible in a new setting.
 :::
 
-## Quarto website project structure
+## One project, two ways to enter {.comparison-slide}
+
+::: {.columns-2}
+<div>
+
+**Open the website**
+
+The manager reads the result in a browser.
+
+No Python environment is required.
+
+</div>
+<div>
+
+**Clone the repository**
+
+The teammate reconstructs and extends the analysis.
+
+The project preserves the technical details.
+
+</div>
+:::
 
 ::: {.key-idea}
-**Two layers of config:**
+GitHub Pages lowers the barrier for readers while GitHub preserves access to the source.
 :::
 
-- **`_quarto.yml`** = site-wide settings (nav, theme, output dir)
-- **Each `.qmd` page** = page-level title, format options, content
-
-::: {.tip-box}
-**Rule:** If it applies to the whole site, put it in `_quarto.yml`. If specific to one page, put it in page front matter.
+::: notes
+Suggested time: 2 minutes.
 :::
 
-## Discussion {.question-slide}
+## The minimal toolbox {.section-card}
 
-::: {.discussion-box}
-What belongs in `_quarto.yml` (site-wide) versus in a page's YAML front matter, and what would break if you put it in the wrong place?
+::: {.big-idea}
+Four file roles and three commands are enough to understand the basic workflow.
 :::
 
-## Create a website project (fast start) {.demo-slide}
+::: notes
+Suggested time: 1 minute.
+:::
 
-::: {.demo-box}
-```bash
-quarto create project website my_site
-cd my_site
-quarto preview
+## Two GitHub Pages site types {.smaller}
+
+| Site type | Repository name | Default public address |
+|---|---|---|
+| **User site** | `USERNAME.github.io` | `https://USERNAME.github.io/` |
+| **Project site** | A regular name such as `stat386-portfolio` | `https://USERNAME.github.io/stat386-portfolio/` |
+
+::: {.key-idea}
+We will use a user site because a personal portfolio belongs naturally at the root of a student's GitHub Pages address.
+:::
+
+Each account can have one user site. A student who already has one can add to it or create a project site instead.
+
+::: notes
+Suggested time: 3 minutes.
+
+The repository belongs under the student's personal GitHub account. The special repository name creates the shorter root address. Project sites are a useful fallback and work well for standalone analyses.
+
+Source: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#types-of-github-pages-sites
+:::
+
+## Anatomy of a Quarto website {.smaller}
+
+```text
+username.github.io/
+├── _quarto.yml
+├── index.qmd
+├── about.qmd
+├── projects.qmd
+├── projects/
+│   └── pilot-analysis.qmd
+├── data/
+├── pyproject.toml
+├── uv.lock
+└── docs/
 ```
+
+| Item | Role |
+|---|---|
+| `.qmd` files | Page content and executable analysis |
+| `_quarto.yml` | Website-wide configuration |
+| Project and data files | Reproducible inputs |
+| `docs/` | Rendered website served by GitHub Pages |
+
+::: notes
+Suggested time: 3 minutes.
+
+The exact set of pages can grow during the semester. Focus on the role of each part rather than the names of every file.
 :::
 
-**What you'll see:** `_quarto.yml`, `index.qmd`, `about.qmd`
+## Website configuration {.demo-slide .smaller}
 
-## Minimal `_quarto.yml` for GitHub Pages {.demo-slide}
-
-::: {.demo-box}
 ```yaml
 project:
   type: website
   output-dir: docs
+
 website:
-  title: "My Portfolio"
+  title: "Your Name"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: projects.qmd
-        text: Projects
-```
-:::
+      - projects.qmd
+      - about.qmd
 
-::: {.warning-box}
-**Important:** Set `output-dir: docs` if Pages is serving `/docs` on `main`.
-:::
-
-## A `.qmd` page: prose + code {.demo-slide}
-
-::: {.demo-box}
-```yaml
----
-title: "EDA: Penguins"
 format:
   html:
+    theme: cosmo
+    toc: true
     code-fold: true
-jupyter: python3
+```
+
+`_quarto.yml` supplies defaults and navigation for the entire site.
+
+::: notes
+Suggested time: 3 minutes.
+
+Explain only the options students will change today. Quarto renders to `_site/` by default. We select `docs/` because GitHub Pages can publish that folder from the main branch.
+
+Source: https://quarto.org/docs/websites/
+Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
+:::
+
+## Site settings and page metadata {.comparison-slide .smaller}
+
+::: {.columns-2}
+<div>
+
+**Whole website**
+
+`_quarto.yml`
+
+```yaml
+website:
+  title: "Avery Lee"
+  navbar:
+    left:
+      - projects.qmd
+```
+
+</div>
+<div>
+
+**One page**
+
+YAML at the top of a `.qmd` file
+
+```yaml
+---
+title: "Pilot Analysis"
+date: 2026-09-22
+categories: [pandas]
 ---
 ```
-```{python}
-#| echo: false
-# your code here
-```
-:::
 
-::: {.key-idea}
-**Good portfolio pages:** Short intro (what question?), 1-3 key visuals, a "so what?" paragraph.
-:::
-
-## The local loop
-
-::: {.columns-2}
-<div>
-**The loop**
-
-- Edit in VS Code
-- Run `quarto preview`
-- Browser auto-refreshes on save
-- `quarto render` to build full site
 </div>
-
-<div>
-**Why preview?**
-
-- Fast feedback
-- Don't debug deploy problems while also debugging your analysis
-</div>
-:::
-
-## Reproducibility: `.gitignore` + environments
-
-::: {.demo-box}
-**Add to `.gitignore`:**
-```
-.quarto/
-site_libs/
-*_files/
-```
-:::
-
-::: {.key-idea}
-**Keep Python environment in repo:** `uv` manages dependencies. If needed: `uv pip freeze > requirements.txt`
-:::
-
-## Two deployment strategies {.comparison-slide}
-
-::: {.columns-2}
-<div>
-**A. Build locally, commit `docs/`**
-
-- Simple mental model
-- Works without Actions
-- **Downside:** must remember to render + commit
-</div>
-
-<div>
-**B. GitHub Actions builds on push**
-
-- Best for "always up to date"
-- More moving parts
-- Once set, it's done
-</div>
-:::
-
-## Strategy A: build locally (fastest to teach) {.demo-slide}
-
-::: {.demo-box}
-```bash
-quarto render
-git add docs
-git commit -m "Render site"
-git push
-```
-:::
-
-::: {.tip-box}
-**Pages setting:** Settings > Pages > Deploy from branch: `main` + `/docs`
-:::
-
-## Strategy B: GitHub Actions (starter concept) {.demo-slide}
-
-::: {.demo-box}
-- Workflow file under `.github/workflows/`
-- Pages source set to **GitHub Actions**
-:::
-
-**Conceptual steps:**
-
-1. Checkout repo
-2. Install Quarto + Python
-3. `quarto render`
-4. Upload site to Pages
-
-::: {.key-idea}
-**Class note:** Provide pre-made workflow so students don't write YAML from scratch.
-:::
-
-## Common gotchas (and quick fixes) {.reference-slide}
-
-::: {.cheat-grid}
-<div>
-**404 or blank page**
-
-Pages not pointed at right folder (use `docs/`)
-</div>
-
-<div>
-**Site doesn't update**
-
-Forgot to push, or Actions failed
-</div>
-
-<div>
-**Broken images**
-
-Path issues (use relative paths)
-</div>
-
-<div>
-**Render fails**
-
-Missing package in your environment
-</div>
-:::
-
-::: {.warning-box}
-**Debug routine:** Check (1) local preview, (2) repo contents (`docs/`), (3) Pages/Actions status.
-:::
-
-## Troubleshooting (pipeline diagram repeat)
-
-::: {.key-idea}
-Input → Render → Output → Host
-:::
-
-::: {.columns-2}
-<div>
-**Check each stage**
-
-- Input: `.qmd` valid?
-- Render: packages present?
-</div>
-
-<div>
-**Check each stage**
-
-- Output: `docs/` built?
-- Host: Pages pointed at `docs/`?
-</div>
-:::
-
-## Portfolio structure that scales
-
-::: {.tip-box}
-**Recommended navbar:** Home (who you are), Projects (2-4 highlights), Assignments (organized by week/topic), Final Project, About/Resume.
-:::
-
-::: {.key-idea}
-**Design rule:** Make it skimmable: headings, short paragraphs, figures with captions.
-:::
-
-## In-class checklist (today) {.exercise-slide}
-
-::: {.exercise-check}
-1. Create Quarto website project
-2. Set `output-dir: docs` in `_quarto.yml`
-3. Preview locally
-4. Push to GitHub
-5. Turn on Pages (`main` + `/docs`)
-6. Confirm your site URL works
-:::
-
-## Wrap-up {.takeaway-slide}
-
-- Quarto builds the static site from `.qmd`
-- GitHub Pages hosts the built static files
-- Your portfolio is a software project: version control + environment + reproducible build
-
-::: {.key-idea}
-**"Ship your work."**
 :::
 
 ::: notes
-This deck walks students from repo to live website in one session.
+Suggested time: 2 minutes.
 
-- Slide 2 sets learning goals; emphasize that GitHub Pages only serves static files.
-- Slide 4 mental model is the backbone — return to it when troubleshooting.
-- Slide 6 IS/NOT comparison clarifies the most common misconceptions about Pages.
-- Slides 11 and 14 give two paths to a project: manual (terminal-friendly) vs. `quarto create`.
-- Slide 15 minimal `_quarto.yml` is the config students will actually use.
-- Slides 19-21 contrast the two deployment strategies; recommend Strategy A for first-time setup.
-- Slide 22 gotchas reference is worth bookmarking — most student issues live here.
-- Slide 25 is the in-class exercise; confirm each step before moving on.
-- Close with the wrap-up: the portfolio is a reproducible software project.
+Reuse the distinction from the earlier Quarto material. The project configuration sets shared behavior. Page metadata describes one document.
 :::
 
-{{< include ../_partials/questions.qmd >}}
+## Preview, render, and publish {.reference-slide .smaller}
+
+| Operation | What it does | Where you inspect the result |
+|---|---|---|
+| `uv run quarto preview` | Renders changes and runs a local preview server | Your computer |
+| `uv run quarto render` | Builds the complete static website in `docs/` | The `docs/` folder |
+| Git commit and push | Sends source and rendered output to GitHub | The repository |
+| GitHub Pages | Serves the selected files as a website | A public URL |
+
+::: {.tip-box}
+Run a full `uv run quarto render` before publishing, even after using preview.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Preview supports a rapid editing loop. A full render ensures that global settings and all pages have current output.
+
+Source: https://quarto.org/docs/websites/#website-preview
+Source: https://quarto.org/docs/websites/#website-render
+:::
+
+## Where does the Python code run? {.question-slide}
+
+Someone opens your published analysis at:
+
+```text
+https://username.github.io/
+```
+
+::: {.discussion-box}
+Does GitHub Pages run your Python code when the visitor opens the page? What files does the visitor actually receive?
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Use this as a quick poll rather than a full think-pair-share. Students may assume that the web server executes the notebook for each visitor.
+:::
+
+## Static publishing
+
+The analysis code runs when Quarto renders the site.
+
+GitHub Pages serves the resulting:
+
+- HTML pages
+- Stylesheets
+- JavaScript
+- Figures and other site assets
+
+::: {.key-idea}
+The reader receives the result without installing Python or the project's packages.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Some browser-based interactivity can live inside a static page. Applications that require a continuously running Python process need a server-based host.
+
+Source: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+:::
+
+## Why `.nojekyll` exists {.reference-slide}
+
+GitHub Pages normally assumes that a site published from a branch may need a Jekyll build.
+
+Quarto has already built the website.
+
+An empty `.nojekyll` file tells GitHub Pages to serve the rendered files without applying another Jekyll build.
+
+::: {.key-idea}
+The file contains no settings. Its presence is the instruction.
+:::
+
+Create it once in the project root and track it with Git.
+
+::: notes
+Suggested time: 2 minutes.
+
+Spell the filename carefully: dot, nojekyll, with no underscore. This file matters for the branch-based publishing workflow used today. Quarto's GitHub Pages documentation includes it as part of the render-to-docs setup.
+
+Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
+Source: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#static-site-generators
+:::
+
+## Source files and generated files {.smaller}
+
+| Item | Git decision | Reason |
+|---|---|---|
+| `.qmd`, `_quarto.yml`, and analysis code | Track | They define the website and analysis |
+| `pyproject.toml` and `uv.lock` | Track | They support environment reconstruction |
+| Public data used by the site | Track when appropriate | The analysis needs its inputs |
+| `docs/` | Track for this deployment method | GitHub Pages serves these files |
+| `.venv/` and `.quarto/` | Ignore | Tools can regenerate them locally |
+| `.env` and credentials | Ignore and keep private | A public repository must not expose secrets |
+
+::: {.key-idea}
+The deployment method makes `docs/` a deliberate exception to the usual rule for generated output.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Connect this to the earlier discussion of durable inputs and generated outputs. We commit docs here because the chosen Pages configuration consumes that generated directory directly.
+:::
+
+## Our publishing choice
+
+Today we will publish from the `docs/` folder on the `main` branch:
+
+1. Quarto renders the site on our computer.
+2. Git records the source and the rendered `docs/` files.
+3. GitHub Pages serves the contents of `docs/`.
+
+::: {.key-idea}
+This method keeps every stage visible, which makes the workflow easier to understand and debug.
+:::
+
+The tradeoff is that we must keep the source and rendered output synchronized.
+
+::: notes
+Suggested time: 2 minutes.
+
+Quarto also supports publishing to a separate `gh-pages` branch and automated deployment. We use `main` and `docs/` because this exposes the full pipeline and requires no automation. Return to the alternatives later in the semester if useful.
+
+Source: https://quarto.org/docs/publishing/github-pages.html
+:::
+
+## The publishing pipeline
+
+```{mermaid}
+%%| echo: false
+flowchart TD
+    A["Edit source<br/>qmd, code, data"] --> B["Preview locally"]
+    B --> C["Render the site<br/>docs/"]
+    C --> D["Commit and push"]
+    D --> E["GitHub Pages serves the site"]
+```
+
+::: {.key-idea}
+Each stage leaves evidence that helps locate a failure later.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+This diagram becomes the debugging model. Students should be able to identify the last stage that produced the expected state.
+:::
+
+## Live workflow {.section-card}
+
+::: {.key-idea}
+We will build a small site, add a reproducible analysis, and publish the rendered result.
+:::
+
+::: notes
+Suggested time: 1 minute.
+
+Prepare the analysis code and small CSV before class so the demonstration focuses on Quarto rather than pandas syntax.
+:::
+
+## Demo 1: create and preview the site {.demo-slide .smaller}
+
+```bash
+quarto create project website USERNAME.github.io
+cd USERNAME.github.io
+uv init --no-package
+uv add jupyter pandas matplotlib
+uv run quarto preview
+```
+
+Then inspect:
+
+- `_quarto.yml`
+- `index.qmd`
+- `about.qmd`
+- The local browser preview
+
+::: notes
+Suggested time: 5 minutes.
+
+Replace USERNAME with the GitHub username used for the demonstration. Keep the generated Quarto scaffold. If setup time is a concern, begin from a prepared copy of this initial state.
+
+Use `uv run` for preview and rendering so the Python code executes with the packages from the project environment.
+
+Source: https://quarto.org/docs/websites/#quick-start
+Source: https://docs.astral.sh/uv/concepts/projects/run/
+:::
+
+## Demo 2: add the analysis page {.demo-slide .smaller}
+
+Create `projects/pilot-analysis.qmd` with:
+
+- The manager's question
+- A code cell that reads `data/pilot_results.csv`
+- A generated retention figure
+- A short interpretation
+- A proposed next step
+
+Add the page to the site's navigation, then preview it.
+
+::: {.demo-box}
+The browser should show the explanation and figure together.
+:::
+
+::: notes
+Suggested time: 5 minutes.
+
+Keep the code ready to paste. Show the source beside the rendered result. If possible, fold or hide the code so the page remains accessible to a nontechnical reader.
+:::
+
+## Demo 3: create and connect the remote {.demo-slide .smaller}
+
+On GitHub, create an empty public repository named:
+
+```text
+USERNAME.github.io
+```
+
+Connect the local project:
+
+```bash
+git branch -M main
+git remote add origin https://github.com/USERNAME/USERNAME.github.io.git
+git remote -v
+```
+
+::: notes
+Suggested time: 3 minutes.
+
+Create the remote without a README, license, or gitignore because the local project already contains files and Git history. Use the student's personal account for the eventual portfolio.
+:::
+
+## Demo 4: render and record the first publication {.demo-slide .smaller}
+
+Create an empty `.nojekyll` file in the project root.
+
+```bash
+uv run quarto render
+git status
+git add .
+git commit -m "Publish initial regional pilot analysis"
+git push -u origin main
+```
+
+Inspect `git status` before committing:
+
+- Source files should show the analysis changes
+- `docs/` should show the corresponding rendered changes
+
+::: notes
+Suggested time: 4 minutes.
+
+Pause at git status. Ask students to identify source changes and generated website changes. The commit records the relationship between the two.
+:::
+
+## Demo 5: configure GitHub Pages {.demo-slide .smaller}
+
+In the repository settings:
+
+1. Open **Pages**
+2. Select **Deploy from a branch**
+3. Select the `main` branch
+4. Select the `/docs` folder
+5. Save and open the published URL
+
+For a user site, the URL is:
+
+```text
+https://USERNAME.github.io/
+```
+
+::: notes
+Suggested time: 4 minutes plus deployment time.
+
+GitHub may take a few minutes to complete the first deployment. Keep an already-published backup site ready so class time does not depend on deployment speed.
+
+Source: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
+:::
+
+## Demo 6: a routine data update {.demo-slide .smaller}
+
+Append the latest month to `data/pilot_results.csv`, then return to the local preview.
+
+```bash
+git add data/pilot_results.csv projects/pilot-analysis.qmd
+git commit -m "Update pilot analysis with latest month"
+git push
+```
+
+Open the public website after the new deployment finishes.
+
+::: notes
+Suggested time: 4 minutes.
+
+The local preview should show an updated figure and generated summary. Revise the written recommendation if the new evidence changes the decision.
+
+Deliberately omit the full render before committing. Do not call attention to the omission. The updated source reaches GitHub, but the existing files in docs remain unchanged. This creates the evidence for the think-pair-share on the next slide.
+:::
+
+## The website still shows the old figure {.question-slide}
+
+You observe three facts:
+
+1. The local preview shows the updated figure.
+2. GitHub contains the updated `.qmd` source.
+3. The public website still shows the earlier figure.
+
+::: {.discussion-box}
+What do these observations tell you? Where could the update have stopped? What would you inspect first?
+:::
+
+::: notes
+Suggested time: 4 to 6 minutes.
+
+Use a full think-pair-share. Give students 30 seconds to reason individually, 90 seconds with a partner, then ask pairs to defend the order in which they would investigate.
+
+Do not reveal that the deliberate mistake was committing and pushing the qmd change without first rendering and committing the updated docs output.
+:::
+
+## Debugging the publishing pipeline {.smaller}
+
+| Check | Evidence to inspect | What success means |
+|---|---|---|
+| Source | Saved `.qmd`, code, and data | The intended change exists locally |
+| Local execution | `uv run quarto preview` | The analysis can run and looks correct |
+| Full render | Updated files in `docs/` | The publishable artifact is current |
+| Commit | `git status` and `git show` | Source and output entered Git history |
+| Remote | The latest GitHub commit | The push reached the remote repository |
+| Deployment | Pages deployment status | GitHub served the selected branch and folder |
+| Browser | Refresh the published URL | The reader received the new deployment |
+
+::: {.key-idea}
+Find the last stage that worked, then inspect the next boundary.
+:::
+
+::: notes
+Suggested time: 3 minutes.
+
+Walk through the evidence from the prompt. The correct local preview shows that the source can run. The updated source on GitHub shows that a commit and push occurred. Those facts do not prove that docs was rendered or included in the commit.
+:::
+
+## The missing render {.demo-slide}
+
+Inspect the repository:
+
+```bash
+git status
+git log --oneline -3
+```
+
+Then repair the update:
+
+```bash
+uv run quarto render
+git add docs
+git commit -m "Render updated pilot results"
+git push
+```
+
+Confirm that GitHub Pages completes the new deployment.
+
+::: notes
+Suggested time: 3 minutes.
+
+Return to the live site after the deployment completes. Reconnect the corrected public figure to the current data and code.
+:::
+
+<!-- Natural stopping point -->
+
+## A portfolio that grows with the course {.section-card}
+
+::: {.big-idea}
+The same workflow can publish every blog and selected project produced this semester.
+:::
+
+::: notes
+Suggested time: 1 minute.
+
+This is a natural stopping point. If the live demonstration takes longer than expected, move the remaining setup activity to the next class or lab.
+:::
+
+## A simple portfolio structure
+
+```text
+Home
+├── About
+├── Projects
+│   ├── Selected lab or analysis
+│   └── Final project
+└── Blog
+    ├── Tutorial
+    ├── Data acquisition
+    └── Book reflection
+```
+
+Each new item follows the publishing pipeline introduced earlier.
+
+::: notes
+Suggested time: 2 minutes.
+
+Explain that the website is a stable home for work created throughout the course. Students will reuse the publishing workflow rather than start over for every assignment.
+:::
+
+## Activity: begin your portfolio {.exercise-slide .smaller}
+
+Create a public repository under your personal GitHub account named:
+
+```text
+YOUR_USERNAME.github.io
+```
+
+Then:
+
+1. Create or clone the starter website
+2. Open the project in Positron
+3. Change the site title to your name
+4. Write a short homepage introduction
+5. Run `uv run quarto preview`
+
+::: {.exercise-check}
+**Check:** A partner can open your local preview and identify whose portfolio it is.
+:::
+
+::: notes
+Suggested time: 8 to 12 minutes.
+
+Use personal GitHub accounts so students retain the portfolio after the course. A course template can reduce setup time while leaving every important file visible.
+
+Before students create the repository, have them check whether `USERNAME.github.io` already exists. Students with an existing user site can add the course pages there or use a project site such as `stat386-portfolio`.
+:::
+
+## Portfolio publishing checklist {.exercise-slide .smaller}
+
+Before publishing:
+
+- [ ] `_quarto.yml` uses `output-dir: docs`
+- [ ] The repository root contains `.nojekyll`
+- [ ] `uv run quarto render` finishes without errors
+- [ ] `docs/index.html` exists
+- [ ] The commit contains both source and rendered changes
+- [ ] GitHub Pages uses `main` and `/docs`
+- [ ] The public URL opens in a private browser window
+
+::: {.exercise-check}
+**Check:** Save both the repository URL and the published website URL.
+:::
+
+::: notes
+Suggested time: 5 to 8 minutes if students publish during class. The first deployment may continue after class.
+:::
+
+## Public work needs a final check {.reference-slide .smaller}
+
+Before pushing a public portfolio, confirm that it contains:
+
+| Safe to publish | Keep private |
+|---|---|
+| Your explanation and original visuals | API keys, tokens, and passwords |
+| Public or properly licensed data | Restricted or personally identifiable data |
+| Attributed external sources | `.env` files and private configuration |
+| Project code you can share | Material you do not have permission to publish |
+
+Also check figure descriptions, readable colors, and meaningful link text.
+
+::: notes
+Suggested time: 2 minutes.
+
+Connect credentials to the earlier gitignore lesson. Remind students that removing a secret from the latest commit does not automatically remove it from Git history.
+:::
+
+## Where this workflow leads
+
+| Today | Later in the course |
+|---|---|
+| Reproducible reports | Reusable Python packages |
+| Static portfolio pages | Richer interactive dashboards |
+| Manual rendering and publishing | More automated project workflows |
+
+::: {.key-idea}
+The tools may become more capable, but the same principles remain: traceable inputs, reproducible computation, and accessible results.
+:::
+
+::: notes
+Suggested time: 2 minutes.
+
+Avoid teaching deployment automation today. GitHub Actions can return later when students package code and have a stronger reason to automate checks and publishing.
+
+Clarify that GitHub Pages supports static sites and browser-based interactivity. A dashboard that needs a continuously running Python process requires server-based hosting.
+:::
+
+## Takeaways {.takeaway-slide .smaller}
+
+1. Data science results need visuals and explanation, while code and data preserve the evidence beneath them.
+2. Quarto generates figures and tables from the analysis during rendering.
+3. Git, GitHub, and uv let a teammate reconstruct and extend the project.
+4. GitHub Pages gives nontechnical readers a browser-based result.
+5. Debugging begins by locating the last successful stage in the publishing pipeline.
+6. The same workflow can support every blog and project added to the portfolio.
+
+::: notes
+Suggested time: 2 minutes.
+
+Ask students to choose one takeaway and connect it to a tool or activity from an earlier class.
+:::
+
+## Command reference {.reference-slide .smaller}
+
+| Goal | Command |
+|---|---|
+| Create a website | `quarto create project website NAME` |
+| Preview the website | `uv run quarto preview` |
+| Render the complete website | `uv run quarto render` |
+| Reconstruct Python packages | `uv sync` |
+| Inspect pending changes | `git status` |
+| Record the update | `git add .` and `git commit` |
+| Share the update | `git push` |
+
+::: {.tip-box}
+Run project commands from the folder containing `_quarto.yml` and `pyproject.toml`.
+:::
+
+::: notes
+Reference slide for students after class.
+:::
+
+## References {.reference-slide .smaller}
+
+- [Creating a Quarto website](https://quarto.org/docs/websites/)
+- [Computations with Python](https://quarto.org/docs/computations/python.html)
+- [Publishing Quarto sites with GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+- [What is GitHub Pages?](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
+- [GitHub Pages site types](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#types-of-github-pages-sites)
+- [Configuring a GitHub Pages publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- [Working on projects with uv](https://docs.astral.sh/uv/guides/projects/)
+- [Running commands with uv](https://docs.astral.sh/uv/concepts/projects/run/)
+
+::: notes
+Reference slide for students after class.
+:::
+
+## Questions? {.section-card}
+
+::: {.key-idea}
+Which stage of the publishing workflow would you want to practice again?
+:::

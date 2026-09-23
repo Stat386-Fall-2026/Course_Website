@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="STAT 386">
   <title>STAT 386 — Fall 2026 – Git and GitHub Foundations</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-1a1f18d4a655ca290ef04ee99f618baf.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dd2fc48f25af76fd2b852377c3459bb.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -241,11 +241,11 @@ STAT 386
 <h2>The <code>final_really_final</code> problem</h2>
 <div class="columns-2">
 <div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>analysis.py</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>analysis.py</span>
 <span id="cb1-2"><a></a>analysis_v2.py</span>
 <span id="cb1-3"><a></a>analysis_final.py</span>
 <span id="cb1-4"><a></a>analysis_final_fixed.py</span>
-<span id="cb1-5"><a></a>analysis_final_really.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a></a>analysis_final_really.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div>
 <div class="discussion-box">
@@ -513,9 +513,9 @@ STAT 386
 </section>
 <section id="git-can-explain-its-commands" class="slide level2 reference-slide">
 <h2>Git can explain its commands</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">git</span> status</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">git</span> status</span>
 <span id="cb2-2"><a></a><span class="fu">git</span> <span class="op">&lt;</span>command<span class="op">&gt;</span> -h</span>
-<span id="cb2-3"><a></a><span class="fu">git</span> help <span class="op">&lt;</span>command<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a></a><span class="fu">git</span> help <span class="op">&lt;</span>command<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>git status</code> describes the current repository state</li>
 <li><code>-h</code> displays a short command summary</li>
@@ -542,13 +542,13 @@ STAT 386
 <section id="a-practice-repository" class="slide level2 demo-slide">
 <h2>A practice repository</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="bu">cd</span> ~/Desktop/School/STAT_386</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="bu">cd</span> ~/Desktop/School/STAT_386</span>
 <span id="cb3-2"><a></a><span class="fu">mkdir</span> git_practice</span>
 <span id="cb3-3"><a></a><span class="bu">cd</span> git_practice</span>
 <span id="cb3-4"><a></a></span>
 <span id="cb3-5"><a></a><span class="fu">git</span> init</span>
 <span id="cb3-6"><a></a><span class="fu">git</span> status</span>
-<span id="cb3-7"><a></a><span class="fu">ls</span> <span class="at">-a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a></a><span class="fu">ls</span> <span class="at">-a</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="tip-box">
 <p>The hidden <code>.git</code> directory contains the repository’s database. Leave its contents alone during normal work.</p>
@@ -571,10 +571,10 @@ STAT 386
 <section id="the-first-project-files" class="slide level2 demo-slide">
 <h2>The first project files</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="bu">echo</span> <span class="st">"# Git Practice"</span> <span class="op">&gt;</span> README.md</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="bu">echo</span> <span class="st">"# Git Practice"</span> <span class="op">&gt;</span> README.md</span>
 <span id="cb4-2"><a></a><span class="bu">echo</span> <span class="st">"Questions about Git"</span> <span class="op">&gt;</span> questions.md</span>
 <span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="discussion-box">
 <p>What does Git know about these files? What has Git recorded in its history?</p>
@@ -597,12 +597,12 @@ STAT 386
 <section id="the-first-snapshot" class="slide level2 demo-slide">
 <h2>The first snapshot</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">git</span> add README.md questions.md</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">git</span> add README.md questions.md</span>
 <span id="cb5-2"><a></a><span class="fu">git</span> status</span>
 <span id="cb5-3"><a></a><span class="fu">git</span> diff <span class="at">--staged</span></span>
 <span id="cb5-4"><a></a></span>
 <span id="cb5-5"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Start Git practice repository"</span></span>
-<span id="cb5-6"><a></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a></a><span class="fu">git</span> log <span class="at">--oneline</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="key-idea">
 <p>Staging proposes the snapshot. Committing records it.</p>
@@ -625,12 +625,12 @@ STAT 386
 <section id="two-files-two-changes" class="slide level2 demo-slide">
 <h2>Two files, two changes</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="bu">echo</span> <span class="st">"This repository records our Git practice."</span> <span class="op">&gt;&gt;</span> README.md</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="bu">echo</span> <span class="st">"This repository records our Git practice."</span> <span class="op">&gt;&gt;</span> README.md</span>
 <span id="cb6-2"><a></a><span class="bu">echo</span> <span class="st">"How does staging work?"</span> <span class="op">&gt;&gt;</span> questions.md</span>
 <span id="cb6-3"><a></a></span>
 <span id="cb6-4"><a></a><span class="fu">git</span> diff</span>
 <span id="cb6-5"><a></a><span class="fu">git</span> add README.md</span>
-<span id="cb6-6"><a></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="discussion-box">
 <p>If we commit now, which change will Git record?</p>
@@ -683,8 +683,8 @@ STAT 386
 <section id="inside-a-commit" class="slide level2 demo-slide">
 <h2>Inside a commit</h2>
 <div class="demo-box">
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="fu">git</span> cat-file <span class="at">-p</span> HEAD</span>
-<span id="cb7-2"><a></a><span class="fu">git</span> cat-file <span class="at">-p</span> HEAD^{tree}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="fu">git</span> cat-file <span class="at">-p</span> HEAD</span>
+<span id="cb7-2"><a></a><span class="fu">git</span> cat-file <span class="at">-p</span> HEAD^{tree}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Look for the commit identifier, the tree identifier, the parent, the author, and each blob.</p>
 <div class="tip-box">
@@ -755,7 +755,7 @@ STAT 386
 <li>Commonly named <code>origin</code></li>
 </ul>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Suggested time: 2 minutes.</p>
 <p>Explain that origin is a conventional short name for a remote URL. It does not mean “the original repository” in every possible workflow.</p>
@@ -775,10 +775,10 @@ STAT 386
 <h2>Connecting the repository to GitHub</h2>
 <p>First, create an <strong>empty</strong> GitHub repository named <code>&lt;netid&gt;_git_practice</code>.</p>
 <div class="demo-box">
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
 <span id="cb9-2"><a></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span>
 <span id="cb9-3"><a></a><span class="fu">git</span> remote <span class="at">-v</span></span>
-<span id="cb9-4"><a></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="discussion-box">
 <p>Which parts of the project now exist on GitHub?</p>
@@ -862,11 +862,11 @@ STAT 386
 <h2>Editing <code>.gitignore</code></h2>
 <div class="columns-2">
 <h3 id="add-a-rule">Add a rule</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="bu">echo</span> <span class="st">"scratch.txt"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="bu">echo</span> <span class="st">"scratch.txt"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
 <span id="cb10-2"><a></a><span class="bu">echo</span> <span class="st">"Temporary notes"</span> <span class="op">&gt;</span> scratch.txt</span>
-<span id="cb10-3"><a></a><span class="fu">git</span> status <span class="at">--ignored</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a></a><span class="fu">git</span> status <span class="at">--ignored</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h3 id="review-or-remove-a-rule">Review or remove a rule</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">nano</span> .gitignore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">nano</span> .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>One pattern goes on each line. Delete the line to stop ignoring that pattern.</p>
 </div>
 <div class="warning-box">
@@ -894,9 +894,9 @@ STAT 386
 <div class="exercise-check">
 <p>Use the history to reconstruct what happened.</p>
 </div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="fu">git</span> log <span class="at">--oneline</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="fu">git</span> log <span class="at">--oneline</span></span>
 <span id="cb12-2"><a></a><span class="fu">git</span> show HEAD</span>
-<span id="cb12-3"><a></a><span class="fu">git</span> show <span class="op">&lt;</span>earlier-commit-hash<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a></a><span class="fu">git</span> show <span class="op">&lt;</span>earlier-commit-hash<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Explain to a partner:</p>
 <ul>
 <li>What each commit changed</li>
@@ -1039,10 +1039,10 @@ STAT 386
 <section id="git-identity" class="slide level2 reference-slide">
 <h2>Git identity</h2>
 <p>If Git does not know who you are:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
-<span id="cb13-2"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb13-2"><a></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Check the current configuration:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p>Use an email address connected to your GitHub account, including a GitHub-provided private email if you prefer.</p>
 </div>
@@ -1259,7 +1259,7 @@ STAT 386
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1333,13 +1333,14 @@ STAT 386
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

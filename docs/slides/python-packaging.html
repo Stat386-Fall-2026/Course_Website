@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Python Packaging with uv</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -377,19 +377,19 @@
 </section>
 <section id="worked-example-create-build-install" class="slide level2 demo-slide">
 <h2>Worked Example: Create, Build, Install</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">uv</span> init <span class="at">--lib</span> templemath</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">uv</span> init <span class="at">--lib</span> templemath</span>
 <span id="cb1-2"><a></a><span class="bu">cd</span> templemath</span>
 <span id="cb1-3"><a></a><span class="ex">uv</span> add numpy</span>
 <span id="cb1-4"><a></a><span class="ex">uv</span> build</span>
 <span id="cb1-5"><a></a><span class="ex">pip</span> install dist/templemath-0.1.0-py3-none-any.whl</span>
-<span id="cb1-6"><a></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import templemath"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import templemath"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="demo-box">
 <p><code>uv init --lib</code> gives an installable layout. <code>uv build</code> creates the distributions. The <strong>wheel</strong> installs like any other package.</p>
 </div>
 </section>
 <section id="what-goes-in-pyproject.toml" class="slide level2 demo-slide">
 <h2>What Goes in <code>pyproject.toml</code>?</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a></a><span class="kw">[project]</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource toml number-lines code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a></a><span class="kw">[project]</span></span>
 <span id="cb2-2"><a></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"templemath"</span></span>
 <span id="cb2-3"><a></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
 <span id="cb2-4"><a></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"Utilities for classroom demos"</span></span>
@@ -402,15 +402,15 @@
 <span id="cb2-11"><a></a></span>
 <span id="cb2-12"><a></a><span class="kw">[build-system]</span></span>
 <span id="cb2-13"><a></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"uv_build&gt;=0.10.9,&lt;0.11.0"</span><span class="op">]</span></span>
-<span id="cb2-14"><a></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"uv_build"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-14"><a></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"uv_build"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p>Read as: <code>[project]</code> = <strong>who am I?</strong> · <code>dependencies</code> = <strong>what do I need?</strong> · <code>[project.scripts]</code> = <strong>what command?</strong> · <code>[build-system]</code> = <strong>how to build?</strong></p>
 </div>
 </section>
 <section id="what-happens-when-you-run-uv-build" class="slide level2 demo-slide">
 <h2>What Happens When You Run <code>uv build</code>?</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">uv</span> build</span>
-<span id="cb3-2"><a></a><span class="fu">ls</span> dist/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">uv</span> build</span>
+<span id="cb3-2"><a></a><span class="fu">ls</span> dist/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="1">
 <li>Read <code>pyproject.toml</code></li>
 <li>Use the declared backend</li>
@@ -445,21 +445,21 @@
 </section>
 <section id="where-can-installs-come-from" class="slide level2 demo-slide">
 <h2>Where Can Installs Come From?</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">pip</span> install templemath                                 <span class="co"># PyPI: published release</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">pip</span> install templemath                                 <span class="co"># PyPI: published release</span></span>
 <span id="cb4-2"><a></a><span class="ex">pip</span> install .                                          <span class="co"># Local path: what's on disk</span></span>
 <span id="cb4-3"><a></a><span class="ex">pip</span> install dist/templemath-0.1.0-py3-none-any.whl     <span class="co"># wheel</span></span>
-<span id="cb4-4"><a></a><span class="ex">pip</span> install git+https://github.com/user/repo.git       <span class="co"># Git URL: source control</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a></a><span class="ex">pip</span> install git+https://github.com/user/repo.git       <span class="co"># Git URL: source control</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p><strong>Teaching shortcut:</strong> PyPI is for <strong>releases</strong>. Git URLs are for <strong>source-control</strong> installs.</p>
 </div>
 </section>
 <section id="one-git-nuance-worth-teaching" class="slide level2 demo-slide">
 <h2>One Git Nuance Worth Teaching</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># named direct URL requirement</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># named direct URL requirement</span></span>
 <span id="cb5-2"><a></a><span class="ex">pip</span> install <span class="st">"TempleMath @ git+https://github.com/user/repo.git"</span></span>
 <span id="cb5-3"><a></a></span>
 <span id="cb5-4"><a></a><span class="co"># bare VCS URL</span></span>
-<span id="cb5-5"><a></a><span class="ex">pip</span> install git+https://github.com/user/repo.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a></a><span class="ex">pip</span> install git+https://github.com/user/repo.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="warning-box">
 <p><strong>Important nuance:</strong> A bare VCS URL can infer the project name, but <strong>extras</strong> cannot be requested, and <strong>editable</strong> VCS installs need more explicit info.</p>
 </div>
@@ -473,9 +473,9 @@
 <li>Sanity-check with <code>uv build --no-sources</code></li>
 <li>Publish to <strong>TestPyPI</strong> or <strong>PyPI</strong></li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">uv</span> build</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">uv</span> build</span>
 <span id="cb6-2"><a></a><span class="ex">uv</span> build <span class="at">--no-sources</span></span>
-<span id="cb6-3"><a></a><span class="ex">uv</span> publish</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a></a><span class="ex">uv</span> publish</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="three-takeaways" class="slide level2 takeaway-slide">
 <h2>Three Takeaways</h2>
@@ -709,7 +709,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -783,13 +783,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

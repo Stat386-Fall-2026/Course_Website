@@ -21,7 +21,7 @@ Lecture slides are built with Quarto Reveal.js. Click a link below to view the d
 - [Collaborating with Git and GitHub](slides/collaborative_github.qmd)
 - [Python Virtual Environments with uv](slides/uv_virtual_envs.qmd)
 <!-- - [GitHub Issues, Projects, and Workflows](slides/github-issues-projects.qmd) -->
-<!-- - [From Repo to Website: Quarto + GitHub Pages](slides/quarto-github-pages.qmd) -->
+- [From Repo to Website: Quarto + GitHub Pages](slides/quarto-github-pages.qmd)
 
 <!-- ### Python Foundations -->
 

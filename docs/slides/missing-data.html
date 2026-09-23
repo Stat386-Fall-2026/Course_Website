@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
 
   <title>STAT 386 — Fall 2026 – Missing Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-28e6d9add919332416c71f95541938a0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-0dc5618ca500c6514858a6038281c0a1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -330,8 +330,8 @@
 <li><strong>Row-level share:</strong> <code>df.isna().any(axis=1).mean()</code></li>
 <li>Dtype surprises can signal placeholders</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>df.info()</span>
-<span id="cb1-2"><a></a>df.isna().<span class="bu">sum</span>().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>df.info()</span>
+<span id="cb1-2"><a></a>df.isna().<span class="bu">sum</span>().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="detecting-non-standard-missingness" class="slide level2 demo-slide">
 <h2>Detecting Non-Standard Missingness</h2>
@@ -340,18 +340,18 @@
 <li><strong>Frequency spikes:</strong> <code>df["name"].value_counts().head(10)</code></li>
 <li><strong>Normalize sentinels</strong> at read time</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>sent <span class="op">=</span> [<span class="st">"NA"</span>, <span class="st">"N/A"</span>, <span class="st">"?"</span>, <span class="st">"Unknown"</span>, <span class="st">"999"</span>, <span class="st">"-999"</span>, <span class="st">""</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>sent <span class="op">=</span> [<span class="st">"NA"</span>, <span class="st">"N/A"</span>, <span class="st">"?"</span>, <span class="st">"Unknown"</span>, <span class="st">"999"</span>, <span class="st">"-999"</span>, <span class="st">""</span>]</span>
 <span id="cb2-2"><a></a>df <span class="op">=</span> df.replace(sent, np.nan)</span>
 <span id="cb2-3"><a></a><span class="co"># Or at read:</span></span>
-<span id="cb2-4"><a></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data.csv"</span>, na_values<span class="op">=</span>sent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data.csv"</span>, na_values<span class="op">=</span>sent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="visualizing-missingness-quick" class="slide level2 demo-slide">
 <h2>Visualizing Missingness (Quick)</h2>
 <p><strong>Column bar — share missing per column:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>(df.isna().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(df)).sort_values(</span>
-<span id="cb3-2"><a></a>    ascending<span class="op">=</span><span class="va">False</span>).plot.bar()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>(df.isna().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(df)).sort_values(</span>
+<span id="cb3-2"><a></a>    ascending<span class="op">=</span><span class="va">False</span>).plot.bar()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Heatmap — where missingness lives:</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>sns.heatmap(df.isna(), cbar<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>sns.heatmap(df.isna(), cbar<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="drop-vs-impute-tradeoffs" class="slide level2 comparison-slide">
 <h2>Drop vs Impute: Tradeoffs</h2>
@@ -374,20 +374,20 @@
 </section>
 <section id="dropping-with-control-pandas" class="slide level2 demo-slide">
 <h2>Dropping with Control (pandas)</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Drop rows only if key columns missing</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Drop rows only if key columns missing</span></span>
 <span id="cb5-2"><a></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"age"</span>, <span class="st">"income"</span>])</span>
 <span id="cb5-3"><a></a></span>
 <span id="cb5-4"><a></a><span class="co"># Drop columns with too many missings</span></span>
 <span id="cb5-5"><a></a><span class="co"># (keep if &gt;= 40% present)</span></span>
 <span id="cb5-6"><a></a>thresh <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.4</span> <span class="op">*</span> <span class="bu">len</span>(df))</span>
-<span id="cb5-7"><a></a>df <span class="op">=</span> df.dropna(axis<span class="op">=</span><span class="dv">1</span>, thresh<span class="op">=</span>thresh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a></a>df <span class="op">=</span> df.dropna(axis<span class="op">=</span><span class="dv">1</span>, thresh<span class="op">=</span>thresh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tip-box">
 <p>Always compare <code>df.shape</code> before/after, and document the fraction removed.</p>
 </div>
 </section>
 <section id="mean-imputation-numeric" class="slide level2 demo-slide">
 <h2>Mean Imputation (Numeric)</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>df[<span class="st">"age"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>df[<span class="st">"age"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> simple, fast, preserves size</li>
 <li><strong>Weaknesses:</strong> shrinks variance, distorts tails, biases correlations toward 0</li>
@@ -396,7 +396,7 @@
 </section>
 <section id="median-imputation-numeric-robust" class="slide level2 demo-slide">
 <h2>Median Imputation (Numeric, Robust)</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].fillna(df[<span class="st">"income"</span>].median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].fillna(df[<span class="st">"income"</span>].median())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> robust to outliers/skew</li>
 <li><strong>Weaknesses:</strong> compresses variance; may flatten multimodality</li>
@@ -405,12 +405,12 @@
 </section>
 <section id="forward-backward-fill-ordered-time-series" class="slide level2 demo-slide">
 <h2>Forward / Backward Fill (Ordered / Time Series)</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="co"># Globally:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="co"># Globally:</span></span>
 <span id="cb8-2"><a></a>df[<span class="st">"price"</span>] <span class="op">=</span> df[<span class="st">"price"</span>].ffill().bfill()</span>
 <span id="cb8-3"><a></a></span>
 <span id="cb8-4"><a></a><span class="co"># Within groups (safer):</span></span>
 <span id="cb8-5"><a></a>df <span class="op">=</span> df.sort_values([<span class="st">"id"</span>, <span class="st">"time"</span>])</span>
-<span id="cb8-6"><a></a>df[<span class="st">"x"</span>] <span class="op">=</span> df.groupby(<span class="st">"id"</span>)[<span class="st">"x"</span>].ffill()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-6"><a></a>df[<span class="st">"x"</span>] <span class="op">=</span> df.groupby(<span class="st">"id"</span>)[<span class="st">"x"</span>].ffill()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> good for continuous sensors/sequences</li>
 <li><strong>Weaknesses:</strong> dangerous across entities; must group properly</li>
@@ -418,8 +418,8 @@
 </section>
 <section id="missingness-indicator-columns" class="slide level2 demo-slide">
 <h2>Missingness Indicator Columns</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>df[<span class="st">"age_missing"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].isna().astype(<span class="st">"int8"</span>)</span>
-<span id="cb9-2"><a></a>df[<span class="st">"age"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>df[<span class="st">"age_missing"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].isna().astype(<span class="st">"int8"</span>)</span>
+<span id="cb9-2"><a></a>df[<span class="st">"age"</span>] <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].median())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> keeps signal that values were missing (useful for MAR/MNAR)</li>
 <li><strong>When:</strong> MNAR suspected, transparency, later modeling</li>
@@ -430,8 +430,8 @@
 </section>
 <section id="nearest-closest-value-index-based" class="slide level2 demo-slide">
 <h2>Nearest / Closest Value (Index-Based)</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>df <span class="op">=</span> df.sort_values(<span class="st">"timestamp"</span>).set_index(<span class="st">"timestamp"</span>)</span>
-<span id="cb10-2"><a></a>df[<span class="st">"y"</span>] <span class="op">=</span> df[<span class="st">"y"</span>].interpolate(method<span class="op">=</span><span class="st">"nearest"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>df <span class="op">=</span> df.sort_values(<span class="st">"timestamp"</span>).set_index(<span class="st">"timestamp"</span>)</span>
+<span id="cb10-2"><a></a>df[<span class="st">"y"</span>] <span class="op">=</span> df[<span class="st">"y"</span>].interpolate(method<span class="op">=</span><span class="st">"nearest"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> leverages local neighborhood</li>
 <li><strong>Weaknesses:</strong> assumes local similarity; unsafe for unordered/categorical data</li>
@@ -439,9 +439,9 @@
 </section>
 <section id="group-wise-conditional-imputation" class="slide level2 demo-slide">
 <h2>Group-Wise (Conditional) Imputation</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].fillna(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].fillna(</span>
 <span id="cb11-2"><a></a>    df.groupby(<span class="st">"region"</span>)[<span class="st">"income"</span>].transform(<span class="st">"median"</span>)</span>
-<span id="cb11-3"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><strong>Strengths:</strong> respects systematic differences across groups (MAR)</li>
 <li><strong>Weaknesses:</strong> unstable for small groups</li>
@@ -515,12 +515,12 @@
 </section>
 <section id="measuring-impact-of-your-choice" class="slide level2 demo-slide">
 <h2>Measuring Impact of Your Choice</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>before <span class="op">=</span> df.copy()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>before <span class="op">=</span> df.copy()</span>
 <span id="cb12-2"><a></a><span class="co"># ... do your cleaning ...</span></span>
 <span id="cb12-3"><a></a>after <span class="op">=</span> df.copy()</span>
 <span id="cb12-4"><a></a>before.shape, after.shape</span>
 <span id="cb12-5"><a></a>before.describe(numeric_only<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb12-6"><a></a>after.describe(numeric_only<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a></a>after.describe(numeric_only<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Watch shifts in mean/median/variance and correlations</li>
 <li>Visual spot-checks: histograms, scatter plots pre/post</li>
@@ -551,7 +551,7 @@
 </section>
 <section id="methods-for-detecting-non-standard-missing" class="slide level2 reference-slide">
 <h2>Methods for Detecting Non-Standard Missing</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># 1) Spot sentinel spikes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># 1) Spot sentinel spikes</span></span>
 <span id="cb13-2"><a></a>df[<span class="st">"name"</span>].value_counts().head(<span class="dv">10</span>)</span>
 <span id="cb13-3"><a></a></span>
 <span id="cb13-4"><a></a><span class="co"># 2) Coerce numerics to reveal NaN</span></span>
@@ -559,15 +559,15 @@
 <span id="cb13-6"><a></a></span>
 <span id="cb13-7"><a></a><span class="co"># 3) Normalize common sentinels</span></span>
 <span id="cb13-8"><a></a>sent <span class="op">=</span> [<span class="st">"NA"</span>, <span class="st">"N/A"</span>, <span class="st">"?"</span>, <span class="st">"Unknown"</span>, <span class="st">"999"</span>, <span class="st">"-999"</span>, <span class="st">""</span>]</span>
-<span id="cb13-9"><a></a>df <span class="op">=</span> df.replace(sent, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-9"><a></a>df <span class="op">=</span> df.replace(sent, np.nan)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="pair-activity-try-two-imputations-compare" class="slide level2 exercise-slide">
 <h2>Pair Activity: Try Two Imputations &amp; Compare</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>m1 <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].median())</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>m1 <span class="op">=</span> df[<span class="st">"age"</span>].fillna(df[<span class="st">"age"</span>].median())</span>
 <span id="cb14-2"><a></a>m2 <span class="op">=</span> df[<span class="st">"age"</span>].fillna(</span>
 <span id="cb14-3"><a></a>    df.groupby(<span class="st">"region"</span>)[<span class="st">"age"</span>].transform(<span class="st">"median"</span>)</span>
 <span id="cb14-4"><a></a>)</span>
-<span id="cb14-5"><a></a>m1.describe(), m2.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-5"><a></a>m1.describe(), m2.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="exercise-check">
 <ul>
 <li>Report changes in mean / median / variance</li>
@@ -797,7 +797,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -871,13 +871,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
