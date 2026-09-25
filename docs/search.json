@@ -4,7 +4,7 @@
     "href": "slides.html",
     "title": "Slides",
     "section": "",
-    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub\nPython Virtual Environments with uv \nFrom Repo to Website: Quarto + GitHub Pages",
+    "text": "Lecture slides are built with Quarto Reveal.js. Click a link below to view the deck in your browser.\n\n\n\n\n\n\nIntro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub\nPython Virtual Environments with uv \nFrom Repo to Website: Quarto + GitHub Pages\nImporting and Loading Data",
     "crumbs": [
       "Home",
       "Slides",
@@ -16,7 +16,7 @@
     "href": "slides.html#available-decks",
     "title": "Slides",
     "section": "",
-    "text": "Intro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub\nPython Virtual Environments with uv \nFrom Repo to Website: Quarto + GitHub Pages",
+    "text": "Intro to the Terminal \nIntroduction to Git and GitHub\nPositron and Markdown\nCollaborating with Git and GitHub\nPython Virtual Environments with uv \nFrom Repo to Website: Quarto + GitHub Pages\nImporting and Loading Data",
     "crumbs": [
       "Home",
       "Slides",
@@ -1620,231 +1620,396 @@
     "href": "slides/importing_and_loading_data.html#todays-goal",
     "title": "Importing and Loading Data",
     "section": "Today’s goal",
-    "text": "Today’s goal\nBy the end of class, you should be able to explain and defend how you loaded a dataset.\n\n\nDecisions before loading\n\nWhere does the data live?\nHow does the file represent values?\nWhat should each column mean?\n\n\nEvidence after loading\n\nDid pandas recover the expected structure?\nDo the types match the variables?\nDo basic checks reveal suspicious values?\n\n\n\nAsk students how they currently decide that an imported dataset is ready to use."
+    "text": "Today’s goal\nBy the end of class, you should be able to explain and defend how you loaded a dataset.\n\n\nDecisions before loading\n\nWhere does the data live?\nHow does the file represent values?\nWhat should each column mean?\n\n\nEvidence after loading\n\nDid pandas recover the expected structure?\nDo the types match the variables?\nDo basic checks reveal suspicious values?\n\n\n\nAsk students how they currently decide that an imported dataset is ready to use.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#loading-is-an-act-of-interpretation",
     "href": "slides/importing_and_loading_data.html#loading-is-an-act-of-interpretation",
     "title": "Importing and Loading Data",
     "section": "Loading is an act of interpretation",
-    "text": "Loading is an act of interpretation\n\n\nStored source\nA file contains bytes arranged according to a format.\n\nReader settings\nA function decides where rows begin, what separates columns, and how values should be typed.\n\nDataFrame\npandas builds an in-memory table that reflects those decisions.\n\n\nTwo analysts can read the same file and produce different DataFrames."
+    "text": "Loading is an act of interpretation\n\n\nStored source\nA file contains bytes arranged according to a format.\n\nReader settings\nA function decides where rows begin, what separates columns, and how values should be typed.\n\nDataFrame\npandas builds an in-memory table that reflects those decisions.\n\n\nTwo analysts can read the same file and produce different DataFrames.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#common-representations",
     "href": "slides/importing_and_loading_data.html#common-representations",
     "title": "Importing and Loading Data",
     "section": "Common representations",
-    "text": "Common representations\n\n\n\n\n\n\n\n\nStored representation\nWhat it preserves\npandas reader\n\n\n\n\nCSV or TSV\nPlain text arranged in rows and fields\nread_csv()\n\n\nExcel workbook\nSheets, cells, and some cell types\nread_excel()\n\n\nJSON\nObjects, arrays, and nested structure\nread_json()\n\n\nParquet\nColumn types and compressed columnar data\nread_parquet()\n\n\n\nThe reader often accepts either a file path or a URL.\n\nCSV receives the most attention today. Mention that APIs and databases come later in the course."
+    "text": "Common representations\n\n\n\n\n\n\n\n\nStored representation\nWhat it preserves\npandas reader\n\n\n\n\nCSV or TSV\nPlain text arranged in rows and fields\nread_csv()\n\n\nExcel workbook\nSheets, cells, and some cell types\nread_excel()\n\n\nJSON\nObjects, arrays, and nested structure\nread_json()\n\n\nParquet\nColumn types and compressed columnar data\nread_parquet()\n\n\n\nThe reader often accepts either a file path or a URL.\n\nCSV receives the most attention today. Mention that APIs and databases come later in the course.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-one-csv-row",
     "href": "slides/importing_and_loading_data.html#conceptual-check-one-csv-row",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: one CSV row",
-    "text": "Conceptual check: one CSV row\ntalk_id,title,views\n0017,\"Data, Decisions, and You\",\"12,450\"\n\nDiscuss with a neighbor:\n\nHow many columns should pandas create?\nWhy do two values use quotation marks?\nWhich pandas types should the columns have?\n\n\n\nThe row contains three fields. Quotation marks protect commas inside a field. talk_id should remain text, while views should eventually become numeric."
+    "text": "Conceptual check: one CSV row\ntalk_id,title,views\n0017,\"Data, Decisions, and You\",\"12,450\"\n\nDiscuss with a neighbor:\n\nHow many columns should pandas create?\nWhy do two values use quotation marks?\nWhich pandas types should the columns have?\n\n\n\nThe row contains three fields. Quotation marks protect commas inside a field. talk_id should remain text, while views should eventually become numeric.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#files-store-representations",
     "href": "slides/importing_and_loading_data.html#files-store-representations",
     "title": "Importing and Loading Data",
     "section": "Files store representations",
-    "text": "Files store representations\nThe text 0017 can represent several ideas:\n\nThe quantity seventeen\nA four-character identifier\nA code whose leading zeros carry meaning\n\nThe characters alone do not tell pandas which meaning applies.\n\nVariable meaning should guide the import settings."
+    "text": "Files store representations\nThe text 0017 can represent several ideas:\n\nThe quantity seventeen\nA four-character identifier\nA code whose leading zeros carry meaning\n\nThe characters alone do not tell pandas which meaning applies.\n\nVariable meaning should guide the import settings.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#paths-connect-code-to-data",
     "href": "slides/importing_and_loading_data.html#paths-connect-code-to-data",
     "title": "Importing and Loading Data",
     "section": "Paths connect code to data",
-    "text": "Paths connect code to data\npd.read_csv(\"data/talks.csv\")\nThis path starts from the project’s working directory.\npd.read_csv(\"C:/Users/maria/Downloads/talks.csv\")\nThis path assumes one computer, one username, and one file location."
+    "text": "Paths connect code to data\npd.read_csv(\"data/talks.csv\")\nThis path starts from the project’s working directory.\npd.read_csv(\"C:/Users/maria/Downloads/talks.csv\")\nThis path assumes one computer, one username, and one file location.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-which-path-travels",
     "href": "slides/importing_and_loading_data.html#conceptual-check-which-path-travels",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: which path travels?",
-    "text": "Conceptual check: which path travels?\n\nMaria pushes her project to GitHub. Another student clones it.\nWhich path is more likely to work on both computers, and what else must Maria include in the repository?\n\n\nproject/\n├── index.qmd\n├── demo/\n└── data/\n    └── talks.csv\n\n\ndata/talks.csv can travel with the project. The repository must also contain the data file in the expected location."
+    "text": "Conceptual check: which path travels?\n\nMaria pushes her project to GitHub. Another student clones it.\nWhich path is more likely to work on both computers, and what else must Maria include in the repository?\n\n\nproject/\n├── index.qmd\n├── demo/\n└── data/\n    └── talks.csv\n\n\ndata/talks.csv can travel with the project. The repository must also contain the data file in the expected location.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#reproducible-paths-with-pathlib",
     "href": "slides/importing_and_loading_data.html#reproducible-paths-with-pathlib",
     "title": "Importing and Loading Data",
     "section": "Reproducible paths with pathlib",
-    "text": "Reproducible paths with pathlib\nInside a Python script:\nfrom pathlib import Path\n\nPROJECT_ROOT = Path(__file__).resolve().parents[1]\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ntalks = pd.read_csv(DATA_DIR / \"talks.csv\")\nInside a notebook or Quarto document launched from the project root:\ntalks = pd.read_csv(\"data/talks.csv\")\n\nThe exact starting point depends on how the code runs. Confirm the working directory when a relative path surprises you."
+    "text": "Reproducible paths with pathlib\nInside a Python script:\nfrom pathlib import Path\n\nPROJECT_ROOT = Path(__file__).resolve().parents[1]\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ntalks = pd.read_csv(DATA_DIR / \"talks.csv\")\nInside a notebook or Quarto document launched from the project root:\ntalks = pd.read_csv(\"data/talks.csv\")\n\nThe exact starting point depends on how the code runs. Confirm the working directory when a relative path surprises you.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#a-files-schema",
     "href": "slides/importing_and_loading_data.html#a-files-schema",
     "title": "Importing and Loading Data",
     "section": "A file’s schema",
-    "text": "A file’s schema\nA schema describes how stored values map to variables.\n\n\n\n\n\n\n\nQuestion\nExample decision\n\n\n\n\nWhat separates fields?\nComma, tab, or semicolon\n\n\nWhere are the column names?\nFirst row or a separate data dictionary\n\n\nWhich codes mean missing?\nNA, Unknown, or -999\n\n\nWhich type fits each variable?\nString, integer, date, or Boolean\n\n\n\nCSV files rarely carry a complete schema with them."
+    "text": "A file’s schema\nA schema describes how stored values map to variables.\n\n\n\n\n\n\n\nQuestion\nExample decision\n\n\n\n\nWhat separates fields?\nComma, tab, or semicolon\n\n\nWhere are the column names?\nFirst row or a separate data dictionary\n\n\nWhich codes mean missing?\nNA, Unknown, or -999\n\n\nWhich type fits each variable?\nString, integer, date, or Boolean\n\n\n\nCSV files rarely carry a complete schema with them.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#import-options-express-the-schema",
     "href": "slides/importing_and_loading_data.html#import-options-express-the-schema",
     "title": "Importing and Loading Data",
     "section": "Import options express the schema",
-    "text": "Import options express the schema\ntalks = pd.read_csv(\n    \"data/talks.csv\",\n    sep=\",\",\n    dtype={\"talk_id\": \"string\"},\n    parse_dates=[\"published_date\"],\n    na_values=[\"Unknown\", \"Not reported\"],\n)\nYou rarely need every option at once. Use the options that express what you know about the source."
+    "text": "Import options express the schema\ntalks = pd.read_csv(\n    \"data/talks.csv\",\n    sep=\",\",\n    dtype={\"talk_id\": \"string\"},\n    parse_dates=[\"published_date\"],\n    na_values=[\"Unknown\", \"Not reported\"],\n)\nYou rarely need every option at once. Use the options that express what you know about the source.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#type-inference-begins-with-observed-values",
     "href": "slides/importing_and_loading_data.html#type-inference-begins-with-observed-values",
     "title": "Importing and Loading Data",
     "section": "Type inference begins with observed values",
-    "text": "Type inference begins with observed values\ntalk_id  views\n00017    12450\n00018    8905\n00019    Not reported\npandas sees patterns in the stored values. It cannot know the full meaning of a variable.\n\ntalk_id looks numeric, so leading zeros may disappear.\nviews contains text, so the entire column may remain text."
+    "text": "Type inference begins with observed values\ntalk_id  views\n00017    12450\n00018    8905\n00019    Not reported\npandas sees patterns in the stored values. It cannot know the full meaning of a variable.\n\ntalk_id looks numeric, so leading zeros may disappear.\nviews contains text, so the entire column may remain text.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-number-or-label",
     "href": "slides/importing_and_loading_data.html#conceptual-check-number-or-label",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: number or label?",
-    "text": "Conceptual check: number or label?\nHow should each value enter a DataFrame?\n\n\n\nValue\nPossible meaning\n\n\n\n\n00124\nStudent ID\n\n\n84653\nZIP code\n\n\n2026\nCalendar year\n\n\n4.7\nRating\n\n\n12%\nResponse rate\n\n\n\n\nIDs and ZIP codes are labels. Rating is quantitative. Year depends on the analysis. A stored percentage usually needs cleaning before arithmetic."
+    "text": "Conceptual check: number or label?\nHow should each value enter a DataFrame?\n\n\n\nValue\nPossible meaning\n\n\n\n\n00124\nStudent ID\n\n\n84653\nZIP code\n\n\n2026\nCalendar year\n\n\n4.7\nRating\n\n\n12%\nResponse rate\n\n\n\n\nIDs and ZIP codes are labels. Rating is quantitative. Year depends on the analysis. A stored percentage usually needs cleaning before arithmetic.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#missing-values-have-source-specific-codes",
     "href": "slides/importing_and_loading_data.html#missing-values-have-source-specific-codes",
     "title": "Importing and Loading Data",
     "section": "Missing values have source-specific codes",
-    "text": "Missing values have source-specific codes\n82\nNA\n-999\nNot reported\n0\n\nWhich entries might mean missing? Which entry requires the most context?\n\n\nNA, -999, and Not reported often encode missingness. Zero may be a real measurement or a missing-value code. The source documentation should decide.\n\n\nLater we will study why values are missing. Today we focus on representing missingness correctly during import."
+    "text": "Missing values have source-specific codes\n82\nNA\n-999\nNot reported\n0\n\nWhich entries might mean missing? Which entry requires the most context?\n\n\nNA, -999, and Not reported often encode missingness. Zero may be a real measurement or a missing-value code. The source documentation should decide.\n\n\nLater we will study why values are missing. Today we focus on representing missingness correctly during import.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-which-date",
     "href": "slides/importing_and_loading_data.html#conceptual-check-which-date",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: which date?",
-    "text": "Conceptual check: which date?\n\n03/04/2026\n\n\nWhat date does this represent?\n\n\nIt could mean March 4 or April 3. Valid text can still carry ambiguous meaning."
+    "text": "Conceptual check: which date?\n\n03/04/2026\n\n\nWhat date does this represent?\n\n\nIt could mean March 4 or April 3. Valid text can still carry ambiguous meaning.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#a-first-response-routine",
     "href": "slides/importing_and_loading_data.html#a-first-response-routine",
     "title": "Importing and Loading Data",
     "section": "A first-response routine",
-    "text": "A first-response routine\nImmediately after loading, ask:\n\nDid I get the expected rows and columns?\nDo the names and values line up?\nDid identifiers retain their original form?\nDo the data types match the variables?\nDid pandas recognize missing values?\nDo basic ranges and relationships look plausible?"
+    "text": "A first-response routine\nImmediately after loading, ask:\n\nDid I get the expected rows and columns?\nDo the names and values line up?\nDid identifiers retain their original form?\nDo the data types match the variables?\nDid pandas recognize missing values?\nDo basic ranges and relationships look plausible?",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#inspection-tools-answer-different-questions",
     "href": "slides/importing_and_loading_data.html#inspection-tools-answer-different-questions",
     "title": "Importing and Loading Data",
     "section": "Inspection tools answer different questions",
-    "text": "Inspection tools answer different questions\ntalks.head()           # What do the first records look like?\ntalks.shape            # How many rows and columns loaded?\ntalks.columns          # Which names did pandas recover?\ntalks.dtypes           # How did pandas represent each column?\ntalks.info()           # Which columns contain missing values?\ntalks.isna().sum()     # Where are missing values concentrated?\nNo single method proves that the import is correct."
+    "text": "Inspection tools answer different questions\ntalks.head()           # What do the first records look like?\ntalks.shape            # How many rows and columns loaded?\ntalks.columns          # Which names did pandas recover?\ntalks.dtypes           # How did pandas represent each column?\ntalks.info()           # Which columns contain missing values?\ntalks.isna().sum()     # Where are missing values concentrated?\nNo single method proves that the import is correct.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-one-column-instead-of-five",
     "href": "slides/importing_and_loading_data.html#conceptual-check-one-column-instead-of-five",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: one column instead of five",
-    "text": "Conceptual check: one column instead of five\nYou expect five columns, but pandas reports:\ndata.shape\n# (500, 1)\nThe code produced a DataFrame without raising an exception.\n\nWhat probably happened, and what would you inspect next?\n\n\nThe reader probably used the wrong delimiter. Inspect the raw file and its first few lines."
+    "text": "Conceptual check: one column instead of five\nYou expect five columns, but pandas reports:\ndata.shape\n# (500, 1)\nThe code produced a DataFrame without raising an exception.\n\nWhat probably happened, and what would you inspect next?\n\n\nThe reader probably used the wrong delimiter. Inspect the raw file and its first few lines.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#hard-and-silent-failures",
     "href": "slides/importing_and_loading_data.html#hard-and-silent-failures",
     "title": "Importing and Loading Data",
     "section": "Hard and silent failures",
-    "text": "Hard and silent failures\n\n\nHard failure\nFileNotFoundError\nThe program stops and points toward a problem.\n\nSilent failure\nshape: (500, 1)\nThe program continues with an incorrectly interpreted table.\n\n\nSilent failures can survive long enough to affect an analysis."
+    "text": "Hard and silent failures\n\n\nHard failure\nFileNotFoundError\nThe program stops and points toward a problem.\n\nSilent failure\nshape: (500, 1)\nThe program continues with an incorrectly interpreted table.\n\n\nSilent failures can survive long enough to affect an analysis.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#conceptual-check-rank-the-warning-signs",
     "href": "slides/importing_and_loading_data.html#conceptual-check-rank-the-warning-signs",
     "title": "Importing and Loading Data",
     "section": "Conceptual check: rank the warning signs",
-    "text": "Conceptual check: rank the warning signs\nRank these from most obvious to easiest to miss. Then rank them by potential harm.\n\nPython raises FileNotFoundError.\nA date column has type object.\nA five-column file loads as one column.\nAn identifier loses its leading zeros.\n\n\nThere is no required ranking. Defend it by separating visibility from downstream consequences."
+    "text": "Conceptual check: rank the warning signs\nRank these from most obvious to easiest to miss. Then rank them by potential harm.\n\nPython raises FileNotFoundError.\nA date column has type object.\nA five-column file loads as one column.\nAn identifier loses its leading zeros.\n\n\nThere is no required ranking. Defend it by separating visibility from downstream consequences.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-question",
     "href": "slides/importing_and_loading_data.html#demo-question",
     "title": "Importing and Loading Data",
     "section": "Demo question",
-    "text": "Demo question\nWe want to investigate:\n\nWhich types of talks tend to receive the most views?\n\nBefore analysis, we need evidence that pandas recovered the source faithfully.\n\nOpen demo/importing_data_demo.py. Keep data/talks.csv visible in the file explorer."
+    "text": "Demo question\nWe want to investigate:\n\nWhich types of talks tend to receive the most views?\n\nBefore analysis, we need evidence that pandas recovered the source faithfully.\n\nOpen demo/importing_data_demo.py. Keep data/talks.csv visible in the file explorer.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-repository",
     "href": "slides/importing_and_loading_data.html#demo-repository",
     "title": "Importing and Loading Data",
     "section": "Demo repository",
-    "text": "Demo repository\nimporting-loading-data-demo/\n├── demo/\n│   └── importing_data_demo.py\n├── data/\n│   ├── talks.csv\n│   ├── talks_semicolon.csv\n│   └── talks.xlsx\n└── index.qmd\nOne dataset appears in several representations. The differences let us isolate the import decisions."
+    "text": "Demo repository\nimporting-loading-data-demo/\n├── demo/\n│   └── importing_data_demo.py\n├── data/\n│   ├── talks.csv\n│   ├── talks_semicolon.csv\n│   └── talks.xlsx\n└── index.qmd\nOne dataset appears in several representations. The differences let us isolate the import decisions.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-first-import",
     "href": "slides/importing_and_loading_data.html#demo-first-import",
     "title": "Importing and Loading Data",
     "section": "Demo: first import",
-    "text": "Demo: first import\ntalks_first_pass = pd.read_csv(DATA_DIR / \"talks.csv\")\ntalks_first_pass.head()\n\nThe code ran. What evidence do we have that the import is correct?\n\n\nOnly limited evidence. We know pandas found a file and returned something that looks tabular."
+    "text": "Demo: first import\ntalks_first_pass = pd.read_csv(DATA_DIR / \"talks.csv\")\ntalks_first_pass.head()\n\nThe code ran. What evidence do we have that the import is correct?\n\n\nOnly limited evidence. We know pandas found a file and returned something that looks tabular.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-systematic-inspection",
     "href": "slides/importing_and_loading_data.html#demo-systematic-inspection",
     "title": "Importing and Loading Data",
     "section": "Demo: systematic inspection",
-    "text": "Demo: systematic inspection\ntalks_first_pass.shape\ntalks_first_pass.columns\ntalks_first_pass.dtypes\ntalks_first_pass.info()\nLook for four problems:\n\nLeading zeros disappeared from talk_id.\npublished_date remains text.\nviews cannot support arithmetic.\nrating contains an unrecognized missing-value code."
+    "text": "Demo: systematic inspection\ntalks_first_pass.shape\ntalks_first_pass.columns\ntalks_first_pass.dtypes\ntalks_first_pass.info()\nLook for four problems:\n\nLeading zeros disappeared from talk_id.\npublished_date remains text.\nviews cannot support arithmetic.\nrating contains an unrecognized missing-value code.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-source-and-dataframe-side-by-side",
     "href": "slides/importing_and_loading_data.html#demo-source-and-dataframe-side-by-side",
     "title": "Importing and Loading Data",
     "section": "Demo: source and DataFrame side by side",
-    "text": "Demo: source and DataFrame side by side\n00020,\"Small Models, Big Questions\",...,\"15,320\",Unknown,Yes\ntalks_first_pass.loc[\n    :, [\"talk_id\", \"published_date\", \"views\", \"rating\"]\n].head()\n\nThe DataFrame is pandas’ interpretation of the file. The file remains the source we must understand."
+    "text": "Demo: source and DataFrame side by side\n00020,\"Small Models, Big Questions\",...,\"15,320\",Unknown,Yes\ntalks_first_pass.loc[\n    :, [\"talk_id\", \"published_date\", \"views\", \"rating\"]\n].head()\n\nThe DataFrame is pandas’ interpretation of the file. The file remains the source we must understand.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-explicit-import-decisions",
     "href": "slides/importing_and_loading_data.html#demo-explicit-import-decisions",
     "title": "Importing and Loading Data",
     "section": "Demo: explicit import decisions",
-    "text": "Demo: explicit import decisions\ntalks = pd.read_csv(\n    DATA_DIR / \"talks.csv\",\n    dtype={\"talk_id\": \"string\", \"views\": \"string\"},\n    parse_dates=[\"published_date\"],\n    na_values={\n        \"views\": [\"Not reported\"],\n        \"rating\": [\"Unknown\"],\n    },\n    true_values=[\"Yes\"],\n    false_values=[\"No\"],\n)\nEach option follows from the variable meaning or source documentation."
+    "text": "Demo: explicit import decisions\ntalks = pd.read_csv(\n    DATA_DIR / \"talks.csv\",\n    dtype={\"talk_id\": \"string\", \"views\": \"string\"},\n    parse_dates=[\"published_date\"],\n    na_values={\n        \"views\": [\"Not reported\"],\n        \"rating\": [\"Unknown\"],\n    },\n    true_values=[\"Yes\"],\n    false_values=[\"No\"],\n)\nEach option follows from the variable meaning or source documentation.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-cleaning-after-import",
     "href": "slides/importing_and_loading_data.html#demo-cleaning-after-import",
     "title": "Importing and Loading Data",
     "section": "Demo: cleaning after import",
-    "text": "Demo: cleaning after import\ntalks[\"views\"] = pd.to_numeric(\n    talks[\"views\"].str.replace(\",\", \"\", regex=False)\n).astype(\"Int64\")\nSome decisions fit naturally in the reader. Other representations are clearer to transform after loading.\n\nInt64 is pandas’ nullable integer type, so the column can contain both integers and missing values."
+    "text": "Demo: cleaning after import\ntalks[\"views\"] = pd.to_numeric(\n    talks[\"views\"].str.replace(\",\", \"\", regex=False)\n).astype(\"Int64\")\nSome decisions fit naturally in the reader. Other representations are clearer to transform after loading.\n\nInt64 is pandas’ nullable integer type, so the column can contain both integers and missing values.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-the-wrong-delimiter",
     "href": "slides/importing_and_loading_data.html#demo-the-wrong-delimiter",
     "title": "Importing and Loading Data",
     "section": "Demo: the wrong delimiter",
-    "text": "Demo: the wrong delimiter\nbad_delimiter = pd.read_csv(DATA_DIR / \"talks_semicolon.csv\")\nbad_delimiter.shape\n# (12, 1)\nsemicolon_talks = pd.read_csv(\n    DATA_DIR / \"talks_semicolon.csv\",\n    sep=\";\",\n)\nsemicolon_talks.shape\n# (12, 9)\nThe first call succeeds as Python code and fails as data interpretation."
+    "text": "Demo: the wrong delimiter\nbad_delimiter = pd.read_csv(DATA_DIR / \"talks_semicolon.csv\")\nbad_delimiter.shape\n# (12, 1)\nsemicolon_talks = pd.read_csv(\n    DATA_DIR / \"talks_semicolon.csv\",\n    sep=\";\",\n)\nsemicolon_talks.shape\n# (12, 9)\nThe first call succeeds as Python code and fails as data interpretation.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-an-excel-workbook",
     "href": "slides/importing_and_loading_data.html#demo-an-excel-workbook",
     "title": "Importing and Loading Data",
     "section": "Demo: an Excel workbook",
-    "text": "Demo: an Excel workbook\nworkbook = pd.ExcelFile(DATA_DIR / \"talks.xlsx\")\nworkbook.sheet_names\n# ['talks', 'speakers']\nspeakers = pd.read_excel(\n    DATA_DIR / \"talks.xlsx\",\n    sheet_name=\"speakers\",\n)\nSelecting a sheet is part of specifying which table to load."
+    "text": "Demo: an Excel workbook\nworkbook = pd.ExcelFile(DATA_DIR / \"talks.xlsx\")\nworkbook.sheet_names\n# ['talks', 'speakers']\nspeakers = pd.read_excel(\n    DATA_DIR / \"talks.xlsx\",\n    sheet_name=\"speakers\",\n)\nSelecting a sheet is part of specifying which table to load.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#demo-validation-makes-expectations-executable",
     "href": "slides/importing_and_loading_data.html#demo-validation-makes-expectations-executable",
     "title": "Importing and Loading Data",
     "section": "Demo: validation makes expectations executable",
-    "text": "Demo: validation makes expectations executable\nassert talks.shape == (12, 9)\nassert talks[\"talk_id\"].str.fullmatch(r\"\\d{5}\").all()\nassert talks[\"talk_id\"].is_unique\nassert talks[\"published_date\"].dtype.kind == \"M\"\nassert talks[\"views\"].dropna().ge(0).all()\nThe final assertion fails because one talk has -150 views.\n\nShould we replace it, delete the row, or do something else?"
+    "text": "Demo: validation makes expectations executable\nassert talks.shape == (12, 9)\nassert talks[\"talk_id\"].str.fullmatch(r\"\\d{5}\").all()\nassert talks[\"talk_id\"].is_unique\nassert talks[\"published_date\"].dtype.kind == \"M\"\nassert talks[\"views\"].dropna().ge(0).all()\nThe final assertion fails because one talk has -150 views.\n\nShould we replace it, delete the row, or do something else?",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#suspicious-data-requires-judgment",
     "href": "slides/importing_and_loading_data.html#suspicious-data-requires-judgment",
     "title": "Importing and Loading Data",
     "section": "Suspicious data requires judgment",
-    "text": "Suspicious data requires judgment\nsuspicious_rows = talks.loc[talks[\"views\"].lt(0)]\nWe know the value violates a reasonable expectation. We do not know the correct value.\ntalks.loc[talks[\"views\"].lt(0), \"views\"] = pd.NA\nMarking the value as missing preserves the record and avoids inventing a correction. The analyst should also document the issue and verify the source."
+    "text": "Suspicious data requires judgment\nsuspicious_rows = talks.loc[talks[\"views\"].lt(0)]\nWe know the value violates a reasonable expectation. We do not know the correct value.\ntalks.loc[talks[\"views\"].lt(0), \"views\"] = pd.NA\nMarking the value as missing preserves the record and avoids inventing a correction. The analyst should also document the issue and verify the source.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#student-challenge",
     "href": "slides/importing_and_loading_data.html#student-challenge",
     "title": "Importing and Loading Data",
     "section": "Student challenge",
-    "text": "Student challenge\nOpen demo/student_challenge.py and data/student_events_dictionary.md.\nYour group must:\n\nLoad data/student_events.tsv with an appropriate reader.\nPreserve the event identifier and parse the date.\nRecognize the documented missing-value codes.\nInspect the result and write at least two assertions.\nFind one row that deserves further investigation.\n\n\nPrepare to convince another analyst that your import is trustworthy."
+    "text": "Student challenge\nOpen demo/student_challenge.py and data/student_events_dictionary.md.\nYour group must:\n\nLoad data/student_events.tsv with an appropriate reader.\nPreserve the event identifier and parse the date.\nRecognize the documented missing-value codes.\nInspect the result and write at least two assertions.\nFind one row that deserves further investigation.\n\n\nPrepare to convince another analyst that your import is trustworthy.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#student-challenge-debrief",
     "href": "slides/importing_and_loading_data.html#student-challenge-debrief",
     "title": "Importing and Loading Data",
     "section": "Student challenge debrief",
-    "text": "Student challenge debrief\nQuestions worth asking:\n\nWhich evidence gave you the most confidence?\nWhich decision required the data dictionary?\nDid a suspicious relationship prove that a value was wrong?\nWhat would you document before handing the data to someone else?\n\nThe row with more attendees than registrations needs investigation. Walk-ins could make it legitimate."
+    "text": "Student challenge debrief\nQuestions worth asking:\n\nWhich evidence gave you the most confidence?\nWhich decision required the data dictionary?\nDid a suspicious relationship prove that a value was wrong?\nWhat would you document before handing the data to someone else?\n\nThe row with more attendees than registrations needs investigation. Walk-ins could make it legitimate.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/importing_and_loading_data.html#before-analysis-begins",
     "href": "slides/importing_and_loading_data.html#before-analysis-begins",
     "title": "Importing and Loading Data",
     "section": "Before analysis begins",
-    "text": "Before analysis begins\n\n\nDescribe the interpretation\n\nSource and file format\nPath and delimiter\nTypes, dates, and missing-value codes\n\n\nSupport it with evidence\n\nExpected shape and column names\nPlausible values and relationships\nAssertions for important assumptions\n\n\n\nA successful reader call starts the import. Inspection and validation establish whether the result deserves trust.\n\n\nReference: pandas input/output documentation"
+    "text": "Before analysis begins\n\n\nDescribe the interpretation\n\nSource and file format\nPath and delimiter\nTypes, dates, and missing-value codes\n\n\nSupport it with evidence\n\nExpected shape and column names\nPlausible values and relationships\nAssertions for important assumptions\n\n\n\nA successful reader call starts the import. Inspection and validation establish whether the result deserves trust.\n\n\nReference: pandas input/output documentation",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Importing and Loading Data"
+    ]
   },
   {
     "objectID": "slides/IDEs_and_Markdown.html#todays-question",

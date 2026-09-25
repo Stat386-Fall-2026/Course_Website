@@ -30,6 +30,7 @@ website:
           - slides/collaborative_github.qmd
           - slides/uv_virtual_envs.qmd
           - slides/quarto-github-pages.qmd
+          - slides/importing_and_loading_data.qmd
       # - section: "Demos"
       #   contents:
       #     - demos.qmd

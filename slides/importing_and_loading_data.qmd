@@ -1,0 +1,566 @@
+---
+title: "Importing and Loading Data"
+subtitle: "Turning stored values into trustworthy DataFrames"
+author: "STAT 386"
+---
+
+## Today's goal
+
+By the end of class, you should be able to explain and defend how you loaded a dataset.
+
+::: {.columns}
+::: {.column width="48%"}
+### Decisions before loading
+
+- Where does the data live?
+- How does the file represent values?
+- What should each column mean?
+:::
+
+::: {.column width="48%"}
+### Evidence after loading
+
+- Did pandas recover the expected structure?
+- Do the types match the variables?
+- Do basic checks reveal suspicious values?
+:::
+:::
+
+::: {.notes}
+Ask students how they currently decide that an imported dataset is ready to use.
+:::
+
+## Loading is an act of interpretation
+
+::: {.columns}
+::: {.column width="30%"}
+### Stored source
+
+A file contains bytes arranged according to a format.
+:::
+
+::: {.column width="30%"}
+### Reader settings
+
+A function decides where rows begin, what separates columns, and how values should be typed.
+:::
+
+::: {.column width="30%"}
+### DataFrame
+
+pandas builds an in-memory table that reflects those decisions.
+:::
+:::
+
+::: {.keyline}
+Two analysts can read the same file and produce different DataFrames.
+:::
+
+## Common representations
+
+| Stored representation | What it preserves | pandas reader |
+|---|---|---|
+| CSV or TSV | Plain text arranged in rows and fields | `read_csv()` |
+| Excel workbook | Sheets, cells, and some cell types | `read_excel()` |
+| JSON | Objects, arrays, and nested structure | `read_json()` |
+| Parquet | Column types and compressed columnar data | `read_parquet()` |
+
+The reader often accepts either a file path or a URL.
+
+::: {.notes}
+CSV receives the most attention today. Mention that APIs and databases come later in the course.
+:::
+
+## Conceptual check: one CSV row
+
+```text
+talk_id,title,views
+0017,"Data, Decisions, and You","12,450"
+```
+
+::: {.check}
+Discuss with a neighbor:
+
+1. How many columns should pandas create?
+2. Why do two values use quotation marks?
+3. Which pandas types should the columns have?
+:::
+
+::: {.fragment .answer}
+The row contains three fields. Quotation marks protect commas inside a field. `talk_id` should remain text, while `views` should eventually become numeric.
+:::
+
+## Files store representations
+
+The text `0017` can represent several ideas:
+
+- The quantity seventeen
+- A four-character identifier
+- A code whose leading zeros carry meaning
+
+The characters alone do not tell pandas which meaning applies.
+
+::: {.keyline}
+Variable meaning should guide the import settings.
+:::
+
+## Paths connect code to data
+
+```python
+pd.read_csv("data/talks.csv")
+```
+
+This path starts from the project's working directory.
+
+```python
+pd.read_csv("C:/Users/maria/Downloads/talks.csv")
+```
+
+This path assumes one computer, one username, and one file location.
+
+## Conceptual check: which path travels?
+
+::: {.check}
+Maria pushes her project to GitHub. Another student clones it.
+
+Which path is more likely to work on both computers, and what else must Maria include in the repository?
+:::
+
+::: {.fragment}
+```text
+project/
+├── index.qmd
+├── demo/
+└── data/
+    └── talks.csv
+```
+:::
+
+::: {.fragment .answer}
+`data/talks.csv` can travel with the project. The repository must also contain the data file in the expected location.
+:::
+
+## Reproducible paths with `pathlib`
+
+Inside a Python script:
+
+```python
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "data"
+
+talks = pd.read_csv(DATA_DIR / "talks.csv")
+```
+
+Inside a notebook or Quarto document launched from the project root:
+
+```python
+talks = pd.read_csv("data/talks.csv")
+```
+
+::: {.small .muted}
+The exact starting point depends on how the code runs. Confirm the working directory when a relative path surprises you.
+:::
+
+## A file's schema
+
+A schema describes how stored values map to variables.
+
+| Question | Example decision |
+|---|---|
+| What separates fields? | Comma, tab, or semicolon |
+| Where are the column names? | First row or a separate data dictionary |
+| Which codes mean missing? | `NA`, `Unknown`, or `-999` |
+| Which type fits each variable? | String, integer, date, or Boolean |
+
+CSV files rarely carry a complete schema with them.
+
+## Import options express the schema
+
+```python
+talks = pd.read_csv(
+    "data/talks.csv",
+    sep=",",
+    dtype={"talk_id": "string"},
+    parse_dates=["published_date"],
+    na_values=["Unknown", "Not reported"],
+)
+```
+
+You rarely need every option at once. Use the options that express what you know about the source.
+
+## Type inference begins with observed values
+
+```text
+talk_id  views
+00017    12450
+00018    8905
+00019    Not reported
+```
+
+pandas sees patterns in the stored values. It cannot know the full meaning of a variable.
+
+- `talk_id` looks numeric, so leading zeros may disappear.
+- `views` contains text, so the entire column may remain text.
+
+## Conceptual check: number or label?
+
+How should each value enter a DataFrame?
+
+| Value | Possible meaning |
+|---|---|
+| `00124` | Student ID |
+| `84653` | ZIP code |
+| `2026` | Calendar year |
+| `4.7` | Rating |
+| `12%` | Response rate |
+
+::: {.fragment .answer}
+IDs and ZIP codes are labels. Rating is quantitative. Year depends on the analysis. A stored percentage usually needs cleaning before arithmetic.
+:::
+
+## Missing values have source-specific codes
+
+```text
+82
+NA
+-999
+Not reported
+0
+```
+
+::: {.check}
+Which entries might mean missing? Which entry requires the most context?
+:::
+
+::: {.fragment .answer}
+`NA`, `-999`, and `Not reported` often encode missingness. Zero may be a real measurement or a missing-value code. The source documentation should decide.
+:::
+
+::: {.small .muted}
+Later we will study why values are missing. Today we focus on representing missingness correctly during import.
+:::
+
+## Conceptual check: which date?
+
+<div class="big-display">03/04/2026</div>
+
+::: {.check}
+What date does this represent?
+:::
+
+::: {.fragment .answer}
+It could mean March 4 or April 3. Valid text can still carry ambiguous meaning.
+:::
+
+## A first-response routine
+
+Immediately after loading, ask:
+
+1. Did I get the expected rows and columns?
+2. Do the names and values line up?
+3. Did identifiers retain their original form?
+4. Do the data types match the variables?
+5. Did pandas recognize missing values?
+6. Do basic ranges and relationships look plausible?
+
+## Inspection tools answer different questions
+
+```python
+talks.head()           # What do the first records look like?
+talks.shape            # How many rows and columns loaded?
+talks.columns          # Which names did pandas recover?
+talks.dtypes           # How did pandas represent each column?
+talks.info()           # Which columns contain missing values?
+talks.isna().sum()     # Where are missing values concentrated?
+```
+
+No single method proves that the import is correct.
+
+## Conceptual check: one column instead of five
+
+You expect five columns, but pandas reports:
+
+```python
+data.shape
+# (500, 1)
+```
+
+The code produced a DataFrame without raising an exception.
+
+::: {.check}
+What probably happened, and what would you inspect next?
+:::
+
+::: {.fragment .answer}
+The reader probably used the wrong delimiter. Inspect the raw file and its first few lines.
+:::
+
+## Hard and silent failures
+
+::: {.columns}
+::: {.column width="46%"}
+### Hard failure
+
+```text
+FileNotFoundError
+```
+
+The program stops and points toward a problem.
+:::
+
+::: {.column width="46%"}
+### Silent failure
+
+```text
+shape: (500, 1)
+```
+
+The program continues with an incorrectly interpreted table.
+:::
+:::
+
+::: {.keyline}
+Silent failures can survive long enough to affect an analysis.
+:::
+
+## Conceptual check: rank the warning signs
+
+Rank these from most obvious to easiest to miss. Then rank them by potential harm.
+
+1. Python raises `FileNotFoundError`.
+2. A date column has type `object`.
+3. A five-column file loads as one column.
+4. An identifier loses its leading zeros.
+
+::: {.fragment .answer}
+There is no required ranking. Defend it by separating visibility from downstream consequences.
+:::
+
+## Demo question
+
+We want to investigate:
+
+<div class="big-display">Which types of talks tend to receive the most views?</div>
+
+Before analysis, we need evidence that pandas recovered the source faithfully.
+
+::: {.notes}
+Open demo/importing_data_demo.py. Keep data/talks.csv visible in the file explorer.
+:::
+
+## Demo repository
+
+```text
+importing-loading-data-demo/
+├── demo/
+│   └── importing_data_demo.py
+├── data/
+│   ├── talks.csv
+│   ├── talks_semicolon.csv
+│   └── talks.xlsx
+└── index.qmd
+```
+
+One dataset appears in several representations. The differences let us isolate the import decisions.
+
+## Demo: first import
+
+```python
+talks_first_pass = pd.read_csv(DATA_DIR / "talks.csv")
+talks_first_pass.head()
+```
+
+::: {.check}
+The code ran. What evidence do we have that the import is correct?
+:::
+
+::: {.fragment .answer}
+Only limited evidence. We know pandas found a file and returned something that looks tabular.
+:::
+
+## Demo: systematic inspection
+
+```python
+talks_first_pass.shape
+talks_first_pass.columns
+talks_first_pass.dtypes
+talks_first_pass.info()
+```
+
+Look for four problems:
+
+- Leading zeros disappeared from `talk_id`.
+- `published_date` remains text.
+- `views` cannot support arithmetic.
+- `rating` contains an unrecognized missing-value code.
+
+## Demo: source and DataFrame side by side
+
+```text
+00020,"Small Models, Big Questions",...,"15,320",Unknown,Yes
+```
+
+```python
+talks_first_pass.loc[
+    :, ["talk_id", "published_date", "views", "rating"]
+].head()
+```
+
+::: {.keyline}
+The DataFrame is pandas' interpretation of the file. The file remains the source we must understand.
+:::
+
+## Demo: explicit import decisions
+
+```python
+talks = pd.read_csv(
+    DATA_DIR / "talks.csv",
+    dtype={"talk_id": "string", "views": "string"},
+    parse_dates=["published_date"],
+    na_values={
+        "views": ["Not reported"],
+        "rating": ["Unknown"],
+    },
+    true_values=["Yes"],
+    false_values=["No"],
+)
+```
+
+Each option follows from the variable meaning or source documentation.
+
+## Demo: cleaning after import
+
+```python
+talks["views"] = pd.to_numeric(
+    talks["views"].str.replace(",", "", regex=False)
+).astype("Int64")
+```
+
+Some decisions fit naturally in the reader. Other representations are clearer to transform after loading.
+
+::: {.small}
+`Int64` is pandas' nullable integer type, so the column can contain both integers and missing values.
+:::
+
+## Demo: the wrong delimiter
+
+```python
+bad_delimiter = pd.read_csv(DATA_DIR / "talks_semicolon.csv")
+bad_delimiter.shape
+# (12, 1)
+```
+
+```python
+semicolon_talks = pd.read_csv(
+    DATA_DIR / "talks_semicolon.csv",
+    sep=";",
+)
+semicolon_talks.shape
+# (12, 9)
+```
+
+The first call succeeds as Python code and fails as data interpretation.
+
+## Demo: an Excel workbook
+
+```python
+workbook = pd.ExcelFile(DATA_DIR / "talks.xlsx")
+workbook.sheet_names
+# ['talks', 'speakers']
+```
+
+```python
+speakers = pd.read_excel(
+    DATA_DIR / "talks.xlsx",
+    sheet_name="speakers",
+)
+```
+
+Selecting a sheet is part of specifying which table to load.
+
+## Demo: validation makes expectations executable
+
+```python
+assert talks.shape == (12, 9)
+assert talks["talk_id"].str.fullmatch(r"\d{5}").all()
+assert talks["talk_id"].is_unique
+assert talks["published_date"].dtype.kind == "M"
+assert talks["views"].dropna().ge(0).all()
+```
+
+The final assertion fails because one talk has `-150` views.
+
+::: {.check}
+Should we replace it, delete the row, or do something else?
+:::
+
+## Suspicious data requires judgment
+
+```python
+suspicious_rows = talks.loc[talks["views"].lt(0)]
+```
+
+We know the value violates a reasonable expectation. We do not know the correct value.
+
+```python
+talks.loc[talks["views"].lt(0), "views"] = pd.NA
+```
+
+Marking the value as missing preserves the record and avoids inventing a correction. The analyst should also document the issue and verify the source.
+
+## Student challenge
+
+Open `demo/student_challenge.py` and `data/student_events_dictionary.md`.
+
+Your group must:
+
+1. Load `data/student_events.tsv` with an appropriate reader.
+2. Preserve the event identifier and parse the date.
+3. Recognize the documented missing-value codes.
+4. Inspect the result and write at least two assertions.
+5. Find one row that deserves further investigation.
+
+::: {.keyline}
+Prepare to convince another analyst that your import is trustworthy.
+:::
+
+## Student challenge debrief
+
+Questions worth asking:
+
+- Which evidence gave you the most confidence?
+- Which decision required the data dictionary?
+- Did a suspicious relationship prove that a value was wrong?
+- What would you document before handing the data to someone else?
+
+The row with more attendees than registrations needs investigation. Walk-ins could make it legitimate.
+
+## Before analysis begins
+
+::: {.columns}
+::: {.column width="48%"}
+### Describe the interpretation
+
+- Source and file format
+- Path and delimiter
+- Types, dates, and missing-value codes
+:::
+
+::: {.column width="48%"}
+### Support it with evidence
+
+- Expected shape and column names
+- Plausible values and relationships
+- Assertions for important assumptions
+:::
+:::
+
+::: {.keyline}
+A successful reader call starts the import. Inspection and validation establish whether the result deserves trust.
+:::
+
+::: {.tiny .muted}
+Reference: [pandas input/output documentation](https://pandas.pydata.org/docs/user_guide/io.html)
+:::
